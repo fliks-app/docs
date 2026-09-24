@@ -11,7 +11,8 @@ a few minutes on a live channel works the same way it does on the rest of the li
 
 > [!IMPORTANT]
 > Fliks does not sell or supply any channels itself. You need a subscription from an IPTV provider
-> before any of this is useful.
+> before any of this is useful. Use a subscription you are entitled to: a service that holds the
+> rights to the channels it streams, and is legal where you live.
 
 Everything below lives under **Settings > Live TV**, admin-only, across six tabs: **Sources**,
 **Channels**, **Guide**, **Settings**, **Access** and **Health**. The **Live TV** entry only
