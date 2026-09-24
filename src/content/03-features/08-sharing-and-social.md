@@ -85,6 +85,8 @@ what you sent, including dismissed cards). Each section has its own switch in **
 | Share my favorites | Your last 24 likes |
 | Share my statistics | The Statistics tab (see below) |
 
+![The Account settings > Privacy page, with every share toggle off by default](/img/account-privacy.webp)
+
 Public playlists (and followers-only ones, for someone who follows you) always appear on your
 profile; there's no separate toggle for those. If a visitor would see no playlist and no section
 with anything in it, they get: "This user has chosen not to display any data on their profile."

@@ -45,6 +45,8 @@ dead disk doesn't take the backups with it.
 
 ## Managing them by hand
 
+![The Backups list, with each backup size, date and the Download/Restore/Delete actions](/img/backups.webp)
+
 **Settings > System > Backups** lists every backup with its size and date, and lets you:
 
 - **Create a backup** on demand, outside the daily schedule.

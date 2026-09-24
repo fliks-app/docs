@@ -8,6 +8,8 @@ description: Point Fliks at a folder of video files, scan it, and it builds a br
 **Settings > Libraries > Add a library** walks through three steps: information, users, and the
 media itself.
 
+![The Information step of the New library wizard, with icon, color, media types and metadata fields](/img/libraries-wizard-info.webp)
+
 | Field | What it's for |
 |---|---|
 | Name | Shown everywhere the library appears; must be unique |

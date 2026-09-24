@@ -19,12 +19,18 @@ seek, or finish something, so switching devices mid-scene loses at most a few se
 - If you were offline when you finished something, the position is kept on the device and sent to
   the server as soon as it reconnects.
 
+![The player control bar: seek bar, transport buttons, speed, settings and fullscreen](/img/player-controls.webp)
+
 ## Track selection
 
 Every embedded audio track, and every embedded or external text subtitle, can be switched
 mid-playback without interrupting the stream. An image-based subtitle (PGS, VobSub) has to be burned
 into the picture, which restarts the stream as a transcode, and these are hidden from the picker by
-default (see [Subtitles](/features/subtitles#subtitle-appearance)). Your choice is remembered per
+default (see [Subtitles](/features/subtitles#subtitle-appearance)).
+
+![The subtitle track picker in the player, listing every language including a hearing-impaired track](/img/player-subtitles-menu.webp)
+
+Your choice is remembered per
 device (not tied to your account), and it applies to the whole show, not just the one episode you
 were on, so picking a language once carries across the rest of a series.
 
@@ -36,6 +42,8 @@ first time you open something new:
 | Preferred audio language | Any language | None |
 | Audio selection | Preferred language, title's original language, file's default track, or first audio track | File's default track |
 | Remember audio selections | On or off | On |
+
+![The App settings > Playback page: audio selection rule and its related toggles](/img/app-settings-playback.webp)
 
 When the chosen rule finds no match, the first audio track plays. The same page also has **Disable
 HDR** (only on a device that reports HDR support; forces an SDR conversion when HDR looks washed

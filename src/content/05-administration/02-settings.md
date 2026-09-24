@@ -63,6 +63,8 @@ access.
 
 ## Advanced
 
+![The Scheduled tasks list, with the interval, last run and next run of each job](/img/scheduled-tasks.webp)
+
 | Page | What it's for |
 |---|---|
 | Scheduled tasks | Every background job Fliks runs on a timer (the daily backup, metadata refresh, plugin source refresh, subtitle search and upgrade, plus any job a plugin adds), with its interval, last and next run, and a button to run it now. Intervals are fixed; they can't be edited here. |

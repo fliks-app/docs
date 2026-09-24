@@ -38,6 +38,8 @@ per subscription. Fliks supports two kinds:
 
 Optional on either kind: a user agent and a referer header, for providers that check them.
 
+![The New source dialog for an M3U playlist, with its optional fields and Test connection](/img/livetv-source-form.webp)
+
 | Field | What it controls |
 |---|---|
 | Max simultaneous streams (0 = unlimited) | How many upstream connections *this source* may hold open at once, not how many people can watch: viewers on the same channel, watching it the same way, share one upstream connection. **Test connection** pre-fills it from the account when the field is still 0; whatever the field holds when you save is kept as your own value. |

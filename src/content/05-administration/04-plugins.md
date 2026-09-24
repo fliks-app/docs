@@ -16,6 +16,8 @@ writing one is covered in the separate developer documentation.
 **Installed** or **Update available** where it applies. Installing shows a consent step first
 (see below) before anything is installed. Updating keeps the plugin's settings.
 
+![The plugin catalogue, with one plugin installed and another listed with no installable version](/img/plugins-catalog.webp)
+
 ## Importing a plugin by hand
 
 The **⋮** menu next to the catalog button has **Import a plugin**, for a `.fkplugin` (or `.zip`)
@@ -78,6 +80,8 @@ The **⋮** menu's **Settings** covers how installation and updates behave overa
 Each row in the plugin list has an **Enabled** switch (stops the plugin without removing it) and
 an **Uninstall** action. Uninstalling asks for confirmation and deletes any data associated with
 that plugin.
+
+![The installed plugins list, showing the version, tier, trust badge and status of a plugin](/img/plugins-installed.webp)
 
 ## See also
 

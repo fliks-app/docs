@@ -56,6 +56,8 @@ on the device that's actually playing.
 
 This needs that device's owner to grant access first:
 
+![The App settings > Remote control page, before a code is shown or a device is added](/img/app-settings-remote.webp)
+
 1. On the device to be controlled, go to **App settings > Remote control** and choose **Show a
    code**. It displays a 6-character code (avoiding easily confused characters), valid for 10
    minutes. This code only grants remote control; signing in a new device needs no code (see

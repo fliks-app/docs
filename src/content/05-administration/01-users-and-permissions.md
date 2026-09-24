@@ -9,6 +9,8 @@ description: Create accounts for the household, control what each one can do, an
 activity. **Add a user** asks for a username, an optional email, a password, a role, and whether
 the account is active. If you leave the role alone, the new account gets the default role.
 
+![The Users list, with the signed-in admin account tagged as you](/img/users-list.webp)
+
 Click a username to open that user's page. Its **Edit user** card holds the settings below,
 which are independent of the role:
 

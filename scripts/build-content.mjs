@@ -164,7 +164,7 @@ const docsRenderer = {
     if (!isExternalHref(href)) {
       pageImages.push({ href, file: currentFile });
     }
-    return `<img src="${escapeHtml(href)}" alt="${escapeHtml(text)}"${titleAttr} loading="lazy">`;
+    return `<img src="${escapeHtml(href)}" alt="${text}"${titleAttr} loading="lazy">`;
   },
 
   blockquote(token) {

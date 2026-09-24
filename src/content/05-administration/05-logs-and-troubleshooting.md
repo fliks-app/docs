@@ -12,6 +12,8 @@ That buffer is reset on every restart. For anything older, or to see what happen
 crash, go to the platform log below instead. There is no log level setting: the server always
 logs at the same verbosity.
 
+![The in-app log viewer, with log and warn lines from scheduled plugin jobs](/img/logs.webp)
+
 ## Where logs live per platform
 
 | Platform | Where |

@@ -71,6 +71,8 @@ condition it sets has to match for the rule to fire:
   show's seasons)
 - A release year range
 
+![The New rule dialog, with its Who and What condition builder](/img/auto-approval-rule.webp)
+
 A condition left empty matches anything, so a rule with nothing set approves every request it sees.
 A condition Fliks can't check (for example, the title's details can't be fetched) counts as not
 matching. Any one enabled rule that matches is enough to approve a request; there's no need for all

@@ -25,6 +25,8 @@ If you're allowed to make [Requests](/features/requests), a **Recent requests** 
 shown by default above Recently added (not on TVs). Each library also gets its own "Recently added"
 row, hidden by default, that you can turn on alongside the combined one.
 
+![The App settings > Home page, with its reorderable list of home rows and a switch for each](/img/app-settings-home.webp)
+
 ## Searching
 
 ![Browsing trending and popular titles from the search page](/img/discover.webp)
@@ -54,6 +56,8 @@ master switch (**Hide spoiler information**) and three things it can hide once i
 | Blur thumbnails | The still of an unwatched episode, and its page's backdrop |
 | Blur synopses | The plot summary of an unwatched film, season or episode |
 | Hide episode names | Shows "Episode 3" instead of a title that gives away the plot |
+
+![The Account settings > Spoilers page with its Hide spoiler information switch](/img/account-spoilers.webp)
 
 Clicking a masked item reveals it for the moment; marking it as watched unmasks it for good. Each
 of the three is its own toggle, and the setting follows your account onto every device, since it's

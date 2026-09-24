@@ -54,6 +54,10 @@ From a title's page, open **Edit subtitles** for the full list of what's already
 upload your own text subtitle file (`.srt`, `.vtt`, `.ass` or `.ssa`), picking its language as you
 do.
 
+![The Edit subtitles dialog listing every track for a title, with its language, provider and flags](/img/subtitles-modal-tracks.webp)
+
+![Subtitle search results with a match score, an HI flag and a download button per result](/img/subtitles-modal-search.webp)
+
 ## Fixing out-of-sync subtitles
 
 A subtitle that drifts against the dialogue can be corrected without hunting for the right offset
@@ -100,6 +104,16 @@ Each provider has a **Test** button that sends a couple of short lines through i
 it. Credentials are stored on the server and are never sent back to the client once saved: the
 settings page always shows a masked field, with the choice to leave it as-is or clear it.
 
+![The New translation provider dialog, with the Gemini engine and the gemma-4-26b-a4b-it model selected](/img/admin-subtitle-translation-gemini.webp)
+
+> [!TIP]
+> The Gemini engine also runs Google's open Gemma 4 model: pick `gemma-4-26b-a4b-it` from the
+> **Model** list. It runs through the Gemini API free of charge, with the same API key from [Google
+> AI Studio](https://aistudio.google.com/), but it has no paid tier: it stays on the free tier's rate
+> limits, and Google may use free-tier requests and responses to improve its products, with human
+> reviewers reading some of them. Use a Gemini model on a paid (billed) API key instead if that
+> matters to you.
+
 > [!NOTE]
 > Translation only runs when you ask for it. Nothing is translated automatically in the background.
 
@@ -122,6 +136,8 @@ normal, editable subtitle file from them.
 **App settings > Subtitles** (in your user menu) controls which subtitle track is picked and how
 subtitles look, and this is remembered per device rather than following your account to every
 screen:
+
+![The Subtitle appearance settings: text size, text color, drop shadow and background color](/img/subtitles-appearance.webp)
 
 | Setting | Options |
 |---|---|
