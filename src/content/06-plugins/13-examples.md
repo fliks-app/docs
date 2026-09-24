@@ -1,26 +1,18 @@
 ---
 title: Examples
-description: Three real plugins walked through in detail, a full process plugin, a second process plugin with a different shape, and a zero-code data plugin.
+description: Two real process plugins walked through in detail, a full reference plugin and a second, smaller one with a different shape.
 ---
 
-## Three plugins, three shapes
+## Two plugins, two shapes
 
-| | `fliks.download` | `fliks.notify` | `fliks.webhooks` |
-|---|---|---|---|
-| Tier | `process` | `process` | `data` |
-| Ships code | Yes | Yes | No |
-| Own database schema | Yes | No | No |
-| Retries on delivery failure | n/a (no outbound deliveries of its own) | Yes, bounded backoff | No, at-most-once |
-| Repository | [`fliks-app/fk-plugin-download`](https://github.com/fliks-app/fk-plugin-download) | [`fliks-app/fk-plugin-notify`](https://github.com/fliks-app/fk-plugin-notify) | Lives inside the catalog itself (`plugins/fliks.webhooks/`), no separate repo |
-| Publish status | Published, current | **Not yet published** (see the callout below) | Published, but stale (see the callout below) |
-
-> [!WARNING]
-> Both `fliks.notify` and the published `fliks.webhooks` currently declare `pluginApi: 0`, which
-> today's core no longer supports (`SUPPORTED_PLUGIN_API_VERSIONS` is just `[1]`), and a `fliks`
-> range of `>=2.0.0 <3.0.0`. Neither would install as-is against a current Fliks. Read them for the **pattern**, retrying delivery on one
-> side, zero-code delivery on the other, not for their literal version numbers; a plugin built from
-> these patterns today should declare `pluginApi: 1` and a `fliks` range against a current major,
-> exactly as `fliks.download` does.
+| | `fliks.download` | `fliks.notify` |
+|---|---|---|
+| Tier | `process` | `process` |
+| Ships code | Yes | Yes |
+| Own database schema | Yes | No |
+| Retries on delivery failure | n/a (no outbound deliveries of its own) | Yes, bounded backoff |
+| Repository | [`fliks-app/fk-plugin-download`](https://github.com/fliks-app/fk-plugin-download) | [`fliks-app/fk-plugin-notify`](https://github.com/fliks-app/fk-plugin-notify) |
+| Publish status | Published, current | **Not yet published** |
 
 ## `fliks.download`: the full reference process plugin
 
@@ -74,8 +66,9 @@ Postgres service container and creates stand-in `coreRefs` tables before running
 
 Where `fliks.download` calls host methods across almost every group, `fliks.notify` does one
 narrow thing well: forward Fliks's own domain events to an admin-configured HTTPS endpoint, with
-retries. It's a smaller, more approachable second reference for the parts of the runtime contract
-`fliks.download` doesn't exercise as clearly:
+retries. It declares `pluginApi: 1` and a `fliks` range of `>=4.0.0 <5.0.0`. It's a smaller, more
+approachable second reference for the parts of the runtime contract `fliks.download` doesn't
+exercise as clearly:
 
 - **A bounded, in-memory retry queue.** Up to 200 queued items, oldest dropped first if it fills;
   up to 6 delivery attempts per item, on a fixed backoff ladder (1s, 5s, 15s, 30s, 60s, 120s), so a
@@ -95,22 +88,12 @@ retries. It's a smaller, more approachable second reference for the parts of the
 
 Source: [github.com/fliks-app/fk-plugin-notify](https://github.com/fliks-app/fk-plugin-notify).
 
-## `fliks.webhooks`: the same job, zero code
-
-The `data`-tier alternative to `fliks.notify`: one settings field (an HTTPS endpoint URL), one
-event subscription referencing it, and nothing else, no `plugin.js`, no process, no retries. Its
-own README states its trade-off plainly: one attempt per event, no queue, no retry, if that's not
-enough, install the process-tier plugin instead. This is the manifest shape reproduced in full in
-[Data plugins](/plugins/data-plugins#a-worked-example).
-
-Because a `data` plugin has no repository of its own (there's no code to hold one), it lives
-directly inside the catalog at `plugins/fliks.webhooks/` rather than as a separate GitHub project.
-
 ## Reading order
 
 If you're building your first `process` plugin, start with `fliks.notify`: it's small enough to
 read start to finish in one sitting and still demonstrates a real retry queue and a real SSRF
 guard. Move to `fliks.download` once you need database access, a wider set of host methods, or a
 non-trivial settings UI (`providers` and `table` pages, bulk actions, a release picker). If your
-plugin turns out not to need to run any code at all, `fliks.webhooks`'s manifest is the shortest
-possible example of exactly that.
+plugin turns out not to need to run any code at all, see the full manifest in
+[Data plugins](/plugins/data-plugins#a-worked-example) for the shortest possible example of exactly
+that.

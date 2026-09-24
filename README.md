@@ -40,6 +40,13 @@ Supported in the body:
   automatically.
 - Images: `![alt](/img/my-screenshot.webp)`, referencing a file at `public/img/my-screenshot.webp`.
 
+Every `##`/`###` heading gets an anchor id derived from its text: lowercased, trimmed, every
+character that isn't a letter, digit, space, `-` or `_` dropped, remaining spaces turned into `-`,
+repeated `-` collapsed, and a leading/trailing `-` stripped (an empty result falls back to
+`section`). A second heading on the same page that slugifies to the same id gets `-1`, `-2`, ...
+appended, in order. Link to a heading with that id (`[Volumes](/install/docker#volumes)`); if you
+rename a heading, its id changes too, so update every link that points at the old one.
+
 The build fails with a file-and-line message if a page is missing its `title`, a `_meta.json` is
 missing or malformed, an internal link points at a page or heading that doesn't exist, or an image
 has no matching file. Fix the listed pages and rebuild.

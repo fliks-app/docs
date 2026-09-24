@@ -111,8 +111,8 @@ say.
 
 ## Real plugins, for reference
 
-[Examples](/plugins/examples) walks through three shipping plugins in detail: `fliks.download` (a
-full `process` plugin: indexers, download clients, the acquisition pipeline), a second `process`
-plugin (`fk-plugin-notify`) doing webhook delivery with retries, and `fliks.webhooks`, the `data`-tier plugin that does the
-same job with zero code and no retries. Reading that chapter alongside this one is the fastest way
-to see the tiers side by side.
+[Examples](/plugins/examples) walks through two shipping `process` plugins in detail:
+`fliks.download` (indexers, download clients, the acquisition pipeline) and `fk-plugin-notify`
+(webhook delivery with retries). [Data plugins](/plugins/data-plugins#a-worked-example) has a full
+worked manifest for the `data` tier. Reading them together is the fastest way to see the tiers side
+by side.

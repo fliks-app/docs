@@ -56,9 +56,9 @@ Uninstalling the app through Windows' own uninstaller leaves this data in place;
 is removed from `%LOCALAPPDATA%\Programs\Fliks`.
 
 > [!NOTE]
-> In-app [backups](/administration/backups) need `pg_dump`, which the app doesn't put on the
-> server's `PATH`. They only work if a PostgreSQL client of the same major version (or newer) is
-> installed and on the system `PATH`.
+> On versions up to 4.1.x, in-app [backups](/administration/backups) need `pg_dump`, which the app
+> doesn't put on the server's `PATH`. They only work if a PostgreSQL client of the same major
+> version (or newer) is installed and on the system `PATH`.
 
 ## Clean reset
 

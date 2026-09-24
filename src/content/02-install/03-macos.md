@@ -45,9 +45,9 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 | `/tmp/transcode/` | The HLS transcode cache, ephemeral. |
 
 > [!NOTE]
-> In-app [backups](/administration/backups) need `pg_dump`, which the app doesn't bundle. They
-> only work if a PostgreSQL client of the same major version (or newer) is installed in
-> `/opt/homebrew/bin` or `/usr/local/bin`.
+> On versions up to 4.1.x, in-app [backups](/administration/backups) need `pg_dump`, which the app
+> doesn't bundle. They only work if a PostgreSQL client of the same major version (or newer) is
+> installed in `/opt/homebrew/bin` or `/usr/local/bin`.
 
 ## Clean reset
 

@@ -37,9 +37,10 @@ dead disk doesn't take the backups with it.
 
 > [!NOTE]
 > Backups need the PostgreSQL client tools (`pg_dump` and `psql`). The Docker image includes
-> them. The Windows and macOS apps don't put a `pg_dump` on the server's `PATH`, so backups there
-> only work if you install a matching PostgreSQL client yourself; a from-source install needs both
-> tools on `PATH`. Check that **Create a backup** works before relying on it; see
+> them. On versions up to 4.1.x, the Windows and macOS apps don't put a `pg_dump` on the server's
+> `PATH`, so backups there only work if you install a matching PostgreSQL client yourself; a
+> from-source install needs both tools on `PATH`. Check that **Create a backup** works before
+> relying on it; see
 > [Backup and restore failures](/administration/logs-and-troubleshooting#backup-and-restore-failures).
 
 ## Managing them by hand

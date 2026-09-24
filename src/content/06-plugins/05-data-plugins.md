@@ -50,71 +50,71 @@ instead; see [Process plugins](/plugins/process-plugins) and the retrying delive
 
 ## A worked example
 
-This is the same shape as the real webhook-notification plugin that ships in the official catalog,
-with current field values (`pluginApi: 1`, a `fliks` range against a current core major) rather than
-its published, now-outdated ones:
+A full manifest for a `data` plugin that pings an admin-configured HTTPS endpoint whenever a
+library scan finishes or a title is removed, so an external status page can reflect catalog
+freshness without polling Fliks:
 
 ```json
 {
-  "id": "acme.webhooks",
+  "id": "acme.library-status",
   "pluginApi": 1,
-  "name": "Webhook notifications",
+  "name": "Library status page",
   "version": "1.0.0",
   "fliks": ">=4.0.0 <5.0.0",
   "author": "you",
-  "description": "Posts a JSON payload to an admin-configured HTTPS endpoint when a title finishes importing or a request is approved.",
+  "description": "Posts a JSON payload to an admin-configured HTTPS endpoint when a library scan finishes or a title is removed.",
   "license": "MIT",
   "logo": "logo.svg",
   "kind": "data",
   "events": [
-    { "event": "media.imported", "webhook": "setting:endpoint_url" },
-    { "event": "request.approved", "webhook": "setting:endpoint_url" }
+    { "event": "library.scan.completed", "webhook": "setting:endpoint_url" },
+    { "event": "media.removed", "webhook": "setting:endpoint_url" }
   ],
   "ui": {
     "contributions": [
       {
-        "id": "acme-webhooks.settings.general",
+        "id": "acme-library-status.settings.general",
         "slot": "settings.page",
         "weight": 100,
-        "labelKey": "acme.webhooks.config.title",
+        "labelKey": "acme.library-status.config.title",
         "icon": "webhook",
-        "action": { "kind": "route", "path": "/admin/settings/plugins/acme.webhooks/general" }
+        "action": { "kind": "route", "path": "/admin/settings/plugins/acme.library-status/general" }
       }
     ],
     "configPages": [
       {
         "id": "general",
-        "labelKey": "acme.webhooks.config.title",
+        "labelKey": "acme.library-status.config.title",
         "icon": "webhook",
         "fields": [
           {
             "key": "endpoint_url",
             "type": "url",
-            "labelKey": "acme.webhooks.config.endpoint_url",
-            "hint": "acme.webhooks.config.endpoint_url_hint",
+            "labelKey": "acme.library-status.config.endpoint_url",
+            "hint": "acme.library-status.config.endpoint_url_hint",
             "required": true
           }
         ],
         "actions": [
-          { "id": "test-delivery", "labelKey": "acme.webhooks.config.test", "actionId": "events.test-delivery" }
+          { "id": "test-delivery", "labelKey": "acme.library-status.config.test", "actionId": "events.test-delivery" }
         ]
       }
     ]
   },
   "i18n": {
     "en": {
-      "acme.webhooks.config.title": "Webhook notifications",
-      "acme.webhooks.config.endpoint_url": "Endpoint URL",
-      "acme.webhooks.config.endpoint_url_hint": "Fliks POSTs the event here over https. Nothing is sent while this is empty.",
-      "acme.webhooks.config.test": "Send a test event"
+      "acme.library-status.config.title": "Library status page",
+      "acme.library-status.config.endpoint_url": "Endpoint URL",
+      "acme.library-status.config.endpoint_url_hint": "Fliks POSTs the event here over https. Nothing is sent while this is empty.",
+      "acme.library-status.config.test": "Send a test event"
     }
   }
 }
 ```
 
-Its i18n keys sit under `acme.`, not `webhooks.` as in the official plugin: an i18n root is claimed
-by the first plugin that uses it, so reusing the official plugin's root would fail with
-`i18n-namespace-conflict` on a server that has it installed.
+Its i18n keys all sit under `acme.`, the plugin's own root: reusing a root another installed plugin
+already claims fails with `i18n-namespace-conflict`, so pick something distinctive rather than a
+generic vendor-style prefix.
 
 The `actionId: "events.test-delivery"` button is one of the small set of buttons core itself
 implements on a `form` page: since a `data` plugin executes no code of its own, this is the only way
