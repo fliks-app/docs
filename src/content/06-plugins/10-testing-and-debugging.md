@@ -1,6 +1,6 @@
 ---
 title: Testing and debugging
-description: Unit tests with no core, a real end-to-end harness, database tests, verifying against core's own archive inspector, and the common install-time errors with their fixes.
+description: Unit tests without core, an end-to-end harness, database tests, checks against core's archive inspector, and common install errors.
 ---
 
 ## Unit tests need no database and no running core

@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
-import { DomSanitizer, Meta } from '@angular/platform-browser';
-import { Component, ElementRef, afterRenderEffect, computed, effect, inject, input, viewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Component, ElementRef, afterRenderEffect, computed, inject, input, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { wireDocContent } from '../../core/content-interactions';
+import { setSeo, SITE_URL } from '../../core/seo';
 import { Toc } from '../../layout/toc/toc';
 import { PAGES_BY_URL } from '../../../generated/manifest';
 
@@ -33,8 +34,25 @@ export class DocPage {
   );
 
   constructor() {
-    const metaTags = inject(Meta);
-    effect(() => metaTags.updateTag({ name: 'description', content: this.meta()?.description ?? '' }));
+    setSeo(() => {
+      const m = this.meta();
+      if (!m) return null;
+      const path = `${m.url.replace(/^\//, '')}/`;
+      return {
+        path,
+        title: `${m.title} | Fliks docs`,
+        description: m.description,
+        type: 'article',
+        jsonLd: {
+          '@context': 'https://schema.org',
+          '@type': 'TechArticle',
+          headline: m.title,
+          description: m.description,
+          url: `${SITE_URL}${path}`,
+          isPartOf: { '@type': 'WebSite', name: 'Fliks docs', url: SITE_URL },
+        },
+      };
+    });
     afterRenderEffect((onCleanup) => {
       this.safeHtml();
       const el = this.container()?.nativeElement;
