@@ -5,8 +5,9 @@ description: What a Fliks plugin can do, the two tiers it can ship as, and how t
 
 ## What a plugin is
 
-A Fliks plugin is a package described by one file, `plugin.json` (the **manifest**), that core
-reads, verifies and registers. A manifest can be all there is (a **data** plugin) or it can carry a
+A Fliks plugin is a package described by one file, `plugin.json` (the **manifest**), that
+**core** (the Fliks server itself) reads, verifies and registers. It is installed as a
+`.fkplugin` archive, a ZIP holding the manifest, a logo and, for a `process` plugin, its code. A manifest can be all there is (a **data** plugin) or it can carry a
 bundled program core spawns as its own process (a **process** plugin). Either way, a plugin never
 ships Angular code and never gets a database connection or a filesystem path outside what core
 hands it explicitly. Everything a plugin can reach, from the methods it can call on core to the
@@ -108,10 +109,10 @@ not a dead end, it's just a core change rather than something a plugin can reach
 See the closing section of [the manifest reference](/plugins/manifest) for what a proposal needs to
 say.
 
-## Two real plugins, for reference
+## Real plugins, for reference
 
 [Examples](/plugins/examples) walks through three shipping plugins in detail: `fliks.download` (a
 full `process` plugin: indexers, download clients, the acquisition pipeline), a second `process`
-plugin doing retrying webhook delivery, and `fliks.webhooks`, the `data`-tier plugin that does the
+plugin (`fk-plugin-notify`) doing webhook delivery with retries, and `fliks.webhooks`, the `data`-tier plugin that does the
 same job with zero code and no retries. Reading that chapter alongside this one is the fastest way
 to see the tiers side by side.

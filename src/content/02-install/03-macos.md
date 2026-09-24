@@ -12,15 +12,16 @@ FFmpeg and Node.js: there is nothing else to install. Requires Apple Silicon and
 
 ## Install
 
-Download the `.dmg` from the [latest release](https://github.com/fliks-app/fliks/releases) and
-drag Fliks to Applications. Official builds are signed with a Developer ID certificate and
-notarized, so Gatekeeper opens them without a warning.
+Download the `Fliks-Server-<version>-arm64.dmg` asset from the
+[latest release](https://github.com/fliks-app/fliks/releases), open it and drag **Fliks Server**
+to Applications. A film icon appears in the menu bar once it runs. Official builds are signed
+with a Developer ID certificate and notarized, so Gatekeeper opens them without a warning.
 
 ## What happens on launch
 
 1. PostgreSQL 18 initializes on first run and starts on port `5433`.
 2. Node.js starts the backend on port `4848`.
-3. Your browser opens to `http://localhost:4848` for first-run setup.
+3. On the very first launch only, your browser opens `http://localhost:4848`.
 4. VideoToolbox hardware acceleration is auto-detected.
 
 ## Menu bar
@@ -30,7 +31,7 @@ notarized, so Gatekeeper opens them without a warning.
 | Open Fliks | Opens the web UI in your default browser. |
 | Start at Login | Toggles auto-start on macOS login. |
 | Restart Server | Stops and restarts PostgreSQL and Node.js. |
-| View Logs | Opens the log directory in Finder. |
+| View Logs... | Opens the log directory in Finder. |
 | Quit Fliks | Gracefully shuts down every process. |
 
 ## Data locations
@@ -39,9 +40,14 @@ notarized, so Gatekeeper opens them without a warning.
 |---|---|
 | `~/Library/Application Support/Fliks/postgresql/` | The database cluster. |
 | `~/Library/Application Support/Fliks/conf/` | The auto-generated JWT secret. |
-| `~/Library/Application Support/Fliks/data/images/` | Cached posters and fanart. |
-| `~/Library/Application Support/Fliks/logs/` | PostgreSQL logs. |
+| `~/Library/Application Support/Fliks/data/` | Backend working directory: artwork, avatars, backups. |
+| `~/Library/Application Support/Fliks/logs/` | Backend and PostgreSQL logs. |
 | `/tmp/transcode/` | The HLS transcode cache, ephemeral. |
+
+> [!NOTE]
+> In-app [backups](/administration/backups) need `pg_dump`, which the app doesn't bundle. They
+> only work if a PostgreSQL client of the same major version (or newer) is installed in
+> `/opt/homebrew/bin` or `/usr/local/bin`.
 
 ## Clean reset
 

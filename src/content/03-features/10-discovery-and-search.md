@@ -7,8 +7,8 @@ description: Home page rows, search across and outside your library, a release c
 
 ![The Fliks home page with its Continue Watching and Recently Added rows](/img/home.webp)
 
-The home page is built from rows you can show, hide and reorder yourself, from **Settings > Home**
-(this is remembered per device, not per account):
+The home page is built from rows you can show, hide and reorder yourself, from **App settings >
+Home** (this is remembered per device, not per account):
 
 | Row | What it shows |
 |---|---|
@@ -21,18 +21,21 @@ The home page is built from rows you can show, hide and reorder yourself, from *
 | Recent playlists | Your own and shared playlists |
 | Coming soon | What's releasing or airing soon, from the calendar below |
 
-A row for recent requests can also be turned on if you use [Requests](/features/requests), and
-you can add a dedicated "Recently added" row per individual library instead of one combined row.
+If you're allowed to make [Requests](/features/requests), a **Recent requests** row is added too,
+shown by default above Recently added (not on TVs). Each library also gets its own "Recently added"
+row, hidden by default, that you can turn on alongside the combined one.
 
 ## Searching
 
 ![Browsing trending and popular titles from the search page](/img/discover.webp)
 
-Search has two tabs: titles, and people (hidden if you've turned off sharing). With no query typed
-yet, it shows suggestions, trending and popular titles instead of an empty page. Turn on **Search
-outside the library** to also search TMDB and TVDB directly, so a title you don't have yet still
-turns up, ready to add or request. **Filters** narrow the results by sort order, genre, minimum
-rating and release year.
+Search has two tabs: **Videos**, and **Users** for finding other members by name (hidden on TVs
+and if you've turned off sharing). Turn on **Search outside the library** to also search your
+metadata provider (TMDB or TVDB, whichever is preferred, falling back to the other when it finds
+nothing), so a title you don't have yet still turns up, ready to add or request. With no query
+typed yet, the page shows suggestions from your library; with external search on, it adds trending
+and popular titles. **Filters** narrow the results by sort order, genre, minimum rating and release
+year (genres need external search on).
 
 ## Calendar
 
@@ -43,8 +46,8 @@ categories off if you'd rather not see it.
 
 ## Spoiler protection
 
-**Account > Spoilers** lets you avoid seeing what you haven't gotten to yet, with one master switch
-and three things it can hide once it's on:
+**Account settings > Spoilers** lets you avoid seeing what you haven't gotten to yet, with one
+master switch (**Hide spoiler information**) and three things it can hide once it's on:
 
 | Setting | What it hides |
 |---|---|
@@ -61,9 +64,9 @@ stored on your profile rather than the device you're using.
 The **Recommendations** row on the home page (and the **Suggestions** view inside a library) is
 built from what you've actually watched, not a fixed list: it looks at the genres of the titles
 you've recently finished, weighted toward the most recent ones, and surfaces library titles you
-haven't started yet that share those genres. Each suggestion says which of your recent titles it's
-based on. Don't want to see something suggested again? Dismiss it, and it stays hidden until you
-reset your dismissed list from **Account > Recommendations**.
+haven't started yet that share those genres. Don't want to see something suggested again? Dismiss
+it from the home page row, and it stays hidden until you reset your dismissed list from **Account
+settings > Recommendations**.
 
 > [!NOTE]
 > This only draws on genres, and only starts producing results once you've finished at least one

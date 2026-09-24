@@ -12,7 +12,7 @@ baked in. A separate PostgreSQL container holds the database. It runs on `linux/
 
 ## Prerequisites
 
-- Docker and Docker Compose.
+- Docker with the Compose plugin (the `docker compose` command).
 - A folder with your video files, reachable from wherever Docker runs.
 
 ## Set it up
@@ -26,10 +26,12 @@ mv docker-compose.example.yml docker-compose.yml
 
 Open `docker-compose.yml` and set three things:
 
-1. `POSTGRES_PASSWORD` and `DB_PASSWORD`: the same real password in both places.
+1. `POSTGRES_PASSWORD` and `DB_PASSWORD`: replace `changeme` with the same real password in both
+   places.
 2. The media volume: `/path/to/your/media:/medias` on the left of the colon is your folder, the
    right side (`/medias`) is what you'll type when adding a library in the UI.
-3. `PORT`: only if `4848` is already taken on the host.
+3. The host port, only if `4848` is already taken: change the left side of `'4848:4848'` under
+   `ports:` (for example `'8080:4848'`). Leave `PORT` alone; it's the port inside the container.
 
 Then start it:
 
@@ -46,11 +48,11 @@ docker compose up -d
 
 | Volume | Contents |
 |---|---|
-| `/medias` | Your library root(s), mounted read-only is fine unless you want Fliks to write there. |
+| `/medias` | Your library root(s). Read-only is enough to browse and play; downloads, deleting media and saving subtitles next to a video need write access. |
 | `/downloads` | Only needed if you install the download plugin; use the same path here and in your download client. |
 | `/app/conf` | The JWT signing key. Lose it and every session is invalidated. |
-| `/app/data` | Artwork, uploaded avatars, and database backups. Not disposable: avatars can't be re-fetched. |
-| `/app/transcode` | The HLS segment cache. Ephemeral, safe to drop. |
+| `/app/data` | Artwork, uploaded avatars, database backups, and a regenerable `cache/` subfolder. Not disposable: avatars can't be re-fetched. |
+| `/app/transcode` | The HLS segment cache. Regenerable, safe to wipe. Paired with `FLIKS_TRANSCODE_DIR`; drop both and the cache lands in the container's `/tmp`. |
 
 ## Running as a specific user
 
@@ -68,18 +70,11 @@ services:
 
 ## Chromecast on a bridge network
 
-mDNS (how Chromecast finds a cast target on the network) doesn't cross Docker's default bridge
-network. If you cast to a Chromecast, run the container on the host network instead:
-
-```yaml
-services:
-  fliks:
-    network_mode: host
-    # remove `ports:` when using network_mode: host
-```
-
-With `network_mode: host`, set `DB_HOST` to `127.0.0.1` (or wherever Postgres actually listens)
-since the container no longer resolves the `postgres` service name through Compose's network.
+The default bridge network works for casting. The device you cast from (a browser, the phone
+app, the desktop app) finds the Chromecast itself; the server takes no part in discovery. What
+the Chromecast does need is to reach the server directly, at the address Fliks hands it: set
+**Public address** under **Settings > General** if that address isn't the one the Chromecast
+can reach (see [Reverse proxy](/install/reverse-proxy#tell-fliks-its-public-address)).
 
 ## Memory on a small box
 
@@ -96,8 +91,9 @@ services:
 ## Hardware transcoding
 
 See [Hardware acceleration](/install/hardware-acceleration) for the devices and environment
-variables each vendor needs (Intel QSV/VAAPI, NVIDIA NVENC, AMD). The Intel and NVIDIA stacks are
-`amd64`-only; on `arm64` (a Raspberry Pi 5, an ARM NAS) transcodes fall back to CPU.
+variables each vendor needs (Intel QSV/VAAPI, NVIDIA NVENC, AMD through VAAPI). The Intel and
+NVIDIA stacks are `amd64`-only; on `arm64` (a Raspberry Pi 5, an ARM NAS) transcodes fall back
+to CPU.
 
 ## First run
 

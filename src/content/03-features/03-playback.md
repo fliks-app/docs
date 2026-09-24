@@ -12,7 +12,8 @@ seek, or finish something, so switching devices mid-scene loses at most a few se
 
 - Under about 10 seconds of progress, a title still shows up under Continue Watching but resumes
   from the start rather than at that tiny offset.
-- Under about 5 seconds, it doesn't count as watched at all, and won't appear in your history.
+- Under about 5 seconds, it doesn't count as watched at all, and won't appear in your history or
+  under Continue Watching.
 - A title is marked as finished once you reach roughly 90% of it, or come within 30 seconds of the
   end, whichever happens first.
 - If you were offline when you finished something, the position is kept on the device and sent to
@@ -20,19 +21,25 @@ seek, or finish something, so switching devices mid-scene loses at most a few se
 
 ## Track selection
 
-Every embedded audio track, and every embedded or external subtitle, can be switched mid-playback
-without interrupting the stream. Your choice is remembered per device (not tied to your account),
-and it applies to the whole show, not just the one episode you were on, so picking a language once
-carries across the rest of a series.
+Every embedded audio track, and every embedded or external text subtitle, can be switched
+mid-playback without interrupting the stream. An image-based subtitle (PGS, VobSub) has to be burned
+into the picture, which restarts the stream as a transcode, and these are hidden from the picker by
+default (see [Subtitles](/features/subtitles#subtitle-appearance)). Your choice is remembered per
+device (not tied to your account), and it applies to the whole show, not just the one episode you
+were on, so picking a language once carries across the rest of a series.
 
-**Settings > Playback > Player** controls how the *default* track is chosen the first time you open
-something new:
+**App settings > Playback** (in your user menu) controls how the *default* track is chosen the
+first time you open something new:
 
 | Setting | Options | Default |
 |---|---|---|
 | Preferred audio language | Any language | None |
-| Audio selection strategy | Preferred language, the title's original language, the file's own default track, or the first track | File's own default track |
+| Audio selection | Preferred language, title's original language, file's default track, or first audio track | File's default track |
 | Remember audio selections | On or off | On |
+
+When the chosen rule finds no match, the first audio track plays. The same page also has **Disable
+HDR** (only on a device that reports HDR support; forces an SDR conversion when HDR looks washed
+out) and **Show low-bandwidth qualities** (see [Streaming and transcoding](/features/streaming-and-transcoding#picking-a-quality)).
 
 Subtitle defaults, and their appearance, are covered in [Subtitles](/features/subtitles#subtitle-appearance).
 
@@ -47,15 +54,18 @@ one:
 - A **Next episode** button appears once playback enters the outro, if there's another episode
   queued up after this one.
 
-Turn on **Skip intro automatically** (in the same Player settings) and the intro is skipped for you
+Turn on **Skip intro automatically** (in **App settings > Playback**) and the intro is skipped for you
 without needing to press anything, once per episode. Turn on **Automatically play next episode**
 (on by default) and the next one starts on its own when this one ends; inside a playlist, the
 playlist's own autoplay setting decides instead.
 
 > [!NOTE]
-> Detection runs automatically after a series is imported, comparing the start (and separately, the
-> end) of every episode in a season to find what repeats. It can also be re-run by hand from a
-> title's **Analyze** dialog if a season's markers look wrong, for example after replacing a file.
+> Detection runs automatically after a series is imported (**Detect intros / credits when importing
+> series** in **Settings > General**, on by default), fingerprinting the audio at the start (and
+> separately, the end) of every episode in a season to find what repeats; a file with a chapter
+> named like an intro is used directly. It can also be re-run by hand from a title's **Analyze**
+> dialog (**Recompute intros / outros**) if a season's markers look wrong, for example after
+> replacing a file.
 
 ## Chapters
 
@@ -68,8 +78,10 @@ shows none.
 
 Dragging the seek bar shows a filmstrip of small preview frames rather than a plain progress bar,
 so you can see roughly where you'll land before letting go. These are generated once, right after a
-file is imported (or later, on demand, from the **Analyze** dialog), not on the fly while you
-scrub.
+file is imported (**Generate seek thumbnails when importing** in **Settings > General**, on by
+default; turn it off on a low-power server), or later on demand from the **Analyze** dialog
+(**Regenerate sprites**) or **Settings > System** (**Generate missing sprites**), not on the fly
+while you scrub.
 
 ## See also
 

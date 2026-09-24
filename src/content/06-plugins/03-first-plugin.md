@@ -5,14 +5,28 @@ description: Build, package and install a minimal process plugin from zero, and 
 
 ## Prerequisites
 
-- **Node.js 24** (the plugin scaffold targets `node24` as its bundle target; an older Node can
-  still build it, but test against 24 if you can).
-- **npm**.
-- A **running local Fliks instance** you can reach and log into as an admin. See
+A few words used on this page:
+
+- **Core** is the Fliks server itself, as opposed to a plugin.
+- A **`process` plugin** is a plugin that ships JavaScript code, which core starts as a separate
+  child process (the other tier, `data`, ships no code; see [Overview](/plugins/overview)).
+- The **manifest** is `plugin.json`, the file that declares what the plugin is and what it may do.
+- The **archive** is the `.fkplugin` file you install: a ZIP holding the manifest, the code and a
+  logo.
+
+What you need installed:
+
+- **Node.js 24** and the **npm** that comes with it. Core runs plugins on Node 24 and the scaffold
+  bundles for `node24`. Check with `node --version`.
+- **git**, to clone the core repository. The scaffold and the packaging tool both live there.
+- A **POSIX shell** (bash or zsh). The commands and the scaffold's `package` script use `cp`; on
+  Windows, run them from Git Bash or WSL.
+- A code editor with TypeScript support (VS Code works out of the box). You don't need to install
+  TypeScript or a bundler globally: the scaffold brings `typescript` and
+  [esbuild](https://esbuild.github.io/) as local dependencies.
+- A **running Fliks 4.x instance** you can log into as an admin. See
   [Dev environment](/development/dev-environment) if you don't have one yet, or
   [Docker](/install/docker) for a packaged one.
-- No bundler expertise needed. The scaffold uses [esbuild](https://esbuild.github.io/) and the
-  commands below are copy-paste.
 
 > [!IMPORTANT]
 > A `process` plugin ships as **one bundled JavaScript file**. There is no `node_modules` inside a
@@ -21,12 +35,43 @@ description: Build, package and install a minimal process plugin from zero, and 
 
 ## Step 1: get the scaffold
 
-The scaffold lives in the core Fliks repository at `examples/plugin-scaffold/`. Copy that directory
-out to wherever you keep your own plugin, then rename its manifest's `id` before you do anything
-else, `example.scaffold` is a placeholder.
+The scaffold lives in the core repository at `examples/plugin-scaffold/`. Its scripts reach into
+the core checkout for two things: the contract types and the packaging tool. So keep the core
+checkout **next to** your plugin, in the same parent folder:
 
-The scaffold has five files. Here they are in full, so you can create them by hand if you'd rather
-not clone the whole core repo just for this.
+```text
+fliks-work/
+  fliks/        the core repository
+  my-plugin/    your copy of the scaffold
+```
+
+Run these once:
+
+```bash
+mkdir fliks-work && cd fliks-work
+git clone https://github.com/fliks-app/fliks.git
+cd fliks/backend && npm ci --ignore-scripts && cd ../..
+cp -r fliks/examples/plugin-scaffold my-plugin
+cd my-plugin
+```
+
+`npm ci` in `fliks/backend` installs what the packaging tool needs to run (`ts-node` and a few
+libraries). `--ignore-scripts` skips building native modules the packaging tool never loads. If you
+already set up the [dev environment](/development/dev-environment) in that checkout, skip that
+line.
+
+Then make two edits in `my-plugin`:
+
+1. **`package.json`**: the scaffold's paths assume it still sits at `examples/plugin-scaffold/`
+   inside the core repository. Replace every `../../backend` with `../fliks/backend` (three
+   places). The result is shown below.
+2. **`plugin.json`**: set `fliks` to `">=4.0.0 <5.0.0"`. The scaffold ships `">=3.0.0 <4.0.0"`,
+   which a 4.x core refuses (the plugin row shows **Failed** with `incompatible-fliks`).
+
+Keep the id `example.scaffold` while you follow this page, since Step 7 uses it in a path. Before you
+share a plugin, give it an id of your own (see [the manifest reference](/plugins/manifest#base-fields-both-tiers)).
+
+Here are the files after those edits.
 
 `package.json`:
 
@@ -38,11 +83,11 @@ not clone the whole core repo just for this.
   "license": "MIT",
   "scripts": {
     "build": "esbuild src/plugin.ts --bundle --platform=node --target=node24 --outfile=dist/plugin.js",
-    "package": "npm run build && cp plugin.json logo.svg dist/ && node ../../backend/node_modules/.bin/ts-node ../../backend/scripts/package-plugin.ts dist -o scaffold.fkplugin",
+    "package": "npm run build && cp plugin.json logo.svg dist/ && node ../fliks/backend/node_modules/.bin/ts-node ../fliks/backend/scripts/package-plugin.ts dist -o scaffold.fkplugin",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@fliks/plugin-contract": "file:../../backend/src/common/plugin-contract"
+    "@fliks/plugin-contract": "file:../fliks/backend/src/common/plugin-contract"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
@@ -71,7 +116,8 @@ not clone the whole core repo just for this.
 ```
 
 `plugin.json`, the manifest. Every field here is explained in full in
-[the manifest reference](/plugins/manifest); this is the minimum a working `process` manifest needs:
+[the manifest reference](/plugins/manifest); this is the minimum a working `process` manifest needs.
+Leave `files` empty: the packaging tool fills in the file hashes.
 
 ```json
 {
@@ -79,7 +125,7 @@ not clone the whole core repo just for this.
   "pluginApi": 1,
   "name": "Scaffold",
   "version": "0.1.0",
-  "fliks": ">=3.0.0 <4.0.0",
+  "fliks": ">=4.0.0 <5.0.0",
   "author": "you",
   "description": "Starting point for a Fliks process plugin",
   "license": "MIT",
@@ -101,8 +147,9 @@ not clone the whole core repo just for this.
 }
 ```
 
-`logo.svg` can be any valid SVG under 64 KiB with an `<svg>` root element and no `<script>` tag or
-event-handler attribute; core sniffs the bytes and refuses anything else.
+`logo.svg` can be any SVG under 64 KiB with an `<svg>` root element and no `<script>` tag,
+event-handler attribute or `javascript:` URI; core sniffs the bytes and refuses anything else. A
+`logo.png` works too, if `logo` names it.
 
 `src/plugin.ts`, the entry point. This implements all 7 methods core calls on a running plugin
 (`hello`, `health`, `job`, `http`, `event`, `config`, `shutdown`), dials both sockets core listens
@@ -226,42 +273,51 @@ one route, and reads its own settings.
 
 ## Step 2: get the contract types
 
-`@fliks/plugin-contract` is types and protocol constants only, erased at build time, never shipped
-inside your bundle. Two ways to get it:
+`@fliks/plugin-contract` holds the TypeScript types and protocol constants of the plugin API. Types
+are erased at build time and the few constants get bundled into `plugin.js`, so nothing from it is
+installed alongside your plugin.
 
-**From a core release** (works without a local Fliks checkout):
+With the layout from Step 1 you already have it: the `file:../fliks/backend/src/common/plugin-contract`
+dependency links it from your core checkout, and `npm install` in the next step sets up that link.
+Nothing to do here.
+
+If you later move your plugin away from a core checkout, install the copy attached to each core
+release instead, picking the release that matches the core you target, plus `semver`, which the
+contract's type-check needs:
 
 ```bash
-npm i -D https://github.com/fliks-app/fliks/releases/download/v3.0.0/fliks-plugin-contract-3.0.0.tgz
+npm i -D https://github.com/fliks-app/fliks/releases/download/v4.1.1/fliks-plugin-contract-4.1.1.tgz semver @types/semver
 ```
 
-**A path mapping**, if you keep a Fliks checkout next to your plugin (this is what the scaffold's
-own `package.json` above does, via `file:../../backend/src/common/plugin-contract`):
-
-```json
-{ "compilerOptions": { "paths": {
-  "@fliks/plugin-contract": ["../fliks/backend/src/common/plugin-contract/index.ts"],
-  "@fliks/plugin-contract/*": ["../fliks/backend/src/common/plugin-contract/*.ts"]
-} } }
-```
+Remove the `file:` entry from `dependencies` when you do. The `package` script still runs core's
+packaging tool from a checkout; [Packaging and signing](/plugins/packaging-and-signing) covers
+what an archive must contain if you build it yourself.
 
 ## Step 3: build and package
 
+From `my-plugin`:
+
 ```bash
 npm install
-npm run typecheck        # tsc --noEmit
-npm run package           # bundle -> dist/, then core's packaging tool -> scaffold.fkplugin
+npm run typecheck        # tsc --noEmit: type errors, no output files
+npm run package          # bundle -> dist/, then core's packaging tool -> scaffold.fkplugin
 ```
 
 Expected output from `npm run package`, roughly:
 
 ```text
 > esbuild src/plugin.ts --bundle --platform=node --target=node24 --outfile=dist/plugin.js
-  dist/plugin.js  4.1kb
 
-wrote /path/to/scaffold.fkplugin (1942 bytes) for example.scaffold@0.1.0
+  dist/plugin.js  5.1kb
+
+Done in 11ms
+wrote /path/to/fliks-work/my-plugin/scaffold.fkplugin (6628 bytes) for example.scaffold@0.1.0
 unsigned: installable only on a core whose "allow unsigned plugins" plugin setting is on
 ```
+
+The `wrote ...` line is the one that matters: `scaffold.fkplugin` now sits in `my-plugin`. If the
+command stops with `package-plugin: ...` instead, the message names the field or file it refused.
+A `Cannot find module` error for `ts-node` means `npm ci` has not run in `fliks/backend`.
 
 That packaging tool (`backend/scripts/package-plugin.ts` in the core repo) always produces an
 **unsigned** archive: it recomputes every file hash itself and refuses early on anything the
@@ -281,29 +337,45 @@ Back on **Settings > Plugins**, open the **⋮** menu again and choose **Import 
 `scaffold.fkplugin` file you just built.
 
 This opens the consent sheet: **Install Scaffold?**, its id and version, a trust badge (it will say
-**Imported manually**, since it's unsigned), a one-line explanation of what a `process` plugin can
-do, and a capability list built from your manifest (here: one settings scope, one route). Because
-it isn't officially trusted, the **Install** button stays disabled until you tick the
+**Imported manually**, since it's unsigned), a short explanation of what a `process` plugin can do,
+and a capability list built from your manifest. Here it lists two lines: **Add a "main" settings
+page** (from `ui.configPages`) and **Access: config:rw** (from `scopes`). Routes are not listed.
+Because the archive is unsigned, the **Install** button stays disabled until you tick the
 acknowledgement checkbox. Tick it, click **Install**.
 
 ## Step 6: see it running
 
 Back in the plugin list you should see one new row:
 
-| Plugin | Version | Tier | Trust | Status |
-|---|---|---|---|---|
-| Scaffold | 0.1.0 | process | Imported manually | Active |
+| Plugin | Version | Tier | Trust | Status | Enabled |
+|---|---|---|---|---|---|
+| Scaffold (`example.scaffold`) | 0.1.0 | Process | Imported manually | Active | on |
 
 If it instead shows **Failed**, click the status badge: it shows the reason and the last lines the
-plugin wrote to its own log. See [Testing and debugging](/plugins/testing-and-debugging#common-errors)
-for what the common ones mean.
+plugin wrote to its own log (its stderr). `incompatible-fliks` means the `fliks` range in
+`plugin.json` doesn't include your core version (see Step 1). See
+[Testing and debugging](/plugins/testing-and-debugging#common-errors) for the other common ones.
 
-Expand the row's metrics panel (`process` plugins only) to see `hostCallCount`, `restartCount` and
-resident memory, all zero or near-zero for a plugin that's just started and done nothing yet.
+Expand the **Metrics** row under it (`process` plugins only) to see **Host calls**, **Restarts**
+and **Memory (RSS)**, all zero or near-zero for a plugin that's just started and done nothing yet.
+
+Now call the plugin's one route. Core serves a plugin's routes under `/api/plugins/<id>/`, so in
+the same browser where you are logged in, open:
+
+```text
+http://<your-fliks-host>/api/plugins/example.scaffold/ping
+```
+
+You should get `{"hello":"GET /ping"}`: core checked the route's `read:Settings` policy against your
+account, forwarded the request to the plugin's `http` handler, and returned its answer. A `503`
+means the process isn't running; check the status badge.
 
 ## Step 7: change something and reinstall
 
-Add a setting your plugin reads. Change the manifest's `ui.configPages` to declare one field:
+Add a setting, show it in the admin sidebar, and read it from the route.
+
+In `plugin.json`, replace the `ui` and `i18n` blocks with these. The field goes on the existing
+`main` page; the contribution adds a sidebar entry that opens it; `i18n.en` labels the new field:
 
 ```json
 "ui": {
@@ -326,23 +398,44 @@ Add a setting your plugin reads. Change the manifest's `ui.configPages` to decla
       "action": { "kind": "route", "path": "/admin/settings/plugins/example.scaffold/main" }
     }
   ]
-}
+},
+"i18n": { "en": { "scaffold.settings": "Scaffold", "scaffold.greeting": "Greeting" } }
 ```
 
-(`i18n.en` needs the new `scaffold.greeting` key too.) Read it back with `config.get` from the
-`job` handler, or from `http`, exactly like the existing code already does for the whole settings
-bag. Rebuild and repackage:
+The path `/admin/settings/plugins/<id>/<page id>` is where core renders a plugin's config page; it
+must name this plugin's own id and a page it declares, or the plugin fails with
+`invalid-ui-contribution`.
+
+In `src/plugin.ts`, replace the `http` handler so it reads the setting. `config.get` returns the
+plugin's own settings without their `plugin.<id>.` prefix, and only the ones an admin has saved, so
+keep a fallback for the `default`:
+
+```ts
+  http: async ({ method, path }) => {
+    const { greeting = 'hello' } = await callHost<Record<string, string>>('config.get', { keys: ['greeting'] });
+    return {
+      status: 200,
+      headers: { 'content-type': 'application/json' },
+      body: { [greeting]: `${method} ${path}` },
+    };
+  },
+```
+
+Rebuild and repackage:
 
 ```bash
+npm run typecheck
 npm run package
 ```
 
-Import the new `scaffold.fkplugin` the same way as before. **Reinstalling the same id replaces the
-running plugin**, there is no need to uninstall first; the existing settings and (if it had one)
-database schema are kept.
+Import the new `scaffold.fkplugin` the same way as before. The consent sheet now also lists **Add a
+"settings.page" interface element**. **Reinstalling the same id replaces the running plugin**, there
+is no need to uninstall first; the existing settings and (if it had one) database schema are kept.
+Uninstalling, on the other hand, deletes them.
 
-You should now see **Scaffold** as its own section in the admin settings sidebar, with your one
-text field in it.
+You should now see **Scaffold** as its own section in the admin settings sidebar. Open it, type
+`bonjour` in **Greeting**, save, and reload the `/ping` URL from Step 6: it answers
+`{"bonjour":"GET /ping"}`.
 
 ## What to read next
 

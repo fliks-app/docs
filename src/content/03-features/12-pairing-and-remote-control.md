@@ -45,8 +45,8 @@ Any other device signed in to your own account shows up automatically wherever t
 appears (the top bar, and the player controls), with no setup needed. Pick it, and from then on:
 
 - Loading a title plays it on that device instead of the one you're holding.
-- Play, pause, seek, volume, mute, next episode, and switching the audio or subtitle track all
-  apply to the remote device.
+- Play, pause, stop, seek, volume, mute, next episode, quality, and switching the audio or subtitle
+  track all apply to the remote device.
 - The remote device's now-playing state is reflected back to you as it changes.
 
 Playback started this way is credited to your account, whichever account happens to be signed in
@@ -56,15 +56,19 @@ on the device that's actually playing.
 
 This needs that device's owner to grant access first:
 
-1. On the device to be controlled, go to **Settings > Remote control** and choose **Show a code**.
-   It displays a 6-character code (avoiding easily confused characters), valid for 10 minutes.
-2. On the controlling device, enter that code under **Control other devices** and confirm.
-3. The grant applies to that one device, not to every device the owner has, and stays in place
-   until either side removes it: **Revoke** from the device that was granted, or **Forget** from
-   the controlling device.
+1. On the device to be controlled, go to **App settings > Remote control** and choose **Show a
+   code**. It displays a 6-character code (avoiding easily confused characters), valid for 10
+   minutes. This code only grants remote control; signing in a new device needs no code (see
+   above).
+2. On the controlling device, enter that code under **Control other devices** and press **Add**.
+3. The grant covers that one device, not every device its owner has, and goes to your account: any
+   device signed in to your account can then control it. It stays in place until either side
+   removes it: **Revoke** on the controlled device (under the accounts that can control it), or
+   **Forget** on your side (under the devices you can control).
 
 Administrators can additionally see and control every device that's currently online, without
-needing a grant.
+needing a grant. Other people's devices appear in the device picker next to your own as long as
+**Show household devices** is on (the default); turn it off to list only your own devices.
 
 ### Limits
 

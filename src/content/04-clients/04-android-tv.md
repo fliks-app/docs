@@ -34,7 +34,8 @@ Consistent with every TV client:
 
 ## Signing in
 
-On first launch, enter your server's address. Then use the on-screen keyboard to type a password, or set the TV up faster with
+On first launch, enter your server's address. Then use the on-screen keyboard to type a password,
+or set the TV up faster with
 [Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect):
 approve the sign-in from a phone that's already logged in, with nothing to type on the TV itself.
 

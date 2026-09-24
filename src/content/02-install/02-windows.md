@@ -14,9 +14,9 @@ install method.
 ## Install
 
 Download the installer from the
-[latest release](https://github.com/fliks-app/fliks/releases) (a `.exe` under Windows assets) and
-run it. It installs per-user, with no administrator prompt, into
-`%LOCALAPPDATA%\Programs\Fliks`.
+[latest release](https://github.com/fliks-app/fliks/releases) (the
+`Fliks-Server-<version>-x64.exe` asset) and run it. It needs 64-bit Windows 10 or 11. It
+installs per-user, with no administrator prompt, into `%LOCALAPPDATA%\Programs\Fliks`.
 
 > [!NOTE]
 > Releases are only Authenticode-signed when the project's signing certificate is configured in
@@ -27,7 +27,7 @@ run it. It installs per-user, with no administrator prompt, into
 
 1. PostgreSQL 18 initializes on first run and starts on port `5433`.
 2. Node.js starts the backend on port `4848`.
-3. Your browser opens to `http://localhost:4848` for first-run setup.
+3. On the very first launch only, your browser opens `http://localhost:4848`.
 4. Hardware transcoding is auto-detected, in this order: **QSV > AMF > NVENC > CPU**. NVENC needs
    an NVIDIA driver `570` or newer; on an older driver it's skipped and NVIDIA hardware falls back
    to CPU. AMD runs a full GPU pipeline (D3D11 decode, scale, AMF encode) on the bundled FFmpeg.
@@ -47,13 +47,18 @@ run it. It installs per-user, with no administrator prompt, into
 | Path | Contents |
 |---|---|
 | `%LOCALAPPDATA%\Fliks\postgresql\` | The database cluster. |
-| `%LOCALAPPDATA%\Fliks\conf\` | The JWT secret and tray settings. |
+| `%LOCALAPPDATA%\Fliks\conf\` | The JWT secret and `tray-settings.json`, which holds the web port (`Port`, default `4848`) and the database port (`PgPort`, default `5433`). |
 | `%LOCALAPPDATA%\Fliks\data\` | Backend working directory: images, thumbnails, backups. |
 | `%LOCALAPPDATA%\Fliks\logs\` | Backend and PostgreSQL logs. |
 | `%LOCALAPPDATA%\Fliks\transcode\` | The HLS transcode cache, ephemeral. |
 
 Uninstalling the app through Windows' own uninstaller leaves this data in place; the app itself
 is removed from `%LOCALAPPDATA%\Programs\Fliks`.
+
+> [!NOTE]
+> In-app [backups](/administration/backups) need `pg_dump`, which the app doesn't put on the
+> server's `PATH`. They only work if a PostgreSQL client of the same major version (or newer) is
+> installed and on the system `PATH`.
 
 ## Clean reset
 

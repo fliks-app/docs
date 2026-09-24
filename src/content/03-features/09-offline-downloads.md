@@ -23,8 +23,10 @@ always a transcoded copy at the chosen quality; the desktop app downloads the sa
 plays it back locally through its own player.
 
 Where the client isn't a native mobile app, there's an extra option: **Original file**, the
-untouched source file with no re-encoding. It downloads faster to verify and plays back exactly as
-stored, but external subtitle files aren't included with it.
+untouched source file with no re-encoding, played back exactly as stored. External subtitle files
+aren't included with it. In the desktop app it lands in the Downloads screen like any other
+download; in a web browser it's an ordinary file save to your computer, which the Downloads screen
+doesn't track.
 
 The **Downloads** screen lists every download with its state (queued, downloading, ready, or
 failed), and lets you retry a failed one, delete it, or play it straight from local storage.
@@ -41,7 +43,9 @@ A few things worth knowing:
 
 - The toggle is set **per device**, not on your account, so turning it on on your phone doesn't
   also turn it on on your tablet.
-- It only downloads for a playlist you can edit; a playlist you can only view isn't auto-downloaded.
+- The toggle lives in the playlist's settings, which only its owner or an administrator of the
+  playlist can open. A playlist where you're only a viewer (including one you saved) is never
+  auto-downloaded.
 - It always uses the best quality available for the file, with no per-playlist quality choice.
 - Only downloads created by this automatic sync get cleaned up when watched. A file you downloaded
   by hand is never removed automatically.
@@ -50,10 +54,10 @@ A few things worth knowing:
 
 ## Storage settings
 
-**Settings > Playback > Storage** (on the clients that support downloads) has:
+**App settings > Storage** (on every client except TVs) has:
 
 - **Simultaneous downloads**: how many downloads run at once, from 1 to 5 (default 3). Downloads
-  beyond that number wait in the queue.
+  beyond that number wait in the queue. Not shown in the desktop app.
 - **Clear cache**: clears the app's own working cache, not your downloads.
 - **Delete all downloads**: removes every downloaded file from the device in one action.
 

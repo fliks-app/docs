@@ -18,9 +18,10 @@ on every start:
 - Your own connection string's `search_path` set to your schema only, `public` is deliberately not
   on it, so an unqualified query can never accidentally hit a core table.
 
-Core **never reads your tables**. It provisions the role and schema, checks your `coreRefs` exist as
-real tables with an `id` column before granting anything, and otherwise leaves your schema alone
-entirely.
+Core **never uses your tables at runtime**: no core feature queries them. It provisions the role and
+schema, checks your `coreRefs` exist as real tables with an `id` column before granting anything, and
+otherwise touches your schema only when an admin explicitly exports, imports or uninstalls (see
+below).
 
 ## `coreRefs`
 
@@ -32,16 +33,17 @@ Each name in `database.coreRefs` must:
   that doesn't exist yet (a core migration not yet applied) fails provisioning with
   `db-provision-failed`.
 
-Point a foreign key at it with `ON DELETE CASCADE` or `ON DELETE SET NULL`; anything else (a
-`RESTRICT` or `NO ACTION` FK from your schema into a core table) is only advisable, not enforced:
-core surfaces it as a warning on the plugin row rather than refusing the install, since it can't
-know whether that's exactly what you intended.
+Point a foreign key at it with `ON DELETE CASCADE` or `ON DELETE SET NULL`. Anything else (a
+`RESTRICT` or `NO ACTION` FK from your schema into a core table) would block core from deleting the
+referenced row. That is advised against, not enforced: on every start core checks your schema for
+such keys and surfaces a warning on the plugin row and in its logs, rather than refusing to run it.
 
 ## Running your own migrations
 
 Core provisions the schema; it never runs anything inside it. Your plugin runs its own migrations,
-against the same `FLIKS_DB_URL` it gets at spawn, before it answers `hello`. The pattern both real
-process plugins use:
+against the same `FLIKS_DB_URL` it gets at spawn, before it answers `hello`. The pattern the
+download plugin uses (`fk-plugin-download`, `migrations/` and `src/db/migrate.ts`; the notify plugin
+declares no schema):
 
 - A migration file per change, numbered (`0001_initial_schema.ts`, `0002_...`), each exporting
   `{ name, up, down }` as plain SQL strings.
@@ -65,7 +67,8 @@ can't do as the provisioned role), not just the migrations.
 
 ## What's not accessible
 
-- Core cannot query your schema, ever, by design, not merely by convention.
+- No core feature queries your schema. The only core code that reads or writes it is the
+  admin-triggered export and import below, which touch only your own schema's tables.
 - You cannot `SELECT` a `coreRefs` table, only reference its `id` in a foreign key. A query that
   tries fails with a permissions error from Postgres itself (`42501`), not a Fliks-level error.
 - You have no path to another plugin's schema.
@@ -117,9 +120,10 @@ collide on a duplicate key.
 
 | | Postgres role and schema | Per-plugin data directory | `plugin.<id>.*` settings | Live routes/UI/jobs |
 |---|---|---|---|---|
-| **Disable** | Kept | Kept | Kept | Dropped |
+| **Disable** | Kept | Kept | Kept | UI and jobs dropped; declared routes stay known and answer 503 (unavailable) rather than 403 |
 | **Uninstall** | Dropped | **Deleted** | **Deleted** | Dropped |
 
 Uninstalling a plugin is destructive across the board, not only its database schema: its per-plugin
 data directory (the one place other than the database meant to survive restarts) and every one of
-its settings, secrets included, go with it. Export first if you might want any of it back.
+its settings, secrets included, go with it, and so do the scopes and ingest roots the admin consented
+to, so a reinstall asks for them again. Export first if you might want any of it back.

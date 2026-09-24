@@ -5,8 +5,12 @@ description: Run the backend, the client and PostgreSQL locally, apply migration
 
 ## Prerequisites
 
-- **Node.js** 22 or newer (CI builds on Node 24; the desktop package
-  requires at least Node 20).
+- **Node.js** 24, the version the Docker images and most CI jobs use.
+  There is no `.nvmrc`; the Angular CLI accepts `^22.22.3`, `^24.15.0` or
+  `>=26`, so odd-numbered releases such as 23 or 25 won't work for the
+  client. TypeScript, the Nest CLI and the Angular CLI come with `npm ci`,
+  nothing needs a global install.
+- Any editor with TypeScript support.
 - **Docker and Docker Compose**, for the recommended local stack.
 - A local **PostgreSQL** if you'd rather not use Docker for the database.
 - **git**.
@@ -62,7 +66,8 @@ the `devices` and `group_add` lines for the `backend` service and set
    `start:dev` runs `nest start --watch`, so a saved file restarts the
    affected part of the app. In development `synchronize: true` keeps the
    database schema following the entities automatically: you don't need to
-   write a migration to try out a schema change locally.
+   write a migration to try out a schema change locally. (`synchronize` is
+   on whenever `NODE_ENV` is not `production`.)
 
 3. Client, in another terminal:
 
@@ -87,7 +92,8 @@ the `devices` and `group_add` lines for the `backend` service and set
 ## Migrations
 
 `synchronize: true` only applies locally. In production, and in CI,
-migrations are the only sanctioned way to change the schema. From
+migrations are the only sanctioned way to change the schema; a production
+boot (`NODE_ENV=production`) applies pending migrations by itself. From
 `backend/`:
 
 ```bash
@@ -97,14 +103,21 @@ npm run db:migration:revert
 npm run db:migration:show
 ```
 
+`db:migration:generate` diffs the entities against the database it
+connects to (`src/data-source.ts`, reading `backend/.env`). A dev database
+that `synchronize` already updated has no diff left, so the generated
+migration comes out empty or missing: generate against a database that
+only ever had `db:migration:run` applied.
+
 A CI job (`.github/workflows/db-migrations.yml`) applies every committed
-migration to a fresh PostgreSQL on each PR touching `backend/`, to catch a
-schema change that was made through `synchronize` locally but never turned
-into a migration.
+migration to a fresh PostgreSQL on each PR touching `backend/`, then runs
+`migration:generate` against it, to catch a schema change that was made
+through `synchronize` locally but never turned into a migration.
 
 ## Tests
 
-Backend, from `backend/`:
+The backend uses [Jest](https://jestjs.io/); unit tests are the
+`*.spec.ts` files next to the code in `backend/src/`. From `backend/`:
 
 ```bash
 npm test          # jest unit tests
@@ -118,11 +131,16 @@ runtime directory). `test:e2e` builds the real `AppModule`, so it does need
 the same PostgreSQL as the app itself, reachable through the same `DB_*`
 environment variables.
 
-Client, from `client/`:
+The client uses [Vitest](https://vitest.dev/) (with jsdom) through the
+Angular CLI's `unit-test` builder. From `client/`:
 
 ```bash
-npm test   # ng test, runs on Vitest
+npm test                    # ng test, watches for changes in a terminal
+npm test -- --watch=false   # a single run
 ```
+
+The desktop package has its own tests on Node's built-in runner: `npm test`
+from `desktop/`.
 
 > [!NOTE]
 > No workflow under `.github/workflows/` currently runs these test suites
@@ -136,12 +154,13 @@ From `client/`, the same build a target ships is one npm script away:
 
 | Target | Command | Notes |
 |---|---|---|
-| Android (Capacitor) | `npm run cap:build` | Builds the Angular app, then `npx cap sync android`. Open the project with `npm run cap:open`. |
+| Android (Capacitor) | `npm run cap:build` | Builds the Angular app, then `npx cap sync android`. Open the project in Android Studio with `npm run cap:open`. |
 | iOS (Capacitor) | `npm run cap:build:ios` | Same, opened with `npm run cap:open:ios`. Needs a Mac with Xcode. |
-| Samsung TV (Tizen) | `npm run tizen:build` | Builds against a Chromium 85 browserslist target, then packages a `.wgt`. `npm run tizen:deploy` installs it over `sdb`. |
-| LG TV (webOS) | `npm run webos:build` | Same Chromium 85 target, packages an `.ipk`. |
+| Samsung TV (Tizen) | `npm run tizen:build` | Builds against a Chromium 85 browserslist target, then packages an unsigned `.wgt`. Signing it and installing it on a TV go through the Tizen Studio CLI (`tizen package`, `tizen install`), see `client/tizen/README.md`. |
+| LG TV (webOS) | `npm run webos:build` | Same Chromium 85 target, packages an `.ipk`. Install it with the webOS CLI (`ares-install`). |
 
-From `desktop/`:
+From `desktop/` (first-time setup, the native addon and the vendored
+libmpv, is in `desktop/README.md`):
 
 ```bash
 npm run dev:linux     # dev run on Linux, the primary dev platform for this client

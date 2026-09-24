@@ -21,7 +21,9 @@ degrades to an empty object instead of erroring, so the app falls back to
 the fallback language rather than showing a blank screen.
 
 Each file is a tree of namespaces (one object per feature area, e.g.
-`display_settings`), with flat, `snake_case` leaf keys inside each one.
+`display_settings`). Most keys inside a namespace are flat `snake_case`
+leaves, though some namespaces nest one level deeper; follow the shape of
+the namespace you're adding to.
 
 ## Shipped languages
 
@@ -68,7 +70,7 @@ in each of them, not just the translated strings.
 3. Register its Angular CLDR locale data in `app.config.ts`: import
    `@angular/common/locales/<code>` and add it to the `registerLocaleData`
    calls next to the existing six.
-4. Rebuild. The language picker under **Settings > Display** reads
+4. Rebuild. The language picker under **App settings > Display** reads
    `SUPPORTED_LOCALES` directly, so the new language appears there without
    any other change.
 
@@ -84,11 +86,13 @@ starting language synchronously at bootstrap, in this order:
    OS language the same way a browser does.
 3. English, if nothing else matched.
 
-Changing the language from **Settings > Display** calls
+Changing the language from **App settings > Display** calls
 `TranslateService.use()` immediately, so the UI text switches live with no
 reload. Angular's own `LOCALE_ID` (date and number formatting) is resolved
 once at bootstrap, so a language change takes full effect for those on the
-next app launch.
+next app launch. Dates rendered with the app's own `localeDate` pipe
+(`core/pipes/locale-date.pipe.ts`) do follow the switch live, so prefer it
+over Angular's `DatePipe` for a date the user reads.
 
 ## Plugin translations
 

@@ -8,15 +8,18 @@ description: Every plugin.json field, its type, whether it's required, its const
 `plugin.json` sits at the archive root. It is validated in layers, and each layer produces a
 different kind of failure:
 
-1. **Structural parsing.** Not valid JSON, missing a required base field, an unknown top-level key,
-   or a `kind` other than `data`/`process` all fail the same way: `PLUGIN_BAD_MANIFEST`,
-   "plugin.json failed structural validation." No finer reason is given at this layer.
+1. **Structural parsing.** Not valid JSON, missing a required field, a wrong type, an unknown
+   top-level key, a `kind` other than `data`/`process`, an unknown or empty `scopes` list, a bad
+   `ingestRoots` entry, or an `i18n` block that breaks the rules below all fail the same way:
+   `PLUGIN_BAD_MANIFEST`, "plugin.json failed structural validation." No finer reason is given at
+   this layer. The packaging tool runs the same check, so it catches these before you install.
 2. **Id and version.** Checked separately, with a specific reason each: `PLUGIN_BAD_ID` or
    `PLUGIN_BAD_VERSION`.
 3. **UI and events shape.** The `ui.*` and `events` blocks are checked field by field, each with
    its own reason (`PLUGIN_BAD_UI_CONTRIBUTIONS`, `PLUGIN_BAD_UI_CONFIG_PAGES`, and so on).
-4. **Registration-time semantics**, once the archive has already been installed: route policies,
-   scopes, jobs, the release picker, the i18n namespace. A failure here does not undo the install;
+4. **Registration-time semantics**, once the archive has already been installed: `pluginApi`, the
+   `fliks` range, route methods, paths and policies, jobs, permissions, webhooks, the release
+   picker, contribution targets, the i18n namespace. A failure here does not undo the install;
    the plugin is written to disk with `status: 'failed'` and a `statusReason` naming exactly which
    rule it broke, so you can fix the manifest and reinstall.
 
@@ -35,11 +38,11 @@ Layers 1-3 run during **inspect**, before anything reaches the database (see
 | `pluginApi` | number | yes | The contract revision this plugin is written against. Core accepts every value in `SUPPORTED_PLUGIN_API_VERSIONS`; today that's just `1`. |
 | `name` | string | yes | Display name. |
 | `version` | string | yes | Must be valid semver (`semver.valid()`). |
-| `fliks` | string | yes | A semver range, matched against the running core version with its prerelease stripped (so a `3.0.0-rc.1` core satisfies `>=3.0.0`). See the callout below about upper bounds. |
+| `fliks` | string | yes | A semver range, matched against the running core version with its prerelease stripped (so a `4.0.0-rc.1` core satisfies `>=4.0.0`). See the callout below about upper bounds. |
 | `author` | string | yes | Free text; may be empty. |
 | `description` | string | yes | Free text; may be empty. |
 | `license` | string | yes | Free text; may be empty. |
-| `logo` | string | yes | The archived file name, `logo.svg` or `logo.png`. Must match a file actually present. |
+| `logo` | string | yes | The archived file name, `logo.svg` or `logo.png`. The packaging tool refuses a name that doesn't match the logo file it finds. |
 | `homepage` | string | no | The only identity field that's optional. |
 | `kind` | `"data" \| "process"` | yes | Picks which of the two shapes below applies. |
 | `ui` | object | no | See [UI extensions](/plugins/ui-extensions). |
@@ -47,8 +50,8 @@ Layers 1-3 run during **inspect**, before anything reaches the database (see
 | `i18n` | `{ locale: { key: string } }` | no | See the i18n rules below. |
 
 > [!IMPORTANT]
-> Core does **not** currently refuse a `fliks` range that has no upper bound (`">=2.1.0"` installs
-> fine on a manual upload). Give it one anyway, `">=3.0.0 <4.0.0"`, never a bare lower bound: the
+> Core does **not** currently refuse a `fliks` range that has no upper bound (`">=4.0.0"` installs
+> fine on a manual upload). Give it one anyway, `">=4.0.0 <5.0.0"`, never a bare lower bound: the
 > official catalog's own submission check refuses a range without one, and a plugin that has never
 > been checked against a future major will be the first thing that breaks when it ships. Treat the
 > upper bound as mandatory even though core's install path doesn't enforce it today.
@@ -61,12 +64,12 @@ where marked optional.
 | Field | Type | Required | Constraint |
 |---|---|---|---|
 | `runtime` | `"node"` | yes | The only legal value. |
-| `memoryMb` | number | yes | Passed straight through as `--max-old-space-size`. Core does not clamp it; the default when a manifest omits it entirely is 256, but once `kind: 'process'` is declared this field itself is required. |
+| `memoryMb` | number | yes | Passed straight through as the child's `--max-old-space-size`, in MiB. Core does not clamp it. It caps the V8 heap, not the whole process memory. A `process` manifest without it is refused. |
 | `files` | `{ path: sha256 }` | yes | sha256 of every archived entry except the manifest and its own signature. Leave it `{}` in your source; the packaging tool recomputes it and refuses a hand-written value that doesn't match. |
 | `database` | `{ schema: boolean, coreRefs: string[] }` | yes | Whether the plugin wants its own Postgres schema, and which core tables it needs `REFERENCES` grants on. Each `coreRefs` name must match `^[a-z_][a-z0-9_]*$`, be at most 63 characters, and appear once. If `schema` is `false`, `coreRefs` must be empty. |
 | `routes` | array of `{ method, path, policy, objectGuard? }` | yes, may be empty | Every HTTP route core will proxy to this plugin. A route not declared here does not exist, full stop. |
 | `scopes` | array | yes, non-empty | Which host-method groups this plugin may call. Table below. |
-| `ingestRoots` | array of strings | yes, may be empty | Absolute path prefixes `library.ingest` is allowed to write under. |
+| `ingestRoots` | array of strings | yes, may be empty | Absolute path prefixes `library.ingest` is allowed to take files from. Each must be absolute, already normalised (no `..` or `//`), and not a filesystem root (`/` or `C:\`). |
 | `jobs` | array of `{ name, cron, triggerable, labelKey }` | no | Named cron entries core schedules and dispatches. |
 | `permissions` | array of strings | no | Raw names; core builds the CASL subject as `plugin:<id>:<name>`. |
 | `checklist` | array of strings | no | Accepted and silently ignored; core reads nothing from it. |
@@ -75,7 +78,7 @@ where marked optional.
 
 | Field | Constraint |
 |---|---|
-| `method` | One of `GET POST PUT PATCH DELETE HEAD OPTIONS` (case-insensitive, stored uppercased). |
+| `method` | One of `GET POST PUT PATCH DELETE HEAD OPTIONS`, case-insensitive. |
 | `path` | Starts with `/`, must parse as an [Express-style path](https://github.com/pillarjs/path-to-regexp) (`:param` segments allowed). |
 | `policy` | `"<action>:<Subject>"`, split at the first colon. `action` is one of `manage create read update delete approve decline grab track`. `Subject` is one of the closed core set (`User`, `Media`, `FliksRequest`, `QualityProfile`, `LanguageProfile`, `SubtitleProvider`, `SubtitleFile`, `TranslationProvider`, `Library`, `Playlist`, `Settings`) or this plugin's own `plugin:<id>:<name>` subject, where `<name>` is one of this same manifest's declared `permissions`. |
 | `objectGuard` (optional) | `"<guard>:<paramName>"`. Exactly two guards exist today: `libraryAccessible` and `mediaAccessible`, each checking the numeric path param against the requesting user's accessible libraries or media. `<paramName>` must actually appear in `path`. |
@@ -130,6 +133,7 @@ routes declared under it.
   `acme.config.title` is refused).
 - Every key across every locale must share exactly one root segment (here, `acme`). It does not
   have to equal or derive from the plugin's own `id`.
+- Breaking any of the three rules above refuses the archive with `PLUGIN_BAD_MANIFEST`.
 - At registration, that root is claimed: a second plugin declaring the same root fails with
   `i18n-namespace-conflict`; whichever plugin loaded first keeps it.
 
@@ -163,7 +167,7 @@ routes declared under it.
 | `invalid-job-name` / `job-name-conflict` / `invalid-job-cron` / `invalid-job-triggerable` / `invalid-job-label` | A `jobs[]` entry is malformed, one field at a time. |
 | `invalid-route-method` / `invalid-route-path` / `invalid-route-policy` / `invalid-route-object-guard` / `duplicate-route` | A `routes[]` entry is malformed, one field at a time. |
 | `db-provision-failed` | The plugin's Postgres role/schema couldn't be created, or a declared `coreRefs` table/column doesn't exist. |
-| `spawn-failed` | The child process didn't complete its handshake in time. |
+| `spawn-failed` | The child process didn't come up: it crashed at start (for example `MODULE_NOT_FOUND` from an unbundled `require`), echoed the wrong token, or didn't answer `hello` within 10 seconds. |
 | `tampered` | Re-extracting the stored archive no longer matches the signed `files` hashes. |
 
 Any reason other than `disabled`, `tampered`, `db-provision-failed`, `spawn-failed`,
@@ -189,6 +193,8 @@ core change, proposed as an issue that says:
 2. **What you tried within the existing set**, and where it stopped.
 3. **What core would have to trust you with**: a new host method is a new scope, or a widening of
    one, say which, and what a hostile plugin holding it could do.
-4. **Whether it can be additive.** A new method, scope or slot ships in a minor `pluginApi` bump. A
-   change to an existing one's shape or meaning is a breaking `pluginApi` bump, which orphans every
-   plugin that hasn't republished, and waits for a scheduled break.
+4. **Whether it can be additive.** `pluginApi` is a single integer, and within one value the
+   contract only grows: a new method, scope or slot lands without changing it. Removing something,
+   or changing an existing one's shape or meaning, bumps `pluginApi`; core keeps accepting the old
+   value for a while (`SUPPORTED_PLUGIN_API_VERSIONS`), then drops it, which orphans every plugin
+   that hasn't republished.

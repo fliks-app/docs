@@ -11,13 +11,15 @@ created, but nothing about an account is shared until its owner turns it on. By 
 - A profile's visibility is **private**.
 - Every individual "share my..." toggle is **off**.
 
-There's also a single kill switch, **Do not use sharing features** (on the Privacy page, reached
-from the profile's **Privacy** button), for anyone who wants no part of this. Turning it on:
+There's also a single kill switch, **Do not use sharing features** (in **Account settings > Privacy**,
+also reached from the profile's **Privacy** button), for anyone who wants no part of this. Turning it on:
 
 - Makes the account undiscoverable: nobody can view its profile, follow it, recommend content to
-  it, add it as a playlist collaborator, or have it save a playlist.
+  it, or add it as a playlist collaborator. It also can't view other profiles or save playlists
+  itself.
 - Permanently deletes its existing follows, saved playlists, collaborations and recommendations,
-  after a confirmation dialog. This cannot be undone.
+  after a confirmation dialog. Its own playlists lose all their members and go back to private.
+  This cannot be undone.
 
 > [!WARNING]
 > That deletion is immediate and permanent. There's no separate "pause sharing" option that keeps
@@ -55,10 +57,11 @@ Pick **Recommend** (or **Recommend season**) from a title's menu to open a dialo
 a recipient and, optionally, add a short note. You can only send to a user with a public profile,
 or one you follow, never to yourself.
 
-The recipient sees it as a card on their own home page, under **Member recommendations**, grouped
-by who sent it, with your note shown alongside. From there they can like it, add it to a playlist,
-or dismiss the card. Sending the same title to the same person again just refreshes the card back
-to the top instead of creating a duplicate.
+The recipient sees it as a card on their own home page (the **Member recommendations** row in their
+**App settings > Home**), grouped under "Recommended by" and the sender's name, with your note shown
+alongside. From there they can like it, add it to a playlist, or **Hide** the card. Sending the
+same title to the same person again just refreshes the card back to the top instead of creating a
+duplicate.
 
 > [!NOTE]
 > This card is only shown on phone, tablet, desktop and the web app. It doesn't appear on TV
@@ -71,7 +74,7 @@ libraries the sender can see.
 
 Every profile page has an **Overview** tab, and, depending on what its owner shares, a
 **Statistics** tab. Your own profile also has a **Recommendations** tab (what was sent to you, and
-what you sent, including dismissed cards). Each section has its own switch on the Privacy page:
+what you sent, including dismissed cards). Each section has its own switch in **Account settings > Privacy**:
 
 | Toggle | Shows on your profile |
 |---|---|
@@ -83,8 +86,9 @@ what you sent, including dismissed cards). Each section has its own switch on th
 | Share my statistics | The Statistics tab (see below) |
 
 Public playlists (and followers-only ones, for someone who follows you) always appear on your
-profile; there's no separate toggle for those. If none of the toggles above are on, visitors just
-see: "This user has chosen not to display any data on their profile."
+profile; there's no separate toggle for those. If a visitor would see no playlist and no section
+with anything in it, they get: "This user has chosen not to display any data on their profile."
+Someone who doesn't follow a private profile sees only its name, picture and follow button.
 
 ### Statistics
 
@@ -99,8 +103,8 @@ The Statistics tab shows what's actually tracked:
 ## Profile picture
 
 Upload any image from the profile page; a circular crop tool with a zoom slider lets you frame it
-before saving. There are no preset avatars: without an uploaded picture, Fliks shows your initials
-on a colour generated from your name instead.
+before saving, and **Remove picture** takes it off again. There are no preset avatars: without an
+uploaded picture, Fliks shows your initials on a colour generated from your name instead.
 
 ## See also
 

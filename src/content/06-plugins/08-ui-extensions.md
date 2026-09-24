@@ -26,7 +26,7 @@ One entry per nav item, menu row, or settings-sidebar link.
 | `icon` | string | no | Name from a closed icon set the surface understands; an unrecognised name renders a plain circle rather than nothing. |
 | `tone` | `'default' \| 'danger'` | no | |
 | `badge` | string | no | A counter key read from the counts endpoint; the badge only shows when its value is `> 0`. |
-| `confirmKey` | string | no | Only honoured on a `table` row action today; a `media.actions`/`card.actions` row currently ignores it. |
+| `confirmKey` | string | no | Accepted, but no slot's renderer reads it today, so a contribution never asks for confirmation. Confirmation dialogs come from the separate `confirmKey` on a `table` or `providers` page action (below). |
 | `when` | array of predicates | no | See below. |
 | `action` | `{kind:'route', path}` \| `{kind:'action', actionId}` \| `{kind:'submenu'}` | yes | A `submenu` only opens its `children`; an older client that doesn't know this kind drops the row rather than showing a parent that does nothing. |
 | `children` | `UiContribution[]` | no | Only meaningful under `action.kind: 'submenu'`. |

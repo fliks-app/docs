@@ -18,9 +18,10 @@ Install "Fliks" from the App Store. Requires **tvOS 17** or newer.
 
 ## Signing in
 
-Enter your server's address on first launch, then sign in with a password, or use **Quick Connect**: the screen shows a QR code that links straight
-to the **Login requests** page on a phone that's already signed in, alongside the same "approve
-from your phone" flow every other client uses. See [Pairing and remote
+Enter your server's address on first launch, then sign in with a password, or use **Quick
+Connect**: the same "approve from your phone" flow every other client uses, with no code to type.
+The waiting screen also shows a QR code that opens the **Login requests** page on a phone that's
+already signed in. See [Pairing and remote
 control](/features/pairing-and-remote-control) for how approval works.
 
 ## Playback

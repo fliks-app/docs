@@ -11,7 +11,7 @@ description: The plugin lifecycle from install to running, process isolation, th
 | 2 | Inspect | Core runs the archive through a fixed set of guards (legal entry names, size caps, Ed25519 signature, manifest shape) and, if it passes, stages the bytes to disk. Nothing is written to the database yet. |
 | 3 | Consent | The admin sees the plugin's identity, its trust level (official, unverified, unsigned) and everything it's asking to be able to do, and must explicitly acknowledge anything short of official trust. |
 | 4 | Confirm | The staged archive is re-verified byte for byte, extracted, and (for a `process` plugin that asks for one) a Postgres role and schema are provisioned. A database row is written. |
-| 5 | Register | Core validates every semantic rule a manifest must satisfy (routes, scopes, jobs, UI targets, i18n namespace) and, for a `process` plugin, spawns the child and waits for it to answer the handshake. |
+| 5 | Register | Core validates every semantic rule a manifest must satisfy (`pluginApi`, the `fliks` range, routes, permissions, jobs, UI targets, i18n namespace) and, for a `process` plugin, spawns the child and waits for it to answer the handshake. |
 | 6 | Running | A `data` plugin is simply registered: its declarations are live. A `process` plugin is now a supervised child, monitored for health and restarted on crash. |
 | 7 | Disable | The process is stopped and every live registration (routes, UI contributions, jobs, webhooks) is dropped. The installed archive, its database role and schema, and its settings are untouched. |
 | 8 | Enable | Re-registers from the stored archive; for a `process` plugin, spawns it again. |
@@ -88,8 +88,8 @@ transport.
 2. At registration, core validates every UI-facing rule the manifest must satisfy: a route opening
    one of the plugin's own pages must point at a page the same manifest actually declares, the
    `i18n` root namespace can't collide with another plugin's, and so on.
-3. The Fliks client calls `GET /plugins/ui` once, at app boot, and caches the result in a registry
-   service. The response is one entry per currently active plugin: its contributions, its config
+3. The Fliks client calls `GET /api/plugins/ui` at app boot, and again after an install or an
+   enable/disable toggle, and caches the result in a registry service. The response is one entry per currently active plugin: its contributions, its config
    pages, its translated strings, and (if it won the tie-break) its release-picker declaration.
    `process` plugins only appear in that response while their state is `ready`; a plugin that has
    gone unreachable simply isn't in the list, so a client never has to reason about a half-working

@@ -16,8 +16,8 @@ description: Three real plugins walked through in detail, a full process plugin,
 
 > [!WARNING]
 > Both `fliks.notify` and the published `fliks.webhooks` currently declare `pluginApi: 0`, which
-> today's core no longer supports (`SUPPORTED_PLUGIN_API_VERSIONS` is just `[1]`). Neither would
-> install as-is against a current Fliks. Read them for the **pattern**, retrying delivery on one
+> today's core no longer supports (`SUPPORTED_PLUGIN_API_VERSIONS` is just `[1]`), and a `fliks`
+> range of `>=2.0.0 <3.0.0`. Neither would install as-is against a current Fliks. Read them for the **pattern**, retrying delivery on one
 > side, zero-code delivery on the other, not for their literal version numbers; a plugin built from
 > these patterns today should declare `pluginApi: 1` and a `fliks` range against a current major,
 > exactly as `fliks.download` does.
@@ -38,10 +38,11 @@ release to a download client driver, and records it. A separate poller watches t
 and on completion calls `library.ingest` to move the finished file into the library, `progress.set`
 to report live download progress, and `events.publish` to announce the grab and the import.
 
-**What it actually uses, of the 15 host methods:** every read method, `library.ingest`,
-`progress.set`, `events.publish`, `notifications.dispatch`, `events.emitOwn` and `config.get`. It
-declares scopes for the other four (`media.exists`, `requests.markInProgress`, `counts.set`,
-`config.set`) but never calls them, a reminder that declaring a scope only grants the *ability* to
+**What it actually uses, of the 15 host methods:** every read method except `media.exists`
+(`media.acquisitionContext`, `acquisition.candidates`, `releases.match`, `releases.score`,
+`media.resolve`), plus `library.ingest`, `progress.set`, `events.publish`, `notifications.dispatch`,
+`events.emitOwn` and `config.get`. It requests all seven scopes, so it could also call the other four
+(`media.exists`, `requests.markInProgress`, `counts.set`, `config.set`), but never does, a reminder that declaring a scope only grants the *ability* to
 call something, not an obligation to.
 
 **Config pattern:** always live `config.get`, never the `FLIKS_CFG_*` environment variables, so a
@@ -58,8 +59,9 @@ incoming one is non-empty, exactly the pattern in
 [UI extensions](/plugins/ui-extensions#form-the-default-and-the-only-kind-that-works-with-the-process-stopped).
 
 **Contract dependency:** predates the published `@fliks/plugin-contract` package, so it hand-restates
-the protocol and method types instead of depending on it, and runs its own script diffing that
-restatement against core's real source on demand, to catch drift before it becomes a runtime bug.
+the protocol and method types instead of depending on it, and diffs that restatement against core's
+real source (`npm run check-contract-drift`, plus a test that runs the same check when a sibling
+Fliks checkout is present), to catch drift before it becomes a runtime bug.
 A new plugin should just depend on the package (see [SDK reference](/plugins/sdk-reference)) rather
 than copy this pattern; it exists here for a historical reason that no longer applies to a fresh
 start.
@@ -85,7 +87,7 @@ retries. It's a smaller, more approachable second reference for the parts of the
   private, loopback, link-local, or otherwise internal address, checked fresh via `dns.lookup` each
   time, since a hostname that was public when saved can be repointed at an internal address later.
 - **No database schema at all** (`database.schema: false`): it keeps no state that needs to survive
-  a restart, so it declares none.
+  a restart, so it declares none. Its only scope is `config:rw`.
 - **Reads `FLIKS_CFG_TARGET_URL`, not `config.get`.** A deliberately different config pattern from
   `fliks.download`: it takes a snapshot at spawn and logs that a settings change "takes effect on
   next restart" rather than fetching a fresh value on every delivery, a real, valid choice when a

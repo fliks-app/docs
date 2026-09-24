@@ -17,8 +17,10 @@ it falls back to CPU (software) encoding. The probe order is fixed per platform:
 | macOS | Apple VideoToolbox → CPU |
 
 You don't choose a path yourself; you give the server access to a device (see below) and it
-takes care of the rest. The [Transcoding dashboard](/administration/transcoding-dashboard) shows
-which path an active stream is actually using.
+takes care of the rest. The server log records each probe at startup (`HW accel test passed:
+qsv`, or `HW accel test failed: ...` with FFmpeg's reason), and the
+[Transcoding dashboard](/administration/transcoding-dashboard) shows which path an active stream
+is actually using. Change the device setup, then restart the server so it probes again.
 
 ## Codec support by path
 
@@ -28,18 +30,33 @@ which path an active stream is actually using.
 | HEVC | Yes | Yes | Yes | Yes | Yes | Yes |
 | AV1 | Yes | Yes | Yes | Yes | Yes | No |
 
+A "Yes" means Fliks has an encoder for that path. Whether the hardware actually encodes a
+codec depends on the GPU generation (AV1 needs a recent one); when it can't, Fliks falls back.
+
 HDR10, HLG and Dolby Vision are tone-mapped to SDR automatically when the receiving device can't
-render HDR itself, on whichever path is active (including CPU).
+render HDR itself, on whichever path is active (including CPU). Keeping HDR through a transcode is
+narrower: only HEVC on QSV and NVENC, and AV1 on NVENC, write HDR metadata in hardware, and every
+other backend hands an HDR transcode to the CPU encoder. See
+[HDR and Dolby Vision](/features/streaming-and-transcoding#hdr-and-dolby-vision).
 
 ## Docker: Intel QSV / VAAPI
 
-Pass the render node through as a device:
+Pass the render node through as a device. This also covers AMD GPUs, which go through VAAPI:
 
 ```yaml
 services:
   fliks:
     devices:
       - /dev/dri:/dev/dri
+```
+
+The container runs as root by default, which can open the device. If you pinned a non-root
+`user:` (see [Running as a specific user](/install/docker#running-as-a-specific-user)), that user
+also needs the host group owning `/dev/dri/renderD128`, usually `render`. Find its numeric id
+with `getent group render` on the host and add it next to `0`:
+
+```yaml
+    group_add: ['0', '<render gid>']
 ```
 
 ## Docker: NVIDIA NVENC
@@ -57,6 +74,9 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: compute,video,utility
 ```
 
+The `fliks` service in the example file already has an `environment:` block: add the two
+`NVIDIA_` lines to it rather than writing a second `environment:` key.
+
 ## Docker: architecture note
 
 The Intel and NVIDIA stacks are `amd64`-only. On `arm64` (a Raspberry Pi 5, an ARM NAS), the
@@ -70,10 +90,9 @@ Both native builds detect hardware automatically at launch: QSV, AMF or NVENC on
 
 ## Multi-GPU hosts
 
-On a host with more than one GPU, **Settings > Streaming** shows a GPU device picker (hidden
-automatically when only one GPU is detected) listing every render node Fliks found, so you can
-pin transcoding to a specific adapter instead of letting it auto-pick. This is the admin-facing
-equivalent of the `streaming_gpu_render_node` setting.
+On a Linux host with more than one GPU, **Settings > Streaming** shows a **GPU device** picker
+(hidden when only one GPU is detected) listing every render node Fliks found, so you can pin
+transcoding to a specific adapter instead of letting it auto-pick.
 
 Two related low-level knobs, only worth touching when the automatic pick lands on the wrong
 device:
@@ -94,13 +113,13 @@ bug:
 - Cropping black bars on Intel QSV sometimes requires a detour through VAAPI on Linux, because
   QSV's own frame pool can't take the variably-sized output crop produces in every situation.
 
-Both fall back automatically; you won't see an error, just a different path in the streaming
-dashboard than you might expect.
+Both fall back automatically; you won't see an error, just a different path in the
+[Transcoding dashboard](/administration/transcoding-dashboard) than you might expect.
 
 ## See also
 
 - [Streaming and transcoding](/features/streaming-and-transcoding) for how Fliks decides between
-  Direct Play, remux and transcode in the first place.
+  Direct Play, Direct Stream and Transcode in the first place.
 - [Transcoding dashboard](/administration/transcoding-dashboard) to see which path each active
   stream is actually using.
 - [Environment variables](/install/environment-variables) for the full list, including the

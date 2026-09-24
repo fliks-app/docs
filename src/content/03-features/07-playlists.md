@@ -16,8 +16,9 @@ something from a library you can't see.
 
 ## Reordering and autoplay
 
-Drag items into the order you want (drag handles, or Move up / Move down buttons when dragging
-isn't available). Reordering needs at least the editor role on a shared playlist.
+Drag items into the order you want by their handles (on a TV, where dragging isn't available, use
+the Move up / Move down buttons instead). A series' episodes move together as one block.
+Reordering needs at least the editor role on a shared playlist.
 
 Turn on **Autoplay** in the playlist's settings and the player advances to the next item
 automatically when one ends, with no confirmation prompt. An item with no playable file is skipped.
@@ -25,8 +26,8 @@ Turn on **Remove watched items** and each item you finish disappears from the li
 playlist can work as a queue that empties itself as you get through it.
 
 > [!NOTE]
-> Remove watched items only reacts to your own playback. If you share a playlist with someone else,
-> an item they finish is not removed on your behalf.
+> Remove watched items only reacts to the owner's playback. If you share a playlist with someone
+> else, an item they finish stays in the list, even if they're an editor.
 
 ## Sharing a playlist
 
@@ -37,6 +38,8 @@ Every playlist has a visibility:
 | Private | Only the owner, plus anyone added by hand |
 | Followers only | The owner's accepted followers |
 | Public | Any signed-in user |
+
+An account that turned off sharing features can only keep its playlists private.
 
 Followers-only and public visibility grant read access without adding anyone by hand. To let
 someone actually edit a shared playlist, add them as a member with a role:
@@ -53,23 +56,25 @@ they've accepted. A user who turned off sharing entirely can never be added.
 
 ## Saving someone else's playlist
 
-A public or followers-only playlist you can see can be saved to your own playlist list with one
-click, the same way you'd bookmark a playlist in a music app. Saving doesn't grant you any extra
-access: your access to its content still comes from the visibility rule above, so you need at
-least viewer access to save it in the first place.
+Any playlist someone else owns that you can see (public, followers-only, or one you were added to)
+can be saved to your own playlist list with the **Save** button, the same way you'd bookmark a
+playlist in a music app. Saving doesn't grant you any extra access: your access to its content
+still comes from the rules above, so you need at least viewer access to save it in the first place.
 
 ## Covers
 
-A playlist's cover is generated automatically: a 2x2 mosaic of the first four posters once a
-playlist has four items or more, a single poster for one to three items, or a placeholder icon for
-an empty one. There is no custom cover upload.
+A playlist's cover is generated automatically from the posters of the titles in it, counting each
+movie or series once (ten episodes of one series give a single poster): a 2x2 mosaic once there
+are four different posters, a single poster for one to three, or a placeholder icon when there are
+none. There is no custom cover upload.
 
 ## Automatic download
 
 On mobile (iOS, Android) and the desktop app, a playlist can be turned into an automatic download:
 unwatched items are fetched to the device, and items you've already watched are removed again to
 give the space back. This is a per-device setting, not something that follows your account, and it
-only appears on those clients: TVs and the web app don't offer it.
+only appears on those clients: TVs and the web app don't offer it. The toggle sits in the
+playlist's settings, so only the owner or an administrator of the playlist can turn it on.
 
 See [Offline downloads](/features/offline-downloads) for the full picture, including storage
 limits.

@@ -76,7 +76,7 @@ its published, now-outdated ones:
         "id": "acme-webhooks.settings.general",
         "slot": "settings.page",
         "weight": 100,
-        "labelKey": "webhooks.config.title",
+        "labelKey": "acme.webhooks.config.title",
         "icon": "webhook",
         "action": { "kind": "route", "path": "/admin/settings/plugins/acme.webhooks/general" }
       }
@@ -84,33 +84,37 @@ its published, now-outdated ones:
     "configPages": [
       {
         "id": "general",
-        "labelKey": "webhooks.config.title",
+        "labelKey": "acme.webhooks.config.title",
         "icon": "webhook",
         "fields": [
           {
             "key": "endpoint_url",
             "type": "url",
-            "labelKey": "webhooks.config.endpoint_url",
-            "hint": "webhooks.config.endpoint_url_hint",
+            "labelKey": "acme.webhooks.config.endpoint_url",
+            "hint": "acme.webhooks.config.endpoint_url_hint",
             "required": true
           }
         ],
         "actions": [
-          { "id": "test-delivery", "labelKey": "webhooks.config.test", "actionId": "events.test-delivery" }
+          { "id": "test-delivery", "labelKey": "acme.webhooks.config.test", "actionId": "events.test-delivery" }
         ]
       }
     ]
   },
   "i18n": {
     "en": {
-      "webhooks.config.title": "Webhook notifications",
-      "webhooks.config.endpoint_url": "Endpoint URL",
-      "webhooks.config.endpoint_url_hint": "Fliks POSTs the event here over https. Nothing is sent while this is empty.",
-      "webhooks.config.test": "Send a test event"
+      "acme.webhooks.config.title": "Webhook notifications",
+      "acme.webhooks.config.endpoint_url": "Endpoint URL",
+      "acme.webhooks.config.endpoint_url_hint": "Fliks POSTs the event here over https. Nothing is sent while this is empty.",
+      "acme.webhooks.config.test": "Send a test event"
     }
   }
 }
 ```
+
+Its i18n keys sit under `acme.`, not `webhooks.` as in the official plugin: an i18n root is claimed
+by the first plugin that uses it, so reusing the official plugin's root would fail with
+`i18n-namespace-conflict` on a server that has it installed.
 
 The `actionId: "events.test-delivery"` button is one of the small set of buttons core itself
 implements on a `form` page: since a `data` plugin executes no code of its own, this is the only way

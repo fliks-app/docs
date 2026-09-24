@@ -35,7 +35,8 @@ A few playback limitations are specific to this platform:
 ## Sideloading
 
 Sideloading a Tizen app is a developer-facing process: it needs Tizen Studio's command-line tools,
-the TV's own device certificate, and a Samsung distributor certificate tied to that specific TV.
+a Samsung account, and a Samsung author and distributor certificate pair tied to that specific
+TV's device ID.
 There is no shortcut around this; it's how Samsung's TV platform works for any unpublished app, not
 a Fliks-specific limitation.
 
@@ -48,10 +49,10 @@ At a high level:
 3. Read the TV's device ID (`sdb -s <TV_IP>:26101 shell 0 getduid`), generate a Samsung author
    certificate and a distributor certificate for that ID, and register them as a security profile
    (`tizen security-profiles add`).
-4. Sign the release `Fliks-<version>.wgt` with that profile
-   (`tizen package -t wgt -s <profile> -- <folder containing the .wgt>`), install it
-   (`tizen install -n Fliks-<version>.wgt -s <TV_IP>:26101 -- <that folder>`) and launch it
-   (`tizen run -p FliksMedia.Fliks -s <TV_IP>:26101`).
+4. Extract the release `Fliks-<version>.wgt` (it's a zip archive) into a folder, sign that folder
+   with your profile (`tizen package -t wgt -s <profile> -- <folder>`, which writes a signed
+   `Fliks.wgt` inside it), install it (`tizen install -n Fliks.wgt -s <TV_IP>:26101 -- <folder>`)
+   and launch it (`tizen run -p FliksMedia.Fliks -s <TV_IP>:26101`).
 
 `sdb install` is not a substitute for `tizen install`: it only copies the file to the TV. The full
 walkthrough, including certificate generation, is in `client/tizen/README.md` in the

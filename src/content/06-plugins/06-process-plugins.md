@@ -21,7 +21,7 @@ for the wire format itself.
 | `hello` | Once, right after connecting | 10 s | Return `{ manifest, token }`. `manifest` should be read fresh from disk (`plugin.json` next to your bundle), not a copy baked into the bundle, since it's what core actually enforces against. `token` is `FLIKS_PLUGIN_TOKEN` echoed back unmodified; getting this wrong is treated as an impostor on the socket and the process is killed immediately, with no message naming why beyond `hello token mismatch` in core's own log. |
 | `health` | Every 15 s, no payload | 3 s | Reply `{ ok: boolean, detail?: string }`. `ok: false` counts exactly like a missed or timed-out call. `detail` is logged against this plugin's own log stream, name what's wrong there if you can. |
 | `job` | On a cron tick, or an admin's manual trigger, for a job this manifest declared | 60 min | `{ name, jobId, args? } => { ok: true }`. There is no `else`: a rejection is only logged, never retried automatically. |
-| `http` | Once per proxied request to a declared route | 180 s | `{ method, path, query, body, principal } => { status, headers, body }`. `principal` is `{ kind: 'delegated', userId }` for a request made on behalf of a signed-in user, or `{ kind: 'system' }` for one core makes itself (a job's pre-roll ask, for instance). |
+| `http` | Once per proxied request to a declared route | 180 s | `{ method, path, query, body, principal } => { status, headers, body }`. `principal` is `{ kind: 'delegated', userId }`, the signed-in user the request is made for. The contract also defines `{ kind: 'system' }`, but core sends `delegated` on every call today, proxied routes and the player's pre-roll call alike. |
 | `event` | A **note**, no reply | n/a | `{ name, payload }`, one of core's domain event names. Every running `process` plugin gets every domain event; there is no per-plugin filtering, so ignore what you don't care about. |
 | `config` | A **note**, no reply | n/a | `{ changed: string[] }`, the unprefixed keys of your own `plugin.<id>.*` settings that just changed. It names what changed, never the new value, call `config.get` for that. |
 | `shutdown` | Once, before core sends SIGTERM | 3 s, then 2 s grace before SIGKILL | Reply `{ ok: true }` and exit soon after (`setTimeout(() => process.exit(0), 10)` is the pattern both real plugins use, so the reply flushes before the process disappears). |
@@ -83,7 +83,8 @@ The full state machine and its thresholds are in
 [Architecture](/plugins/architecture#process-isolation). One thing worth restating here because
 it changes how you should read a stuck plugin: **six crashes inside a rolling 10-minute window trip
 a permanent circuit breaker**. The supervisor stops retrying entirely, the plugin's row shows
-`Failed`, and it stays that way until an admin disables and re-enables it (or installs an upgrade).
+`Failed`, and it stays that way until an admin disables and re-enables it, installs an upgrade, or
+calls `POST /api/plugins/<id>/restart`.
 If your plugin is crash-looping during development, fix the crash rather than waiting it out, past
 that sixth crash nothing will restart it for you.
 
@@ -132,7 +133,7 @@ Two directories, and only two:
 
 ## Metrics
 
-`GET /api/plugins/metrics` (admin-only) reports, per installed plugin, `{ pluginId, kind, metrics }`,
+`GET /api/plugins/metrics` (needs the `read:Settings` permission) reports, per installed plugin, `{ pluginId, kind, metrics }`,
 with `metrics: null` for a `data` plugin (it has no supervisor) and for a `process` plugin that
 isn't currently running, never a row of zeros that reads like a healthy process. For a running
 `process` plugin:

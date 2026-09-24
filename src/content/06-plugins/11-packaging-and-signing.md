@@ -48,11 +48,13 @@ npm run package-plugin -- <built-plugin-dir> [-o out.fkplugin]
 `<built-plugin-dir>` is a directory holding your built `plugin.json`, `plugin.js` (for a `process`
 manifest) and logo. This tool:
 
-1. Recomputes every `files` sha256 itself, rather than trusting whatever your manifest already
-   says, a hand-written value is refused.
+1. For a `process` manifest, computes the `files` map (the sha256 of `plugin.js` and the logo)
+   itself and writes it into the archived `plugin.json`, replacing whatever your source manifest
+   says, so you never hand-write it.
 2. Refuses early, by name, on anything the inspector would refuse later anyway: a missing
-   `plugin.js` for a `process` manifest, one present on a `data` manifest, a `logo` field that
-   doesn't match what's on disk, an oversized entry, a bad id or version.
+   `plugin.js` for a `process` manifest, one present on a `data` manifest, any other file in the
+   directory beyond the legal entry names, a `logo` field that doesn't match what's on disk, an
+   oversized entry, a manifest that fails validation, a bad id or version.
 3. Writes an archive that is **always unsigned**.
 
 ```text
@@ -60,7 +62,8 @@ wrote /path/to/acme.tool-1.0.0.fkplugin (1942 bytes) for acme.tool@1.0.0
 unsigned: installable only on a core whose "allow unsigned plugins" plugin setting is on
 ```
 
-That output is exactly right for local iteration (see [Your first plugin](/plugins/first-plugin)),
+(The second line is worded for `process` plugins: a `data` plugin installs unsigned without that
+setting.) That output is exactly right for local iteration (see [Your first plugin](/plugins/first-plugin)),
 and exactly wrong for anything you intend other people to install: signing for real distribution is
 a separate, later step this tool deliberately does not perform.
 
@@ -75,10 +78,15 @@ separate failure from a bad signature.
 - `plugin.json.sig` is the base64 text of the raw 64-byte signature. Its length must decode to
   exactly 64 bytes, or the archive is refused with `PLUGIN_BAD_SIGNATURE` before the manifest is
   even parsed.
-- The signature is checked against a **compiled-in public key** on core's side. There is no
+- The signature is checked against the **compiled-in official public keys** on core's side
+  (`OFFICIAL_KEYS` in `archive/trust-store.ts`; today one key, `release-2026`). There is no
   registry of third-party keys built into core: the only way an archive becomes `official` trust is
-  a signature that verifies against that one key, everything else is `unverified` (a valid-length
-  signature from a key core doesn't know) or `unsigned` (no signature at all). See
+  a signature that verifies against one of those keys, everything else is `unverified` (a
+  64-byte signature that verifies against no official key, whoever made it) or `unsigned` (no
+  signature at all).
+- Only `unsigned` is gated by the admin setting **Allow unsigned plugins** (`plugins.allow_unsigned`),
+  and only for a `process` archive. An `unverified` archive installs without it; the admin UI makes
+  the admin tick an acknowledgement on the consent sheet first. See
   [Publishing](/plugins/publishing) for what that means for your own catalog.
 
 > [!IMPORTANT]
@@ -91,18 +99,21 @@ separate failure from a bad signature.
 ## Hand-rolling your own packaging step
 
 Both real plugins covered in [Examples](/plugins/examples) build their own archive with about 100
-lines of plain Node, no zip dependency, in this shape:
+lines of plain Node, no zip dependency (`scripts/build.ts`, then `scripts/package-archive.ts`; run
+them with `npm run build` and `npm run package`), in this shape:
 
-1. Bundle (`esbuild`, `--bundle --platform=node --target=node24`).
+1. Bundle with esbuild (`bundle: true`, `platform: 'node'`, `target: 'node24'`, `format: 'cjs'`).
 2. Compute the sha256 of the built `plugin.js` and the logo; write them into `files`.
-3. Write out `plugin.json` (your template plus the computed `version` and `files`).
-4. If a signing key is available (an environment variable holding an Ed25519 private key in PEM or
-   base64 DER), sign the manifest bytes and write `plugin.json.sig` as base64. Otherwise skip it,
-   the archive is unsigned.
-5. Build the zip by hand: **store method only** (no compression), a real CRC32
-   (`node:zlib.crc32`), the UTF-8 filename flag, a fixed DOS date/time (so two builds of identical
+3. Write out `plugin.json` (the manifest template plus `version` from `package.json` and the
+   computed `files`).
+4. Optionally sign. The download plugin's script never signs: its release archives are built and
+   signed by the catalog instead (see [Publishing](/plugins/publishing#the-official-catalog)). The
+   notify plugin's script signs when `FK_NOTIFY_SIGNING_KEY` holds an Ed25519 private key in PEM
+   form, writing `plugin.json.sig` as base64; otherwise its archive is unsigned too.
+5. Build the zip by hand: **store method only** (no compression), a CRC32 computed in a few lines
+   of plain JavaScript, the UTF-8 filename flag, a fixed DOS date/time (so two builds of identical
    input produce byte-identical output), no archive comment, entries in a fixed order
-   (`plugin.json`, `plugin.json.sig` if present, `plugin.js` if present, the logo).
+   (`plugin.json`, `plugin.json.sig` if present, `plugin.js`, the logo).
 
 Doing it this way, with no dependency at all, is deliberate in both real plugins: a packaging tool
 whose job is partly to gatekeep supply-chain risk for everyone downstream of your archive shouldn't
@@ -113,6 +124,11 @@ import its own.
 ```ts
 import { generateKeyPairSync } from 'node:crypto';
 const { publicKey, privateKey } = generateKeyPairSync('ed25519');
+
+// Public half in the format Fliks pins: the raw 32-byte key, base64 (the last 32 bytes of the SPKI DER).
+const publicB64 = publicKey.export({ type: 'spki', format: 'der' }).subarray(-32).toString('base64');
+// Private half as base64 PKCS#8 DER, the format the catalog's signing script reads.
+const privateB64 = privateKey.export({ type: 'pkcs8', format: 'der' }).toString('base64');
 ```
 
 - Keep the **private** half only in a CI secret (or your own local secret store); never commit it.
@@ -135,6 +151,6 @@ The full mechanics of running this as an actual catalog other people install fro
 - [ ] `files` is computed by your build step, never hand-written.
 - [ ] The archive holds only legal entries, and nothing exceeds the size caps above.
 - [ ] You signed the **archived** manifest bytes, not your source file, if you signed at all.
-- [ ] `npm run package-plugin` (or your own `verify-with-core.ts`, see
+- [ ] `npm run package-plugin` packs it without error (or your own `verify-with-core.ts`, see
       [Testing and debugging](/plugins/testing-and-debugging#verifying-your-archive-against-the-real-core-inspector))
       accepts it before you try installing it anywhere.

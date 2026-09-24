@@ -30,11 +30,12 @@ latter breaks asset loading. A dedicated subdomain is the simplest way to get th
 
 ## Tell Fliks its public address
 
-Set the **Public URL** under **Settings > General** to the address people actually use
+Set **Public address** under **Settings > General** to the address people actually use
 (`https://fliks.example.com`). It's used to build stream URLs for Chromecast, which connects
 directly to the server rather than through whatever device is casting; leave it blank and Fliks
-falls back to guessing from the request's `Host` header, which is often wrong behind a proxy
-(it sees the proxy's own address, not the public one).
+builds them from the request's `Host` and `X-Forwarded-Proto` headers, which is wrong whenever
+the proxy doesn't pass the original `Host` through (it then sees the proxy's own upstream
+address, not the public one).
 
 ## nginx
 
@@ -106,7 +107,5 @@ nothing in the chain buffers the SSE responses.
 
 ## See also
 
-- [Docker](/install/docker) for `network_mode: host`, needed if you also want Chromecast
-  discovery to work from the same host.
 - [Environment variables](/install/environment-variables) for `CORS_ORIGIN`, needed if the web
   client and the API end up served from different origins.

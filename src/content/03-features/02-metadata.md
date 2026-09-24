@@ -12,14 +12,16 @@ Fliks fetches titles, artwork, cast and crew from two providers:
 | **TMDB** | Movies and series; also trending, popular, upcoming and discovery browsing |
 | **TVDB** | Movies and series, as an alternative source |
 
-TMDB is the default, and the fallback whenever a library doesn't specify a preference. A library
-can be set to prefer one provider over the other (**Settings > Libraries**), and that preference
-can be overridden again for one specific title, or even one specific season, if the usual source is
-missing something for it.
+TMDB is the default, and the fallback whenever a library's **Metadata provider** is left on
+**Auto**. A library can be set to prefer one provider over the other (**Settings > Libraries**), and
+that preference can be overridden again for one specific title, or even one specific season, if the
+usual source is missing something for it.
 
 > [!NOTE]
-> Both providers need an API key to work. The official Docker image already ships with one built
-> in; you only need to supply your own if you build the image yourself from source.
+> Both providers need an API key to work. The official Docker image and the Windows and macOS
+> installers already ship with them built in; you only need to supply your own (`TMDB_API_KEY`,
+> `TVDB_API_KEY`) if you build Fliks yourself from source. Without a TMDB key, the metadata refresh
+> jobs below don't run at all.
 
 ## Language and region
 
@@ -31,11 +33,12 @@ takes effect on the next refresh: anything already imported keeps what it has un
 
 ## Keeping metadata current
 
-A daily background job refreshes metadata on its own: older movies and series that have finished
-airing are refreshed about once a week, and anything still airing is refreshed daily. You can also
-trigger this by hand from **Settings > System**: **Refresh metadata** for everything, or **Reload
-missing metadata** for titles that are missing a poster, overview or seasons, or simply haven't been
-touched in a while.
+A background job refreshes metadata every night: movies released more than a year ago and series
+that have ended are refreshed about once a week, and everything else daily. You can also trigger
+this by hand from **Settings > System**: **Refresh metadata** runs that same pass right away (so
+settled titles refreshed in the last week are still skipped), and **Reload missing metadata**
+catches titles that are missing a poster, overview or seasons, or haven't been refreshed in three
+months. Titles added without metadata are skipped by both until you identify them.
 
 ## Fixing a wrong match
 

@@ -7,8 +7,9 @@ description: The branch and PR workflow, the commit message rules CI enforces, h
 
 - `main` is protected: direct pushes are rejected. Branch off `main`, push
   the branch, open a pull request, and merge it through GitHub.
-- Local commit hooks (see `.husky/` if present) mirror the CI check below.
-  Don't bypass them with `--no-verify`.
+- The repository ships no local commit hooks (no `.husky/` directory), so
+  nothing checks a message before the CI run below. If you add a hook of
+  your own, don't bypass it with `--no-verify`.
 - If a branch's history has commits that fail the commit lint (it runs on
   every commit in the PR, not just the merge), a clean squash-merge with a
   conventional title is simpler than rewriting and force-pushing.
@@ -18,7 +19,9 @@ description: The branch and PR workflow, the commit message rules CI enforces, h
 Every push and pull request against `main` runs
 [`wagoid/commitlint-github-action`](https://github.com/wagoid/commitlint-github-action)
 with `@commitlint/config-conventional` defaults
-(`.github/workflows/commit-lint.yml`). A failing check blocks the merge.
+(`.github/workflows/commit-lint.yml`; the repository has no commitlint
+config file, so the action falls back to that preset). A failing check
+blocks the merge.
 
 - **Header**: `type(scope): subject`. Type and scope lowercase, scope
   optional but encouraged.
@@ -77,9 +80,10 @@ The version bump follows the commit types merged since the last release:
 - a `BREAKING CHANGE:` footer → major
 - everything else (`chore`, `docs`, `test`, ...) doesn't bump the version
 
-Merging the release PR tags `v<version>` and cuts a GitHub release, which
-in turn triggers the Docker image publish and the various platform publish
-workflows.
+Merging the release PR tags `v<version>` and cuts a GitHub release. The
+`v*` tag triggers the Docker image publish and the platform publish
+workflows (app stores, TV stores, the Windows and macOS server builds);
+the desktop client's release workflow is started by hand.
 
 ## Code style
 
@@ -102,6 +106,17 @@ workflows.
 > No workflow currently runs lint or the test suites automatically on a
 > pull request; see [Dev environment](/development/dev-environment#tests)
 > for running them locally before you push.
+
+What CI does run on a pull request:
+
+- the two commit message checks above (`commit-lint.yml`);
+- `db-migrations.yml`, when `backend/` changes: applies every migration to
+  a fresh PostgreSQL and fails if the entities need a migration nobody
+  committed;
+- `native-build.yml`, when `client/` changes: compiles the Android and iOS
+  shells, unsigned;
+- `windows-installer.yml`, when `windows/` changes: builds the Windows
+  server bundle.
 
 ## Where to ask
 

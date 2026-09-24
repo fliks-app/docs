@@ -27,13 +27,17 @@ import type { ConfigPage, UiContribution } from '@fliks/plugin-contract/ui';
 ```
 
 Take a runtime **value** from the barrel and a bundler cannot drop the `semver` dependency it pulls
-in along with it, that's the difference between a 4 KB bundle and a 72 KB one for constants you
-could have inlined. Import values from the leaf module, types from wherever's convenient.
+in along with it, so a few constants end up dragging a whole semver library into your bundle.
+Import values from the leaf module, types from wherever's convenient.
+
+A `process` plugin ships as one bundled `plugin.js`: an archive carries no `node_modules`, so an
+unbundled `require` of this package (or of anything else) fails at spawn.
 
 > [!NOTE]
 > Both real-world plugins covered in [Examples](/plugins/examples) predate this package and
-> hand-restate its types instead of depending on it, guarded by a script that diffs their copy
-> against core's on demand. For a new plugin, just depend on the package; restating it yourself
+> hand-restate the parts of its types they use instead of depending on it. The download plugin
+> guards its copy with `npm run check-contract-drift` (and a test that runs the same diff when a
+> sibling Fliks checkout is present); the notify plugin has no such check. For a new plugin, just depend on the package; restating it yourself
 > only makes sense if you have a specific reason to avoid the dependency.
 
 ## `PluginApi`: the 7 methods core calls on your plugin
@@ -68,7 +72,9 @@ export interface PluginApi {
 }
 ```
 
-Behavioural notes for each are in [Process plugins](/plugins/process-plugins#the-7-lifecycle-hooks).
+`hello`'s `token` is the `FLIKS_PLUGIN_TOKEN` value from your environment, echoed back unchanged: it
+proves the responder is the process core spawned, and core never sends it to you. Behavioural notes
+for each method are in [Process plugins](/plugins/process-plugins#the-7-lifecycle-hooks).
 
 ## `PluginHostApi`: the 15 methods you call on core
 
@@ -242,6 +248,22 @@ interface PluginHostApi {
 }
 ```
 
+### Which scope each method needs
+
+A **scope** is a permission your manifest requests and the admin consents to at install.
+`HOST_METHOD_SCOPES` (in `principal.ts`) lists the scopes each host method requires; a call needs
+**all** of them.
+
+| Method | Required scopes |
+|---|---|
+| `media.acquisitionContext`, `media.resolve`, `media.exists` | `media:read` |
+| `acquisition.candidates`, `releases.match` | `acquisition:candidates` and `media:read` |
+| `releases.score` | `releases:score` |
+| `requests.markInProgress` | `requests:progress` |
+| `library.ingest` | `ingest:write` |
+| `events.publish`, `notifications.dispatch`, `counts.set`, `events.emitOwn`, `progress.set` | `events:emit` |
+| `config.get`, `config.set` | `config:rw` |
+
 ## Supporting types
 
 ```ts
@@ -294,6 +316,9 @@ export interface ScoredRelease {
   rejections: { code: string; params?: Record<string, number | string> }[];
 }
 
+/** Who an `http` callback acts for: `delegated` is a proxied request from a signed-in user,
+ *  re-checked by core against that user on every host call; `system` is a background job,
+ *  limited to the scopes consented at install. */
 export type Principal = { kind: 'delegated'; userId: number } | { kind: 'system' };
 
 export type PluginScope =
@@ -347,6 +372,12 @@ export interface PluginSpawnEnv {
   TZ: string;
 }
 ```
+
+`FLIKS_API_VERSION` is the `pluginApi` your own manifest declares, as a string; core answers every
+plugin in the version its manifest declares. `FLIKS_DB_URL` is `''` when your manifest declares no
+schema. On top of these, every `plugin.<id>.<key>` setting arrives as an env var named `FLIKS_CFG_`
+plus the key upper-cased, with every character outside `[A-Z0-9_]` replaced by `_`. Those are a
+snapshot taken at spawn.
 
 ## `fliksRangeVersion`
 

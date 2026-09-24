@@ -5,12 +5,14 @@ description: How to move the server to a newer release on each install method, a
 
 ## The update check
 
-Any admin sees an update indicator in the web client's top bar when a newer server release
-exists. It only checks; it never installs anything by itself, on any install method. The check
-polls the project's public GitHub releases once every few hours and is cached, so it costs
-nothing per page load. Set `FLIKS_DISABLE_UPDATE_CHECK=1` (an environment variable, Docker and
-from-source only) to turn off the outbound request entirely, if you'd rather update on your own
-schedule without Fliks phoning out for it.
+Any admin sees an update button in the web client's top bar when a newer server release
+exists; it opens the release notes. It only checks; it never installs anything by itself, on
+any install method. There is no background polling: the server asks the project's public
+GitHub releases only when the web client asks it, and caches the answer for six hours, so it
+costs nothing per page load. Set the `FLIKS_DISABLE_UPDATE_CHECK=1` environment variable (on
+Docker or a source install) to turn off the outbound request entirely,
+if you'd rather update on your own schedule without Fliks phoning out for it. The TrueNAS app
+sets it for you.
 
 ## Database migrations
 
@@ -39,8 +41,8 @@ run it the same way you did the first time:
 
 - **Windows**: the installer replaces the app under `%LOCALAPPDATA%\Programs\Fliks`; your data
   under `%LOCALAPPDATA%\Fliks` is untouched.
-- **macOS**: quit Fliks, drag the new `.dmg`'s app over the one in Applications, and relaunch;
-  your data under `~/Library/Application Support/Fliks` is untouched.
+- **macOS**: quit Fliks, drag **Fliks Server** from the new `.dmg` over the one in
+  Applications, and relaunch; your data under `~/Library/Application Support/Fliks` is untouched.
 
 ## From source
 
@@ -51,7 +53,8 @@ cd client && npm ci && npx ng build --configuration=production
 cd ../backend && npm ci && npm run build
 ```
 
-Restart `node dist/main`; migrations run as part of that startup.
+Restart `node dist/main` with the same environment as before (including `NODE_ENV=production`);
+migrations run as part of that startup.
 
 ## TrueNAS
 
