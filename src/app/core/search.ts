@@ -22,11 +22,18 @@ export class SearchService {
     const scored: { entry: SearchEntry; score: number }[] = [];
     for (const entry of index) {
       const titleLc = entry.title.toLowerCase();
+      const sectionLc = entry.section.toLowerCase();
       const textLc = entry.text.toLowerCase();
       let score = 0;
       for (const term of terms) {
-        if (titleLc.includes(term)) score += 5;
-        if (textLc.includes(term)) score += 1;
+        const termScore =
+          (titleLc.includes(term) ? 5 : 0) + (sectionLc.includes(term) ? 2 : 0) + (textLc.includes(term) ? 1 : 0);
+        // Every term has to match somewhere, so adding words narrows the results.
+        if (!termScore) {
+          score = 0;
+          break;
+        }
+        score += termScore;
       }
       if (score > 0) scored.push({ entry, score });
     }

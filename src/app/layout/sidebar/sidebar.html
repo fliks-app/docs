@@ -1,41 +1,41 @@
-<nav class="flex flex-col gap-6 text-sm">
-  @for (group of ['user', 'dev']; track group) {
-    @if (sectionsInGroup(group).length) {
-      <div>
-        <div class="mb-2 px-2 text-xs font-semibold uppercase tracking-wide opacity-50">
-          {{ group === 'dev' ? 'Developers' : 'Documentation' }}
-        </div>
-        <div class="flex flex-col gap-0.5">
-          @for (section of sectionsInGroup(group); track section.slug) {
-            <details class="group" [open]="isCurrentSection(section)">
-              <summary
-                class="flex cursor-pointer list-none items-center justify-between rounded-field px-2 py-1.5 font-medium hover:bg-base-200"
-              >
-                {{ section.title }}
-                <svg
-                  lucideChevronRight
-                  class="h-3.5 w-3.5 shrink-0 opacity-60 transition-transform group-open:rotate-90"
-                ></svg>
-              </summary>
-              <ul class="ms-2 flex flex-col gap-0.5 border-s border-base-300 ps-2 py-1">
-                @for (page of section.pages; track page.url) {
-                  <li>
-                    <a
-                      [routerLink]="page.url"
-                      class="block truncate rounded-field px-2 py-1 hover:bg-base-200"
-                      [class.bg-base-200]="currentUrl() === page.url"
-                      [class.text-primary]="currentUrl() === page.url"
-                      [class.font-medium]="currentUrl() === page.url"
-                    >
-                      {{ page.title }}
-                    </a>
-                  </li>
-                }
-              </ul>
-            </details>
-          }
-        </div>
+<nav class="flex flex-col gap-6 text-sm" aria-label="Documentation">
+  @for (group of groups; track group.label) {
+    <div>
+      <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-base-content/60">{{ group.label }}</p>
+      <div class="flex flex-col gap-0.5">
+        @for (section of group.sections; track section.slug) {
+          <details class="group" [open]="isCurrentSection(section)">
+            <summary
+              class="flex cursor-pointer list-none items-center justify-between rounded-field px-3 py-1.5 font-medium hover:bg-base-200 [&::-webkit-details-marker]:hidden"
+            >
+              {{ section.title }}
+              <svg
+                lucideChevronRight
+                class="h-3.5 w-3.5 shrink-0 text-base-content/50 transition-transform group-open:rotate-90"
+                aria-hidden="true"
+              ></svg>
+            </summary>
+            <ul class="my-1 ms-3 flex flex-col gap-px border-s border-base-300">
+              @for (page of section.pages; track page.url) {
+                <li>
+                  <a
+                    [routerLink]="page.url"
+                    class="-ms-px block border-s-2 py-1 ps-3 pe-2 leading-snug transition-colors"
+                    [class]="
+                      currentPath() === page.url
+                        ? 'border-primary font-medium text-primary'
+                        : 'border-transparent text-base-content/70 hover:border-base-content/30 hover:text-base-content'
+                    "
+                    [attr.aria-current]="currentPath() === page.url ? 'page' : null"
+                  >
+                    {{ page.title }}
+                  </a>
+                </li>
+              }
+            </ul>
+          </details>
+        }
       </div>
-    }
+    </div>
   }
 </nav>

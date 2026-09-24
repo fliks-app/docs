@@ -5,6 +5,8 @@ import { filter, map } from 'rxjs';
 import { LucideChevronRight } from '@lucide/angular';
 import { DocSection, SECTIONS } from '../../../generated/manifest';
 
+const pathOf = (url: string) => url.split(/[?#]/)[0];
+
 @Component({
   selector: 'app-sidebar',
   imports: [RouterLink, LucideChevronRight],
@@ -13,20 +15,20 @@ import { DocSection, SECTIONS } from '../../../generated/manifest';
 export class Sidebar {
   private readonly router = inject(Router);
 
-  protected readonly sections = SECTIONS;
-  protected readonly currentUrl = toSignal(
+  protected readonly groups = [
+    { label: 'Documentation', sections: SECTIONS.filter((s) => s.group === 'user') },
+    { label: 'Developers', sections: SECTIONS.filter((s) => s.group === 'dev') },
+  ].filter((g) => g.sections.length);
+
+  protected readonly currentPath = toSignal(
     this.router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
-      map((e) => e.urlAfterRedirects),
+      map((e) => pathOf(e.urlAfterRedirects)),
     ),
-    { initialValue: this.router.url },
+    { initialValue: pathOf(this.router.url) },
   );
 
-  protected sectionsInGroup(group: string): DocSection[] {
-    return this.sections.filter((s) => s.group === group);
-  }
-
   protected isCurrentSection(section: DocSection): boolean {
-    return section.pages.some((p) => p.url === this.currentUrl());
+    return section.pages.some((p) => p.url === this.currentPath());
   }
 }

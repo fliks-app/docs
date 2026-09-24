@@ -1,43 +1,61 @@
-@if (overlay.isOpen()) {
-  <div class="fixed inset-0 z-50 flex items-start justify-center bg-black/40 p-4 pt-[10vh]" (click)="overlay.close()">
-    <div
-      class="w-full max-w-xl rounded-box bg-base-100 shadow-xl"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Search documentation"
-      (click)="$event.stopPropagation()"
-    >
-      <div class="flex items-center gap-2 border-b border-base-300 px-4 py-3">
-        <svg lucideSearch class="h-4 w-4 shrink-0 opacity-60"></svg>
-        <input
-          #input
-          type="text"
-          class="w-full bg-transparent text-sm outline-none"
-          placeholder="Search the docs..."
-          [value]="query()"
-          (input)="onInput($any($event.target).value)"
-        />
-        <button type="button" class="btn btn-ghost btn-xs btn-square" (click)="overlay.close()" aria-label="Close search">
-          <svg lucideX class="h-4 w-4"></svg>
-        </button>
-      </div>
-
-      <div class="max-h-[60vh] overflow-y-auto p-2">
-        @if (query() && results().length === 0) {
-          <p class="px-3 py-6 text-center text-sm opacity-60">No results for "{{ query() }}"</p>
-        }
-        @for (result of results(); track result.url) {
-          <button
-            type="button"
-            class="flex w-full flex-col items-start gap-0.5 rounded-field px-3 py-2 text-start hover:bg-base-200"
-            (click)="go(result.url)"
-          >
-            <span class="text-xs uppercase tracking-wide opacity-50">{{ result.section }}</span>
-            <span class="font-medium">{{ result.title }}</span>
-            <span class="line-clamp-1 text-sm opacity-60">{{ result.text }}</span>
-          </button>
-        }
-      </div>
+<dialog
+  #dialog
+  class="search-dialog"
+  aria-label="Search the documentation"
+  (close)="overlay.close()"
+  (click)="onBackdropClick($event)"
+>
+  <div class="flex max-h-[min(36rem,80dvh)] flex-col overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-2xl">
+    <div class="flex items-center gap-3 border-b border-base-300 px-4">
+      <svg lucideSearch class="h-4 w-4 shrink-0 text-base-content/60" aria-hidden="true"></svg>
+      <input
+        #input
+        type="text"
+        autofocus
+        class="h-14 w-full bg-transparent outline-none"
+        placeholder="Search the docs"
+        autocomplete="off"
+        spellcheck="false"
+        role="combobox"
+        aria-autocomplete="list"
+        aria-controls="search-results"
+        [attr.aria-expanded]="results().length > 0"
+        [attr.aria-activedescendant]="results().length ? 'search-result-' + active() : null"
+        [value]="query()"
+        (input)="onInput($any($event.target).value)"
+        (keydown)="onInputKeydown($event)"
+      />
+      <kbd class="kbd kbd-sm">Esc</kbd>
     </div>
+
+    <ul #list id="search-results" role="listbox" aria-label="Results" class="overflow-y-auto p-2 empty:hidden">
+      @for (result of results(); track result.url; let i = $index) {
+        <li
+          [id]="'search-result-' + i"
+          role="option"
+          [attr.aria-selected]="i === active()"
+          class="flex cursor-pointer items-center gap-3 rounded-field px-3 py-2.5"
+          [class.bg-primary]="i === active()"
+          [class.text-primary-content]="i === active()"
+          (click)="go(result.url)"
+          (mousemove)="active.set(i)"
+        >
+          <div class="min-w-0 flex-1">
+            <div class="text-xs opacity-70">{{ result.section }}</div>
+            <div class="truncate font-medium">{{ result.title }}</div>
+            @if (result.text) {
+              <div class="truncate text-sm opacity-70">{{ result.text }}</div>
+            }
+          </div>
+          @if (i === active()) {
+            <svg lucideCornerDownLeft class="h-4 w-4 shrink-0" aria-hidden="true"></svg>
+          }
+        </li>
+      }
+    </ul>
+
+    @if (query().trim() && results().length === 0) {
+      <p class="px-4 py-10 text-center text-sm text-base-content/60">No results for "{{ query() }}"</p>
+    }
   </div>
-}
+</dialog>

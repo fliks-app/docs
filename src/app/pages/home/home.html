@@ -1,7 +1,15 @@
-<div class="mx-auto max-w-5xl px-4 py-16 sm:py-24">
+<div class="mx-auto max-w-5xl px-4 py-16 sm:px-8 sm:py-24">
   <div class="mb-16 text-center">
-    <img [src]="logo()" alt="Fliks" class="mx-auto mb-6 h-10 w-auto sm:h-12" />
-    <p class="text-lg opacity-70 sm:text-xl">Everything you need to install, run and extend Fliks.</p>
+    <h1 class="mb-6"><img [src]="logo()" alt="Fliks documentation" class="mx-auto h-10 w-auto sm:h-12" /></h1>
+    <p class="text-lg text-base-content/70 sm:text-xl">Everything you need to install, run and extend Fliks.</p>
+    @if (sections.length) {
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a [routerLink]="sections[0].pages[0].url" class="btn btn-primary">Get started</a>
+        @if (developersUrl) {
+          <a [routerLink]="developersUrl" class="btn btn-outline">Build a plugin</a>
+        }
+      </div>
+    }
   </div>
 
   @if (sections.length) {
@@ -9,16 +17,16 @@
       @for (section of sections; track section.slug) {
         <a
           [routerLink]="section.pages[0].url"
-          class="card border border-base-300 bg-base-200/50 p-5 transition-colors hover:bg-base-200"
+          class="card border border-base-300 bg-base-200/40 p-5 transition-colors hover:border-primary hover:bg-base-200/70"
         >
           <h2 class="mb-1 font-semibold">{{ section.title }}</h2>
-          <p class="line-clamp-2 text-sm opacity-70">
+          <p class="line-clamp-2 text-sm text-base-content/70">
             {{ section.pages[0].description || (section.pages.length + ' pages') }}
           </p>
         </a>
       }
     </div>
   } @else {
-    <p class="text-center opacity-60">Documentation is on its way.</p>
+    <p class="text-center text-base-content/60">Documentation is on its way.</p>
   }
 </div>

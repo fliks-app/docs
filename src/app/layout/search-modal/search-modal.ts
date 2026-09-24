@@ -1,16 +1,16 @@
-import { Component, ElementRef, afterRenderEffect, inject, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, effect, inject, signal, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { LucideSearch, LucideX } from '@lucide/angular';
+import { LucideCornerDownLeft, LucideSearch } from '@lucide/angular';
 import { SearchOverlayService } from '../../core/search-overlay';
 import { SearchService } from '../../core/search';
 import type { SearchEntry } from '../../../generated/search-index';
 
 @Component({
   selector: 'app-search-modal',
-  imports: [LucideSearch, LucideX],
+  imports: [LucideSearch, LucideCornerDownLeft],
   templateUrl: './search-modal.html',
   host: {
-    '(document:keydown)': 'onKeydown($event)',
+    '(document:keydown)': 'onGlobalKeydown($event)',
   },
 })
 export class SearchModal {
@@ -20,26 +20,40 @@ export class SearchModal {
 
   protected readonly query = signal('');
   protected readonly results = signal<SearchEntry[]>([]);
-  private readonly input = viewChild<ElementRef<HTMLInputElement>>('input');
+  protected readonly active = signal(0);
+  private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
+  private readonly input = viewChild.required<ElementRef<HTMLInputElement>>('input');
+  private readonly list = viewChild<ElementRef<HTMLElement>>('list');
   private requestId = 0;
 
   constructor() {
-    afterRenderEffect(() => {
-      if (this.overlay.isOpen()) {
-        this.input()?.nativeElement.focus();
+    effect(() => {
+      const dialog = this.dialog().nativeElement;
+      if (this.overlay.isOpen() && !dialog.open) {
+        dialog.showModal();
+        this.input().nativeElement.select();
       }
+      if (!this.overlay.isOpen() && dialog.open) dialog.close();
     });
   }
 
-  protected onKeydown(event: KeyboardEvent): void {
-    const isModK = (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k';
-    if (isModK) {
+  protected onGlobalKeydown(event: KeyboardEvent): void {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
       event.preventDefault();
       this.overlay.toggle();
-      return;
     }
-    if (event.key === 'Escape' && this.overlay.isOpen()) {
-      this.overlay.close();
+  }
+
+  protected onInputKeydown(event: KeyboardEvent): void {
+    const count = this.results().length;
+    if (!count) return;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      this.active.update((i) => (i + (event.key === 'ArrowDown' ? 1 : count - 1)) % count);
+      this.list()?.nativeElement.children[this.active()]?.scrollIntoView({ block: 'nearest' });
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      this.go(this.results()[this.active()].url);
     }
   }
 
@@ -47,13 +61,17 @@ export class SearchModal {
     this.query.set(value);
     const id = ++this.requestId;
     const results = await this.search.search(value);
-    if (id === this.requestId) this.results.set(results);
+    if (id !== this.requestId) return;
+    this.results.set(results);
+    this.active.set(0);
+  }
+
+  protected onBackdropClick(event: MouseEvent): void {
+    if (event.target === this.dialog().nativeElement) this.overlay.close();
   }
 
   protected go(url: string): void {
     this.overlay.close();
-    this.query.set('');
-    this.results.set([]);
     void this.router.navigateByUrl(url);
   }
 }

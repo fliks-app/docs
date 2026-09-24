@@ -1,31 +1,26 @@
-<div class="flex min-h-screen flex-col">
-  <app-navbar />
+<button type="button" class="skip-link btn btn-primary btn-sm" (click)="main.focus()">Skip to content</button>
 
-  <div class="drawer lg:drawer-open flex-1">
-    <input id="docs-drawer" type="checkbox" class="drawer-toggle" />
+<app-navbar />
 
-    <div class="drawer-content flex min-w-0 flex-col">
-      <main class="mx-auto w-full max-w-[100rem] flex-1">
-        <router-outlet />
-      </main>
-      <footer class="border-t border-base-300 py-6 text-center text-sm opacity-60">
-        <a
-          href="https://fliks-app.github.io/showcase/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="link link-hover"
-        >
-          Fliks
-        </a>
-        docs
-      </footer>
-    </div>
+<div class="drawer lg:drawer-open">
+  <input #drawerToggle id="docs-drawer" type="checkbox" class="drawer-toggle" tabindex="-1" aria-hidden="true" />
 
-    <div class="drawer-side z-40">
-      <label for="docs-drawer" aria-label="Close navigation" class="drawer-overlay"></label>
-      <div class="min-h-full w-72 border-e border-base-300 bg-base-100 px-4 py-6 lg:w-64">
-        <app-sidebar />
-      </div>
+  <div class="drawer-content flex min-h-[calc(100dvh-4rem)] min-w-0 flex-col">
+    <main #main tabindex="-1" class="w-full flex-1 outline-none">
+      <router-outlet />
+    </main>
+    <footer class="border-t border-base-300 px-4 py-6 text-center text-sm text-base-content/60">
+      <a href="https://fliks-app.github.io/showcase/" target="_blank" rel="noopener noreferrer" class="link link-hover">
+        Fliks
+      </a>
+      documentation
+    </footer>
+  </div>
+
+  <div class="drawer-side z-40 lg:top-16 lg:h-[calc(100dvh-4rem)]">
+    <label for="docs-drawer" aria-label="Close navigation" class="drawer-overlay"></label>
+    <div class="min-h-full w-72 border-e border-base-300 bg-base-100 px-3 py-6 lg:w-64">
+      <app-sidebar />
     </div>
   </div>
 </div>

@@ -1,17 +1,20 @@
 @if (headings().length) {
-  <nav class="sticky top-20 text-sm" aria-label="On this page">
-    <div class="mb-2 px-2 text-xs font-semibold uppercase tracking-wide opacity-50">On this page</div>
-    <ul class="flex flex-col gap-0.5 border-s border-base-300">
+  <nav class="sticky top-24 max-h-[calc(100dvh-7rem)] overflow-y-auto text-sm" aria-label="On this page">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-base-content/60">On this page</p>
+    <ul class="flex flex-col border-s border-base-300">
       @for (h of headings(); track h.id) {
         <li>
           <a
-            [href]="'#' + h.id"
-            class="-ms-px block truncate border-s-2 py-0.5 ps-3 opacity-70 hover:opacity-100"
-            [class.ps-6]="h.level === 3"
-            [class.border-primary]="activeId() === h.id"
-            [class.text-primary]="activeId() === h.id"
-            [class.opacity-100]="activeId() === h.id"
-            [class.border-transparent]="activeId() !== h.id"
+            [routerLink]="pageUrl()"
+            [fragment]="h.id"
+            class="-ms-px block border-s-2 py-1 leading-snug transition-colors"
+            [class]="
+              (h.level === 3 ? 'ps-6 ' : 'ps-3 ') +
+              (activeId() === h.id
+                ? 'border-primary text-primary'
+                : 'border-transparent text-base-content/70 hover:text-base-content')
+            "
+            [attr.aria-current]="activeId() === h.id ? 'location' : null"
           >
             {{ h.text }}
           </a>

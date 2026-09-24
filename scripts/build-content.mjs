@@ -4,7 +4,7 @@
 // search-index.ts. Fails loudly on anything the writers' contract forbids.
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { Marked } from 'marked';
+import { Marked, Renderer } from 'marked';
 import hljs from 'highlight.js';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -39,7 +39,7 @@ function slugify(text) {
   return text
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/[^\p{L}\p{N}\s_-]/gu, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
@@ -47,17 +47,22 @@ function slugify(text) {
 
 function tokensToPlainText(tokens) {
   return (tokens ?? [])
-    .map((t) => {
-      if (t.type === 'text' || t.type === 'codespan') return t.text ?? '';
-      if (t.tokens) return tokensToPlainText(t.tokens);
-      return t.raw ?? '';
-    })
+    .map((t) => (t.tokens ? tokensToPlainText(t.tokens) : (t.text ?? t.raw ?? '')))
     .join('');
+}
+
+function decodeEntities(text) {
+  return text
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, '&');
 }
 
 /** Minimal frontmatter parser: `key: value` flat string pairs only. */
 function parseFrontmatter(raw) {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+  const match = raw.replace(/^\uFEFF/, '').match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!match) return { data: {}, body: raw };
   const data = {};
   for (const line of match[1].split(/\r?\n/)) {
@@ -74,7 +79,7 @@ function parseFrontmatter(raw) {
     }
     data[key] = value;
   }
-  return { data, body: raw.slice(match[0].length) };
+  return { data, body: raw.replace(/^\uFEFF/, '').slice(match[0].length) };
 }
 
 function highlightCode(code, requestedLang) {
@@ -100,6 +105,7 @@ const CALLOUTS = {
 // ---------- per-page render state (reset before each page) ----------
 
 let currentFile = '';
+let currentUrl = '';
 let headings = [];
 let slugCounts = new Map();
 let pageLinks = [];
@@ -112,14 +118,14 @@ const docsRenderer = {
   heading({ tokens, depth }) {
     const html = this.parser.parseInline(tokens);
     const text = tokensToPlainText(tokens);
-    let id = slugify(text) || 'section';
-    const count = slugCounts.get(id) ?? 0;
-    slugCounts.set(id, count + 1);
-    if (count > 0) id = `${id}-${count}`;
+    const base = slugify(text) || 'section';
+    let id = base;
+    for (let n = 1; slugCounts.has(id); n++) id = `${base}-${n}`;
+    slugCounts.set(id, true);
     if (depth === 2 || depth === 3) {
       headings.push({ id, text, level: depth });
     }
-    return `<h${depth} id="${id}"><a class="heading-anchor" href="#${id}" aria-label="Link to this section">#</a>${html}</h${depth}>\n`;
+    return `<h${depth} id="${id}">${html}<a class="heading-anchor" href="${currentUrl}#${id}" aria-label="Link to this section">#</a></h${depth}>\n`;
   },
 
   code({ text, lang }) {
@@ -130,8 +136,7 @@ const docsRenderer = {
     return (
       `<div class="code-block" data-lang="${escapeHtml(label)}">` +
       `<div class="code-block-header"><span class="code-lang">${escapeHtml(label)}</span>` +
-      `<button type="button" class="copy-btn" aria-label="Copy code to clipboard">` +
-      `<span class="copy-btn-label">Copy</span></button></div>` +
+      `<button type="button" class="copy-btn"><span class="copy-btn-label" aria-live="polite">Copy</span></button></div>` +
       `<pre><code class="hljs language-${escapeHtml(usedLang)}">${html}</code></pre></div>\n`
     );
   },
@@ -144,7 +149,9 @@ const docsRenderer = {
     }
     if (href.startsWith('/') || href.startsWith('#')) {
       pageLinks.push({ href, file: currentFile });
-      return `<a href="${escapeHtml(href)}"${titleAttr}>${text}</a>`;
+      // Same-page anchors carry the page path: a bare "#x" would resolve against <base href>.
+      const target = href.startsWith('#') ? currentUrl + href : href;
+      return `<a href="${escapeHtml(target)}"${titleAttr}>${text}</a>`;
     }
     fail(
       `${currentFile}: internal link "${href}" must be root-absolute (e.g. /install/docker) or a same-page anchor (#heading)`,
@@ -169,13 +176,17 @@ const docsRenderer = {
       const meta = CALLOUTS[type];
       const bodyHtml = marked.parse(body);
       return (
-        `<div class="alert doc-callout doc-callout-${meta.variant}" role="note">` +
+        `<div class="doc-callout doc-callout-${meta.variant}" role="note">` +
         `<span class="doc-callout-label">${meta.label}</span>` +
         `<div class="doc-callout-body">${bodyHtml}</div></div>\n`
       );
     }
     const body = this.parser.parse(token.tokens);
     return `<blockquote>\n${body}</blockquote>\n`;
+  },
+
+  table(token) {
+    return `<div class="table-wrap">${Renderer.prototype.table.call(this, token)}</div>\n`;
   },
 };
 
@@ -228,6 +239,7 @@ function readSections() {
       const [, pOrderStr, pSlug] = fileName.match(/^(\d+)-(.+)\.md$/);
       const relPath = `${dirName}/${fileName}`;
       currentFile = relPath;
+      currentUrl = `/${slug}/${pSlug}`;
       headings = [];
       slugCounts = new Map();
       pageLinks = [];
@@ -362,10 +374,6 @@ const manifestSections = sections.map((s) => ({
   })),
 }));
 
-const manifestPagesByUrl = Object.fromEntries(
-  manifestSections.flatMap((s) => s.pages.map((p) => [p.url, p])),
-);
-
 writeFileSync(
   path.join(GENERATED_DIR, 'manifest.ts'),
   `// Auto-generated by scripts/build-content.mjs. Do not edit.
@@ -387,8 +395,10 @@ export interface DocSection {
   group: 'user' | 'dev';
   pages: DocPageMeta[];
 }
-export const SECTIONS: DocSection[] = ${JSON.stringify(manifestSections, null, 2)};
-export const PAGES_BY_URL: Record<string, DocPageMeta> = ${JSON.stringify(manifestPagesByUrl, null, 2)};
+export const SECTIONS: DocSection[] = ${JSON.stringify(manifestSections)};
+export const PAGES_BY_URL: Record<string, DocPageMeta> = Object.fromEntries(
+  SECTIONS.flatMap((s) => s.pages.map((p) => [p.url, p])),
+);
 export const FIRST_SECTION_PAGE_URL: string | null = ${JSON.stringify(firstSectionPageUrl)};
 export const FIRST_PLUGINS_PAGE_URL: string | null = ${JSON.stringify(firstPluginsPageUrl)};
 `,
@@ -404,7 +414,7 @@ for (const section of sections) {
       path.join(GENERATED_DIR, 'pages', `${key}.page.ts`),
       `// Auto-generated by scripts/build-content.mjs. Do not edit.\nexport const PAGE_HTML: string = ${JSON.stringify(page.html)};\n`,
     );
-    routeEntries.push({ path: page.url.slice(1), pageUrl: page.url, key });
+    routeEntries.push({ path: page.url.slice(1), pageUrl: page.url, title: page.title, key });
   }
 }
 routeLines.push('/404');
@@ -423,7 +433,7 @@ ${routeEntries
     (r) =>
       `  { path: ${JSON.stringify(r.path)}, component: DocPage, data: { pageUrl: ${JSON.stringify(
         r.pageUrl,
-      )}, loadContent: () => import('./pages/${r.key}.page').then((m) => m.PAGE_HTML) } },`,
+      )} }, title: ${JSON.stringify(`${r.title} | Fliks docs`)}, resolve: { html: () => import('./pages/${r.key}.page').then((m) => m.PAGE_HTML) } },`,
   )
   .join('\n')}
 ];
@@ -454,8 +464,8 @@ for (const section of sections) {
       searchEntries.push({
         url: heading ? `${page.url}#${heading.id}` : page.url,
         title: heading ? heading.text : page.title,
-        section: section.title,
-        text: stripTags(body).slice(0, 600),
+        section: heading ? `${section.title} / ${page.title}` : section.title,
+        text: decodeEntities(stripTags(body)).slice(0, 600),
       });
     }
   }

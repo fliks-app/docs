@@ -1,33 +1,35 @@
-<div class="navbar sticky top-0 z-30 gap-2 border-b border-base-300 bg-base-100/90 px-3 backdrop-blur">
+<header class="navbar sticky top-0 z-30 min-h-16 gap-2 border-b border-base-300 bg-base-100/85 px-3 backdrop-blur sm:px-4">
   <div class="flex flex-1 items-center gap-1">
-    <label for="docs-drawer" class="btn btn-ghost btn-square lg:hidden" aria-label="Open navigation">
-      <svg lucideMenu class="h-5 w-5"></svg>
-    </label>
+    <button type="button" class="btn btn-ghost btn-square lg:hidden" aria-label="Open navigation" (click)="openDrawer()">
+      <svg lucideMenu class="h-5 w-5" aria-hidden="true"></svg>
+    </button>
 
     <a routerLink="/" class="btn btn-ghost gap-2 px-2 text-base font-semibold normal-case">
       <img [src]="logo()" alt="Fliks" class="h-6 w-auto" />
       <span class="hidden sm:inline">docs</span>
     </a>
 
-    <div class="ms-2 hidden items-center gap-1 md:flex">
+    <nav class="ms-2 hidden items-center gap-1 md:flex" aria-label="Main">
       @if (userGuideUrl) {
         <a [routerLink]="userGuideUrl" class="btn btn-ghost btn-sm">User guide</a>
       }
       @if (developersUrl) {
         <a [routerLink]="developersUrl" class="btn btn-ghost btn-sm">Developers</a>
       }
-    </div>
+    </nav>
   </div>
 
   <div class="flex items-center gap-1">
     <button
       type="button"
-      class="btn btn-ghost btn-sm gap-2 text-sm opacity-70"
+      class="btn btn-ghost btn-sm gap-2 font-normal text-base-content/70 max-sm:btn-square sm:w-52 sm:justify-start sm:border-base-300 sm:bg-base-200/60"
+      aria-label="Search the docs"
+      aria-keyshortcuts="Control+K Meta+K"
       (click)="searchOverlay.open()"
     >
-      <svg lucideSearch class="h-4 w-4"></svg>
+      <svg lucideSearch class="h-4 w-4" aria-hidden="true"></svg>
       <span class="hidden sm:inline">Search</span>
-      <kbd class="kbd kbd-sm hidden sm:inline">Ctrl K</kbd>
+      <kbd class="kbd kbd-xs ms-auto hidden sm:inline-flex">Ctrl K</kbd>
     </button>
 
     <button
@@ -37,9 +39,9 @@
       [attr.aria-label]="theme.isDark() ? 'Switch to light theme' : 'Switch to dark theme'"
     >
       @if (theme.isDark()) {
-        <svg lucideSun class="h-5 w-5"></svg>
+        <svg lucideSun class="h-5 w-5" aria-hidden="true"></svg>
       } @else {
-        <svg lucideMoon class="h-5 w-5"></svg>
+        <svg lucideMoon class="h-5 w-5" aria-hidden="true"></svg>
       }
     </button>
 
@@ -66,4 +68,4 @@
       </svg>
     </a>
   </div>
-</div>
+</header>

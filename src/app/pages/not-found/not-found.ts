@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -7,8 +6,4 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   templateUrl: './not-found.html',
 })
-export class NotFound {
-  constructor() {
-    inject(Title).setTitle('Page not found | Fliks docs');
-  }
-}
+export class NotFound {}
