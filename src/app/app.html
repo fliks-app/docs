@@ -1,0 +1,33 @@
+<div class="flex min-h-screen flex-col">
+  <app-navbar />
+
+  <div class="drawer lg:drawer-open flex-1">
+    <input id="docs-drawer" type="checkbox" class="drawer-toggle" />
+
+    <div class="drawer-content flex min-w-0 flex-col">
+      <main class="mx-auto w-full max-w-[100rem] flex-1">
+        <router-outlet />
+      </main>
+      <footer class="border-t border-base-300 py-6 text-center text-sm opacity-60">
+        <a
+          href="https://fliks-app.github.io/showcase/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link link-hover"
+        >
+          Fliks
+        </a>
+        docs
+      </footer>
+    </div>
+
+    <div class="drawer-side z-40">
+      <label for="docs-drawer" aria-label="Close navigation" class="drawer-overlay"></label>
+      <div class="min-h-full w-72 border-e border-base-300 bg-base-100 px-4 py-6 lg:w-64">
+        <app-sidebar />
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-search-modal />

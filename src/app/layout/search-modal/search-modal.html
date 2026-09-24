@@ -1,0 +1,43 @@
+@if (overlay.isOpen()) {
+  <div class="fixed inset-0 z-50 flex items-start justify-center bg-black/40 p-4 pt-[10vh]" (click)="overlay.close()">
+    <div
+      class="w-full max-w-xl rounded-box bg-base-100 shadow-xl"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Search documentation"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="flex items-center gap-2 border-b border-base-300 px-4 py-3">
+        <svg lucideSearch class="h-4 w-4 shrink-0 opacity-60"></svg>
+        <input
+          #input
+          type="text"
+          class="w-full bg-transparent text-sm outline-none"
+          placeholder="Search the docs..."
+          [value]="query()"
+          (input)="onInput($any($event.target).value)"
+        />
+        <button type="button" class="btn btn-ghost btn-xs btn-square" (click)="overlay.close()" aria-label="Close search">
+          <svg lucideX class="h-4 w-4"></svg>
+        </button>
+      </div>
+
+      <div class="max-h-[60vh] overflow-y-auto p-2">
+        @if (query() && results().length === 0) {
+          <p class="px-3 py-6 text-center text-sm opacity-60">No results for "{{ query() }}"</p>
+        }
+        @for (result of results(); track result.url) {
+          <button
+            type="button"
+            class="flex w-full flex-col items-start gap-0.5 rounded-field px-3 py-2 text-start hover:bg-base-200"
+            (click)="go(result.url)"
+          >
+            <span class="text-xs uppercase tracking-wide opacity-50">{{ result.section }}</span>
+            <span class="font-medium">{{ result.title }}</span>
+            <span class="line-clamp-1 text-sm opacity-60">{{ result.text }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+}
