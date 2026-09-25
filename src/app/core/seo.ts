@@ -2,7 +2,7 @@ import { effect, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Meta } from '@angular/platform-browser';
 
-export const SITE_URL = 'https://fliks-app.github.io/docs/';
+export const SITE_URL = 'https://docs.fliks.media/';
 const OG_IMAGE = { url: `${SITE_URL}og-image.png`, width: 1200, height: 630, alt: 'Fliks documentation' };
 
 export interface SeoData {

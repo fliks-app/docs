@@ -7,7 +7,7 @@ import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const BROWSER_DIR = path.join(ROOT, 'dist/docs/browser');
-const SITE_URL = 'https://fliks-app.github.io/docs/';
+const SITE_URL = 'https://docs.fliks.media/';
 
 if (!existsSync(BROWSER_DIR)) {
   console.error(`[postbuild] ${BROWSER_DIR} does not exist, did the build run?`);

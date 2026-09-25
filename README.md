@@ -1,6 +1,6 @@
 # Fliks docs
 
-Source for [fliks-app.github.io/docs](https://fliks-app.github.io/docs/): an Angular 22 app that
+Source for [docs.fliks.media](https://docs.fliks.media/): an Angular 22 app that
 turns `src/content/**/*.md` into a static, prerendered documentation site (Tailwind CSS 4 +
 daisyUI 5). Deploys to GitHub Pages on every push to `main` (`.github/workflows/deploy.yml`).
 
@@ -35,7 +35,7 @@ Supported in the body:
 - GitHub-flavoured markdown: tables, fenced code blocks (`bash`, `yaml`, `json`, `ts`, `js`, `html`,
   `css`, `ini`, `dockerfile`, `nginx`, `diff`, `text`, ...), task lists.
 - Callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`.
-- Internal links, root-absolute and without the `/docs` base: `[Docker](/install/docker)` or
+- Internal links, root-absolute: `[Docker](/install/docker)` or
   `[Volumes](/install/docker#volumes)`. External links (`https://...`) open in a new tab
   automatically.
 - Images: `![alt](/img/my-screenshot.webp)`, referencing a file at `public/img/my-screenshot.webp`.
@@ -61,7 +61,7 @@ to the first "Developers" section if there is no `plugins` folder yet).
 ```bash
 npm ci
 npm start      # dev server at http://localhost:4200
-npm run build  # production build (base href /docs/) in dist/docs/browser
+npm run build  # production build in dist/docs/browser
 ```
 
 `npm start` and `npm run build` both first run `scripts/build-content.mjs`, which reads
