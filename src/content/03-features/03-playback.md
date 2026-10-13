@@ -1,6 +1,6 @@
 ---
 title: Playback
-description: Resume across devices, remembered audio and subtitle tracks, skip intro and next episode, chapter markers, and scrubbing previews.
+description: Resume across devices, remembered audio and subtitle tracks, skip intro and next episode, chapter markers, scrubbing previews, and skipping commercials from an EDL file.
 ---
 
 ## Resume anywhere
@@ -90,6 +90,63 @@ file is imported (**Generate seek thumbnails when importing** in **Settings > Ge
 default; turn it off on a low-power server), or later on demand from the **Analyze** dialog
 (**Regenerate sprites**) or **Settings > System** (**Generate missing sprites**), not on the fly
 while you scrub.
+
+## Commercials, cuts and mutes (EDL)
+
+Put a Kodi `.edl` file next to a video, with the same name (`Movie (2020).mkv` and
+`Movie (2020).edl`), and every client acts on it: commercials are skipped, cuts are jumped over, and
+muted stretches go silent. This is the format Comskip and MCEBuddy write. Fliks reads the file when
+playback starts, so adding, editing or removing it needs no rescan.
+
+Each line is `start end action`, separated by spaces or tabs. Times are seconds (`61.5`),
+`h:mm:ss.ms`, or `#frame` numbers (these need the video's frame rate).
+
+| Action | Code | What playback does |
+|---|---|---|
+| Cut | `0` | Always skipped, including when you seek or resume inside it. |
+| Mute | `1` | Audio is silenced for that stretch; the picture keeps playing. |
+| Scene marker | `2` | Read and ignored. |
+| Commercial | `3` | Skipped once per viewing, then plays normally, so you can seek back to watch it. |
+
+A skip shows a short "Commercial skipped" or "Scene skipped" notice, a muted stretch shows an "Audio
+muted" badge, and the seek bar draws the ranges (cuts greyed, commercials tinted, mutes as a thin
+strip). A range that reaches the end of the file ends playback. Mutes are separate from your own
+mute and volume, which they never change, and are accurate to about 100 ms.
+
+On Apple TV, desktop, Android, iOS, web, Tizen, webOS and Chromecast, skips and mutes work the same
+way. Two details: on Android a file with mutes plays decoded PCM audio instead of Dolby passthrough,
+and a Chromecast gets an AAC transcode instead of AC-3 or E-AC-3 when the file has mutes. A very large
+EDL is dropped for casting (the file still works everywhere else).
+
+### Turning it off
+
+In **App settings > Playback** (user menu), per user:
+
+- **Skip cuts and mutes** is on by default. Off, the server stops sending ranges and no client acts
+  on the file. It applies to streaming and to downloads made afterwards.
+- **Skip commercial breaks automatically** is on by default. Off, a **Skip ad** button appears
+  during a commercial instead (cuts still skip on their own).
+
+### Adding an EDL from Fliks
+
+On a title's file information, **View companion files** lists the `.edl` next to the video, and
+lets you download or delete it. If you can edit media, **Import a file** accepts a new one:
+
+1. Pick the type **EDL (skip / mute list)** and choose the file.
+2. Fliks checks it and writes it beside the video as `<video name>.edl`. If one already exists it
+   asks before replacing it.
+
+Lines Fliks can't use are skipped, and the result says how many. An import fails when the file is
+over 1 MiB, isn't UTF-8 text, or has no valid range.
+
+> [!NOTE]
+> A line with a bad time or action, or one overlapping an earlier line, is skipped and logged. At
+> most 10000 ranges are read per file. Only `.edl` is supported, not Comskip's `.txt`. Times count
+> from the start of the file, as in Kodi.
+
+An EDL belongs to one encode. It travels with the video when Fliks moves or renames it (`.edl` is in
+the default **Companion file extensions**), is removed when an import replaces the video, and is
+deleted along with the video when you delete the file from disk, unless another video shares its name.
 
 ## See also
 

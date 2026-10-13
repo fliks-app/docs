@@ -73,6 +73,8 @@ last error line. The two common ones:
 
 ## See also
 
+- [Playback quality](/administration/playback-quality) when playback stutters: a verdict and a
+  cause for every stall, per client.
 - [Backups](/administration/backups) for how to take and restore a database backup.
 - [Environment variables](/install/environment-variables) for every path that can be redirected.
 - [FAQ](/administration/faq) for the more common one-off questions.
