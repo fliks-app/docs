@@ -21,6 +21,7 @@ after the plugin.
 | Statistics | Library counts, pending requests, disk space: the admin landing page. |
 | System | Three tabs. **Status**: server health (app version, uptime, database, running plugins), running and queued activity, recent commands, and a **Restart server** button when Fliks runs under a supervisor that can bring it back (Docker, for instance). **Backups**: see [Backups](/administration/backups). **Logs**: see [Logs and troubleshooting](/administration/logs-and-troubleshooting). |
 | Video activity | The live [Transcoding dashboard](/administration/transcoding-dashboard): who's watching what, and on which hardware path. |
+| Playback quality | [Why a client stuttered](/administration/playback-quality): a verdict per playback, a timeline with the cause of each stall, and the two settings that turn collection on and set how long it is kept. |
 
 ## Settings
 

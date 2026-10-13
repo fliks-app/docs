@@ -25,6 +25,9 @@ One card per active playback session, with:
 - **Why**: whenever a line isn't Direct Play, a short reason in italics explains what forced the
   decision (an incompatible codec, a bitrate over the device's cap, a subtitle burned in, and so
   on). A Direct Play stream shows none.
+- **Playback quality**: a health dot with the verdict so far (network, device, server, error or
+  healthy); expand it for the reasons, throughput, buffer and decoder. Hidden when collection is
+  off. See [Playback quality](/administration/playback-quality).
 - **Hardware path**: on a transcoded video line, which of CPU, QSV, VAAPI, NVENC, AMF or
   VideoToolbox (shown as "Apple VT") is doing the encoding. See
   [Hardware acceleration](/install/hardware-acceleration) for what each of those means.
