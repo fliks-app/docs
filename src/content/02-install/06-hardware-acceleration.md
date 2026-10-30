@@ -94,13 +94,12 @@ On a Linux host with more than one GPU, **Settings > Streaming** shows a **GPU d
 (hidden when only one GPU is detected) listing every render node Fliks found, so you can pin
 transcoding to a specific adapter instead of letting it auto-pick.
 
-Two related low-level knobs, only worth touching when the automatic pick lands on the wrong
+One related low-level knob, only worth touching when the automatic pick lands on the wrong
 device:
 
 | Variable | What it does |
 |---|---|
 | `FLIKS_OPENCL_DEVICE` | Pins the `platform.device` OpenCL selector (e.g. `0.0`) used for HDR tone-mapping on the NVENC/CPU path, when auto-pick chooses the wrong vendor on a mixed Intel+NVIDIA host. |
-| `THUMB_HWACCEL_DEVICE` | Which render node generates thumbnails during a scan: `off` to force software, or a specific render node. |
 
 ## Subtitle burn-in and cropping
 
