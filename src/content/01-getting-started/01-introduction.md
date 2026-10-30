@@ -29,7 +29,7 @@ A Fliks install is one server plus as many clients as you like.
   to the next.
 
 Fliks ships with no way to acquire media on its own. If you want automatic downloading from
-indexers, you install the download plugin from **Settings > Plugins** once the server is
+indexers, you install the download plugin from **Settings > Advanced > Plugins** once the server is
 running; the rest of the app works fully without it, on media you already have.
 
 ## Where to go next

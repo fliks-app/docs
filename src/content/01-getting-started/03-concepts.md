@@ -74,12 +74,12 @@ See [Streaming and transcoding](/features/streaming-and-transcoding) for the ful
 ## Plugins
 
 Fliks ships with no way to acquire media by itself; you add that capability with a plugin from
-**Settings > Plugins**. A plugin is either:
+**Settings > Advanced > Plugins**. A plugin is either:
 
 - **Data**: ships static data (a JSON catalog, for instance) and executes no code at all.
-- **Process**: runs actual code, but in its own child process with its own database schema
-  (and, when the server runs as root on Linux or macOS, its own system user), so it can't reach
-  another plugin's data, or yours, outside what it's explicitly granted.
+- **Process**: runs actual code as a WebAssembly component sandboxed by the server, with capped
+  memory and run time, one private folder and its own PostgreSQL role and schema, so it can't
+  reach another plugin's data, or yours, outside what it's explicitly granted.
 
 See [Plugins](/administration/plugins).
 

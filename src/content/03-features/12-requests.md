@@ -97,6 +97,6 @@ everything it asked for have landed on disk.
 
 > [!NOTE]
 > Requests need an acquisition plugin installed to ever leave the Approved state on their own; see
-> **Settings > Plugins**. Without one, an admin can still add the title to the library by hand:
+> **Settings > Advanced > Plugins**. Without one, an admin can still add the title to the library by hand:
 > matching open requests are linked to it (a pending one is approved on the spot) and move to
 > Downloaded once its files are on disk.
