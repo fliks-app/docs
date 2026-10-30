@@ -34,6 +34,7 @@ your phone, and the TV offers to resume it from the same spot.
   password on the remote, by approving the request from a phone that's already signed in.
 - **[Remote control](/features/pairing-and-remote-control)**: send a title from one signed-in
   device to play on another.
+- **[Watch parties](/features/watch-party)**: watch together in sync with chat. Every client has it, with a few differences listed on that page.
 - **Adaptive playback**: each client tells the server what it can decode, and the server picks
   between sending the file as-is, repackaging it, or converting it, per [Streaming and
   transcoding](/features/streaming-and-transcoding).

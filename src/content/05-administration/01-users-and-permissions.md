@@ -17,12 +17,26 @@ which are independent of the role:
 | Setting | What it does |
 |---|---|
 | Account active | Turning it off blocks login without deleting the account or its history. The switch in the user list is greyed out on your own row so you don't lock yourself out, but the edit card doesn't stop you, so be careful there. |
-| Super-admin (full access) | Grants every permission and access to every library, bypassing the role and the library checklist entirely. The default `admin` account is a super-admin. |
+| Super-admin (full access) | Grants every permission and access to every library, bypassing the role and the library checklist entirely. The administrator created on the setup page is a super-admin. |
 | Force password change at next login | The user must set a new password before doing anything else. Useful after creating an account with a temporary password. Changing their password yourself doesn't clear it; they clear it by picking their own. |
 | Accessible libraries | Which libraries this user can see, as a plain checklist. Independent of role: two users with the same role can have completely different library access. The same access can be edited per library, from that library's **Users** tab. |
 
 Leave **New password** empty while editing an existing user to keep their current password.
 The same page has a **Delete** button and **Requests** and **Stats** tabs for that user.
+
+## Login user list
+
+The login screen lists the accounts so people can pick theirs instead of typing a username.
+**Settings > General > Server > Login user list** sets who sees that list, and **Save** applies it:
+
+| Option | Who sees the list |
+|---|---|
+| Everyone | Anyone who can reach the server. This is the default. |
+| Local network only | Only a caller whose address, and every `X-Forwarded-For` hop, is private or loopback. Behind a [reverse proxy](/install/reverse-proxy), the proxy has to set that header; a request that went through a public address is outside. |
+| Hidden | Nobody. The login screen goes straight to the username form. |
+
+Only enabled accounts are listed, and only with their username and avatar. **Hidden** also turns
+Quick Connect off for new devices, since there is no account to pick: people type their username.
 
 ## Roles and permissions
 
@@ -36,8 +50,8 @@ Fliks ships three roles, seeded the first time the server starts with no roles y
 | Role | Permissions | Notes |
 |---|---|---|
 | **Admin** | every permission | Give it to anyone who should manage the server without being a super-admin. |
-| **User** | `media.read`, `livetv.read`, `requests.create` | The default role for new users, unless you mark another role as default. |
-| **Readonly** | `media.read`, `livetv.read` | Browse and watch only; can't request a title. |
+| **User** | `media.read`, `livetv.read`, `requests.create`, `parties.create`, `parties.read_public` | The default role for new users, unless you mark another role as default. |
+| **Readonly** | `media.read`, `livetv.read`, `parties.read_public` | Browse and watch only; can't request a title or create a watch party. |
 
 The available permissions (the label the role editor shows is in brackets):
 
@@ -51,6 +65,9 @@ The available permissions (the label the role editor shows is in brackets):
 | `livetv.read` (Watch Live TV) | See and watch Live TV. |
 | `requests.create` (Create requests) | Request a title that isn't in the library yet, and edit or cancel your own requests while they're pending. |
 | `requests.manage` (Manage requests) | Approve, decline, or edit anyone's requests. |
+| `parties.create` (Create parties) | Create [watch parties](/features/watch-party) and manage your own. |
+| `parties.read_public` (View public parties) | See and join public watch parties. |
+| `parties.manage` (Manage parties) | Manage every party, whoever hosts it. Includes the two permissions above. |
 | `subtitles.manage` (Manage subtitles) | Add, edit and delete subtitle files on a title. Subtitle providers and translation settings are admin pages, so they need `settings.access`. |
 | `settings.access` (Settings access) | Open the Administration area at all, and change every setting in it: libraries, profiles, subtitle and translation providers, Live TV, plugins, and so on. |
 | `users.manage` (Manage users) | Create, edit, disable and delete user accounts. Picking a user's role also needs `roles.manage`. |
