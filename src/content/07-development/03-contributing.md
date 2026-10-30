@@ -66,8 +66,9 @@ letting the commit vanish later.
 `main` (`.github/workflows/release-please.yml`) and keeps a release pull
 request up to date from the conventional commits merged since the last
 tag. That PR bumps the version in
-`.github/.release-please-manifest.json`, in the `backend`, `client` and
-`desktop` `package.json` files (and their lockfiles), and in a list of
+`.github/.release-please-manifest.json`, in the `client` and
+`desktop` `package.json` files (and their lockfiles), in the server's
+`Cargo.toml` and `Cargo.lock` files, and in a list of
 platform-specific version files (webOS `appinfo.json`, Tizen `config.xml`,
 the macOS `Info.plist`, the Android `build.gradle`, `environment.ts`, the
 cast receiver's `index.html`, the iOS Xcode project, the tvOS
@@ -79,11 +80,14 @@ The version bump follows the commit types merged since the last release:
 - `feat:` → minor
 - a `BREAKING CHANGE:` footer → major
 - everything else (`chore`, `docs`, `test`, ...) doesn't bump the version
+- a `Release-As: 5.1.0-beta.1` footer forces that exact version. A suffixed version is cut as a
+  GitHub pre-release that no stable install picks up (see
+  [Updating](/install/updating#pre-release-versions))
 
 Merging the release PR tags `v<version>` and cuts a GitHub release. The
 `v*` tag triggers the Docker image publish and the platform publish
-workflows (app stores, TV stores, the Windows and macOS server builds);
-the desktop client's release workflow is started by hand.
+workflows (app stores, TV stores, the Windows and macOS server builds,
+the desktop client installers).
 
 ## Code style
 
@@ -97,22 +101,26 @@ the desktop client's release workflow is started by hand.
   (`ngx-translate`), including toast messages, never hardcoded. See
   [Translations](/development/translations) for how the translation files
   are organized.
-- **Linting**: the backend's `npm run lint` runs `eslint --fix`, so it
-  rewrites files rather than only reporting problems; don't run it just to
-  check for errors on code you didn't mean to reformat. The backend also
-  has a `npm run format` (Prettier) script.
+- **Server**: `cargo fmt` and `cargo clippy -- -D warnings` must be clean.
+  Behaviour changes go in the spec under `server/docs/spec/` first, and a
+  behaviour change updates the spec, the parity `expect`s and the golden
+  vectors in the same pull request.
 
-> [!NOTE]
-> No workflow currently runs lint or the test suites automatically on a
-> pull request; see [Dev environment](/development/dev-environment#tests)
-> for running them locally before you push.
+See [Dev environment](/development/dev-environment#tests) for running the
+test suites locally before you push.
 
 What CI does run on a pull request:
 
 - the two commit message checks above (`commit-lint.yml`);
-- `db-migrations.yml`, when `backend/` changes: applies every migration to
-  a fresh PostgreSQL and fails if the entities need a migration nobody
-  committed;
+- `server.yml`, when `server/` changes: `cargo fmt`, `clippy`, the test
+  suites against a PostgreSQL service (the plugin SDK too), and checks that
+  `server/openapi.json` and the sqlx query cache (`server/.sqlx`) are
+  current, plus Clippy on Windows;
+- `client.yml`, when `client/` or `desktop/` changes: the Angular unit
+  tests, the Tizen widget build, and the desktop typecheck and tests;
+- `engine-lock.yml`, when the engine pin moves: fails if `engine.lock`, the
+  `Dockerfile` engine image and the server's engine crate tag disagree
+  (use `scripts/bump-engine.sh`);
 - `native-build.yml`, when `client/` changes: compiles the Android and iOS
   shells, unsigned;
 - `windows-installer.yml`, when `windows/` changes: builds the Windows

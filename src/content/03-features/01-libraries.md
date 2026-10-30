@@ -37,7 +37,8 @@ added since the last scan, open **Settings > Libraries**, pick the library, and 
 folder** on its **Medias** tab. The scan:
 
 - Walks the root folder and up to three levels of subfolders for video files (`.mkv`, `.mp4`,
-  `.avi`, `.mov`, `.ts`, `.m2ts`, `.wmv`, `.flv`).
+  `.avi`, `.mov`, `.ts`, `.m2ts`, `.wmv`, `.flv`, `.webm`, `.m4v`, `.mpg`, `.mpeg`, `.ogm`,
+  `.mts`). `.vob` is left out: every part of a DVD folder would become its own item.
 - Treats a file whose name carries an episode number (`S01E02`, `1x02` and similar) as an episode,
   and groups every episode under the same top-level folder into one series. An episode file sitting
   directly in the root folder is skipped: a series needs its own folder. Looser forms count too

@@ -42,8 +42,8 @@ See [Hardware acceleration](/install/hardware-acceleration) for what each vendor
 ## First run
 
 Continue with the [Quick start](/getting-started/quick-start): open
-`http://<truenas-host>:30485` (or the port you chose), log in with the default account, and add
-your first library, pointing it at the mount path you configured in the app.
+`http://<truenas-host>:30485` (or the port you chose), create the administrator account on the
+setup page, and add your first library, pointing it at the mount path you configured in the app.
 
 ## See also
 

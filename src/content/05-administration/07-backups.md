@@ -12,8 +12,9 @@ including the installed plugin archives. It does **not** include:
 - Artwork, cached images or uploaded avatars (`FLIKS_DATA_DIR`).
 - The JWT signing key (`FLIKS_CONF_DIR`); restoring a backup onto a fresh install with a
   different key logs everyone out, since existing sessions were signed with the old one.
-- The plugins' unpacked runtime files (`FLIKS_RUNTIME_DIR`); Fliks unpacks them again from the
-  archives in the database on every start.
+- The plugins' runtime directory (`FLIKS_RUNTIME_DIR`, `plugins/` under the data directory by
+  default). Fliks rebuilds the compiled code from the archives in the database, but each
+  process plugin's private data folder lives there too.
 - The transcode cache; it's disposable by design.
 - Your media files themselves.
 

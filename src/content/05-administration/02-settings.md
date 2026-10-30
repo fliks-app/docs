@@ -27,7 +27,7 @@ after the plugin.
 
 | Page | What it's for |
 |---|---|
-| General | The setup checklist; the server name shown in client apps; the **Public address** Chromecast uses to reach streams (set it when Fliks sits behind a [reverse proxy](/install/reverse-proxy), leave it empty otherwise); metadata language and region; and import automation (detect intros and credits, generate seek thumbnails). |
+| General | The setup checklist; the server name shown in client apps; the **Public address** Chromecast uses to reach streams (set it when Fliks sits behind a [reverse proxy](/install/reverse-proxy), leave it empty otherwise); the **Login user list**, which sets [who sees the account list on the login screen](/administration/users-and-permissions#login-user-list); metadata language and region; and import automation (detect intros and credits, generate seek thumbnails). |
 | Libraries | Add, edit or remove libraries: a disk path, a media type, and who can access it. See [Libraries](/features/libraries). |
 | Naming | The template used to rename a file once it's grabbed and imported. |
 

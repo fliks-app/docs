@@ -18,6 +18,10 @@ recognising the device, not by matching a number.
 4. Quick Connect shows a waiting screen: "Waiting for approval", with the device's own name and
    operating system underneath, and a countdown until the request expires.
 
+An admin can limit that account list, or hide it: see the
+[login user list](/administration/users-and-permissions#login-user-list). With it hidden, people
+type their username and Quick Connect isn't offered to a new device.
+
 **On a phone or another device already signed in to that account:**
 
 1. Open the user menu and go to **Login requests**.

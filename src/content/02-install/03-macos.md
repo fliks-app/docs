@@ -7,7 +7,7 @@ description: Run Fliks as a native macOS menu-bar app, with VideoToolbox hardwar
 
 A lightweight menu-bar app that runs the Fliks server natively on macOS, with hardware
 transcoding through Apple's VideoToolbox, auto-detected at startup. It bundles PostgreSQL,
-FFmpeg and Node.js: there is nothing else to install. Requires Apple Silicon and macOS 13
+FFmpeg, the streaming engine and the server: there is nothing else to install. Requires Apple Silicon and macOS 13
 (Ventura) or newer.
 
 ## Install
@@ -20,7 +20,7 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 ## What happens on launch
 
 1. PostgreSQL 18 initializes on first run and starts on port `5433`.
-2. Node.js starts the backend on port `4848`.
+2. The engine listens on port `4848` and starts the server behind it.
 3. On the very first launch only, your browser opens `http://localhost:4848`.
 4. VideoToolbox hardware acceleration is auto-detected.
 
@@ -30,18 +30,19 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 |---|---|
 | Open Fliks | Opens the web UI in your default browser. |
 | Start at Login | Toggles auto-start on macOS login. |
-| Restart Server | Stops and restarts PostgreSQL and Node.js. |
+| Restart Server | Stops and restarts PostgreSQL and the server. |
 | View Logs... | Opens the log directory in Finder. |
+| Check for Updates... | Asks for a newer release and, if there is one, installs it in place. See [Updating](/install/updating#windows-and-macos). |
 | Quit Fliks | Gracefully shuts down every process. |
 
 ## Data locations
 
 | Path | Contents |
 |---|---|
-| `~/Library/Application Support/Fliks/postgresql/` | The database cluster. |
-| `~/Library/Application Support/Fliks/conf/` | The auto-generated JWT secret. |
-| `~/Library/Application Support/Fliks/data/` | Backend working directory: artwork, avatars, backups. |
-| `~/Library/Application Support/Fliks/logs/` | Backend and PostgreSQL logs. |
+| `~/Library/Application Support/Fliks Server/postgresql/` | The database cluster. |
+| `~/Library/Application Support/Fliks Server/conf/` | The auto-generated JWT secret and engine token. |
+| `~/Library/Application Support/Fliks Server/data/` | The server's working directory: artwork, avatars, backups. |
+| `~/Library/Application Support/Fliks Server/logs/` | Server and PostgreSQL logs. |
 | `/tmp/transcode/` | The HLS transcode cache, ephemeral. |
 
 > [!NOTE]
@@ -54,14 +55,14 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 To wipe everything and start over, quit Fliks first, then in Terminal:
 
 ```bash
-rm -rf ~/Library/Application\ Support/Fliks
+rm -rf ~/Library/Application\ Support/Fliks\ Server
 ```
 
 ## First run
 
-Continue with the [Quick start](/getting-started/quick-start): open `http://localhost:4848`, log
-in with the default account, and add your first library. Point it at any folder on disk; there's
-no container mount to think about on this install method.
+Continue with the [Quick start](/getting-started/quick-start): open `http://localhost:4848`,
+create the administrator account on the setup page, and add your first library. Point it at any
+folder on disk; there's no container mount to think about on this install method.
 
 ## See also
 

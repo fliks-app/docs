@@ -5,9 +5,10 @@ description: Run the Fliks server and its database with Docker Compose, the reco
 
 ## What you get
 
-The published image is a single container: the NestJS backend, the built Angular web client
-served as static assets, and a self-contained FFmpeg build with hardware-acceleration support
-baked in. A separate PostgreSQL container holds the database. It runs on `linux/amd64` and
+The published image is a single container: the Rust server (`fliks-server`) behind `fliks-engine`,
+the streaming engine that owns port `4848` and forwards the API to the server, the built Angular
+web client served as static assets, and a self-contained FFmpeg build with hardware-acceleration
+support baked in. A separate PostgreSQL container holds the database. It runs on `linux/amd64` and
 `linux/arm64`.
 
 ## Prerequisites
@@ -50,9 +51,9 @@ docker compose up -d
 |---|---|
 | `/medias` | Your library root(s). Read-only is enough to browse and play; downloads, deleting media and saving subtitles next to a video need write access. |
 | `/downloads` | Only needed if you install the download plugin; use the same path here and in your download client. |
-| `/app/conf` | The JWT signing key. Lose it and every session is invalidated. |
-| `/app/data` | Artwork, uploaded avatars, database backups, and a regenerable `cache/` subfolder. Not disposable: avatars can't be re-fetched. |
-| `/app/transcode` | The HLS segment cache. Regenerable, safe to wipe. Paired with `FLIKS_TRANSCODE_DIR`; drop both and the cache lands in the container's `/tmp`. |
+| `/app/conf` | The JWT signing key and the engine token, both generated at first start. Lose the key and every session is invalidated. |
+| `/app/data` | Artwork, uploaded avatars, database backups, plugin data (`plugins/`), and a regenerable `cache/` subfolder. Not disposable: avatars can't be re-fetched. |
+| `/app/transcode` | The HLS segment cache. Regenerable, safe to wipe. The image sets `FLIKS_TRANSCODE_DIR` to this path. |
 
 ## Running as a specific user
 
@@ -76,16 +77,17 @@ the Chromecast does need is to reach the server directly, at the address Fliks h
 **Public address** under **Settings > General** if that address isn't the one the Chromecast
 can reach (see [Reverse proxy](/install/reverse-proxy#tell-fliks-its-public-address)).
 
-## Memory on a small box
+## Limits on a small box
 
-Node sizes its heap from the container's cgroup memory limit; with no limit set, it assumes the
-whole host and reserves around 4 GB, leaving little for the FFmpeg processes a library scan runs
-alongside. On a small NAS or single-board computer, set a limit:
+On a shared NAS or single-board computer, cap the container so transcodes don't starve the rest of
+the box. A 4K HDR transcode takes about 700 MB of RAM, and the engine runs one software FFmpeg per
+CPU of the limit minus one (at least one): 4 CPUs allow 3 concurrent transcodes.
 
 ```yaml
 services:
   fliks:
     mem_limit: 4g
+    cpus: '4'
 ```
 
 ## Hardware transcoding
@@ -97,5 +99,5 @@ to CPU.
 
 ## First run
 
-Continue with the [Quick start](/getting-started/quick-start): open `http://<host>:4848`, log in
-with the default account, and add your first library.
+Continue with the [Quick start](/getting-started/quick-start): open `http://<host>:4848`, create
+the administrator account on the setup page, and add your first library.

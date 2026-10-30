@@ -9,7 +9,7 @@ description: Honest answers to the questions self-hosters ask most often.
 
 No. Docker is the recommended way to run the server, but native builds exist for
 [Windows](/install/windows) and [macOS](/install/macos) with no separate dependencies to
-install, and you can [build it from source](/install/from-source) on a machine with Node.js,
+install, and you can [build it from source](/install/from-source) on a machine with Rust, Node.js,
 PostgreSQL and FFmpeg.
 
 ### I forgot the admin password and it's my only admin account. What now?
@@ -19,21 +19,18 @@ There's no self-service "forgot password" flow and no reset command. If another 
 [backup](/administration/backups) won't help: it holds the same forgotten password.
 
 With no other admin, you have to write a new password hash into the database yourself. On the
-Docker setup from [Docker](/install/docker), generate a hash for a temporary password:
-
-```bash
-docker compose exec fliks node -e "require('bcrypt').hash('temporary-password', 12).then(console.log)"
-```
-
-Then open the database with `docker compose exec postgres psql -U fliks -d fliks` and run this,
-pasting the hash printed above:
+Docker setup from [Docker](/install/docker), open the database with
+`docker compose exec postgres psql -U fliks -d fliks`, then run this with your username and a
+temporary password. PostgreSQL's `pgcrypto` extension produces the bcrypt hash, and the last line
+removes it again:
 
 ```sql
-UPDATE users SET "passwordHash" = '<hash>', "requirePasswordChange" = true WHERE username = 'admin';
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+UPDATE users SET "passwordHash" = crypt('temporary-password', gen_salt('bf', 12)), "requirePasswordChange" = true WHERE username = '<username>';
+DROP EXTENSION pgcrypto;
 ```
 
-Replace `admin` with your username if you renamed it. Log in with the temporary password; Fliks
-asks you to pick a new one straight away.
+Log in with the temporary password; Fliks asks you to pick a new one straight away.
 
 ### Nothing shows up after I add a library. Is it broken?
 

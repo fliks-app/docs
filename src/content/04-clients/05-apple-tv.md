@@ -24,6 +24,24 @@ The waiting screen also shows a QR code that opens the **Login requests** page o
 already signed in. See [Pairing and remote
 control](/features/pairing-and-remote-control) for how approval works.
 
+A new server has no account yet, and the Apple TV app can't create the first administrator: it
+asks you to open the server in a web browser and finish the [setup](/getting-started/quick-start)
+there.
+
+## Watch parties
+
+The Apple TV app takes part in [watch parties](/features/watch-party). When your account can
+create parties, **Watch together** on a title, an episode or a playlist starts one, and so does
+**New party** in the home page's watch parties row. That row also lists your live and scheduled
+parties.
+
+Before the film starts, the party's lobby shows who is in, the programme and any proposals. Each
+person can mark themselves ready, and guests vote on proposals with a thumbs up or down. The host
+starts the party, picks the film, invites people, passes the host role on and removes members. In
+the player, the transport bar has a party menu: the member list, quick chat phrases and the
+message history, reactions, the queue, a resync button and the party settings. The host ends the
+party; everyone else leaves it.
+
 ## Playback
 
 ![The player on Apple TV](/img/clients-appletv-player.jpg)

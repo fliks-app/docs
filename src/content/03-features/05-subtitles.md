@@ -1,6 +1,6 @@
 ---
 title: Subtitles
-description: Automatic subtitle search across six providers, one-click sync, on-demand translation, and OCR for image-based tracks.
+description: Automatic subtitle search across six providers, one-click sync, live resync in the player, on-demand translation, OCR and burn-in for image-based and styled tracks.
 ---
 
 ## How automatic search works
@@ -78,6 +78,30 @@ first.
 > Turn on **Automatically sync subtitles** in **Settings > Subtitles** and every new automatic
 > download or upgrade gets this treatment on its own.
 
+### Resyncing from the player
+
+You can fix the timing while the video plays. In the player, open the **Subtitles** menu, then
+**Appearance**, then **Open synchronize panel**. It needs the **Manage subtitles** permission and a
+text track, and it isn't offered while casting. If no subtitle is on, opening the panel picks the
+first text track.
+
+The panel lists the cues on a timeline that follows the video, with a time ruler and a chevron on
+each side marking the current moment. The subtitles on the picture update as you move them.
+
+- **Move the timing.** Scroll the list, drag it with the mouse, or swipe on a touch screen. A badge
+  shows the shift. With a keyboard or a TV remote, press Enter or OK on the timeline, then Up and
+  Down shift by 100 ms (holding the key speeds it up). Esc or Back ends the adjustment.
+- **Save** applies the shift to the file, like **Adjust timing**. **Reset** drops it.
+- **Synchronize on other track** runs the automatic sync from the section above, with the same
+  choice of reference (the audio, another subtitle track or a subtitle file). A running sync shows
+  a spinner and can be cancelled from the panel or from the **Edit subtitles** dialog.
+- The track picker at the top switches to another text track. Switching or closing with an
+  unsaved shift asks you to confirm.
+
+An embedded track can be previewed here but not saved: the panel says so, and **Save** and
+**Synchronize on other track** stay disabled. On a phone the panel opens as a sheet, with icon
+buttons instead of text.
+
 ## Translating a subtitle
 
 When nothing is available in a language you want, translate a track you do have instead: open its
@@ -114,6 +138,13 @@ settings page always shows a masked field, with the choice to leave it as-is or 
 > reviewers reading some of them. Use a Gemini model on a paid (billed) API key instead if that
 > matters to you.
 
+When the source track is flagged hearing-impaired, the translate dialog shows a **Remove
+hearing-impaired annotations** switch. It strips cues such as `[door creaks]` or `(SIGHS)` from the
+translated result once the run finishes, even if you closed the dialog, and the translated file is
+then no longer flagged hearing-impaired. The switch is remembered in your browser. The server-wide
+**Remove HI tags** setting (see [Admin settings](/features/subtitles#admin-settings)) does the same for every
+translation.
+
 > [!NOTE]
 > Translation only runs when you ask for it. Nothing is translated automatically in the background.
 
@@ -131,6 +162,28 @@ normal, editable subtitle file from them.
 - An admin can turn on **Prefer OCR of embedded image tracks over a download**, so Fliks tries this
   before searching online for a missing language.
 
+## Burned-in subtitles
+
+Some subtitles can't be shown as plain text on every client. For those, the server draws the
+subtitle into the video itself. The video then plays through a transcode, and the stream reloads
+when you pick or drop such a track.
+
+- **Image tracks** (PGS, VobSub, DVB, XSub). The desktop app, Android and Android TV draw an
+  embedded image track themselves when the video Direct Plays. The web client, iPhone and iPad,
+  Samsung, LG and Chromecast always get it burned in, and so does a separate image file on every
+  client (a `.sup`, or a VobSub `.idx` and `.sub` pair next to the video).
+- **Styled ASS/SSA tracks.** Only the desktop app draws the track's own fonts, colors and
+  positions. The web, mobile, Android TV, Samsung, LG and Chromecast clients get the track burned
+  in so it keeps that styling; as plain text it would lose it.
+
+A styled track you pick yourself from the menu is burned in. One chosen automatically when
+playback starts (your preferred language, or a remembered choice) starts as plain text, so the
+video doesn't reload at launch.
+
+Both cases need **Hide image subtitles** (see [Subtitle appearance](/features/subtitles#subtitle-appearance)) turned
+off. It is on by default: image tracks then stay out of the picker, and styled ASS/SSA plays as
+plain text and takes your appearance settings.
+
 ## Subtitle appearance
 
 **App settings > Subtitles** (in your user menu) controls which subtitle track is picked and how
@@ -145,7 +198,7 @@ screen:
 | Subtitle mode | Off, forced only, smart (the default: a full track when the audio is in another language, only the forced track when it's already in your preferred language), always |
 | Hearing-impaired subtitles (SDH) | Avoid (default), no preference, prefer |
 | Remember subtitle selections | On (default) or off; remembered per show |
-| Hide image subtitles | On by default: keeps PGS/VobSub tracks out of the picker on this device |
+| Hide image subtitles | On by default: keeps PGS/VobSub tracks out of the picker on this device, and keeps styled ASS/SSA from being [burned in](/features/subtitles#burned-in-subtitles) |
 | Show the file format | Adds SRT, VTT, ASS and so on next to each track in the picker |
 | Text size | Very small to extra large |
 | Text color | White, yellow, green, cyan |
@@ -154,8 +207,8 @@ screen:
 | Subtitle position | Bottom edge and top edge positions |
 
 > [!NOTE]
-> None of this changes how an ASS/SSA subtitle that carries its own styling is rendered, or how an
-> image-based track looks: those keep their original appearance.
+> None of this changes how an image-based track looks, or an ASS/SSA track that keeps its own
+> styling (see [Burned-in subtitles](/features/subtitles#burned-in-subtitles)): those keep their original appearance.
 
 ## Admin settings
 
@@ -172,7 +225,7 @@ screen:
 | Prefer OCR of embedded image tracks over a download | Off | Tries OCR on an embedded image track before searching online |
 | Automatically sync subtitles (ffsubsync/alass) | Off | Runs the sync tool after every automatic download or upgrade |
 | Re-encode to UTF-8 after download | On | Normalizes the file's text encoding |
-| Remove HI tags | Off | Strips things like `[music]` or `(sighs)` from downloaded text |
+| Remove HI tags | Off | Strips things like `[music]` or `(sighs)` from downloaded text, and from translations and OCR results |
 | Delete the image subtitle once extracted | Off | Removes the OCR'd track's entry (an embedded track stays in the video file and reappears on the next scan) |
 | Custom exclusions (regex) | None | One regular expression per line; any subtitle line matching one is removed |
 
