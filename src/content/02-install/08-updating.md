@@ -17,10 +17,12 @@ sets it for you.
 ## Pre-release versions
 
 A version with a suffix, such as `5.1.0-beta.1`, is published as a GitHub **pre-release** so it
-can be tried before it ships. It is built for every platform, but the Docker `latest` tag, the app
-stores and the stable update feeds skip it, so no stable install picks one up by itself. To try
-one, download it from the [releases page](https://github.com/fliks-app/fliks/releases) or, on
-Docker, pin its exact image tag (`ghcr.io/fliks-app/fliks:5.1.0-beta.1`).
+can be tried before it ships. It is built for every platform, but the app stores and the stable
+update feeds skip it, so no stable install picks one up by itself. On Docker, a stable release
+`5.1.0` is published as `5.1.0`, `5.1`, `5` and `latest`. A pre-release is published under its
+exact tag only (`ghcr.io/fliks-app/fliks:5.1.0-beta.1`), so `latest`, `5.1` and `5` never move to
+it. To try one, pin that tag or download it from the
+[releases page](https://github.com/fliks-app/fliks/releases).
 
 The update check asks GitHub for the latest stable release, which never is a pre-release. A server
 running a pre-release is offered the final release (`5.1.0` is newer than `5.1.0-beta.1`), but not

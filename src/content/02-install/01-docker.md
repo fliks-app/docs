@@ -80,8 +80,12 @@ can reach (see [Reverse proxy](/install/reverse-proxy#tell-fliks-its-public-addr
 ## Limits on a small box
 
 On a shared NAS or single-board computer, cap the container so transcodes don't starve the rest of
-the box. A 4K HDR transcode takes about 700 MB of RAM, and the engine runs one software FFmpeg per
-CPU of the limit minus one (at least one): 4 CPUs allow 3 concurrent transcodes.
+the box. A 4K HDR transcode takes about 700 MB of RAM. The engine sizes itself on the CPUs of the
+limit: software transcodes share them (each gets at least 2 threads), so more simultaneous
+transcodes run slower, and none is refused or queued. Background jobs (scans, thumbnails, marker
+detection) run on the CPUs minus one (at least one) and wait or pause while a transcode needs the
+CPU. Hardware encodes don't use that budget. The **Concurrent background jobs** setting overrides
+it (see [Streaming and transcoding](/features/streaming-and-transcoding#admin-settings)).
 
 ```yaml
 services:

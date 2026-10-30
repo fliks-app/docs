@@ -171,10 +171,14 @@ when you pick or drop such a track.
 - **Image tracks** (PGS, VobSub, DVB, XSub). The desktop app, Android and Android TV draw an
   embedded image track themselves when the video Direct Plays. The web client, iPhone and iPad,
   Samsung, LG and Chromecast always get it burned in, and so does a separate image file on every
-  client (a `.sup`, or a VobSub `.idx` and `.sub` pair next to the video).
+  client (a `.sup`, or a VobSub `.idx` and `.sub` pair next to the video). Apple TV burns in an
+  image track only when it picks it automatically at playback start, from your preferred language
+  and mode, when the file has no text track in that language. Its player menu lists text tracks
+  only, and the app has no **Hide image subtitles** setting.
 - **Styled ASS/SSA tracks.** Only the desktop app draws the track's own fonts, colors and
   positions. The web, mobile, Android TV, Samsung, LG and Chromecast clients get the track burned
-  in so it keeps that styling; as plain text it would lose it.
+  in so it keeps that styling; as plain text it would lose it. Apple TV always plays it as plain
+  text.
 
 A styled track you pick yourself from the menu is burned in. One chosen automatically when
 playback starts (your preferred language, or a remembered choice) starts as plain text, so the

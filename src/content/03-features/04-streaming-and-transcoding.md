@@ -95,7 +95,7 @@ Fliks uses the first one it finds.
 | First segment duration | A shorter first segment to speed up startup; later segments use the normal duration |
 | Automatic black bar cropping | On by default. Removes black bars detected at import, at the cost of a re-encode; turn it off to keep the bars and allow Direct Play |
 | Encoding preset (QSV / libx264) | Speed-versus-quality tradeoff (default `faster`); has no effect on VAAPI or NVENC |
-| Concurrent background jobs | How many FFmpeg jobs can run at once for scans, thumbnails and marker detection (playback transcodes aren't limited by this) |
+| Concurrent background jobs | How many FFmpeg jobs can run at once for scans, thumbnails and marker detection. Empty means the CPUs minus one, at least one. Playback never waits for a slot: it starts at once and background jobs pause for it |
 | Cache size limit / retention | How much disk the transcode cache may use, and how long a cached segment is kept, with a manual "Clear cache" action |
 
 ## See also

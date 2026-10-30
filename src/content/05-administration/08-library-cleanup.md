@@ -114,7 +114,7 @@ reminders. Removing a title by hand is not counted.
 
 ### Who sees the flag
 
-Everyone who can open the library sees it:
+Every user who can open the library sees it, not only admins:
 
 - Titles flagged with a date appear in a **Leaving soon** row on the home page, soonest first.
   Each card reads "Leaving today" or "Leaving in N days".
@@ -141,12 +141,15 @@ season and episode for a scoped rule), the rule, the size and the days left, soo
 
 | Action | Effect |
 |---|---|
-| Keep | Removes the flag and protects the title: no rule flags it again. Keeping a season or episode protects that one and stops whole-series rules from flagging the series. There is no button to undo it. |
+| Keep | Removes the flag and protects the title: no rule flags it again. Keeping a season or episode protects that one and stops whole-series rules from flagging the series. The app has no button to undo it. |
 | Delete now | Runs the rule's action immediately, after a confirmation, without waiting for the date. For a **Flag only** rule on movies or series it deletes the title and its files. |
 
 Tick the boxes to select several rows. The header shows the count and the total size, with
 **Keep** and **Delete now** for the whole selection. A bulk action takes at most 200 rows, and
 the page reports how many succeeded and how many failed.
+
+An admin can lift a **Keep** through the API with `DELETE /api/cleanup/exclusions/<mediaId>`, adding
+`?seasonId=` or `?episodeId=` for a season or an episode.
 
 ## Recommendations
 
