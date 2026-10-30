@@ -20,7 +20,7 @@ recognising the device, not by matching a number.
 
 An admin can limit that account list, or hide it: see the
 [login user list](/administration/users-and-permissions#login-user-list). With it hidden, people
-type their username and Quick Connect isn't offered to a new device.
+type their username and a new device isn't offered Quick Connect, since it starts from that list.
 
 **On a phone or another device already signed in to that account:**
 

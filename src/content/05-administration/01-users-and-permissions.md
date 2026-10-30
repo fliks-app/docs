@@ -35,8 +35,11 @@ The login screen lists the accounts so people can pick theirs instead of typing 
 | Local network only | Only a caller whose address, and every `X-Forwarded-For` hop, is private or loopback. Behind a [reverse proxy](/install/reverse-proxy), the proxy has to set that header; a request that went through a public address is outside. |
 | Hidden | Nobody. The login screen goes straight to the username form. |
 
-Only enabled accounts are listed, and only with their username and avatar. **Hidden** also turns
-Quick Connect off for new devices, since there is no account to pick: people type their username.
+Only enabled accounts are listed, and only with their username and avatar. With **Hidden**, or
+**Local network only** for a caller outside the network, the list is empty, and the login screen
+goes straight to the username form. That form has no Quick Connect button: Quick Connect starts
+from the account list, so a new device can't use it. Accounts already signed in on a device still
+show in that device's list.
 
 ## Roles and permissions
 
