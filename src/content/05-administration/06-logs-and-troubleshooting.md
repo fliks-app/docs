@@ -19,8 +19,8 @@ logs at the same verbosity.
 | Platform | Where |
 |---|---|
 | Docker | `docker compose logs fliks` (or `docker logs <container>`), same as any container: stdout/stderr, not written to a file inside the container by default. |
-| Windows | `%LOCALAPPDATA%\Fliks\logs\backend-YYYY-MM-DD.log`, one file per day. The tray's **View Logs…** opens this folder directly. |
-| macOS | `~/Library/Application Support/Fliks/logs/backend-YYYY-MM-DD.log`, one file per day, plus PostgreSQL's own logs alongside. Backend lines are also visible in Console.app (subsystem `app.fliks.macos`). The menu bar's **View Logs...** opens this folder directly. |
+| Windows | `%LOCALAPPDATA%\Fliks Server\logs\server-YYYY-MM-DD.log`, one file per day, plus PostgreSQL's own logs alongside. The tray's **View Logs…** opens this folder directly. |
+| macOS | `~/Library/Application Support/Fliks Server/logs/server-YYYY-MM-DD.log`, one file per day, plus PostgreSQL's own logs alongside. Server lines are also visible in Console.app (subsystem `app.fliks.macos`). The menu bar's **View Logs...** opens this folder directly. |
 | From source | Whatever the process's stdout/stderr is redirected to; Fliks doesn't write a log file itself outside of a packaged build. |
 
 ## Warnings worth recognizing
@@ -30,20 +30,18 @@ already looking at the log (search for the text in the in-app viewer):
 
 | Message (start of line) | What it means | Fix |
 |---|---|---|
-| `No users found` | First boot, no accounts exist yet; Fliks created `admin`/`password`. | Log in and change the password immediately; see [Quick start](/getting-started/quick-start). |
-| `Cannot write to the data directory` | `FLIKS_DATA_DIR` isn't writable by the process; Fliks fell back to a temp directory. Artwork and avatars won't survive a restart. | Fix the mount/permission, or set `FLIKS_DATA_DIR` to a writable path. |
-| `Cannot write to the cache directory` | Same, for `FLIKS_CACHE_DIR`. Nothing is lost permanently (it's regenerable), just slower after every restart. | Fix the mount/permission, or set `FLIKS_CACHE_DIR`. |
-| `Cannot write to the plugins runtime directory` | The directory set by `FLIKS_RUNTIME_DIR` isn't writable, so Fliks used a temp directory. Harmless for your data: the plugin archives are stored in the database and unpacked again on every start. | Fix the mount/permission, or point `FLIKS_RUNTIME_DIR` at a writable path. |
-| `Cannot write to the JWT conf directory` | `FLIKS_CONF_DIR` (`/app/conf` in Docker) isn't writable, so a new signing key is generated on every restart and everyone is logged out each time. | Fix the mount/permission, or set `JWT_SECRET`. |
+| `data directory not writable: using …` | `FLIKS_DATA_DIR` isn't writable by the process; Fliks fell back to a temp directory. Artwork and avatars won't survive a restart. | Fix the mount/permission, or set `FLIKS_DATA_DIR` to a writable path. |
+| `cache directory not writable: using …` | Same, for `FLIKS_CACHE_DIR`. Nothing is lost permanently (it's regenerable), just slower after every restart. | Fix the mount/permission, or set `FLIKS_CACHE_DIR`. |
+| `no usable conf dir for .jwt-secret: using a process-local secret` | `FLIKS_CONF_DIR` (`/app/conf` in Docker) isn't writable, so a new signing key is generated on every restart and everyone is logged out each time. The same line appears for `.engine-token`. | Fix the mount/permission, or set `JWT_SECRET` (and `FLIKS_ENGINE_TOKEN`). |
 | `HW accel test failed: <type>` | At startup Fliks tries each hardware path in turn and keeps the first that works; the tail of FFmpeg's own error follows on the same line. A failure followed by `HW accel test passed` for another path is normal. If every path fails, Fliks transcodes on the CPU. | See [Hardware acceleration](/install/hardware-acceleration) for what each path needs (a device, a driver version, a container capability). |
 | `GitHub release lookup failed: HTTP …` | The update check got an error answer from GitHub; harmless, retried on the next check. | Ignore, or set `FLIKS_DISABLE_UPDATE_CHECK=1` if the server has no outbound internet access at all. |
 
 ## Common startup failure: the database extension
 
-On every boot, Fliks runs `CREATE EXTENSION IF NOT EXISTS pg_trgm` (used for search) against the
-configured database, and stops with an error if it fails, before the web server starts. With the
-example Compose file this works out of the box, because the `fliks` Postgres role owns its own
-database. Pointing Fliks at a database on a shared or externally managed PostgreSQL server can
+Fliks creates the `pg_trgm` extension (used for search) with `CREATE EXTENSION IF NOT EXISTS` in
+one of its database migrations, which run on boot, and stops with an error if it fails, before the
+web server starts. With the example Compose file this works out of the box, because the `fliks`
+Postgres role owns its own database. Pointing Fliks at a database on a shared or externally managed PostgreSQL server can
 fail here if that role isn't allowed to create extensions. Either have a superuser run
 `CREATE EXTENSION IF NOT EXISTS pg_trgm;` once on that database, or grant the role the `CREATE`
 privilege on it (`pg_trgm` is a trusted extension, so that is enough).

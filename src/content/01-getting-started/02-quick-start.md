@@ -17,19 +17,16 @@ Pick whichever fits the machine that holds your video files. Every option gives 
 Each guide ends with the server listening on port `4848`, except TrueNAS, whose app publishes
 port `30485` by default.
 
-## 2. Open it and log in
+## 2. Create the administrator
 
 Open `http://<host>:4848` in a browser (`http://localhost:4848` on the machine itself, port
-`30485` on TrueNAS). Fliks creates one account the first time it starts with no users in its
-database:
+`30485` on TrueNAS). A server with no account has no default login: Fliks shows the **Create the
+administrator** page instead. Pick a username, a password of at least 8 characters, type it again
+to confirm, and click **Create account**. You're signed in as that administrator, who has every
+permission.
 
-| Username | Password |
-|---|---|
-| `admin` | `password` |
-
-> [!IMPORTANT]
-> Change that password immediately: user menu > **Account settings** > **Password**. It is a
-> well-known default, and anyone who can reach the server can log in with it until you do.
+The page only shows while the server has no user. After that, the address opens the normal
+login.
 
 ## 3. Add a library
 
