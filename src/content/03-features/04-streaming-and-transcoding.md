@@ -19,8 +19,9 @@ and picks the cheapest option that still works:
 A few specific things always force a transcode, no matter how compatible the codec otherwise is:
 subtitles that have to be burned into the picture (any image-based track you turn on, such as PGS
 or VobSub), black bars detected in the file while automatic black-bar cropping is on (it is by default,
-unless your device crops them itself), HDR that your screen can't display, and deliberately
-picking a lower quality than the source. If letterboxed films never Direct Play, the cropping
+unless your device crops them itself), HDR that your screen can't display, an interlaced video
+(the transcode deinterlaces it, since no client platform deinterlaces a stream it is handed
+as-is), and deliberately picking a lower quality than the source. If letterboxed films never Direct Play, the cropping
 setting is the usual reason.
 
 The player's **Stats for nerds** overlay shows which of the three methods is active for whatever

@@ -22,6 +22,19 @@ Moving the D-pad up or down between rows of posters, or left and right within a 
 you'd expect from a typical TV app: moving into a row lands on its first item, and moving back into
 a row you already had focus in returns you to the same card rather than resetting to the start.
 
+## Surround sound through an AV receiver
+
+When the TV's HDMI output is connected to a receiver or soundbar that accepts Dolby Digital (AC3),
+Dolby Digital Plus (E-AC3), DTS (including DTS-HD) or Dolby TrueHD as a bitstream, Fliks asks it
+which of those it takes and sends matching audio tracks through untouched. The receiver decodes
+them, even when the TV has no decoder for the format, so a TrueHD or DTS track plays as is
+instead of being converted. The list is read again when you plug or unplug HDMI audio, so
+switching receivers needs no restart. There is no setting for it.
+
+A file with an [`.edl` file](/features/playback#commercials-cuts-and-mutes-edl) that mutes part of
+the audio is the exception: a bitstream can't be muted, so its audio is decoded and converted as
+before.
+
 ## What's hidden on this platform
 
 Consistent with every TV client:
