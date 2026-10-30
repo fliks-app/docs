@@ -1,6 +1,6 @@
 ---
 title: Packaging and signing
-description: The .fkplugin archive format, the local build command, what an Ed25519 signature actually covers, and how to sign one for real.
+description: The .fkplugin archive format, the cargo xtask build commands, what an Ed25519 signature actually covers, and how signing works for real distribution.
 ---
 
 ## The archive format
@@ -14,7 +14,7 @@ it, by exact reason, rather than silently ignoring the unexpected part.
 |---|---|
 | `plugin.json` | Both, required |
 | `plugin.json.sig` | Both, optional (its absence just means "unsigned") |
-| `plugin.js` | `process` only, required for that tier and forbidden on `data` |
+| `plugin.wasm` | `process` only, required for that tier and forbidden on `data`. It must be a WebAssembly component. |
 | `logo.svg` or `logo.png` | Both, at most one |
 
 **Size and shape caps:**
@@ -22,135 +22,141 @@ it, by exact reason, rather than silently ignoring the unexpected part.
 | Cap | Value |
 |---|---|
 | Entries per archive | 4 |
-| Whole archive, compressed | 8 MiB |
-| Total uncompressed | 24 MiB |
+| Whole archive, compressed (upload or catalog fetch) | 33 MiB |
+| Total uncompressed | 48 MiB |
+| `plugin.wasm` | 32 MiB |
 | `plugin.json` | 256 KiB |
 | `plugin.json.sig` | 256 bytes |
-| `plugin.js` | 8 MiB |
 | Logo | 64 KiB |
 | Compression ratio, per entry | 100:1 |
 
 Only the store (no compression) and deflate compression methods are accepted; no ZIP64, no data
 descriptors, no encrypted entries, no symlinks, no directory entries, no archive comment, and no
-more than one end-of-central-directory record. Every one of these has its own refusal code (the
-full list is in [the manifest reference](/plugins/manifest#full-validation-error-reference)); the
-practical upshot is: build your archive with a plain, boring zip writer that stores files rather
-than one tuned for maximum compression or compatibility with unusual zip features.
+more than one end-of-central-directory record. Entry names must be NFC, free of control characters
+and path separators, and unique even case-folded. A logo is checked by its bytes: PNG by its magic
+bytes, SVG must be XML rooted at `<svg>` with no `<script>`, no `on*=` attribute and no
+`javascript:`. Every one of these has its own refusal code; build your archive with a plain, boring
+zip writer that stores files, which is what `cargo xtask package` does.
 
-## Building locally, for development
+### Refusal codes
 
-From the core Fliks repository's `backend/` directory:
+The guards run in this order and the first failure refuses the whole archive, before anything
+touches the disk.
+
+| Code | Refused because |
+|---|---|
+| `PLUGIN_BAD_MAGIC` | The bytes don't start with a ZIP local header. |
+| `PLUGIN_TOO_LARGE` | The archive, an entry, or the total is over its cap, or an inflated size contradicts the central directory. |
+| `PLUGIN_TRAILING_DATA` | A second end-of-central-directory record. |
+| `PLUGIN_MALFORMED_ARCHIVE` | The central directory can't be parsed. |
+| `PLUGIN_ARCHIVE_COMMENT` | The archive has a comment. |
+| `PLUGIN_TOO_MANY_ENTRIES` | More than 4 entries. |
+| `PLUGIN_CONTROL_CHAR`, `PLUGIN_NOT_NFC`, `PLUGIN_PATH_SEPARATOR`, `PLUGIN_ABSOLUTE_PATH` | An entry name breaks the naming rules above. |
+| `PLUGIN_DIRECTORY_ENTRY`, `PLUGIN_SYMLINK` | An entry is a directory, or a Unix file type other than regular. |
+| `PLUGIN_DUPLICATE_ENTRY` | A duplicate name, exact or case-folded, or two logos. |
+| `PLUGIN_UNEXPECTED_ENTRY` | A name outside `plugin.json`, `plugin.json.sig`, `plugin.wasm`, `logo.svg`, `logo.png`. |
+| `PLUGIN_ZIP64`, `PLUGIN_DATA_DESCRIPTOR`, `PLUGIN_ENCRYPTED`, `PLUGIN_COMPRESSION_METHOD` | An unsupported ZIP feature. |
+| `PLUGIN_RATIO` | A compression ratio above 100, or content from zero compressed bytes. |
+| `PLUGIN_MANIFEST_TOO_LARGE` | `plugin.json` over 256 KiB. |
+| `PLUGIN_BAD_SIGNATURE` | `plugin.json.sig` doesn't decode to exactly 64 bytes. |
+| `PLUGIN_BAD_LOGO` | The logo isn't a safe PNG or SVG. |
+
+The manifest, tier and file-set refusals that follow are in
+[the manifest reference](/plugins/manifest#full-validation-error-reference).
+
+## Building with `cargo xtask`
+
+A plugin repository keeps a tiny `xtask` crate over the SDK's `build` feature (see
+[Your first plugin](/plugins/first-plugin#step-1-create-the-crate)). It has three commands:
 
 ```bash
-npm run package-plugin -- <built-plugin-dir> [-o out.fkplugin]
+cargo xtask build [<crate dir>]
+cargo xtask package [<crate dir>] [--key <hex seed file>] [--out <dir>] [--max-mib <n>]
+cargo xtask verify <archive> [--key <hex public key file>] [--max-mib <n>]
 ```
 
-`<built-plugin-dir>` is a directory holding your built `plugin.json`, `plugin.js` (for a `process`
-manifest) and logo. This tool:
+`build` runs `cargo build --release --target wasm32-wasip2` and prints the path of the component.
 
-1. For a `process` manifest, computes the `files` map (the sha256 of `plugin.js` and the logo)
-   itself and writes it into the archived `plugin.json`, replacing whatever your source manifest
-   says, so you never hand-write it.
-2. Refuses early, by name, on anything the inspector would refuse later anyway: a missing
-   `plugin.js` for a `process` manifest, one present on a `data` manifest, any other file in the
-   directory beyond the legal entry names, a `logo` field that doesn't match what's on disk, an
-   oversized entry, a manifest that fails validation, a bad id or version.
-3. Writes an archive that is **always unsigned**.
+`package` does the whole job:
+
+1. Builds the release component.
+2. Writes `plugin.json` from `plugin.template.json`: the template plus `version` (from `Cargo.toml`)
+   and `files`, the sha256 of `plugin.wasm` and of the logo. You never hand-write `files`.
+3. Writes `<id>-<version>.fkplugin` into `--out` (default `.`) as a deterministic archive:
+   store-only, a fixed DOS timestamp, no archive comment, entries in a fixed order (`plugin.json`,
+   `plugin.json.sig` if signed, `plugin.wasm`, the logo), so two builds of the same input are
+   byte-identical.
+4. Verifies it before writing it: core's own archive inspector, the `files` hashes, the size budget
+   (`--max-mib`, default 32) and that the component imports only the `plugin` world and exports
+   only `guest`.
+
+Without `--key` the archive is **unsigned**:
 
 ```text
-wrote /path/to/acme.tool-1.0.0.fkplugin (1942 bytes) for acme.tool@1.0.0
-unsigned: installable only on a core whose "allow unsigned plugins" plugin setting is on
+dist/example.hello-0.1.0.fkplugin
 ```
 
-(The second line is worded for `process` plugins: a `data` plugin installs unsigned without that
-setting.) That output is exactly right for local iteration (see [Your first plugin](/plugins/first-plugin)),
-and exactly wrong for anything you intend other people to install: signing for real distribution is
-a separate, later step this tool deliberately does not perform.
+That is exactly right for local iteration (see [Your first plugin](/plugins/first-plugin)) and
+exactly wrong for anything you intend other people to install.
 
 ## What a signature actually covers
 
 The Ed25519 signature is over **the exact raw bytes of `plugin.json`, and nothing else**. Not the
-zip, not `plugin.js`. The other files are covered indirectly: a `process` manifest's `files` map
-holds their sha256 hashes, and those hashes are checked against the real bytes when the archive is
-extracted, if `plugin.js` doesn't match its declared hash, that's `PLUGIN_HASH_MISMATCH`, a
-separate failure from a bad signature.
+zip, not `plugin.wasm`. The other files are covered indirectly: a `process` manifest's `files` map
+holds their sha256 hashes, and those hashes are checked against the real bytes at install and at
+every load, so a `plugin.wasm` that doesn't match its declared hash is `PLUGIN_HASH_MISMATCH` (at
+load, the plugin fails as `tampered`), a separate failure from a bad signature.
 
-- `plugin.json.sig` is the base64 text of the raw 64-byte signature. Its length must decode to
-  exactly 64 bytes, or the archive is refused with `PLUGIN_BAD_SIGNATURE` before the manifest is
-  even parsed.
-- The signature is checked against the **compiled-in official public keys** on core's side
-  (`OFFICIAL_KEYS` in `archive/trust-store.ts`; today one key, `release-2026`). There is no
-  registry of third-party keys built into core: the only way an archive becomes `official` trust is
-  a signature that verifies against one of those keys, everything else is `unverified` (a
-  64-byte signature that verifies against no official key, whoever made it) or `unsigned` (no
-  signature at all).
-- Only `unsigned` is gated by the admin setting **Allow unsigned plugins** (`plugins.allow_unsigned`),
-  and only for a `process` archive. An `unverified` archive installs without it; the admin UI makes
-  the admin tick an acknowledgement on the consent sheet first. See
-  [Publishing](/plugins/publishing) for what that means for your own catalog.
+- `plugin.json.sig` is the base64 text of the raw 64-byte signature. Surrounding whitespace is
+  trimmed first, so a trailing newline is fine. It must decode to exactly 64 bytes, or the archive
+  is refused with `PLUGIN_BAD_SIGNATURE` before the manifest is even parsed.
+- The signature is checked against the **compiled-in official public keys** on core's side (today
+  one key, `release-2026`). There is no registry of third-party keys built into core: the only way
+  an archive becomes `official` trust is a signature that verifies against one of those keys.
+  Everything else is `unverified` (a 64-byte signature that verifies against no official key,
+  whoever made it) or `unsigned` (no signature at all).
+- A `process` archive that is not `official` is refused with `PLUGIN_UNSIGNED` unless the admin
+  setting **Allow unsigned plugins** (`plugins.allow_unsigned`) is on. That holds for `unverified`
+  as well as `unsigned`. The setting gates installs, not loads: turning it back off leaves a plugin
+  already installed running; uninstall it instead. A `data` archive installs with any trust level,
+  after the admin ticks the acknowledgement on the consent sheet.
+- An upgrade over a package that was verified by a key must carry the same key
+  (`PLUGIN_SIGNER_CHANGED`, 409).
 
 > [!IMPORTANT]
-> If you build your own packaging step, don't sign your **source** `plugin.json` file. Core's own
-> packaging tool (and any packaging step modelled on it) re-serialises the manifest
-> (`JSON.stringify(manifest, null, 2)`) before writing it into the archive, computing `files`
-> yourself along the way, so the archived bytes differ from your source file byte for byte. Sign
-> the **archived** bytes, after that re-serialisation, or your signature will never verify.
+> Sign the **archived** `plugin.json`, never your source template. `cargo xtask package` writes
+> the manifest with `serde_json`'s pretty printer, so the archived bytes differ from
+> `plugin.template.json` byte for byte. A signature made over any other bytes will never verify.
 
-## Hand-rolling your own packaging step
+## Signing for development
 
-Both real plugins covered in [Examples](/plugins/examples) build their own archive with about 100
-lines of plain Node, no zip dependency (`scripts/build.ts`, then `scripts/package-archive.ts`; run
-them with `npm run build` and `npm run package`), in this shape:
+`--key <hex seed file>` signs the archive with a development key: a file holding 64 hex
+characters, the 32-byte Ed25519 seed (`openssl rand -hex 32 > dev.key` makes one).
 
-1. Bundle with esbuild (`bundle: true`, `platform: 'node'`, `target: 'node24'`, `format: 'cjs'`).
-2. Compute the sha256 of the built `plugin.js` and the logo; write them into `files`.
-3. Write out `plugin.json` (the manifest template plus `version` from `package.json` and the
-   computed `files`).
-4. Optionally sign. The download plugin's script never signs: its release archives are built and
-   signed by the catalog instead (see [Publishing](/plugins/publishing#the-official-catalog)). The
-   notify plugin's script signs when `FK_NOTIFY_SIGNING_KEY` holds an Ed25519 private key in PEM
-   form, writing `plugin.json.sig` as base64; otherwise its archive is unsigned too.
-5. Build the zip by hand: **store method only** (no compression), a CRC32 computed in a few lines
-   of plain JavaScript, the UTF-8 filename flag, a fixed DOS date/time (so two builds of identical
-   input produce byte-identical output), no archive comment, entries in a fixed order
-   (`plugin.json`, `plugin.json.sig` if present, `plugin.js`, the logo).
-
-Doing it this way, with no dependency at all, is deliberate in both real plugins: a packaging tool
-whose job is partly to gatekeep supply-chain risk for everyone downstream of your archive shouldn't
-import its own.
-
-## Generating and holding a signing key
-
-```ts
-import { generateKeyPairSync } from 'node:crypto';
-const { publicKey, privateKey } = generateKeyPairSync('ed25519');
-
-// Public half in the format Fliks pins: the raw 32-byte key, base64 (the last 32 bytes of the SPKI DER).
-const publicB64 = publicKey.export({ type: 'spki', format: 'der' }).subarray(-32).toString('base64');
-// Private half as base64 PKCS#8 DER, the format the catalog's signing script reads.
-const privateB64 = privateKey.export({ type: 'pkcs8', format: 'der' }).toString('base64');
+```bash
+cargo xtask package --key dev.key --out dist
 ```
 
-- Keep the **private** half only in a CI secret (or your own local secret store); never commit it.
-- Publish the **public** half at a stable, permanent location, one file per key id, and **never
-  delete a retired key's public file**: a signature made with it has to keep verifying for as long
-  as the archive it signed might still be installed anywhere.
-- Rotating means **adding a new key**, never replacing an existing file. A signature is bound to
-  the exact key that made it, not to "whichever key this trust store currently prefers", restoring
-  an old signed archive still verifies against the old, retained key even after you've moved on to
-  signing new archives with a new one.
+A development key is not one core trusts, so the archive is `unverified` on a real server and still
+needs **Allow unsigned plugins**. The flag exists to exercise a signed archive's shape end to end.
+`cargo xtask package --key` also makes the verification step trust that key's public half.
 
-The full mechanics of running this as an actual catalog other people install from, including how
-`official` trust and revocation interact with key rotation, are in
-[Publishing](/plugins/publishing#key-rotation).
+## Signing for distribution
+
+A plugin other people install carries the signature of the official release key, made by the
+catalog's `Package plugin` workflow from the unsigned archive your repository's release publishes:
+it checks the archive against the manifest the catalog maintainers reviewed, signs `plugin.json`
+with the catalog key, and replaces the release asset with the signed `.fkplugin`. The private half
+of that key lives only in the catalog repository's secrets. See [Publishing](/plugins/publishing)
+for the whole flow, and why a plugin published on its own is `unverified`.
 
 ## Quick packaging checklist
 
-- [ ] `plugin.js` is a single bundled file; `node --check dist/plugin.js` runs clean with no
-      `require` your bundler didn't inline.
-- [ ] `files` is computed by your build step, never hand-written.
-- [ ] The archive holds only legal entries, and nothing exceeds the size caps above.
-- [ ] You signed the **archived** manifest bytes, not your source file, if you signed at all.
-- [ ] `npm run package-plugin` packs it without error (or your own `verify-with-core.ts`, see
-      [Testing and debugging](/plugins/testing-and-debugging#verifying-your-archive-against-the-real-core-inspector))
-      accepts it before you try installing it anywhere.
+- [ ] `plugin.template.json` has the `id`, `pluginApi`, `fliks` range and `runtime: "wasm"` you mean,
+      and `Cargo.toml`'s `version` is the version you are releasing.
+- [ ] `cargo xtask package` passes: it verifies the archive, the world and the size budget.
+- [ ] You did not hand-write `files`, and you did not sign your template.
+- [ ] The component is built with `opt-level = "s"`, LTO and `strip = true`, so it fits well under
+      the 32 MiB cap (the real plugins gate CI at 12 MiB with `--max-mib 12`).
+- [ ] You imported the archive on a dev instance with **Allow unsigned plugins** on and it reached
+      `Active` (see [Testing and debugging](/plugins/testing-and-debugging)).

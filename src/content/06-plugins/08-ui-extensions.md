@@ -38,7 +38,7 @@ One entry per nav item, menu row, or settings-sidebar link.
 | `nav.main` | The main sidebar/nav bar (desktop), the TV tab row, or the phone "more" sheet, depending on client. | Yes, home/search/profile/live TV/playlists/downloads/history. |
 | `nav.acquisition` | The requests area's own nav. | Yes, requests and calendar. |
 | `settings.page` | The admin settings sidebar. Each plugin gets its **own** section named after it, it never joins a core section. | Yes, 8 core sections; plugin sections come after them, ordered by plugin id. |
-| `media.actions` | The card context menu and the detail page's ⋯ menu, both built from one merged list. | Yes, 22 core actions. |
+| `media.actions` | The card context menu and the detail page's ⋯ menu, both built from one merged list. | Yes, core's own actions. |
 | `card.actions` | Same merged list as `media.actions`. | Same list. |
 | `media.season.actions` | Extra buttons in a season's action row. | No, this slot is plugin-only. |
 
@@ -68,6 +68,7 @@ guessing.
 | `isTv` | Running on a TV form factor. |
 | `isTouch` | Running on a touch device. |
 | `liveTv` | The signed-in user has at least one Live TV channel available. |
+| `server:<version>` | The connected server is at least that release, for example `server:5.1.0`. A row that needs a newer server hides itself against an older one. |
 | `surface:card` / `surface:detail` | Which menu is being built; a "Play" row makes no sense on the page you're already on. |
 
 None of this is a trust boundary: whatever a `when` hides, the route behind it is still checked
@@ -81,7 +82,7 @@ the current surface has no handler for, makes the row disappear rather than rend
 
 | Slot | Closed set |
 |---|---|
-| `media.actions` / `card.actions` | 22 core ids (`media.play`, `media.request`, `media.grab-best`, `media.search-releases`, `media.delete`, and so on), plus whatever your manifest names among them. Each surface serves only a subset; "Play" and "Open", for instance, exist only on the card. |
+| `media.actions` / `card.actions` | `media.recommend`, `media.toggle-series-watched`, `media.open-tracking`, `media.request`, `media.grab-best`, `media.search-releases`, `media.edit-profiles`, `media.edit-library`, `media.edit-subtitles`, `media.refresh-metadata`, `media.analyze`, `media.toggle-monitored`, `media.delete`, `media.toggle-like`, `media.download`, `media.download-series`, `media.auto-download-0`, `-3`, `-5` and `-10`, `media.play`, `media.open`, `media.add-to-playlist`, `media.watch-together`, `media.toggle-watched`, `media.remove`, `media.identify`, `media.request-deletion`. Each surface serves only a subset; "Play" and "Open", for instance, exist only on the card. |
 | `media.season.actions` | `season.search-releases`, `season.grab-best`. Plugin-only, core declares no entries here. |
 | `nav.main` | `nav.my-profile` only, and only for core's own row. |
 | A `form` page's `actions[]` | `events.test-delivery` only, today. |
@@ -138,7 +139,7 @@ routes. Needs the process running.
 | `showPriority`, `defaultPriority`, `reorderable` | A priority column and drag-to-reorder, when the resource has a meaningful priority concept. |
 | `bulkSelect` | Adds a selection column plus bulk enable/disable/delete and one bulk field edit. |
 | `labels` | Overrides generic wording ("New provider") with domain terms ("New indexer"). |
-| `actions[]` | `{ id, labelKey, method: GET\|POST\|DELETE, route, scope: 'row'\|'list', confirmKey?, slot?, result? }`. A `GET` row action needs a declared `result: { kind: 'table', columns, emptyKey }` or it renders no button at all, core has no domain view to fall back on. `slot: 'cooldown-reset'` is the one recognised placement, next to a row's own reported cooldown rather than as its own button. |
+| `actions[]` | `{ id, labelKey, method: GET\|POST\|DELETE, route, scope: 'row'\|'list', confirmKey?, slot?, result?, successKey?, afterSave? }`. A `GET` row action needs a declared `result: { kind: 'table', columns, emptyKey }` or it renders no button at all, core has no domain view to fall back on. `slot: 'cooldown-reset'` is the one recognised placement, next to a row's own reported cooldown rather than as its own button. `successKey` is toasted after a successful mutation, interpolated with the fields of what it answered. `afterSave` also runs a `scope: 'row'` action, unconfirmed, on the row the editor just saved when that row is enabled. |
 
 ### `table`
 
@@ -147,13 +148,13 @@ running.
 
 | Field | Notes |
 |---|---|
-| `list` | The route. With `paged: true` it answers `{data, total, page, pageSize}` instead of a bare array. |
-| `columns[]` | `key`, `labelKey`, `format?` (`date`/`bytes`/`percent`/`speed`), `labelKeys?` (enum-to-label map), `badges?` (value-to-tone map, `*` covers everything else), `nowrap?`, `truncate?`, `subValues?` (a second line under the cell), `detailField?`+`detailTitleKey?` (turns the cell into a button opening a dialog), `linkActionId?` (the closed `table.open-media` id), `progressField?` (a 0-100 field that fills a badge left to right). |
+| `list` | The route. With `paged: true` it answers `{data, total, page, pageSize}` instead of a bare array; `pageSize` sets how many rows a page asks for. |
+| `columns[]` | `key`, `labelKey`, `format?` (`date`/`bytes`/`percent`/`speed`), `labelKeys?` (enum-to-label map), `badges?` (value-to-tone map, `*` covers everything else; the tones are `neutral`, `primary`, `secondary`, `accent`, `info`, `success`, `warning`, `error` and `ghost`, and an unknown name falls back to `ghost`), `nowrap?`, `truncate?`, `subValues?` (a second line under the cell, each with its own `format`, `labelKeys` and `badges`), `detailField?`+`detailTitleKey?` (turns the cell into a button opening a dialog), `linkActionId?` (the closed `table.open-media` id), `progressField?` (a 0-100 field that fills a badge left to right). |
 | `filters[]` | `{kind:'search', key, placeholderKey}` (debounced) or `{kind:'select', key, labelKey, options}` (reloads immediately). Sent as query params; an empty value is omitted. |
 | `bulkSelect` | Turns declared `proxy` row actions into batch actions with one confirmation for the whole selection. |
 | `refreshMs` / `refreshOn` | Poll on an interval (floored at 2000 ms, paused while the tab is hidden), or re-fetch when one of the named SSE event types arrives. Prefer `refreshOn`; `refreshMs` is for a value no event announces. |
-| `rowActions[]` | Four kinds: `route`, `action` (the closed id set), `detail` (a read-only dialog built from the row's own already-loaded fields, no extra route), `proxy` (`POST`/`DELETE`, with `:id` filled from the row, an optional `confirmKey`, an optional `confirmToggle` checkbox sent as a query param, and `tone: 'danger'` styling). `when` gates on the viewer; `visibleWhen: {key, in}` gates on the row itself, pausing a paused download is not an action, it's a button that fails. |
-| `listActions[]` | Same `proxy` shape, rendered once above the rows rather than per-row. |
+| `rowActions[]` | Four kinds: `route`, `action` (the closed id set), `detail` (a read-only dialog of declared `fields`, with an optional `titleKey`, built from the row's own already-loaded fields, no extra route; a `link` field is anchored only when it is `http:` or `https:`), `proxy` (`POST`/`DELETE`, with `:id` filled from the row, an optional `confirmKey`, an optional `confirmToggle` checkbox (`{ labelKey, param, hintKey? }`) sent as a query param, and `tone: 'danger'` styling). `when` gates on the viewer; `visibleWhen: {key, in}` gates on the row itself, pausing a paused download is not an action, it's a button that fails. |
+| `listActions[]` | Same `proxy` shape, rendered once above the rows rather than per-row; `when` gates it on the viewer. |
 | `defaultSortKey` | Applied once; there's no click-to-resort. |
 
 ## `ui.releasePicker`
