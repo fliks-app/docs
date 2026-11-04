@@ -74,7 +74,7 @@ provides (without one, `playback-info` answers `503`).
    ```
 
    Pending migrations run at start. See [Environment variables](/install/environment-variables)
-   for `DB_*`, `TMDB_API_KEY` and the rest.
+   for `DB_*` and the rest. Set the TMDB and TVDB keys in **Settings > Plugins**.
 
 3. Client, in another terminal:
 

@@ -67,12 +67,16 @@ Keep the `/app/conf` volume: it holds the token as well as the JWT secret.
 
 | Variable | Default | What it controls |
 |---|---|---|
-| `TMDB_API_KEY` | baked into the published image | Only set this if you build the image yourself; the published image already carries a working key. |
-| `TVDB_API_KEY` | baked into the published image | Same. |
 | `METADATA_STALE_AFTER_MONTHS` | `3` | Age after which the scheduled metadata refresh re-fetches a title's metadata. |
 
-A source build has no baked-in keys: set your own, or titles won't be matched and no artwork is
-fetched.
+Metadata comes from provider plugins bundled with the server. Their API keys are set per plugin in
+**Settings > Plugins**, not in the environment. Official builds ship default keys; a source build
+has none, so set your own there or titles won't be matched and no artwork is fetched.
+
+> [!NOTE]
+> Upgrading from 5.x: on the first 6.0.0 boot, `TMDB_API_KEY` and `TVDB_API_KEY` are imported once
+> into the plugin settings (an existing plugin key is kept). Later boots ignore them, so you can
+> remove both from your compose file.
 
 ## Update check
 
@@ -100,7 +104,7 @@ These rarely need touching; the defaults match the docker-compose example. Cache
 
 | Variable | Default | What it controls |
 |---|---|---|
-| `FLIKS_PLUGINS_DISABLED` | off | Set to `1` to start the server without loading any plugin: the way out when a plugin crashes the server on boot. |
+| `FLIKS_PLUGINS_DISABLED` | off | Set to `1` to start the server without loading any plugin except the bundled metadata providers: the way out when a plugin crashes the server on boot. |
 
 ## Hardware
 
