@@ -139,7 +139,7 @@ Reinstalling the same plugin id replaces the running plugin in place, no need to
 and it keeps your existing settings and database schema. To restart it without reinstalling, use
 `POST /api/plugins/<id>/restart`.
 
-Setting `FLIKS_PLUGINS_DISABLED=1` starts the server without loading any plugin, which is the way
+Setting `FLIKS_PLUGINS_DISABLED=1` starts the server without loading any plugin except the bundled providers, which is the way
 out when a plugin misbehaves at boot.
 
 ## Reading the plugin logs

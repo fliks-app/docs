@@ -1,16 +1,22 @@
 ---
 title: Metadata
-description: Posters, backdrops, cast and details come from TMDB and TVDB, cached locally so nothing hotlinks to an outside service while you browse.
+description: Posters, backdrops, cast and details come from provider plugins bundled with the server, cached locally so nothing hotlinks to an outside service while you browse.
 ---
 
 ## Where the data comes from
 
-Fliks fetches titles, artwork, cast and crew from two providers:
+Fliks fetches titles, artwork, cast and crew through provider plugins. They ship inside the server
+and are installed at boot, so metadata works on a first start without a catalog. They can be
+disabled but not uninstalled.
 
 | Provider | Covers |
 |---|---|
 | **TMDB** | Movies and series; also trending, popular, upcoming and discovery browsing |
 | **TVDB** | Movies and series, as an alternative source |
+| **OpenLibrary**, **BnF**, **Google Books** | Books |
+| **Audible**, **Audnexus** | Audiobooks |
+
+**Settings > Metadata** sets the order in which providers are tried, per kind of media.
 
 TMDB is the default, and the fallback whenever a library's **Metadata provider** is left on
 **Auto**. A library can be set to prefer one provider over the other (**Settings > Libraries**), and
@@ -18,10 +24,14 @@ that preference can be overridden again for one specific title, or even one spec
 usual source is missing something for it.
 
 > [!NOTE]
-> Both providers need an API key to work. The official Docker image and the Windows and macOS
-> installers already ship with them built in; you only need to supply your own (`TMDB_API_KEY`,
-> `TVDB_API_KEY`) if you build Fliks yourself from source. Without a TMDB key, the metadata refresh
-> jobs below don't run at all.
+> TMDB and TVDB need an API key. Official builds ship default keys. To use your own, enter it in
+> the plugin's settings (**Settings > Plugins**); clearing it restores the default. A source build
+> has no default key: without a TMDB key, video titles are matched through TVDB if it has a key,
+> and otherwise stay unidentified.
+>
+> Upgrading from 5.x: `TMDB_API_KEY` and `TVDB_API_KEY` are imported once into the plugin settings
+> on the first 6.0.0 boot. You can then remove them from your compose file.
+> `FLIKS_PLUGINS_DISABLED` does not disable the bundled providers.
 
 ## Language and region
 

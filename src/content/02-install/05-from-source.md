@@ -85,7 +85,6 @@ SERVE_STATIC_PATH=$PWD/client/dist/client/browser \
 FLIKS_CAST_DIR=$PWD/server/public \
 DB_HOST=localhost DB_PORT=5432 DB_USERNAME=fliks DB_PASSWORD=changeme DB_NAME=fliks \
 FLIKS_CONF_DIR=$HOME/.local/share/fliks/conf \
-TMDB_API_KEY=your-tmdb-key \
 ./fliks-engine --supervise --upstream http://127.0.0.1:4849 --public-listen 0.0.0.0:4848 \
   -- server/target/release/fliks-server
 ```
@@ -98,9 +97,9 @@ TMDB_API_KEY=your-tmdb-key \
 - `FLIKS_CONF_DIR` holds the generated JWT signing key and engine token. Its default, `/app/conf`,
   usually isn't writable outside Docker, and the fallback is a temp directory: lose it and
   everyone is logged out.
-- `TMDB_API_KEY` (and `TVDB_API_KEY` for TVDB): only the published Docker image and the
-  packaged apps carry built-in keys. A source build has none, so without your own keys titles
-  aren't matched and no artwork is fetched.
+- Metadata keys are not environment variables. Only the published Docker image and the packaged
+  apps carry default keys; a source build has none, so set your own in **Settings > Plugins** after
+  the first start, or titles aren't matched and no artwork is fetched.
 
 Pending database migrations run on every start, so the schema is created on first launch.
 `fliks-server migrate` runs them on their own. See
