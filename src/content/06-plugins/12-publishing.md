@@ -41,8 +41,8 @@ takes four steps:
      "author": "Fliks",
      "kind": "process",
      "version": "1.0.0",
-     "pluginApi": 2,
-     "fliks": ">=5.0.0 <6.0.0",
+     "pluginApi": 3,
+     "fliks": ">=6.0.0 <7.0.0",
      "zipUrl": "https://github.com/fliks-app/fk-plugin-notify/releases/download/v1.0.0/fliks.notify-1.0.0.fkplugin",
      "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
    }
@@ -52,7 +52,7 @@ takes four steps:
    anything that changes ships as a new version. `name`, `description`, `author` and `kind` must be
    identical across every version of the same id. `id`, `version`, `kind`, `pluginApi` and `fliks`
    must equal the manifest's. `fliks` carries a mandatory upper bound, and `pluginApi` must have a
-   row in the catalog's `COMPATIBILITY.md`. For a `process` plugin of `pluginApi` 2 the `zipUrl` must
+   row in the catalog's `COMPATIBILITY.md`. For a `process` plugin of `pluginApi` 2 or later the `zipUrl` must
    be an asset of a `fliks-app` repository's `v<version>` release, named `<id>-<version>.fkplugin`.
    The `sha256` stays zeroed, which keeps the version out of the published catalog until step 4.
 3. **CI checks the PR, cheaply.** The catalog's `validate-pr.yml` runs its script tests, a PR-shape
@@ -119,14 +119,12 @@ archive is inspected on install, and again whenever the plugin is registered):
 | `pluginApi` | The contract revision your plugin is written against. | An exact match against one of core's `SUPPORTED_PLUGIN_API_VERSIONS`, never bypassable by any admin setting. |
 | `fliks` | The core versions your plugin has been checked against. | A semver range match against the running core version (prerelease stripped). Bypassable with the admin setting **Ignore the required Fliks version**, since unlike `pluginApi` this one is a judgment call about actual runtime behaviour, not a hard protocol difference. |
 
-`pluginApi`'s own surface is **additive only** within one value: a bump adds functions or fields, it
-never changes an existing one's shape or meaning. Core accepts every value listed in
-`SUPPORTED_PLUGIN_API_VERSIONS`, so a bump can add the new value while still accepting the old one;
-only once a release drops the old value does a plugin still declaring it stop installing. Today
-`SUPPORTED_PLUGIN_API_VERSIONS` is `[2]`, and the catalog's `COMPATIBILITY.md` maps `2` to core
-`>=5.0.0 <6.0.0`; `0` and `1` are retired rows. A plugin declaring a value core doesn't accept is
-installed but `failed` with `incompatible-api`, and recovers when an auto-update installs a version
-that declares `2`.
+The host links one WIT package version per `pluginApi` value, so any change to a record or a
+function, an added field included, is a new `pluginApi`. Core accepts only the values in
+`SUPPORTED_PLUGIN_API_VERSIONS`, with no transition window: today it is `[3]`, and the catalog's
+`COMPATIBILITY.md` maps `3` to core `>=6.0.0 <7.0.0` (`0`, `1` and `2` are retired rows). A plugin
+declaring a value core doesn't accept is installed but `failed` with `incompatible-api`, and
+recovers when an auto-update installs a version that declares `3`.
 
 ## Updates
 

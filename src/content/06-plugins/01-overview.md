@@ -58,7 +58,7 @@ supervision, which is why core watches its health and recreates its instances on
 
 **Every plugin, either tier, can:**
 
-- Add a navigation entry, a settings-sidebar entry, or a row in the media/season action menus
+- Add a navigation entry, a settings-sidebar entry, or a row in the media/group/item action menus
   (`ui.contributions`, see [UI extensions](/plugins/ui-extensions)).
 - Declare a settings page rendered by core's own form, provider-list, or table components
   (`ui.configPages`, same chapter).

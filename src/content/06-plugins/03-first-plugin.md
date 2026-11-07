@@ -66,7 +66,7 @@ publish = false
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v5.2.0" }
+fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v6.0.0" }
 serde_json = "1"
 
 [profile.release]
@@ -93,7 +93,7 @@ edition = "2024"
 publish = false
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
-fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v5.2.0", features = ["build"] }
+fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v6.0.0", features = ["build"] }
 ```
 
 `xtask/src/main.rs`:
@@ -123,9 +123,9 @@ one settings page.
 ```json
 {
   "id": "example.hello",
-  "pluginApi": 2,
+  "pluginApi": 3,
   "name": "Hello",
-  "fliks": ">=5.0.0 <6.0.0",
+  "fliks": ">=6.0.0 <7.0.0",
   "author": "you",
   "description": "Starting point for a Fliks plugin.",
   "license": "MIT",

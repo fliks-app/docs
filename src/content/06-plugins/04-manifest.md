@@ -38,10 +38,10 @@ Layers 1-3 run during **inspect**, before anything reaches the database (see
 | Field | Type | Required | Constraint |
 |---|---|---|---|
 | `id` | string | yes | Pattern `^[a-z][a-z0-9]*(\.[a-z0-9]+)*$`, lowercase letters, digits and dots only, no hyphens or underscores, at most 51 characters. Reverse-DNS style, e.g. `acme.subtitles`. The cap keeps the longest name derived from it (the database role `fp_<8 hex>_<id>`) inside Postgres's 63-byte identifier limit. `ui`, `metrics`, `sources` and `import` are reserved. |
-| `pluginApi` | number | yes | The contract revision this plugin is written against. Core accepts every value in `SUPPORTED_PLUGIN_API_VERSIONS`; today that's just `2`. |
+| `pluginApi` | number | yes | The contract revision this plugin is written against. Core accepts every value in `SUPPORTED_PLUGIN_API_VERSIONS`; today that's just `3`; a package built for an older value is installed but `failed` with `incompatible-api` and the plugin list says to install a `pluginApi` 3 build. |
 | `name` | string | yes | Display name, non-empty. |
 | `version` | string | yes | Must be valid semver. `cargo xtask package` writes it from the crate version. |
-| `fliks` | string | yes | A non-empty semver range, matched against the running core version with its prerelease stripped (so a `5.0.0-rc.1` core satisfies `>=5.0.0`). See the callout below about upper bounds. |
+| `fliks` | string | yes | A non-empty semver range, matched against the running core version with its prerelease stripped (so a `6.0.0-rc.1` core satisfies `>=6.0.0`). See the callout below about upper bounds. |
 | `author` | string | yes | Free text; may be empty. |
 | `description` | string | yes | Free text; may be empty. |
 | `license` | string | yes | Free text; may be empty. |
@@ -53,8 +53,8 @@ Layers 1-3 run during **inspect**, before anything reaches the database (see
 | `i18n` | `{ locale: { key: string } }` | no | See the i18n rules below. |
 
 > [!IMPORTANT]
-> Core does **not** refuse a `fliks` range that has no upper bound (`">=5.0.0"` installs fine on a
-> manual upload). Give it one anyway, `">=5.0.0 <6.0.0"`, never a bare lower bound: the official
+> Core does **not** refuse a `fliks` range that has no upper bound (`">=6.0.0"` installs fine on a
+> manual upload). Give it one anyway, `">=6.0.0 <7.0.0"`, never a bare lower bound: the official
 > catalog's own submission check refuses a range without one, and a plugin that has never been
 > checked against a future major will be the first thing that breaks when it ships.
 
@@ -108,10 +108,10 @@ a parameter, such as `/:page`, stays legal.
 
 | Scope | Host functions it unlocks |
 |---|---|
-| `media:read` | `media_acquisition_context`, `media_resolve`, `media_exists`, and (because both answer with media identity across the whole library) `acquisition_candidates` and `releases_match` |
+| `media:read` | `media_acquisition_context`, `media_resolve`, `media_exists`, `media_resolve_or_create` (it tells which titles exist), and (because both answer with media identity across the whole library) `acquisition_candidates` and `releases_match` |
+| `media:create` | `media_resolve_or_create` (with `media:read`): adds a title to a library when none holds it, and adopts and approves the pending requests for it. An update that newly declares it waits for an admin. |
 | `acquisition:candidates` | `acquisition_candidates`, `releases_match` |
 | `releases:score` | `releases_score` |
-| `requests:progress` | `requests_mark_in_progress` |
 | `ingest:write` | `library_ingest` |
 | `events:emit` | `events_publish`, `notifications_dispatch_grab_started`, `events_emit_own`, `counts_set`, `progress_set` |
 | `config:rw` | `config_get`, `config_set` |
@@ -171,7 +171,7 @@ Archive-level refusals (`PLUGIN_BAD_MAGIC`, `PLUGIN_TOO_LARGE` and the rest) are
 | `PLUGIN_BAD_UI` | `ui` is present but isn't an object. |
 | `PLUGIN_BAD_UI_CONTRIBUTIONS` | A `ui.contributions[]` entry is missing `id`, `slot`, `labelKey`, a numeric `weight`, or an `action` object with a string `kind`. |
 | `PLUGIN_BAD_UI_CONFIG_PAGES` | A `ui.configPages[]` entry is missing what its `kind` requires (see [UI extensions](/plugins/ui-extensions)), or a `group` page item nests another `group` inside it. |
-| `PLUGIN_BAD_UI_RELEASE_PICKER` | `ui.releasePicker` doesn't declare `{search, grab}` for all three of movie, season and episode. |
+| `PLUGIN_BAD_UI_RELEASE_PICKER` | `ui.releasePicker` isn't a map of kinds to levels (`work`, `group`, `item`) of `{search, grab}` routes. |
 | `PLUGIN_BAD_EVENTS` | An `events[]` entry is missing a string `event` or `webhook`. |
 | `PLUGIN_TIER_VIOLATION` | A `data` archive carries `plugin.wasm`, or a `process` archive doesn't. |
 | `PLUGIN_UNSIGNED` | A `process` plugin isn't signed by the official key and **Allow unsigned plugins** is off. |
@@ -187,7 +187,7 @@ Archive-level refusals (`PLUGIN_BAD_MAGIC`, `PLUGIN_TOO_LARGE` and the rest) are
 | `incompatible-api` | `pluginApi` isn't in `SUPPORTED_PLUGIN_API_VERSIONS`. |
 | `incompatible-fliks` | The `fliks` range doesn't match the running core version. Bypassable with the admin setting **Ignore the required Fliks version**; `incompatible-api` never is. |
 | `invalid-webhook-event` / `unknown-webhook-setting` / `invalid-webhook-url` / `insecure-webhook-scheme` / `internal-webhook-host` | One of the `events[]` entries is malformed: an unknown event name, a `setting:<key>` naming no declared form field, an unparsable or non-https URL, or a URL whose host is an internal/private IP literal. |
-| `invalid-release-picker` | One of the six `releasePicker` routes isn't declared in `routes[]` with the right method. |
+| `invalid-release-picker` | A `releasePicker` `search` or `grab` route isn't declared in `routes[]` with the right method. |
 | `invalid-player` | `ui.player.preRollRoute` isn't a declared `POST` route. |
 | `invalid-ui-contribution` | A contribution's own route opens `/plugins/...` or `/admin/settings/plugins/...` for a page id this same manifest doesn't declare. |
 | `i18n-namespace-conflict` | This manifest's i18n root is already claimed by another installed plugin. |
@@ -225,9 +225,8 @@ core change, proposed as an issue that says:
 2. **What you tried within the existing set**, and where it stopped.
 3. **What core would have to trust you with**: a new host function is a new scope, or a widening of
    one, say which, and what a hostile plugin holding it could do.
-4. **Whether it can be additive.** `pluginApi` is a single integer, and within one value the
-   contract only grows: a new optional field or function lands without changing it. Removing
-   something, or changing an existing one's shape or meaning, bumps `pluginApi`. Core accepts only
-   the values it lists (`SUPPORTED_PLUGIN_API_VERSIONS`, today `[2]`), and a plugin declaring any
+4. **Whether it can avoid a break.** `pluginApi` is a single integer, and core links one WIT
+   package version per value, so any change to a record or a function, an added field included,
+   bumps `pluginApi`. Core accepts only the values it lists (`SUPPORTED_PLUGIN_API_VERSIONS`, today `[3]`), and a plugin declaring any
    other is installed but `failed` with `incompatible-api`, which is why a change that needs a new
-   value waits for a scheduled break and one that fits inside the current value ships far sooner.
+   value waits for a scheduled break.

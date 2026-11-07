@@ -34,6 +34,9 @@ Each entry names a **domain event** and a **target**:
   `media.monitored.changed`, `media.season.monitored.changed`, `media.removed`,
   `media.files.imported`, `media.acquisition.requested`, `acquisition.grabbed`, `request.created`,
   `request.approved`, `library.scan.completed`, `settings.changed`).
+  A `media.imported`, `media.removed`, `request.created` or `request.approved` payload carries
+  `externalIds`, a list of `{ "provider": "tmdb", "value": "603" }` entries, instead of the
+  `tmdbId` of 5.x; `media.files.imported` and `acquisition.grabbed` carry a `family`.
 - `webhook` is either a literal `https://` URL, or `setting:<key>` naming a field the same manifest
   declares on one of its own `form` pages, the field an operator fills in after installing. A
   literal URL is checked at registration (https only, and a bare IP literal must not be private or
@@ -61,10 +64,10 @@ freshness without polling Fliks:
 ```json
 {
   "id": "acme.librarystatus",
-  "pluginApi": 2,
+  "pluginApi": 3,
   "name": "Library status page",
   "version": "1.0.0",
-  "fliks": ">=5.0.0 <6.0.0",
+  "fliks": ">=6.0.0 <7.0.0",
   "author": "you",
   "description": "Posts a JSON payload to an admin-configured HTTPS endpoint when a library scan finishes or a title is removed.",
   "license": "MIT",

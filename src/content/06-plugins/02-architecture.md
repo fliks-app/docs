@@ -97,7 +97,7 @@ trap and a missed deadline are.
 
 ## The interface between core and a plugin
 
-The contract is a WebAssembly interface (WIT) package, `fliks:plugin@2.0.0`, shipped in the
+The contract is a WebAssembly interface (WIT) package, `fliks:plugin@3.0.0`, shipped in the
 `fliks-plugin-sdk` crate. The SDK generates the bindings, so a plugin never writes wire code.
 
 | Direction | Interface | Contents |
@@ -108,8 +108,8 @@ The contract is a WebAssembly interface (WIT) package, `fliks:plugin@2.0.0`, shi
 | The plugin calls core | `log` | One line at a level, tagged `plugin:<id>` in core's log. |
 | The plugin calls core | `wasi:http` | Outbound requests, vetted as described above. |
 
-Within one `pluginApi` value the package only grows: a new optional field or function raises its
-minor version and core links both. A change to an existing shape or meaning is a new `pluginApi`.
+Core links one package version per `pluginApi` value, so any change to a record or a function is a
+new `pluginApi`; today that is `3`.
 Every signature is in [SDK reference](/plugins/sdk-reference).
 
 ## How a UI contribution reaches the client

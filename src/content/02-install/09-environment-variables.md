@@ -84,6 +84,7 @@ has none, so set your own there or titles won't be matched and no artwork is fet
 |---|---|---|
 | `FLIKS_DISABLE_UPDATE_CHECK` | off | Set to `1`, `true` or `yes` to stop the server from asking GitHub for the latest release (it only asks when the web client requests the update status, cached 6 h). See [Updating](/install/updating). |
 | `FLIKS_GITHUB_REPO` | `fliks-app/fliks` | Which repository the update check queries; only relevant if you run a fork. |
+| `FLIKS_SKIP_PRE_MIGRATION_BACKUP` | off | Set to `1`, `true` or `yes` to skip the database dump the server writes before applying pending migrations (to `<data dir>/backups/pre-migration`, the 3 latest kept). Leave it off unless the disk is too small for the dump. See [Backups](/administration/backups#before-a-migration). |
 
 ## Streaming session tuning
 

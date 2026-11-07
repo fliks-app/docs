@@ -38,8 +38,11 @@ The login screen lists the accounts so people can pick theirs instead of typing 
 Only enabled accounts are listed, and only with their username and avatar. With **Hidden**, or
 **Local network only** for a caller outside the network, the list is empty, and the login screen
 goes straight to the username form. That form has no Quick Connect button: Quick Connect starts
-from the account list, so a new device can't use it. Accounts already signed in on a device still
-show in that device's list.
+from the account screen, which is skipped, so a new device can't use it. Accounts already signed
+in on a device still show in that device's list.
+
+Accounts can also sign in through an OpenID Connect provider: see
+[Single sign-on](/administration/single-sign-on).
 
 ## Roles and permissions
 

@@ -5,15 +5,39 @@ description: Every function a plugin can call or must implement, with its Rust s
 
 ## The crate
 
-`fliks-plugin-sdk` is the guest SDK for `pluginApi` 2 (`MIT OR Apache-2.0`). Its source lives at
+`fliks-plugin-sdk` is the guest SDK for `pluginApi` 3 (`MIT OR Apache-2.0`). Its source lives at
 `server/crates/plugin-sdk/` in the core Fliks repository, next to the WIT package it generates
-bindings from (`wit/fliks.wit`, package `fliks:plugin@2.0.0`). It is not published to crates.io;
+bindings from (`wit/fliks.wit`, package `fliks:plugin@3.0.0`). It is not published to crates.io;
 depend on it from git and pin a Fliks release tag or a commit:
 
 ```toml
 [dependencies]
-fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v5.2.0" }
+fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v6.0.0" }
 ```
+
+## Migrating from `pluginApi` 2
+
+`pluginApi` 3 (Fliks 6.0.0) is a breaking change, and core accepts nothing else: a plugin built for
+2 shows as failed until you rebuild it. What authors meet:
+
+- **Kinds, families and units replace movies, seasons and episodes.** `MediaKind` is gone; a `Kind`
+  is an open string (`movie`, `series`, `book`, `comic`, `album`) and a `Family` (`video`, `audio`,
+  `text`, `image`) names the modality, each with its own quality table. Season and episode numbers
+  become a `UnitRef` (`group`, `number`, `end_number`, `label`, `absolute`); season and episode ids
+  become `group_id` and `item_id`.
+- **External ids** are a list of `{ provider, value }` entries instead of `imdb_id`, `tmdb_id` and
+  `tvdb_id`.
+- `AcquisitionTarget` is now `Target`, with `family`, `language`, `creators`, `edition_ids`, `scope`
+  and `search_units`. `is_full_season` and `ReleaseCoverage` fields became `whole_group`, `groups`,
+  `units` and `complete`; a scored release carries a list of `languages`.
+- `requests_mark_in_progress` and the `requests:progress` scope are gone. `media_resolve_or_create`
+  and the `media:create` scope are new.
+- The release picker is declared per kind and level, and UI slots and `actionId`s speak of groups
+  and items, see [UI extensions](/plugins/ui-extensions#uireleasepicker).
+- Metadata providers are a new kind of plugin, and `fetch-children` takes a season argument.
+- Data plugin events carry `externalIds` instead of `tmdbId`, and a `family` where it matters; see
+  [Data plugins](/plugins/data-plugins#events).
+- The `fliks` range of a new build is `>=6.0.0 <7.0.0`.
 
 | Module | What it holds |
 |---|---|
@@ -116,50 +140,53 @@ use fliks_plugin_sdk::bindings::fliks::plugin::types::*;
 ### Reads
 
 ```rust
-pub fn media_acquisition_context(media_id: u32, season_id: Option<u32>, episode_id: Option<u32>)
-    -> Result<Option<AcquisitionTarget>, HostError>;
+pub fn media_acquisition_context(media_id: u32, family: Option<Family>, language: Option<&str>,
+    group_id: Option<u32>, item_id: Option<u32>) -> Result<Option<Target>, HostError>;
 pub fn acquisition_candidates(query: &CandidatesQuery) -> Result<CandidatesPage, HostError>;
 pub fn releases_match(titles: &[ReleaseTitle], min_age_minutes: Option<u32>)
     -> Result<Vec<ReleaseMatch>, HostError>;
-pub fn releases_score(media_id: u32, season_number: Option<u32>, episode_number: Option<u32>,
-    releases: &[CandidateRelease]) -> Result<Vec<ScoredRelease>, HostError>;
+pub fn releases_score(media_id: u32, family: Option<Family>, language: Option<&str>,
+    unit: Option<UnitRef>, releases: &[CandidateRelease]) -> Result<Vec<ScoredRelease>, HostError>;
 pub fn media_resolve(query: &ResolveQuery) -> Result<Vec<(String, ResolvedMedia)>, HostError>;
 pub fn media_exists(media_ids: &[u32]) -> Result<Vec<u32>, HostError>;
 ```
 
 - `media_acquisition_context` answers everything needed to decide whether and how to acquire one
-  piece of media, or `None` for an unknown media, a media with no library, or a season or episode
-  of another media. A whole-series lookup has `want: None`.
-- `acquisition_candidates` enumerates monitored movies and wanted episodes and season packs,
-  sorted by media, season, episode. `available_on` must be a `YYYY-MM-DD` date (else
-  `ERR_VALIDATION`); `limit` is at most 500; `cursor` is opaque, and each page reads only the
-  next monitored media after it, so nothing is cached. A season with two or more wanted episodes
-  yields its pack and every episode.
+  piece of media, or `None` for an unknown media, a media with no library, or a group or item of
+  another media. `family: None` is the media's first want; `language` picks among the wants of a
+  book's family. A whole-work lookup has `want: None`.
+- `acquisition_candidates` enumerates the monitored works and the wanted groups and items, sorted by
+  media then unit. `available_on` must be a `YYYY-MM-DD` date (else `ERR_VALIDATION`); `limit` is
+  at most 500; `cursor` is opaque, and each page reads only the next monitored media after it, so
+  nothing is cached. `family` and `kind` filter the query.
 - `releases_match` indexes the monitored library once per call and decides per title: grab, or
   skip with a reason (`on-disk`, `not-monitored`, `unmatched`, `too-fresh`, `not-available`,
-  `unprofiled`). `publish_date` is read as RFC 3339, then RFC 2822, then ISO 8601 without offset as
-  UTC; an unparsable date never gates.
-- `releases_score` runs core's rejection rules, custom formats and quality and language profiles in
-  one call and returns the scored list (`[]` for an unknown media). The plugin supplies only what
-  only it can know: per-indexer minimum seeders and its own `blocked` flag.
-- `media_resolve` answers queue-page labels, keyed `media:<id>`, `season:<id>`, `episode:<id>`. At
+  `unprofiled`, `scene-unresolved`). `publish_date` is read as RFC 3339, then RFC 2822, then ISO 8601
+  without offset as UTC; an unparsable date never gates.
+- `releases_score` runs core's rejection rules, custom formats and the family's quality and language
+  profiles in one call and returns the scored list (`[]` for an unknown media). The plugin supplies
+  only what only it can know: per-indexer minimum seeders and its own `blocked` flag.
+- `media_resolve` answers queue-page labels, keyed `media:<id>`, `group:<id>`, `item:<id>`. At
   most 100 ids in total, else `ERR_VALIDATION`.
 - `media_exists` answers which of the ids exist.
 
 ### Writes
 
 ```rust
-pub fn requests_mark_in_progress(idempotency_key: &str, media_id: u32, season_number: Option<u32>)
-    -> Result<(), HostError>;
+pub fn media_resolve_or_create(kind: &str, external_ids: &[ExternalId], library_id: Option<u32>,
+    folder_id: Option<u32>) -> Result<u32, HostError>;
 pub fn library_ingest(request: &IngestRequest) -> Result<IngestResult, HostError>;
 ```
 
-`requests_mark_in_progress` moves an approved request to processing. `library_ingest` is the one
+`media_resolve_or_create` answers the id of the media of a work named by external ids, creating it
+when the library has none, so a plugin can acquire what nobody requested. It needs `media:create`
+and `media:read`. `library_ingest` is the one
 function that writes to disk. Core resolves every path with `realpath` and requires it under one of
 the manifest's `ingestRoots` (none declared or outside every root: `ERR_DENIED`; missing path:
 `ERR_NOT_FOUND`), then imports, replacing an existing file. A retried call with the same files
 lands in `already_present`. After an import core dispatches the `download.complete` notification
-and refreshes the connected media servers.
+and refreshes the connected media servers. `requests_mark_in_progress` is gone: core moves a request
+along itself.
 
 ### Events, counts and progress
 
@@ -192,25 +219,31 @@ pub fn config_set(key: &str, value: Option<&str>) -> Result<(), HostError>;
 pub fn schedule_call(key: &str, delay_ms: u64, payload: &str) -> Result<(), HostError>;
 pub fn cancel_call(key: &str) -> Result<bool, HostError>;
 pub fn deadline_remaining_ms() -> u64;
+pub fn provider_set_limits(rate_per_sec: f64, burst: u32, daily_quota: Option<u32>) -> Result<(), HostError>;
+pub fn provider_quota_spent() -> Result<(), HostError>;
 ```
 
 `config_get(None)` returns every setting the plugin owns, prefix stripped; with a key list, only
 those it owns and that hold a value. `config_set` takes 1 to 256 character keys and values up to
 64 KiB; `None` stores a null, which reads back as absent. Prefer the typed `scheduled::schedule` and
 `scheduled::cancel` to the raw `schedule_call` and `cancel_call`. `deadline_remaining_ms` needs no
-scope and never fails: 0 once the deadline has passed.
+scope and never fails: 0 once the deadline has passed. `provider_set_limits` and
+`provider_quota_spent` are for metadata providers: the first replaces the limits of the host's
+outbound limiter (read from `x-ratelimit-*` headers), the second says the day's quota is spent until
+midnight UTC.
 
 ### Scopes
 
 | Function | Required scopes |
 |---|---|
 | `media_acquisition_context`, `media_resolve`, `media_exists` | `media:read` |
+| `media_resolve_or_create` | `media:create` and `media:read` |
 | `acquisition_candidates`, `releases_match` | `acquisition:candidates` and `media:read` |
 | `releases_score` | `releases:score` |
-| `requests_mark_in_progress` | `requests:progress` |
 | `library_ingest` | `ingest:write` |
 | `events_publish`, `notifications_dispatch_grab_started`, `counts_set`, `events_emit_own`, `progress_set` | `events:emit` |
 | `config_get`, `config_set` | `config:rw` |
+| `provider_set_limits`, `provider_quota_spent` (provider plugins only) | none |
 | `schedule_call`, `cancel_call`, `deadline_remaining_ms`, `db`, `log` | none |
 
 ### `HostError`
@@ -234,36 +267,49 @@ pub struct HostError { pub code: String, pub message: String }
 Field names are the WIT's, in snake_case (`ref` is `ref_`).
 
 ```rust
-pub enum MediaKind { Movie, Series }
+pub type Kind = String;      // movie, series, book, comic, album: an open set; the host answers
+                             // `unsupported-kind` for one it does not serve
+pub enum Family { Video, Audio, Text, Image }   // each has its own quality table
+pub struct ExternalId { pub provider: String, pub value: String }   // tmdb, tvdb, imdb, isbn, asin, ...
+pub struct UnitRef {         // none is the whole work; `group` alone a group (season, volume)
+    pub group: Option<u32>, pub number: Option<f64>, pub end_number: Option<f64>,
+    pub label: Option<String>,               // the number as printed: `1A`, a half issue
+    pub absolute: Option<f64>,               // absolute numbering of anime
+}
+pub struct Unit {
+    pub ref_: UnitRef, pub group_id: Option<u32>, pub item_id: Option<u32>,
+    pub title: Option<String>, pub air_date: Option<String>, pub unit_count: Option<u32>,
+}
 pub enum WantDecision { Missing, Upgrade, Skip }
 pub struct Want {
-    pub decision: WantDecision, pub allowed_quality_ids: Vec<u32>, pub allowed_language_ids: Vec<u32>,
-    pub min_resolution: u32, pub resolution_upgrade_only: bool,
+    pub decision: WantDecision, pub family: Family, pub language: Option<String>,
+    pub allowed_quality_ids: Vec<u32>, pub allowed_language_ids: Vec<u32>,
+    pub min_resolution: u32, pub resolution_upgrade_only: bool,   // video only
 }
-pub struct SeasonRef { pub id: u32, pub number: u32, pub episode_count: u32 }
-pub struct EpisodeRef {
-    pub id: u32, pub number: u32, pub end_number: Option<u32>,
-    pub air_date: Option<String>, pub title: Option<String>,
-}
-pub struct AcquisitionTarget {
-    pub media_id: u32, pub kind: MediaKind, pub title: String, pub original_title: Option<String>,
-    pub alternative_titles: Vec<String>, pub year: Option<u32>, pub runtime_minutes: Option<u32>,
-    pub imdb_id: Option<String>, pub tmdb_id: Option<u32>, pub tvdb_id: Option<u32>,
+pub struct Creator { pub name: String, pub role: String }          // author, narrator, director, ...
+pub struct Target {
+    pub media_id: u32, pub kind: Kind, pub family: Family, pub language: Option<String>,
+    pub title: String, pub original_title: Option<String>, pub alternative_titles: Vec<String>,
+    pub creators: Vec<Creator>,             // empty for video
+    pub year: Option<u32>, pub runtime_minutes: Option<u32>,
+    pub external_ids: Vec<ExternalId>,
+    pub edition_ids: Vec<ExternalId>,       // the wished edition (isbn, asin); empty for video
     pub library_id: u32,
     pub want: Option<Want>,                 // None: unprofiled, nothing can be scored
     pub expected_titles: Vec<String>, pub search_title: String,
-    pub season: Option<SeasonRef>, pub episode: Option<EpisodeRef>,
+    pub scope: Vec<Unit>,                   // empty is the whole work
+    pub search_units: Vec<UnitRef>,         // the numbers release names use for `scope`
 }
 pub struct CandidatesQuery {
-    pub kind: Option<MediaKind>, pub media_ids: Option<Vec<u32>>, pub available_on: String,
-    pub limit: u32, pub cursor: Option<String>,
+    pub kind: Option<Kind>, pub family: Option<Family>, pub media_ids: Option<Vec<u32>>,
+    pub available_on: String, pub limit: u32, pub cursor: Option<String>,
 }
-pub struct CandidatesPage { pub items: Vec<AcquisitionTarget>, pub cursor: Option<String> }
+pub struct CandidatesPage { pub items: Vec<Target>, pub cursor: Option<String> }
 
 pub struct ReleaseTitle { pub id: String, pub title: String, pub publish_date: String }
 pub struct ReleaseMatch {
-    pub id: String, pub media_id: Option<u32>, pub season_number: Option<u32>,
-    pub episode_number: Option<u32>, pub is_full_season: bool, pub coverage: Option<ReleaseCoverage>,
+    pub id: String, pub media_id: Option<u32>, pub unit: Option<UnitRef>, pub whole_group: bool,
+    pub coverage: Option<ReleaseCoverage>,
     pub decision: MatchDecision,            // Grab | Skip
     pub skip_reason: Option<SkipReason>,
 }
@@ -274,37 +320,42 @@ pub struct CandidateRelease {
     pub unknown_language_iso_code: Option<String>,
     pub blocked: bool,                      // only the plugin knows: it owns the blocklist
 }
+pub struct ReleaseLanguage { pub id: u32, pub name: String }
 pub struct ScoredRelease {
     pub id: String, pub quality_id: u32, pub quality_name: String, pub rank: i32, pub allowed: bool,
-    pub custom_format_score: i32, pub blocklisted: bool, pub language_id: Option<u32>,
-    pub language_name: Option<String>, pub language_allowed: bool, pub is_full_season: bool,
+    pub custom_format_score: i32, pub blocklisted: bool, pub languages: Vec<ReleaseLanguage>,
+    pub language_allowed: bool, pub whole_group: bool,
     pub coverage: Option<ReleaseCoverage>, pub size_deviation: Option<f64>,
     pub video_codec: Option<String>, pub rejections: Vec<Rejection>,
 }
-pub struct ReleaseCoverage { pub seasons: Option<Span>, pub episodes: Option<Span>, pub complete_series: bool }
-pub struct Span { pub first: u32, pub last: u32 }
+pub struct ReleaseCoverage { pub groups: Option<Span>, pub units: Option<Span>, pub complete: bool }
+pub struct Span { pub first: f64, pub last: f64 }
 pub struct Rejection { pub code: String, pub params: Vec<(String, ParamValue)> }  // ParamValue: Number(f64) | Text(String)
 
-pub struct ResolveQuery { pub media_ids: Vec<u32>, pub season_ids: Vec<u32>, pub episode_ids: Vec<u32> }
+pub struct ResolveQuery { pub media_ids: Vec<u32>, pub group_ids: Vec<u32>, pub item_ids: Vec<u32> }
 pub struct ResolvedMedia {
-    pub title: String, pub kind: MediaKind, pub library_id: u32, pub season_number: Option<u32>,
-    pub episode_number: Option<u32>, pub episode_title: Option<String>,
+    pub title: String, pub kind: Kind, pub library_id: u32, pub unit: Option<UnitRef>,
+    pub unit_title: Option<String>,
 }
 
 pub enum TransferMode { Copy, Move }
 pub struct IngestRequest {
-    pub idempotency_key: String, pub media_id: u32, pub paths: Vec<String>, pub transfer: TransferMode,
-    pub fallback_quality: Option<String>, pub source_label: String,
+    pub idempotency_key: String, pub media_id: u32, pub family: Family, pub language: Option<String>,
+    pub paths: Vec<String>, pub transfer: TransferMode, pub fallback_quality: Option<String>,
+    pub source_label: String,
 }
-pub struct ImportedFile { pub media_file_id: u32, pub relative_path: String, pub quality: String }
+pub struct ImportedFile {
+    pub media_file_id: u32, pub relative_path: String, pub quality: String,
+    pub edition_id: u32, pub item_ids: Vec<u32>,
+}
 pub struct IngestResult {
     pub imported: Vec<ImportedFile>, pub already_present: Vec<String>,
-    pub season_number: Option<u32>, pub episode_number: Option<u32>,  // only for a single imported episode
+    pub unit: Option<UnitRef>,              // only for a single imported unit
 }
 
 pub enum AcquisitionEvent {
-    Grabbed(Grabbed),            // { media_id, season_number?, episode_number? }
-    Imported(Imported),          // { media_id, season_number?, episode_number?, quality, source_title }
+    Grabbed(Grabbed),            // { media_id, family, unit? }
+    Imported(Imported),          // { media_id, family, unit?, quality, source_title }
     Failed(Failed),              // { media_id, title, reason }
     QueueChanged,
     StalledRemoved(StalledRemoved), // { media_id: Option<u32>, title }
@@ -312,11 +363,22 @@ pub enum AcquisitionEvent {
 pub enum Audience { Everyone, Media(u32), User(u32) }
 pub enum DownloadState { Queued, Active, Stalled, Paused, Importing }
 pub struct DownloadProgress {
-    pub ref_: String, pub season_number: Option<u32>, pub episode_number: Option<u32>,
+    pub ref_: String, pub unit: Option<UnitRef>,
     pub progress: f64,                      // 0 to 1
     pub bytes_per_second: Option<f64>, pub eta_seconds: Option<f64>, pub state: DownloadState,
 }
 ```
+
+## Metadata providers
+
+A metadata provider is a `process` plugin whose component also exports the `metadata-provider`
+interface (the `provider` world of the WIT: `search`, `fetch-work`, `fetch-children`,
+`child-stubs`, `find-by`, `fetch-edition`, `fetch-chapters`, `fetch-person`, `person-credits` and
+`list`). A provider that also declares the `scene` capability exports `scene` too (the `scene-provider`
+world). `fetch-children` takes an optional `season`: since `fliks:plugin@3.0.0` a
+provider built before it no longer links. The SDK's `fliks-plugin-sdk-provider` crate
+(`export_provider!`) wraps this; the fields of the manifest's `provider` block and the record
+shapes are in the core repository's `server/docs/spec/provider-plugins.md`.
 
 ## `db`
 
@@ -418,9 +480,9 @@ RFC 3339 UTC with milliseconds, which is the form the database layer reads and w
 
 ## The WIT package
 
-The interface is `fliks:plugin@2.0.0`, with one world, `plugin`. A component may import only what
+The interface is `fliks:plugin@3.0.0`, with the worlds `plugin`, `provider` (`plugin` plus `metadata-provider`) and `scene-provider`. A component may import only what
 the world imports (`wasi:cli`, `wasi:http/types`, `wasi:http/outgoing-handler` and the `host`, `db`
-and `log` interfaces of the package) and may export only `guest`; `cargo xtask verify` checks both
+and `log` interfaces of the package) and may export only `guest`, plus `metadata-provider` (and `scene`) for a provider; `cargo xtask verify` checks both
 and core checks the world again when it registers the plugin. `wasi:sockets` links but every address
 check refuses and name lookup is off. Ids are `u32`, JSON documents travel as UTF-8 text, and a
 `list<tuple<string, string>>` is an ordered multimap.

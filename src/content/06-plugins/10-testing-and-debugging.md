@@ -39,7 +39,7 @@ doesn't resolve, a handler that traps.
 
 ```toml
 [target.'cfg(not(target_arch = "wasm32"))'.dev-dependencies]
-fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v5.2.0", features = ["harness"] }
+fliks-plugin-sdk = { git = "https://github.com/fliks-app/fliks", tag = "v6.0.0", features = ["harness"] }
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 ```
 
@@ -175,7 +175,7 @@ browser's developer tools; codes the UI doesn't know are shown verbatim.
 | `PLUGIN_TOO_LARGE` | `plugin.wasm` over 32 MiB, the archive over 33 MiB, or the entries over 48 MiB together. | Build with `opt-level = "s"`, LTO and `strip = true`, as both real plugins do. |
 | `invalid-component` | The component doesn't compile, or imports something outside the `plugin` world. | Run `cargo xtask verify` on the archive: it prints the imports it refused. |
 | `manifest-mismatch` | The `id`, `version` or `pluginApi` the component reports in `hello` differs from the manifest. | Rebuild and repackage from the same crate: `export!` reads `plugin.template.json` and `CARGO_PKG_VERSION` at build time. |
-| `incompatible-api` | Your `pluginApi` isn't in core's `SUPPORTED_PLUGIN_API_VERSIONS`. | Use `2` and rebuild against the current [SDK](/plugins/sdk-reference). A `pluginApi` 1 package stays installed but `failed` until a version built for `2` replaces it. |
+| `incompatible-api` | Your `pluginApi` isn't in core's `SUPPORTED_PLUGIN_API_VERSIONS`. | Use `3` and rebuild against the current [SDK](/plugins/sdk-reference). A `pluginApi` 1 or 2 package stays installed but `failed` until a version built for `3` replaces it. |
 | `incompatible-fliks` | Your `fliks` range doesn't cover the running core version. | Widen the range (with an upper bound) once you've actually checked compatibility; see [Publishing](/plugins/publishing#compatibility). |
 | `network-not-granted` | The manifest asks for `network.internal` and the install didn't grant it, for instance after an unattended update. | Install it by hand from the consent sheet, which lists `network:internal`. |
 | `PLUGIN_DB_PROVISION_FAILED` on import, or `db-provision-failed` as the status reason | A declared `coreRefs` table or its `id` column doesn't exist, `coreRefs` is set while `schema` is `false`, or the database role may not create roles. | Confirm the table name and check the core version you're running has it. |

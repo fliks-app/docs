@@ -19,7 +19,7 @@ One entry per nav item, menu row, or settings-sidebar link.
 | Field | Type | Required | Notes |
 |---|---|---|---|
 | `id` | string | yes | Unique within your manifest. |
-| `slot` | one of six, below | yes | |
+| `slot` | one of seven, below | yes | |
 | `weight` | number | yes | Sort order within the slot, ascending, then by `id`. |
 | `labelKey` | string | yes | An i18n key from your own `i18n` block. |
 | `shortLabelKey` | string | no | A shorter label for compact surfaces (the phone dock); falls back to `labelKey`. |
@@ -31,16 +31,17 @@ One entry per nav item, menu row, or settings-sidebar link.
 | `action` | `{kind:'route', path}` \| `{kind:'action', actionId}` \| `{kind:'submenu'}` | yes | A `submenu` only opens its `children`; an older client that doesn't know this kind drops the row rather than showing a parent that does nothing. |
 | `children` | `UiContribution[]` | no | Only meaningful under `action.kind: 'submenu'`. |
 
-### The six slots
+### The seven slots
 
 | Slot | Where it renders | Core has entries here too? |
 |---|---|---|
 | `nav.main` | The main sidebar/nav bar (desktop), the TV tab row, or the phone "more" sheet, depending on client. | Yes, home/search/profile/live TV/playlists/downloads/history. |
 | `nav.acquisition` | The requests area's own nav. | Yes, requests and calendar. |
 | `settings.page` | The admin settings sidebar. Each plugin gets its **own** section named after it, it never joins a core section. | Yes, 8 core sections; plugin sections come after them, ordered by plugin id. |
-| `media.actions` | The card context menu and the detail page's ⋯ menu, both built from one merged list. | Yes, core's own actions. |
+| `media.actions` | The whole work. The card context menu and the detail page's ⋯ menu, both built from one merged list. | Yes, core's own actions. |
 | `card.actions` | Same merged list as `media.actions`. | Same list. |
-| `media.season.actions` | Extra buttons in a season's action row. | No, this slot is plugin-only. |
+| `media.group.actions` | Extra buttons in the action row of a group: a season, a volume or a disc. | No, this slot is plugin-only. |
+| `media.item.actions` | Extra buttons in the action row of an item: an episode, an issue or a track. | No, this slot is plugin-only. |
 
 A route contribution opening one of your **own** views must be exactly
 `/plugins/<your-id>/<pageId>` or `/admin/settings/plugins/<your-id>/<pageId>`, where `<pageId>` is a
@@ -62,8 +63,9 @@ guessing.
 | `mediaType:movie` / `mediaType:series` | The surface has a media item of that kind in context. |
 | `hasFiles` | The item has at least one file on disk. |
 | `isMonitored` | The item is monitored. |
-| `hasQualityProfile` | The item has a quality profile assigned. |
-| `isEpisode` | The context is a single episode. |
+| `hasQualityProfile` | The target has at least one want with a quality profile, whatever its kind. |
+| `level:work` / `level:group` / `level:item` | The level the menu is built for: the whole work, a group (season, volume, disc) or an item (episode, issue, track). |
+| `isEpisode` | Core's own gate on its title-level rows: true on a series item. A manifest should use `level:*` instead. |
 | `identified` | The item has at least one metadata-provider id (defaults true when the surface doesn't supply this fact). |
 | `isTv` | Running on a TV form factor. |
 | `isTouch` | Running on a touch device. |
@@ -83,7 +85,8 @@ the current surface has no handler for, makes the row disappear rather than rend
 | Slot | Closed set |
 |---|---|
 | `media.actions` / `card.actions` | `media.recommend`, `media.toggle-series-watched`, `media.open-tracking`, `media.request`, `media.grab-best`, `media.search-releases`, `media.edit-profiles`, `media.edit-library`, `media.edit-subtitles`, `media.refresh-metadata`, `media.analyze`, `media.toggle-monitored`, `media.delete`, `media.toggle-like`, `media.download`, `media.download-series`, `media.auto-download-0`, `-3`, `-5` and `-10`, `media.play`, `media.open`, `media.add-to-playlist`, `media.watch-together`, `media.toggle-watched`, `media.remove`, `media.identify`, `media.request-deletion`. Each surface serves only a subset; "Play" and "Open", for instance, exist only on the card. |
-| `media.season.actions` | `season.search-releases`, `season.grab-best`. Plugin-only, core declares no entries here. |
+| `media.group.actions` | `group.search-releases`, `group.grab-best`. Plugin-only, core declares no entries here. |
+| `media.item.actions` | `item.search-releases`, `item.grab-best`. Plugin-only, core declares no entries here. |
 | `nav.main` | `nav.my-profile` only, and only for core's own row. |
 | A `form` page's `actions[]` | `events.test-delivery` only, today. |
 | A `table` page's row `actionId` | `table.open-media` only: needs the row's `mediaId` and `mediaType` columns (and optionally `episodeId`); missing either means no button renders at all. |
@@ -161,11 +164,22 @@ running.
 
 ```json
 "releasePicker": {
-  "movie":   { "search": "/:id/releases",                       "grab": "/:id/grab" },
-  "season":  { "search": "/:id/seasons/:seasonId/releases",      "grab": "/:id/seasons/:seasonId/grab" },
-  "episode": { "search": "/:id/episodes/:episodeId/releases",    "grab": "/:id/episodes/:episodeId/grab" }
+  "movie":  { "work":  { "search": "/:id/releases", "grab": "/:id/grab" } },
+  "series": {
+    "group": { "search": "/:id/groups/:groupId/releases", "grab": "/:id/groups/:groupId/grab" },
+    "item":  { "search": "/:id/items/:itemId/releases",    "grab": "/:id/items/:itemId/grab" }
+  }
 }
 ```
+
+The keys are kinds of work (open lowercase words: `movie`, `series`, `book`, `comic`, `album`, and so
+on), then levels: `work` (the whole title), `group` (a season, a volume, a disc) and `item` (an
+episode, an issue, a track). Each level is a `{search, grab}` pair, and a kind declares at least one
+level. A kind the server doesn't serve is accepted and ignored. Core fills `:id` (the media id),
+`:groupId` and `:itemId` in the routes. `search` is a `GET` taking the query parameters `family` and
+`language` (the want aimed at; `language` is absent for an any-language want), `q` and `sid`; `grab`
+is a `POST` whose JSON body carries `family`, `language` and, for a manual pick, `downloadUrl`,
+`sourceTitle`, `sourceId`, `force` and `infoUrl` (none for a grab-best).
 
 Every route named here must also appear in this manifest's own `routes[]`, `search` as `GET`,
 `grab` as `POST`, so it carries a policy like any other. If more than one installed plugin declares
@@ -199,7 +213,7 @@ weight alongside core's own entries in the same slot:
 | `nav.main`, `nav.acquisition` | The app's nav/sidebar service, into the same list as core's own nav items. Icons come from a closed icon set; an unrecognised name shows a generic circle rather than nothing. |
 | `settings.page` | The admin settings sidebar, one section per plugin, named after it, after every core section. |
 | `media.actions`, `card.actions` | The card's context menu and the detail page's ⋯ menu, both built from one merged list (core items first, then this slot, then `card.actions`), rendered as an anchored dropdown on desktop or a bottom sheet on touch/TV. |
-| `media.season.actions` | Extra buttons in the season action row; only `action`-kind rows with the two closed ids above are kept. |
+| `media.group.actions`, `media.item.actions` | Extra buttons in the group or item action row; only `action`-kind rows with the two closed ids of their slot are kept. |
 | `form` / `providers` / `table` config pages | A generic schema-form component, a generic provider-list component, and a generic data-table component respectively, at `/plugins/<id>/<pageId>` or `/admin/settings/plugins/<id>/<pageId>`. |
 
 ## i18n

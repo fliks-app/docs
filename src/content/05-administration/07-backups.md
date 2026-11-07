@@ -44,6 +44,21 @@ dead disk doesn't take the backups with it.
 > relying on it; see
 > [Backup and restore failures](/administration/logs-and-troubleshooting#backup-and-restore-failures).
 
+## Before a migration
+
+When a newer server starts with database migrations pending, it takes a dump first, before it
+changes anything. It lands in `<data dir>/backups/pre-migration` (`/app/data/backups/pre-migration`
+in Docker) as `fliks-pre-migration-v<version>-<timestamp>.dump` (a `pg_dump` custom-format archive), and only
+the 3 most recent are kept, plus the first one of the pending version. These files are not listed
+under **Settings > System > Backups**; copy them from the folder.
+A start with nothing to migrate takes none.
+
+If the dump fails (no room on the disk, no `pg_dump`), the server stops and says so instead of
+migrating. Free the space or fix the tool, or set `FLIKS_SKIP_PRE_MIGRATION_BACKUP=1` to start
+without it, see [Environment variables](/install/environment-variables#update-check). It is a
+safety net, not a replacement for your own backup before a
+[major update](/install/updating#upgrading-to-600).
+
 ## Managing them by hand
 
 ![The Backups list, with each backup size, date and the Download/Restore/Delete actions](/img/backups.webp)
