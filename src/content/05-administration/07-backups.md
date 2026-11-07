@@ -48,8 +48,9 @@ dead disk doesn't take the backups with it.
 
 When a newer server starts with database migrations pending, it takes a dump first, before it
 changes anything. It lands in `<data dir>/backups/pre-migration` (`/app/data/backups/pre-migration`
-in Docker) as `fliks-pre-migration-v<version>-<timestamp>.sql`, and only the 3 most recent are
-kept. These files are not listed under **Settings > System > Backups**; copy them from the folder.
+in Docker) as `fliks-pre-migration-v<version>-<timestamp>.dump` (a `pg_dump` custom-format archive), and only
+the 3 most recent are kept, plus the first one of the pending version. These files are not listed
+under **Settings > System > Backups**; copy them from the folder.
 A start with nothing to migrate takes none.
 
 If the dump fails (no room on the disk, no `pg_dump`), the server stops and says so instead of

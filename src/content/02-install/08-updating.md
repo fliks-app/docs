@@ -44,19 +44,31 @@ before pulling the image.
 **Back up first, and keep free disk.** Take a [backup](/administration/backups) yourself, and
 copy it off the server. On top of that, when migrations are pending the server writes a database
 dump before applying them, to `<data dir>/backups/pre-migration` (`/app/data/backups/pre-migration`
-in Docker), and keeps the 3 most recent. The dump is as large as a manual backup, so leave room for
-it. If the dump fails, the server stops before touching the database and the log says why. On a
+in Docker). It keeps the 3 most recent, plus the first one taken for the pending version, and a
+start that refuses and is restarted in a loop writes a new dump each time. The dump is as large as
+a manual backup, so leave room for it. If the dump fails, the server stops before touching the
+database and the log says why. On a
 source install that means `pg_dump` must be on the `PATH`, at least as recent as the PostgreSQL
 server's major version, and `<data dir>/backups` must be writable (the Docker image and the
-Windows and macOS apps handle this). To restore a dump, run it with `psql` against the database,
-as you would a manual [backup](/administration/backups#managing-them-by-hand). Setting
+Windows and macOS apps handle this). Setting
 `FLIKS_SKIP_PRE_MIGRATION_BACKUP=1` skips it; see
 [Environment variables](/install/environment-variables#update-check).
 
+To go back to 5.x with that dump, in Docker (the dump is a `pg_dump` custom-format archive, a
+`.dump` file; replace `<user>`, `<db>` and `<file>`):
+
+```bash
+docker compose stop fliks
+docker compose cp fliks:/app/data/backups/pre-migration/<file> ./pre-migration.dump
+docker compose exec -T postgres pg_restore --clean --if-exists --no-owner -U <user> -d <db> < pre-migration.dump
+```
+
+Then pin your compose file back to the 5.x image tag and run `docker compose up -d`.
+
 **The server may refuse to start.** The first 6.0.0 migration checks that your library data can
 move into folders. It fixes what it can on its own and refuses the rest, with an explicit message
-in the log. A refusal changes nothing: the database stays as 5.2.1 left it, so rolling back to the 5.x image
-still works while you fix the data. Open a SQL shell, run what the message asks for, and restart.
+in the log. A refusal changes nothing: the database stays as your 5.x left it, so rolling back to the
+5.x image still works while you fix the data. Open a SQL shell, run what the message asks for, and restart.
 The user and database are the `POSTGRES_USER` and `POSTGRES_DB` of your compose file (`fliks` in
 the example):
 
@@ -67,15 +79,16 @@ docker compose exec postgres psql -U <user> <db>
 | The log says | Why | What to do |
 |---|---|---|
 | media file(s) belong to no media | A file row points at no title. | Run the `UPDATE media_files SET "mediaId" = ...` it prints for each id, or delete the rows with the `DELETE` it prints (this also drops their watch progress and subtitle rows; the files on disk are untouched). |
-| directory(ies) belong to several libraries | Two libraries share one path; a folder now belongs to exactly one library. | Run the printed `UPDATE libraries SET path = ...` statements, giving each library its own directory. |
+| directory(ies) belong to several libraries | Two libraries share one path; a folder now belongs to exactly one library. | If the files really sit in different folders, run the printed `UPDATE libraries SET path = ...` statements to give each library its own directory. If they are one folder, keep one library: `UPDATE media SET "libraryId" = <kept> WHERE "libraryId" = <other>` (only when the kept library's media types accept those titles), then `UPDATE libraries SET path = NULL WHERE id = <other>`. |
 | media own files but belong to no library | A title with files sits outside every library, and no single library takes its type. | Run the printed `UPDATE media SET "libraryId" = ...` with the library that should hold them. |
 | library(ies) hold files but have no path | A library with titles but no directory. | Run the printed `UPDATE libraries SET path = ...` for each. |
 | media have a folderName that is absolute, or holds a `.`, `..` or empty segment | A stored folder name is not a clean relative path. | Run the printed `UPDATE media SET "folderName" = ...` with the directory name under the library path. |
 | media file(s) have a relativePath that is empty, outside its library, or holds a `.`, `..` or empty segment | A stored file path cannot be placed under its folder. | Run the printed `UPDATE media_files SET "relativePath" = ...` with the path relative to the media folder. |
 | media file(s) would share one path in their folder with a lower-id file | Two rows describe one file. | Run the printed statements: they re-point the playback and subtitle rows to the file that stays, then delete the duplicate row (the file on disk is untouched). |
 
-Each message lists the first 100 rows it found, with `<placeholders>` for the values only you know.
-Run the statements, restart, and repeat until the server starts.
+Most messages list the first 100 rows they found, with `<placeholders>` for the values only you
+know; the two about libraries list every one. Run the statements, restart, and repeat until the
+server starts.
 
 **If you ran a `:main` image early in November.** The `1789000000050` migration was edited on
 2026-11-04 (#2400) before 6.0.0 shipped. A database that applied the earlier version fails to
@@ -92,8 +105,11 @@ Databases that went from 5.x straight to a release are not affected.
 
 **Update the plugins.** The server accepts `pluginApi` 3 only. A plugin built for `pluginApi` 2
 stays installed but shows as **failed** in **Settings > Plugins**, with a status telling you to
-install a `pluginApi` 3 build, and its data is kept. Update each one from the plugin catalog. The
-download plugin must be **2.4.0 or newer** to pick releases per season and episode.
+install a `pluginApi` 3 build, and its data is kept. At boot the server tries to update each failed
+plugin from the catalog in the background. That works unless you turned off plugin auto-update, the
+new version asks for a scope you haven't granted (it then waits for you), or the plugin isn't
+officially signed; update those by hand. The download plugin must be **2.4.0 or newer** to pick
+releases per season and episode; it adds no scope, so it installs by itself.
 
 **Provider keys and URLs.** The TMDB and TVDB API keys now live in the settings of their provider
 plugins. `TMDB_API_KEY` and `TVDB_API_KEY` are imported once on the first boot (an existing plugin
@@ -102,10 +118,12 @@ gone and their values are not imported: a mirror or proxy you pointed them at is
 the providers reach the upstream services directly. The server logs nothing when it ignores them,
 so check your compose file for these three variables yourself.
 
-**Webhooks and notifications.** `media.imported`, `media.removed`, `request.created` and
-`request.approved` no longer carry `tmdbId`. They carry `externalIds`, a list of
-`{ "provider": "tmdb", "value": "603" }` entries, one per id the title has. Update what reads them
-(n8n, Home Assistant, a script behind a webhook) to look the id up by `provider`.
+**Plugin webhooks and events.** The domain events that plugins receive (`media.imported`,
+`media.removed`, `request.created` and `request.approved`) no longer carry `tmdbId`. They carry
+`externalIds`, a list of `{ "provider": "tmdb", "value": "603" }` entries, one per id the title
+has. If a data plugin's webhook or a notify plugin forwards them to n8n, Home Assistant or a
+script, update what reads the id to look it up by `provider`. The webhooks configured in
+**Settings > Notifications** don't use these events and are unchanged.
 
 **Update the apps.** Quick Connect now uses a code (see [Pairing and remote
 control](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect)): the old

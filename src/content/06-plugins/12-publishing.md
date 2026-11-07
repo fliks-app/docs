@@ -52,7 +52,7 @@ takes four steps:
    anything that changes ships as a new version. `name`, `description`, `author` and `kind` must be
    identical across every version of the same id. `id`, `version`, `kind`, `pluginApi` and `fliks`
    must equal the manifest's. `fliks` carries a mandatory upper bound, and `pluginApi` must have a
-   row in the catalog's `COMPATIBILITY.md`. For a `process` plugin of `pluginApi` 2 the `zipUrl` must
+   row in the catalog's `COMPATIBILITY.md`. For a `process` plugin of `pluginApi` 2 or later the `zipUrl` must
    be an asset of a `fliks-app` repository's `v<version>` release, named `<id>-<version>.fkplugin`.
    The `sha256` stays zeroed, which keeps the version out of the published catalog until step 4.
 3. **CI checks the PR, cheaply.** The catalog's `validate-pr.yml` runs its script tests, a PR-shape
