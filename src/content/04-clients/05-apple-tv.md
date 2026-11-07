@@ -19,9 +19,9 @@ Install "Fliks" from the App Store. Requires **tvOS 17** or newer.
 ## Signing in
 
 Enter your server's address on first launch, then sign in with a password, or use **Quick
-Connect**: the same "approve from your phone" flow every other client uses, with no code to type.
-The waiting screen also shows a QR code that opens the **Login requests** page on a phone that's
-already signed in. See [Pairing and remote
+Connect**: the same flow every other client uses. The waiting screen shows a 6-digit code, which
+you type on the **Login requests** page of a phone that's already signed in, and a QR code that
+opens that page (the code itself is not in it). See [Pairing and remote
 control](/features/pairing-and-remote-control) for how approval works.
 
 A new server has no account yet, and the Apple TV app can't create the first administrator: it

@@ -75,7 +75,7 @@ keeps a **Re-enable** button for it.
 Point the web app, or any native client, at the same address and log in with your account. Web,
 iOS, Android, Android TV, Apple TV, Samsung and LG TVs, the desktop app and Chromecast are all
 covered in [Clients](/clients/overview). On a TV you don't have to type your password with the
-remote: pick your account, choose **Quick Connect**, and approve the request from your phone (see
+remote: choose **Quick Connect**, then type the code the TV shows on your phone's **Login requests** page (see
 [Pairing](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect)). Start a
 film on one device and pick it up on another: the position syncs live.
 

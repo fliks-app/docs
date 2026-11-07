@@ -60,7 +60,8 @@ One page with tabs for Sources, Channels, Guide, Settings, Access and Health, fu
 ## Users
 
 [Users and permissions](/administration/users-and-permissions): accounts, roles, and library
-access.
+access. **Single sign-on** (administrators only) is where you add an OpenID Connect provider; see
+[Single sign-on](/administration/single-sign-on).
 
 ## Advanced
 

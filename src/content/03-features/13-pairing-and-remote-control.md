@@ -6,35 +6,48 @@ description: Sign in on a TV without typing a password, and send a title from on
 ## Pairing a TV or new device (Quick Connect)
 
 Typing a password on a TV remote is slow, so Fliks lets a new device get signed in through a device
-that's already logged in instead. There's no code to read out loud or type in: approval happens by
-recognising the device, not by matching a number.
+that's already logged in instead. The new device shows a 6-digit code, and you type it on the
+signed-in device: approving means reading the screen of the device you mean to sign in.
+
+> [!IMPORTANT]
+> Quick Connect needs server 6.0.0 and an app that shows and sends the code. A TV or mobile app that
+> predates it can't use Quick Connect until you update it; password login is unaffected.
 
 **On the new device** (a TV the first time it's set up, or any client after signing out):
 
-1. The "Who's watching?" screen lists the accounts on the server.
-2. Choosing an account that already has a saved session on this device signs straight back in, with
-   no password (this works even offline, for downloaded content).
-3. Choosing any other account opens a choice between **Password** and **Quick Connect**.
-4. Quick Connect shows a waiting screen: "Waiting for approval", with the device's own name and
-   operating system underneath, and a countdown until the request expires.
+1. The "Who's watching?" screen lists the accounts on the server, with a **Quick Connect** button
+   below them. Pick **Quick Connect** to sign in without choosing an account first: whoever approves
+   the code is the account that gets signed in.
+2. Or choose an account that has no saved session on this device and pick **Quick Connect** in the
+   sheet that opens (next to **Password**): the request is then meant for that account only, and no
+   other account can approve it. An account that already has a saved session signs straight back in,
+   with no password (this works even offline, for downloaded content).
+3. The waiting screen reads "Waiting for approval", with the code in large digits, the device's own
+   name ("This device: ..."), the operating system when known, and the minutes left before the
+   request expires. **Cancel** drops the request.
 
 An admin can limit that account list, or hide it: see the
 [login user list](/administration/users-and-permissions#login-user-list). With it hidden, people
 type their username and a new device isn't offered Quick Connect, since it starts from that list.
 
-**On a phone or another device already signed in to that account:**
+**On a phone or another device already signed in:**
 
 1. Open the user menu and go to **Login requests**.
-2. Each pending request shows the requesting device's name and how long ago it asked.
-3. **Approve** or **Deny** it.
+2. Type the code in **Code shown on the device** and press **Continue**.
+3. Check the device name, its operating system, its network address and how long ago it asked, then
+   press **Approve**, or **Cancel** to back out.
 
-The request expires after 10 minutes if nobody responds, and a single device can only have a few
-requests pending at once. Only the account being signed into can approve its own requests: nobody
-else's login requests are visible to you.
+The rows listed under the code field are the pending requests that name your account. They only
+carry **Deny**: there's no one-tap approval, so the code is always typed. An unnamed request
+(started without choosing an account) is not listed there; it is approved by its code alone.
+
+The request expires after 10 minutes if nobody responds, and a device can only have a few requests
+pending at once. A wrong code is refused, and after several wrong codes in a short time the page
+asks you to try again later. A request meant for one account can only be approved by that account.
 
 > [!NOTE]
-> On the Apple TV app specifically, the waiting screen also shows a QR code that links straight to
-> the phone's **Login requests** page, so scanning it is a shortcut to the same approval step.
+> On the Apple TV app specifically, the waiting screen also shows a QR code that opens the phone's
+> **Login requests** page. It doesn't carry the code: you still type it.
 
 ## Remote control: playing on another device
 
@@ -64,8 +77,7 @@ This needs that device's owner to grant access first:
 
 1. On the device to be controlled, go to **App settings > Remote control** and choose **Show a
    code**. It displays a 6-character code (avoiding easily confused characters), valid for 10
-   minutes. This code only grants remote control; signing in a new device needs no code (see
-   above).
+   minutes. This code only grants remote control; it is not the Quick Connect code (see above).
 2. On the controlling device, enter that code under **Control other devices** and press **Add**.
 3. The grant covers that one device, not every device its owner has, and goes to your account: any
    device signed in to your account can then control it. It stays in place until either side
