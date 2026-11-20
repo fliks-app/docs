@@ -4,7 +4,7 @@ description: Install the server, create the administrator, add your first librar
 ---
 
 > [!SUMMARY]
-> Install the server, create the administrator at `http://<host>:4848`, create your language and quality profiles, add a library, add an indexer if you want downloads, then open Fliks on your devices.
+> Install the server, create the administrator at `http://<host>:4848`, create your language and quality profiles, add a library, set up a download plugin if you want downloads, then open Fliks on your devices.
 
 ## 1. Install the server
 
@@ -71,11 +71,11 @@ sees it, then **Browse...** to the folder with your media (under Docker, the pat
 A wrong match is fixed from the title's **More** menu with **Identify**: see
 [Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
 
-## 5. Add an indexer
+## 5. Set up a download plugin
 
-To let Fliks fetch the titles people request, install the Torrent manager plugin and add an indexer:
-[Set up the plugin](/built-in-plugins/torrent-manager), then [add your indexers](/built-in-plugins/indexers).
-Skip this if you only watch your own files.
+To let Fliks fetch the titles people request, install a download plugin such as
+[Torrent manager](/built-in-plugins/torrent-manager), then give it an [indexer](/built-in-plugins/indexers)
+and a [download client](/built-in-plugins/download-clients). Skip this if you only watch your own files.
 
 ## 6. Open Fliks on your devices
 
