@@ -4,7 +4,7 @@ description: Install the server, create the administrator, add your first librar
 ---
 
 > [!SUMMARY]
-> Install the server, create the administrator at `http://<host>:4848`, add a library, set a language profile, a quality profile and an indexer, then open Fliks on your devices.
+> Install the server, create the administrator at `http://<host>:4848`, create your language and quality profiles, add a library, set up a download plugin if you want downloads, then open Fliks on your devices.
 
 ## 1. Install the server
 
@@ -27,7 +27,29 @@ click **Create account**.
 
 ![The Create the administrator page: username, password, confirmation](/img/setup-create-admin-filled.webp)
 
-## 3. Add a library
+## 3. Create your profiles
+
+Create them before your first library, so it can use them:
+
+- **A language profile**: the audio and subtitle languages you want. Fliks uses it to find subtitles
+  on its own and to pick the right release. The default profile has no subtitle language.
+- **A quality profile**: which qualities Fliks accepts (720p, 1080p, 4K...). Every request needs one.
+
+:::steps
+![**Settings > Language profiles**: a new server lists one default profile](/img/admin-lprofile-1-sidebar.webp)
+![Click **New profile**](/img/admin-lprofile-2-new.webp)
+![Name it and tick the **Accepted audio languages**](/img/admin-lprofile-3-audio.webp)
+![Tick your **Subtitle languages**](/img/admin-lprofile-4-subtitles.webp)
+![Click **Save**](/img/admin-lprofile-5-save.webp)
+![**Settings > Quality profiles**: click **New profile**](/img/admin-qprofile-2-new.webp)
+![Name it and pick the **Cutoff quality**](/img/admin-qprofile-3-form.webp)
+![Tick the qualities you accept, then **Save**](/img/admin-qprofile-4-allowed.webp)
+:::
+
+Only watching files you already have? The language profile is enough. Details:
+[Language profiles](/downloads/language-profiles), [Quality profiles](/downloads/quality-profiles).
+
+## 4. Add a library
 
 Open your avatar menu, then **Administration > Libraries > Add a library**. Name it, choose who
 sees it, then **Browse...** to the folder with your media (under Docker, the path you mounted at
@@ -49,26 +71,13 @@ sees it, then **Browse...** to the folder with your media (under Docker, the pat
 A wrong match is fixed from the title's **More** menu with **Identify**: see
 [Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
 
-## 4. Finish the setup
+## 5. Set up a download plugin
 
-Do these three once, right after your first library: they are what makes Fliks find subtitles
-and fetch what you ask for.
+To let Fliks fetch the titles people request, install a download plugin such as
+[Torrent manager](/built-in-plugins/torrent-manager), then give it an [indexer](/built-in-plugins/indexers)
+and a [download client](/built-in-plugins/download-clients). Skip this if you only watch your own files.
 
-- **A language profile**: the languages you want for audio and subtitles. Fliks uses it to
-  search subtitles on its own and to pick the right release. The default profile has no subtitle
-  language, so nothing is searched until you add yours.
-  [Language profiles](/downloads/language-profiles)
-- **A quality profile**: which qualities Fliks accepts (720p, 1080p, 4K...) and when it stops
-  upgrading a title. Every request needs one.
-  [Quality profiles](/downloads/quality-profiles)
-- **An indexer**: where Fliks searches for releases, through the Torrent manager plugin. Without
-  one, approved requests are never downloaded. [Set up the plugin](/built-in-plugins/torrent-manager), then
-  [add your indexers](/built-in-plugins/indexers).
-
-Only watching files you already have? Set the language profile for subtitles and skip the other
-two.
-
-## 5. Open Fliks on your devices
+## 6. Open Fliks on your devices
 
 Open the same address in any browser, or install an app: phone, tablet, TV, desktop. Sign in with
 your account. On a TV, choose **Quick Connect** and type the code it shows on your phone.
