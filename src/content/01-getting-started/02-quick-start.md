@@ -62,8 +62,8 @@ and fetch what you ask for.
   upgrading a title. Every request needs one.
   [Quality profiles](/downloads/quality-profiles)
 - **An indexer**: where Fliks searches for releases, through the Torrent manager plugin. Without
-  one, approved requests are never downloaded. [Set up the plugin](/downloads/plugin), then
-  [add your indexers](/downloads/indexers).
+  one, approved requests are never downloaded. [Set up the plugin](/built-in-plugins/torrent-manager), then
+  [add your indexers](/built-in-plugins/indexers).
 
 Only watching files you already have? Set the language profile for subtitles and skip the other
 two.

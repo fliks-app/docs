@@ -339,6 +339,9 @@ function readSections() {
       title: meta.title,
       group: DEV_SECTION_SLUGS.has(slug) ? 'dev' : 'user',
       pages,
+      // `"links": [{"title", "url"}]` in _meta.json lists a page of another section here too.
+      links: Array.isArray(meta.links) ? meta.links : [],
+      metaFile: `src/content/${dirName}/_meta.json`,
     });
   }
   sections.sort((a, b) => a.order - b.order);
@@ -370,6 +373,14 @@ for (const group of ['user', 'dev']) {
 }
 
 // ---------- validate internal links + images now that every URL/anchor is known ----------
+
+for (const section of sections) {
+  for (const link of section.links) {
+    if (!link?.title || !pageByUrl.has(link?.url)) {
+      fail(`${section.metaFile}: "links" entries need a title and the url of an existing page`);
+    }
+  }
+}
 
 for (const section of sections) {
   for (const page of section.pages) {
@@ -422,6 +433,7 @@ const manifestSections = sections.map((s) => ({
   slug: s.slug,
   title: s.title,
   group: s.group,
+  links: s.links,
   pages: s.pages.map((p) => ({
     url: p.url,
     title: p.title,
@@ -457,6 +469,7 @@ export interface DocSection {
   slug: string;
   title: string;
   group: 'user' | 'dev';
+  links: { title: string; url: string }[];
   pages: DocPageMeta[];
 }
 export const SECTIONS: DocSection[] = ${JSON.stringify(manifestSections)};

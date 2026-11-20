@@ -38,7 +38,7 @@ Open **Settings > Torrent manager > Download clients**.
 ![**Connected successfully**: click **Save**](/img/download-client-qbit-4-test.webp)
 :::
 
-**Host** follows the same rule as for [indexer sources](/downloads/indexers#what-fliks-needs-from-you):
+**Host** follows the same rule as for [indexer sources](/built-in-plugins/indexers#what-fliks-needs-from-you):
 it is the address Fliks uses, so a Docker service name or the host's LAN address, never `localhost` from a
 Fliks that runs in Docker. Type only the name. If you add `http://` or `:8080` Fliks strips them, but
 **Port** and **Use HTTPS** are what count.
@@ -132,7 +132,7 @@ space for each download once, plus the copy Fliks makes into the library.
 
 > [!NOTE]
 > Fliks **copies** the file into the library, then leaves the original where it is so the client can keep
-> seeding. The original goes away when it reaches its [seeding limit](/downloads/plugin-settings#seeding).
+> seeding. The original goes away when it reaches its [seeding limit](/built-in-plugins/torrent-manager-settings#seeding).
 > Hard links and moves are not used.
 
 ## Edit or remove a client

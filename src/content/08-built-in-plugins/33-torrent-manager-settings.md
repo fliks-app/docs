@@ -15,8 +15,8 @@ In the admin sidebar, under **TORRENT MANAGER**, click **General**. Change what 
 
 ![The General page of Torrent manager: pause, search time and stalled-download cleanup](/img/torrent-manager-settings.webp)
 
-Tracker, client and profile options live on their own pages: [Indexers](/downloads/indexers#indexer-options),
-[Download clients](/downloads/download-clients#client-options), [Quality profiles](/downloads/quality-profiles)
+Tracker, client and profile options live on their own pages: [Indexers](/built-in-plugins/indexers#indexer-options),
+[Download clients](/built-in-plugins/download-clients#client-options), [Quality profiles](/downloads/quality-profiles)
 and [Language profiles](/downloads/language-profiles).
 
 ## Options
@@ -93,7 +93,7 @@ When a search runs, the plugin builds the query from the title and its year, for
 
 An indexer ticked for none of them is never used, which is why the form refuses an empty **Use for**.
 Each indexer is spaced by its **Request delay**, and an indexer that fails is paused for a while, see
-[cooldowns](/downloads/indexers#keeping-an-eye-on-indexers).
+[cooldowns](/built-in-plugins/indexers#keeping-an-eye-on-indexers).
 :::
 
 ## Import

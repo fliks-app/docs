@@ -4,7 +4,7 @@ description: Let household members ask for a title to be added, or for one to be
 ---
 
 > [!SUMMARY]
-> A request lets someone ask for a title without adding it to the library themselves. Search for it, click request, choose the library and profiles, then someone with **Manage requests** approves it (or an [auto-approval rule](/downloads/auto-approval) does). Actually fetching the file needs the [Torrent manager](/downloads/plugin).
+> A request lets someone ask for a title without adding it to the library themselves. Search for it, click request, choose the library and profiles, then someone with **Manage requests** approves it (or an [auto-approval rule](/downloads/auto-approval) does). Actually fetching the file needs the [Torrent manager](/built-in-plugins/torrent-manager).
 
 ## Request a title
 

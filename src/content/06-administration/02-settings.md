@@ -42,7 +42,7 @@ The entry needs the `settings.access` permission and never shows on a TV. These 
 | [Auto-approval](/downloads/auto-approval) | Rules that approve [requests](/downloads/requests) automatically. |
 | [Cleanup](/administration/library-cleanup) | Rules that flag and remove stale media. Destructive. |
 | [Metadata](/administration/metadata-settings) | Metadata providers and the order they are asked in. |
-| [Downloads](/downloads/automatic-search) | Provider order and how often missing titles are searched. Needs the [Torrent manager](/downloads/plugin). |
+| [Downloads](/downloads/automatic-search) | Provider order and how often missing titles are searched. Needs the [Torrent manager](/built-in-plugins/torrent-manager). |
 | [Lyrics](/administration/lyrics-and-karaoke#lyrics) | Automatic lyrics for music libraries. |
 | [Karaoke](/administration/lyrics-and-karaoke#karaoke) | Voice separation and word-by-word lyrics. |
 

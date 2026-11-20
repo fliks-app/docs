@@ -31,9 +31,9 @@ description: Which plugins Fliks ships with or offers in its catalogue, where to
 | [LRCLIB](/built-in-plugins/music#lrclib) | Synced and plain lyrics | Bundled | No |
 | [Music lists](/built-in-plugins/music#music-lists) | Follows ListenBrainz, Last.fm, Spotify, Deezer and MusicBrainz lists | Catalogue | Depends on the source |
 | [Notify](/built-in-plugins/notify) | Posts Fliks events to an HTTPS address as JSON | Catalogue | No |
-| [Torrent manager](/downloads/plugin) | Torrent search on Torznab indexers, torrent clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
+| [Torrent manager](/built-in-plugins/torrent-manager) | Torrent search on Torznab indexers, torrent clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
 
-Torrent manager has its own guide: start with [Set up the plugin](/downloads/plugin).
+Torrent manager has its own guide: start with [Set up the plugin](/built-in-plugins/torrent-manager).
 
 ## Where plugins live
 
