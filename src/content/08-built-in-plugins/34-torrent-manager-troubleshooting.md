@@ -78,7 +78,7 @@ For Transmission, also check the port. The form keeps `8080` when you switch **T
 |---|---|
 | **Queued** | The client has it and has not started. |
 | **Downloading** | Data is coming in. |
-| **Stalled** | The client reports no activity. Cleanup can remove it, see [Settings](/built-in-plugins/torrent-manager-settings#stalled-downloads). |
+| **Stalled** | The client reports no activity. Cleanup can remove it, see [Settings](/built-in-plugins/torrent-manager-settings#options). |
 | **Paused** | Paused, in the client or from the row menu. **Resume** restarts it. |
 | **Importing** | Finished in the client, copied within a minute. |
 | **Import failed** | The file could not be placed. Open **Info** for the reason, fix it, then **Retry the import** in the row menu. |

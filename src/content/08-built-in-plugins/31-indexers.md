@@ -129,7 +129,7 @@ Each row of the list has **Stats**, **Delete** and a **Cooldown** column (a paus
 "retry after" delay is paused for that delay. A search skips an indexer in cooldown.
 
 **Slow indexers.** A search stops waiting for an indexer after the time set in
-[**Seconds allowed for a release search**](/built-in-plugins/torrent-manager-settings#search) and keeps the answers
+[**Seconds allowed for a release search**](/built-in-plugins/torrent-manager-settings#options) and keeps the answers
 it already has.
 
 **Tracker quirks.** The plugin asks each indexer which kinds of search it supports. If a typed search such
