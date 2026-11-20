@@ -36,7 +36,7 @@ The entry needs the `settings.access` permission and never shows on a TV. These 
 | Entry | What it is |
 |---|---|
 | [Quality profiles](/downloads/quality-profiles) | Accepted qualities, ranking, cutoff and upgrades for downloads. |
-| [Language profiles](/administration/language-profiles) | Audio and subtitle languages wanted, for downloads and subtitle search. |
+| [Language profiles](/downloads/language-profiles) | Audio and subtitle languages wanted, for downloads and subtitle search. |
 | [Quality definitions](/downloads/quality-definitions) | Size limits per quality, shared by every profile. |
 | [Custom formats](/downloads/custom-formats) | Score points for releases that match a pattern. |
 | [Auto-approval](/downloads/auto-approval) | Rules that approve [requests](/downloads/requests) automatically. |
@@ -99,7 +99,7 @@ How subtitles work per title is on [Subtitles](/features/subtitles).
 
 If you only watch files you already have:
 
-- **Quality profiles, Quality definitions, Custom formats, Auto-approval and Downloads** only steer downloads and requests. See [Do you need downloads?](/downloads/overview).
+- **Quality profiles, Quality definitions, Custom formats, Auto-approval and Downloads** only steer downloads and requests. See [Downloads](/downloads/quality-profiles).
 - **Language profiles** matter for downloads and automatic subtitle search only.
 - **Naming** applies only when Fliks renames or moves a file. Untick **Move / rename according to the naming rules** on a folder scan to keep your files where they are.
 - **Cleanup**, **Optimization**, **Karaoke**, **Lyrics**, **Outgoing mail**, **Remote engine** and **Media servers** are opt-in.

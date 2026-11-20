@@ -60,7 +60,7 @@ When Fliks looks at the releases found for a title, it:
 
 1. Refuses those that break a rule: quality not ticked, custom format score under the minimum, size outside
    the [quality definition](/downloads/quality-definitions), audio language not in the
-   [language profile](/administration/language-profiles), blocklisted, wrong title, year or episode.
+   [language profile](/downloads/language-profiles), blocklisted, wrong title, year or episode.
 2. Sorts the rest by rank, then by custom format score, then by swarm health and closeness to the
    preferred size.
 3. Takes the first one. Refused releases are sorted last and are never grabbed automatically; you can
@@ -128,7 +128,7 @@ their own family, which has no profile page.
   every profile shares.
 - **[Custom formats](/downloads/custom-formats)** add or subtract points on a release. They are global:
   the scores apply to every profile, and each profile only sets the minimum it tolerates.
-- **[Language profiles](/administration/language-profiles)** are chosen alongside a quality profile and filter
+- **[Language profiles](/downloads/language-profiles)** are chosen alongside a quality profile and filter
   audio languages.
 - **[Libraries](/features/libraries#quality-and-language-profiles)** store a default quality profile used when none
   is chosen.

@@ -5,13 +5,13 @@ description: What Torrent manager does, what to set up before it can fetch anyth
 ---
 
 > [!SUMMARY]
-> Torrent manager turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins** once the [setup order](/downloads/overview#order-to-set-things-up) is done. Without it requests stay approved forever.
+> Torrent manager turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins**. Without it requests stay approved forever.
 
 Its pages: [Indexers](/downloads/indexers), [Download clients](/downloads/download-clients), [Settings](/downloads/plugin-settings), [Troubleshooting](/downloads/troubleshooting).
 
 ## What you need first
 
-Set up in the order of [Do you need downloads?](/downloads/overview#order-to-set-things-up): profiles on the library, one indexer, one download client, then the plugin. Skipping one is the usual reason nothing happens.
+Set up in this order: a [quality profile](/downloads/quality-profiles) and a [language profile](/downloads/language-profiles), the plugin, one [indexer](/downloads/indexers), one [download client](/downloads/download-clients). Skipping one is the usual reason nothing happens.
 
 ## Install the plugin
 

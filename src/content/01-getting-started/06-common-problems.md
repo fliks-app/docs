@@ -183,7 +183,7 @@ Read the message shown by the test, then check the address and credentials. Each
 
 ### The wrong quality or language was downloaded
 
-Adjust the library's quality and language profiles, and the score of custom formats. See [Quality profiles](/downloads/quality-profiles), [Custom formats](/downloads/custom-formats) and [Language profiles](/administration/language-profiles).
+Adjust the library's quality and language profiles, and the score of custom formats. See [Quality profiles](/downloads/quality-profiles), [Custom formats](/downloads/custom-formats) and [Language profiles](/downloads/language-profiles).
 
 ### Backups or restores fail
 

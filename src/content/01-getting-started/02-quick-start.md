@@ -57,7 +57,7 @@ and fetch what you ask for.
 - **A language profile**: the languages you want for audio and subtitles. Fliks uses it to
   search subtitles on its own and to pick the right release. The default profile has no subtitle
   language, so nothing is searched until you add yours.
-  [Language profiles](/administration/language-profiles)
+  [Language profiles](/downloads/language-profiles)
 - **A quality profile**: which qualities Fliks accepts (720p, 1080p, 4K...) and when it stops
   upgrading a title. Every request needs one.
   [Quality profiles](/downloads/quality-profiles)

@@ -9,7 +9,7 @@ description: A short glossary of the words Fliks uses: library, metadata, profil
 - **Library**: One or more folders on the server plus the media types they hold (movies, series, books, comics, albums). Each library has its own list of users who can see it. See [Libraries](/features/libraries).
 - **Media and media file**: A media is one movie or one show (split into seasons and episodes). Each has one or more files on disk.
 - **Metadata**: Posters, descriptions, cast and genres, fetched from providers such as TMDB and TVDB. A title Fliks can't match is marked **Unidentified**; **Identify** fixes it. See [Metadata](/features/metadata).
-- **Quality profile, language profile, custom format**: Rules for the optional download side: which qualities, audio and subtitle languages you want, and extra scoring on release names. See [Downloads](/downloads/overview).
+- **Quality profile, language profile, custom format**: Rules for the optional download side: which qualities, audio and subtitle languages you want, and extra scoring on release names. See [Quality profiles](/downloads/quality-profiles) and [Language profiles](/downloads/language-profiles).
 - **Monitored**: A title Fliks keeps working on: it looks for a missing or better release and for subtitles.
 - **Request**: A non-admin user asking for a title that isn't in the library yet. An admin or an auto-approval rule approves it. See [Requests](/downloads/requests).
 - **Role and permission**: An account has one role, a named set of permissions. The default roles are Admin, User and Readonly. Which libraries a user sees is set per user. See [Users and permissions](/administration/users-and-permissions).
