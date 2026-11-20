@@ -10,6 +10,8 @@ description: See why a playback stuttered, by client, with a verdict, a per-play
 
 Open **Settings > Playback quality** (the **System** section of the admin sidebar). Every Fliks client reports how each playback goes, and the server works out what went wrong.
 
+![Playback quality: verdict bars, then the Sessions, Devices and Settings tabs](/img/admin-playback-quality.webp)
+
 1. Pick the last **7** or **30** days above the tabs. A bar shows the share of each verdict.
 2. On **Sessions** (the default tab), filter by verdict, user and device, then click the row of the playback.
 3. Read the verdict and the **Stalls by cause** table in the detail window. The **Timeline** shows each freeze with a plain sentence for its cause.
@@ -49,9 +51,6 @@ quality and resolution, video codec, measured throughput, video bitrate, dropped
   HDR, quality tier, decode and encode on CPU or which GPU path, tone-mapping path, burned-in
   subtitles, crop, audio transcode), and the server load when a stall happened (transcodes, sessions,
   load average and cores).
-
-**Export JSON** saves the whole detail (sessions, events, causes) as
-`playback-quality-<id>.json`, handy for a bug report.
 
 :::
 

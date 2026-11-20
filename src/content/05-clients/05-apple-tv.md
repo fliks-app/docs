@@ -6,30 +6,23 @@ description: A native SwiftUI app covering the core Fliks experience, built spec
 > [!SUMMARY]
 > Install Fliks from the App Store (tvOS 17+), enter the server address and sign in with Quick Connect. No downloads, Live TV or casting out; create the first administrator in a browser.
 
-## What it is
+## Install and sign in
+
+Install "Fliks" from the App Store (tvOS 17 or newer), enter your server's address and choose
+**Quick Connect**: the screen shows a 6-digit code (and a QR code that opens the right page on your
+phone). Type the code on the **Login requests** page of a phone that's already signed in, or sign in
+with a password. See [Pairing and remote control](/features/pairing-and-remote-control).
 
 ![The Fliks home screen on Apple TV](/img/clients-appletv-home.jpg)
 
-The Apple TV app is a separate, native SwiftUI codebase, not a build of the same Angular interface
-used everywhere else: tvOS has no web view to run that interface in, so it's a purpose-built app
-instead. It covers the core of Fliks: signing in, the home page, browsing a library, a title's
-detail page (including individual episodes), search, playlists, settings, and the player.
+A new server has no account yet, and the app can't create the first administrator: do step 2 of the
+[Quick start](/getting-started/quick-start) in a browser first.
 
-## Getting it
-
-Install "Fliks" from the App Store. Requires **tvOS 17** or newer.
-
-## Sign in on Apple TV
-
-Enter your server's address on first launch, then sign in with a password, or use **Quick
-Connect**: the same flow every other client uses. The waiting screen shows a 6-digit code, which
-you type on the **Login requests** page of a phone that's already signed in, and a QR code that
-opens that page (the code itself is not in it). See [Pairing and remote
-control](/features/pairing-and-remote-control) for how approval works.
-
-A new server has no account yet, and the Apple TV app can't create the first administrator: it
-asks you to open the server in a web browser and finish the [setup](/getting-started/quick-start)
-there.
+:::details What the app is
+The Apple TV app is a separate, native SwiftUI codebase, not the Angular interface used elsewhere
+(tvOS has no web view). It covers signing in, the home page, library browsing, title and episode
+pages, search, playlists, settings and the player.
+:::
 
 ## Watch parties
 
@@ -51,25 +44,14 @@ party; everyone else leaves it.
 
 ![The player on Apple TV](/img/clients-appletv-player.jpg)
 
-Video plays through tvOS's own system player, which is what gives you the standard Apple TV
-scrubbing bar, info panel, and audio/subtitle pickers. On top of that, Fliks adds its own skip-intro
-button with a countdown, a next-episode prompt with autoplay, and the same automatic subtitle
-selection logic (off, always, or automatically matching your audio) used elsewhere.
+Video plays through the system player (standard scrubbing bar, info panel, audio and subtitle
+pickers), plus Fliks' skip-intro button and a next-episode prompt with autoplay.
 
-Because the Apple TV app doesn't keep a permanently open connection to the server,
-[remote control](/features/pairing-and-remote-control) commands sent to it (play, pause, load a
-title, switch a track) are picked up by checking in with the server every 2 seconds rather
-than arriving instantly.
+:::details Remote control latency
+The app keeps no open connection to the server, so [remote control](/features/pairing-and-remote-control) commands sent to it are picked up every 2 seconds rather than instantly.
+:::
 
-## What isn't on Apple TV
-
-- **No offline downloads.**
-- **No Live TV.**
-- **No casting to a Chromecast.**
-- **No server administration.**
-
-These follow the same pattern as every other TV client: consistent with keeping TV apps focused on
-watching rather than managing the server.
+Not on Apple TV: offline downloads, Live TV, casting out and server administration.
 
 ## See also
 

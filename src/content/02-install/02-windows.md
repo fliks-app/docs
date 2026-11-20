@@ -21,10 +21,7 @@ Download the installer from the
 `Fliks-Server-<version>-Setup.exe` asset) and run it. It needs 64-bit Windows 10 or 11. It
 installs per-user, with no administrator prompt, into `%LOCALAPPDATA%\FliksServer`.
 
-> [!NOTE]
-> Releases are only Authenticode-signed when the project's signing certificate is configured in
-> CI. An unsigned installer makes Windows SmartScreen warn that the app is unrecognized; choose
-> **More info > Run anyway** to continue.
+If SmartScreen warns that the app is unrecognized, choose **More info > Run anyway**.
 
 :::details What happens on first launch
 1. PostgreSQL 18 initializes on first run and starts on port `5433`.
@@ -74,12 +71,9 @@ Remove-Item -Recurse -Force "$env:LOCALAPPDATA\Fliks Server"
 
 ## First run
 
-Continue with the [Quick start](/getting-started/quick-start): open `http://localhost:4848`,
-create the administrator account on the setup page, and add your first library. Point it at any
-folder on disk; there's no container mount to think about on this install method.
+Your browser opens `http://localhost:4848` on the first launch. Continue with the
+[Quick start](/getting-started/quick-start) from step 2; the library can point at any folder on disk.
 
 ## See also
 
-- [Hardware acceleration](/install/hardware-acceleration) for what each detected GPU path
-  actually does.
-- [Updating](/install/updating) for how to move to a newer release.
+[Hardware acceleration](/install/hardware-acceleration) and [Updating](/install/updating).

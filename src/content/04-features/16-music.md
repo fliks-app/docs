@@ -51,11 +51,11 @@ as other titles. See [Libraries](/features/libraries#the-title-page-and-its-acti
 
 ## The player
 
-A mini player stays at the bottom while you browse and opens into the full player, with the queue, shuffle, repeat, volume levelling and lyrics. All of it is described in [The music player](/player/music-player).
+The mini player, queue, shuffle, repeat and lyrics are in [The music player](/player/music-player).
 
 ## Lyrics
 
-Lyrics come from the files (embedded, or `.lrc`, `.elrc`, `.ttml`, `.srt`, `.txt` beside the track), from the LRCLIB plugin, or from you. How to show, add and sync them is in [The music player](/player/music-player#lyrics).
+Lyrics come from the files, a provider plugin or from you. Where they come from and how to show, add and sync them: [The music player](/player/music-player#lyrics).
 
 ## Smart playlists and M3U
 

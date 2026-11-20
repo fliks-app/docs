@@ -4,11 +4,11 @@ description: What Fliks notifies you of, how to turn notifications on per device
 ---
 
 > [!SUMMARY]
-> Open **Settings > Notifications** in the app, switch on system notifications for this device, then choose which categories you want. Each device is set up on its own.
+> Open **App settings > Notifications**, switch on system notifications for this device, then choose which categories you want. Each device is set up on its own.
 
 ## Turn notifications on
 
-Open **Settings > Notifications** in the app. The page has three parts:
+Open **App settings > Notifications**. The page has three parts:
 
 - **This device**: a switch for system notifications, the ones that arrive with the app closed, and a switch for the on-screen messages. These are per device: turning them on here does not turn them on elsewhere. **Send a test notification** sends one to every device of yours that receives system notifications.
 - **What to be notified about**: one switch per category, plugins included. It applies to all your devices, and a muted category is neither shown nor pushed.
@@ -51,7 +51,7 @@ system notifications stay off there.
 
 ### Desktop: background mode and start at login
 
-The desktop app can only notify while it runs. Two options in **Settings > Notifications**:
+The desktop app can only notify while it runs. Two options in **App settings > Notifications**:
 
 - **Keep running in the background**: closing the window hides it, and a tray icon offers **Open Fliks** and **Quit Fliks**. It is off by default, and offered when you turn notifications on. On Linux it needs a system tray; without one, closing the window quits.
 - **Start at login**: Fliks opens in the background when you sign in to your computer.

@@ -111,10 +111,6 @@ the home page and stay out of **Continue watching**.
 - **Account settings > Devices** creates a token per e-reader or reading app. It enables Kobo
   sync (experimental), KOReader progress sync and an OPDS catalog for apps such as KOReader.
 
-> [!NOTE]
-> This page was written from the app's source and release notes. It has no screenshots yet: the
-> demo server has no book content.
-
 ## See also
 
 - [Libraries](/features/libraries) for scanning, naming and the actions common to every title.

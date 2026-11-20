@@ -6,26 +6,7 @@ description: Download a title, a season, a whole series or a playlist to a phone
 > [!SUMMARY]
 > On a phone, tablet, desktop or browser, open a movie or episode and choose **Download**, pick a quality, then play it from **Downloads** without a connection. TV apps have no offline downloads.
 
-## Check that your client supports it
-
-:::details Which client supports which feature
-| | Web browser | iOS, Android | Desktop |
-|---|:-:|:-:|:-:|
-| Download a movie or episode | Yes (kept in the browser itself) | Yes | Yes |
-| Download a season, a series or picked episodes | Yes | Yes | Yes |
-| Pause and resume each download | Yes | Yes | Yes |
-| Automatic playlist download | No | Yes | Yes |
-| Keep the next episodes of a series | No | Yes | Yes |
-| Auto-download limit | No | Yes | Yes |
-| Wi-Fi only | No | Yes | No |
-| Free space shown | Yes (the browser's estimate) | Yes | Yes |
-:::
-
-Android TV, Samsung, LG and Apple TV have no offline downloads. They are hidden from the interface
-entirely on every TV client: there's nowhere to start one, and nothing to manage.
-
-Downloads and the rules below belong to the signed-in account on that server. Another account on
-the same device doesn't see them.
+Android TV, Samsung, LG and Apple TV have no offline downloads. Downloads belong to the signed-in account on that device.
 
 ## Download a movie or episode
 
@@ -41,6 +22,8 @@ aren't included with it. In the desktop app it lands in the Downloads screen lik
 download; in a web browser it's an ordinary file save to your computer, which the Downloads screen
 doesn't track. The original file is not offered for a season or a series.
 
+![Press Download on a title page: the quality list opens](/img/offline-download-quality-anim.webp)
+
 Once a title is on the device, its page shows **Downloaded** where **Download** was. Tap it to open
 **Change quality**: the quality of the copy you have is marked, and picking another one replaces the
 copy. **Delete download** removes it from the device. While a download is still transferring, the
@@ -49,9 +32,7 @@ downloaded is removed.
 
 ## Download a season or a whole series
 
-A series page has four ways to download more than one episode at once. All of them open the
-quality picker, which lists the number of episodes it will fetch and multiplies each estimated size
-by that number.
+A series page has four ways to download several episodes. All open the quality picker, which shows the episode count and total size.
 
 - **Download all episodes**, in the series' actions menu. Specials are left out.
 - **Download season**, in the menu of the season you're viewing.
@@ -59,19 +40,10 @@ by that number.
   **Download**.
 - **Download** in the menu of a single episode card.
 
-Only episodes that have a file are included. When some of the episodes were already watched and
-some were not, an **Unwatched episodes only** box is ticked by default, so a season you've started
-only downloads the rest. Episodes you tick by hand are never filtered by what you've watched.
-
-Fliks announces how many episodes it will download, for example "12 episodes will be downloaded",
-before it starts, and queues them one after the other. Episodes already on the device are skipped.
-If there was nothing to download, you get **Already downloaded** (everything was on the device) or
-**Nothing new to download**. If a file doesn't offer the quality you picked, it gets the nearest
-lower one instead.
-
-Each episode card shows where it stands: a small download mark once it's on the device, or a
-progress ring while it transfers. The card's menu offers **Download**, or **Delete download** once
-the copy is finished.
+Only episodes that have a file are included, and ones already on the device are skipped. On a season you have
+started, **Unwatched episodes only** is ticked by default. Episodes are queued one after the other; a file that
+lacks the quality you picked gets the nearest lower one. Each episode card shows a download mark, or a progress ring
+while it transfers.
 
 ## The Downloads screen
 
@@ -189,9 +161,6 @@ device, not to your account.
 - **Delete all downloads**: removes every downloaded file from the device in one action.
 :::
 
-There's no overall storage quota on downloads you start by hand and no choice of download folder:
-downloads use whatever storage the operating system gives the app.
-
 :::details Download notifications and admin view
 On Android, a notification follows the queue. A single download shows its title, its percentage
 and the time left, with **Pause** (or **Resume** while paused) and **Cancel** buttons. Several
@@ -203,6 +172,21 @@ and tapping the banner that announces a finished download opens the Downloads sc
 An administrator sees a download in progress under **Downloads in progress** on **Settings > Video
 activity**, apart from the playbacks, without a position or playback controls. See
 [Transcoding dashboard](/administration/transcoding-dashboard).
+:::
+
+## Which client supports what
+
+:::details Which client supports which feature
+| | Web browser | iOS, Android | Desktop |
+|---|:-:|:-:|:-:|
+| Download a movie or episode | Yes (kept in the browser itself) | Yes | Yes |
+| Download a season, a series or picked episodes | Yes | Yes | Yes |
+| Pause and resume each download | Yes | Yes | Yes |
+| Automatic playlist download | No | Yes | Yes |
+| Keep the next episodes of a series | No | Yes | Yes |
+| Auto-download limit | No | Yes | Yes |
+| Wi-Fi only | No | Yes | No |
+| Free space shown | Yes (the browser's estimate) | Yes | Yes |
 :::
 
 ## See also

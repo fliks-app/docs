@@ -19,16 +19,15 @@ and picks the cheapest option that still works:
 | **Direct Stream** (shown in the app as "Remux") | The video is copied without re-encoding, just repackaged into a streaming-friendly container | The video itself is compatible but the container or the audio track isn't |
 | **Transcode** | The video is re-encoded, at a quality your device can decode, and packaged for adaptive streaming | Nothing above applies: an incompatible codec, a bitrate over your limit, HDR your screen can't show, or a feature (like burned-in subtitles) that needs it |
 
-A few specific things always force a transcode, no matter how compatible the codec otherwise is:
-subtitles that have to be burned into the picture (any image-based track you turn on, such as PGS
-or VobSub), black bars detected in the file while automatic black-bar cropping is on (it is by default,
-unless your device crops them itself), HDR that your screen can't display, an interlaced video
-(the transcode deinterlaces it, since no client platform deinterlaces a stream it is handed
-as-is), and deliberately picking a lower quality than the source. If letterboxed films never Direct Play, the cropping
-setting is the usual reason.
+These always force a transcode, whatever the codec:
 
-The player's **Stats for nerds** overlay shows which of the three methods is active for whatever
-you're watching, plus the exact reason if it isn't a plain Direct Play.
+- Subtitles burned into the picture (an image track such as PGS or VobSub).
+- Black bars detected in the file while black-bar cropping is on (the default). Letterboxed films that never Direct Play: this is why.
+- HDR your screen can't display.
+- An interlaced video.
+- A quality lower than the source.
+
+The player's **Stats for nerds** overlay shows which method is active and why: see [Quality and stats](/player/quality-and-stats).
 
 ## Picking a quality
 

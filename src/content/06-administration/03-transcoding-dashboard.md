@@ -8,11 +8,21 @@ description: Watch every active stream live, see why each one is or isn't being 
 
 ## Watch a stream live
 
-**Settings > Video activity** (**System** section). Live TV viewers show up here too.
+Open **Settings > Video activity** (**System** section). Live TV viewers show up here too.
 
-## What each stream card shows
+![A stream card: source and output per track, why, health verdict, and the pause, message and stop buttons](/img/admin-video-activity-stream.webp)
 
-One card per active playback session, with:
+## Stepping in
+
+Three buttons at the bottom of each card, all sent to the playing client:
+
+| Action | Effect |
+|---|---|
+| Pause / Resume | Toggles playback on that client. |
+| Message | Shows a short text in the client's player. |
+| Stop | Ends the session after you confirm. |
+
+:::details What each stream card shows
 
 - **Who and what**: poster, title (and episode, for a show), username, and the device it's
   playing on, with the client app's version when the client reports one.
@@ -33,16 +43,7 @@ One card per active playback session, with:
 - **Hardware path**: on a transcoded video line, which of CPU, QSV, VAAPI, NVENC, AMF or
   VideoToolbox (shown as "Apple VT") is doing the encoding. See
   [Hardware acceleration](/install/hardware-acceleration) for what each of those means.
-
-## Stepping in
-
-Three buttons at the bottom of each card, all sent to the playing client:
-
-| Action | Effect |
-|---|---|
-| Pause / Resume | Toggles playback on that client. |
-| Message | Sends a short text message that appears in the client's player (useful for "wrapping up in 5 minutes" without walking to the TV). |
-| Stop | Ends the session after you confirm; the client's playback is interrupted immediately. |
+:::
 
 ## See also
 

@@ -8,8 +8,9 @@ description: What a Fliks backup actually contains, how it's taken automatically
 
 ## Make, download or restore a backup
 
-Open **Settings > System** and select the **Backups** tab. A click-through is in
-[First-day admin tasks](/administration/first-day-tasks#make-a-backup).
+Open **Settings > System** and select the **Backups** tab, then click **Create a backup**.
+
+![Opening System, the Backups tab and the Create a backup button](/img/admin-backup-2-done-anim.webp)
 
 ![The Backups list, with each backup size, date and the Download/Restore/Delete actions](/img/backups.webp)
 

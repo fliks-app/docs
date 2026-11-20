@@ -24,11 +24,6 @@ enabled, and search for **fliks**. On the install form:
   it a **Mount Path** such as `/medias`. That mount path is what you'll type when adding a
   library in Fliks.
 
-> [!NOTE]
-> The exact fields on that form belong to the TrueNAS app catalog itself (a separate repository
-> from Fliks), and can change between TrueNAS SCALE versions. Check the current form in your
-> TrueNAS instance rather than assuming it matches an older screenshot.
-
 :::details Permissions on your media dataset
 The app runs Fliks as the TrueNAS `apps` user (uid and gid `568`, changeable under **User and
 Group Configuration**). A permissions step at install time makes the storage it creates writable
@@ -44,9 +39,8 @@ See [Hardware acceleration](/install/hardware-acceleration) for what each vendor
 
 ## First run
 
-Continue with the [Quick start](/getting-started/quick-start): open
-`http://<truenas-host>:30485` (or the port you chose), create the administrator account on the
-setup page, and add your first library, pointing it at the mount path you configured in the app.
+Open `http://<truenas-host>:30485` and continue with the [Quick start](/getting-started/quick-start)
+from step 2. The library path is the mount path you set in the app.
 
 ## See also
 

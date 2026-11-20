@@ -16,30 +16,11 @@ The list starts with **Auto**, then the resolutions the title can be sent at, fr
 down to 144p. A row marked **Low bandwidth** is a lighter version meant for a slow connection.
 The entry only shows when the title offers more than one quality.
 
-- **Auto** lets Fliks decide. Depending on an admin setting it plays the file as it is whenever it
-  can, or adapts the quality to your connection while you watch.
-- A resolution you pick yourself stays fixed for the rest of the playback. Fliks does not switch
-  it behind your back.
+**Auto** lets Fliks decide. A resolution you pick yourself stays fixed for the rest of the playback.
+How the ladder and **Auto** work: [Streaming and transcoding](/features/streaming-and-transcoding#picking-a-quality).
 
-The ladder, the low-bandwidth rows and what **Auto** does are explained in
-[Streaming and transcoding](/features/streaming-and-transcoding#picking-a-quality).
-
-:::details What Direct Play, Remux and Transcode mean
-Each time you press play, Fliks checks what your device can handle and picks the lightest way to
-send the video:
-
-| What it is called | In plain words |
-|---|---|
-| **Direct Play** | The file is sent as it is. Nothing is converted. Best quality, no work for the server. |
-| **Remux** | The picture is untouched but repackaged into a container your device understands. Almost no load on the server. |
-| **Transcode** | The server converts the video (and sometimes the audio) to something your device can play. It uses the processor or the graphics card of the server. |
-
-Audio is judged on its own. A video can be Direct Play while its audio is converted, for example
-when the device cannot play AC3 sound.
-
-The full rules, including what always forces a transcode, are in
+**Direct Play**, **Remux** and **Transcode** are the three ways a file reaches you. What each one means:
 [Streaming and transcoding](/features/streaming-and-transcoding#the-three-ways-a-file-can-be-sent).
-:::
 
 :::details Read the stats overlay (Stats for nerds)
 **Settings**, then **Stats for nerds**, shows a panel at the top left of the picture. It stays
@@ -53,11 +34,8 @@ until you close it with the cross. On a phone, use **Settings** in the bar, then
 | **Video** | Resolution, codec and bitrate, the profile and frame rate, what is done to the picture (**Direct Play**, or the transcode and its reason), and **Dropped frames**. |
 | **Audio** | The track, its codec and channels, the bitrate, the sample rate, and what is done to the sound. |
 
-In the screenshot, the container (MKV) is not supported by the browser, so the file is
-repackaged (**Remux**). The picture is untouched. The AC3 sound is converted to AAC because the
-browser cannot play AC3. Nothing is wrong: this is the normal, cheap path.
-
-A live TV channel adds a **Live** block with how far behind live you are.
+Here the browser cannot play MKV, so the file is repackaged (**Remux**), and its AC3 sound is converted to AAC.
+Nothing is wrong: this is the normal, cheap path.
 :::
 
 ## Fix playback that stutters or buffers
@@ -78,9 +56,7 @@ Try these in order. Each is quick.
    view of stalls and their causes, and
    [Hardware acceleration](/install/hardware-acceleration) for the server side.
 
-A message in the player (**Playback failed**, **Network error during playback**, **Video decoding
-error**, **Unsupported video format**) comes with **Technical details** and a **Copy info**
-button. Include that text when you report a problem.
+A player error comes with **Technical details** and a **Copy info** button: include that text when you report a problem.
 
 ## Play slower or faster
 

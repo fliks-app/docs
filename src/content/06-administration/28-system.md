@@ -64,7 +64,7 @@ Open **System > System**, open a group in **Trigger a task**, such as **Metadata
 | | **Detect missing intros and outros** | Only seasons without markers. |
 | **Media** | The remaining scheduled tasks | **Create a backup**, **Refresh plugin sources**, **Clean up the library**, **Follow new releases**, and the three Live TV tasks. |
 
-A group can also show jobs a plugin registered. **Refresh plugin sources** also applies automatic plugin updates, see the note in [First-day admin tasks](/administration/first-day-tasks#run-a-scheduled-task).
+A group can also show jobs a plugin registered. **Refresh plugin sources** also applies automatic plugin updates, so expect installed plugins to move to the newest version when you run it.
 :::
 
 ### Task history
@@ -79,7 +79,9 @@ Lists the playbacks in progress across all clients. It is the [Transcoding dashb
 
 ## Scheduled tasks
 
-**Advanced > Scheduled tasks** lists each timed job.
+**Advanced > Scheduled tasks** lists each timed job. Click the play button at the end of a row to run it now.
+
+![Opening Advanced > Scheduled tasks, then the play button of a task row](/img/admin-task-3-run-anim.webp)
 
 ![The Scheduled tasks list](/img/admin-schedulers-page.webp)
 
@@ -117,4 +119,3 @@ A plugin that registers jobs adds its own rows. A hidden housekeeping job also r
 
 - [Backups](/administration/backups), [Logs and troubleshooting](/administration/logs-and-troubleshooting).
 - [Transcoding dashboard](/administration/transcoding-dashboard).
-- [First-day admin tasks](/administration/first-day-tasks#run-a-scheduled-task).

@@ -4,7 +4,7 @@ description: Pick an audio or subtitle track in the player, fix subtitle timing 
 ---
 
 > [!SUMMARY]
-> In the player, **Audio** and **Subtitles** pick a track; the gear in the subtitle list opens appearance and the synchronize panel for subtitles that are early or late. Defaults live in **App settings**.
+> In the player, **Audio** and **Subtitles** pick a track; the gear in the subtitle list opens the synchronize panel for subtitles that are early or late. Defaults live in **App settings**.
 
 ## Pick an audio track
 
@@ -14,17 +14,12 @@ has more than one audio track.
 ![The audio track list of a file with two tracks, MP3 2.0 and AC3 5.1](/img/player-menu-audio.webp)
 
 Pick a track and the sound changes without a restart. A track the device cannot play is greyed
-out and says **Not supported on this device**. When the language is unknown the track is called
-**Track 1**, **Track 2** and so on, with the codec and the channel layout under it.
-
-You can also choose before pressing play: on the title page, the **Audio** list next to **Video**
-sets the track the player starts with.
+out. You can also choose before pressing play, in the **Audio** list of the title page.
 
 ## Subtitles in the player
 
-Everything below happens in the player's dropdowns: the **Subtitles** list and its settings. To
-search, download, import or delete subtitle files, use the
-[Edit subtitles dialog of the title page](/features/subtitles#managing-subtitles-from-the-title-page).
+To search, download, import, translate or delete subtitle files, use the
+[Edit subtitles dialog](/features/subtitles#managing-subtitles-from-the-title-page) of the title page.
 
 ### Pick a subtitle track
 
@@ -38,27 +33,13 @@ picture of the text: it forces the server to burn it into the video, which resta
 a transcode. Those tracks are hidden by default, see
 [Burned-in subtitles](/features/subtitles#burned-in-subtitles).
 
-Your choice is remembered on this device, and it carries over to the other episodes of a
-series. To choose before pressing play, use the **Subtitles** list on the title page.
-
-![The Subtitles list on a title page](/img/player-detail-subtitle-picker.webp)
-
-### Subtitle settings
-
-The small gear at the top right of the subtitle list opens the subtitle settings: the
-[appearance options](#change-how-subtitles-look) and the
-[synchronize panel](#fix-the-timing-while-you-watch).
-
-Show the controls and open **Subtitles**, then the gear at the top right of the list. The settings hold the **Appearance** rows and **Open synchronize panel**.
-
-![Subtitles menu, then the gear, then the synchronize panel](/img/player-menu-subtitles-anim.webp)
+Your choice is remembered on this device and carries over to the other episodes of a series. You can also
+choose before pressing play, in the **Subtitles** list of the title page.
 
 ### Fix the timing while you watch
 
-If a subtitle is early or late, you can slide it against the picture without leaving the player.
-
-Pick the track, open the gear at the top right of the **Subtitles** list, then **Open synchronize panel**.
-The example below fixes an imported English file that shows its lines about 2.5 seconds late.
+Pick the track, press the gear at the top right of the **Subtitles** list, then **Open synchronize panel**.
+The example fixes an imported English file that shows its lines about 2.5 seconds late.
 
 :::steps
 ![Open **Subtitles**, choose the track (here the imported English file), then press the gear at the top right of the list](/img/player-sync-1.webp)
@@ -68,27 +49,20 @@ The example below fixes an imported English file that shows its lines about 2.5 
 ![A **Processing applied successfully** message confirms the file was rewritten](/img/player-sync-4.webp)
 :::
 
-This needs the **Manage subtitles** permission and a text track. It is not offered while casting.
-If no subtitle is on, opening the panel picks the first text track.
+This needs the **Manage subtitles** permission and a text track. To sync a file without playing the video, or to
+sync it automatically, see [Subtitles](/features/subtitles#fixing-out-of-sync-subtitles).
 
 :::details What the synchronize panel offers
-The panel lists the cues on a timeline that follows the video, with a time ruler and a chevron on
-each side marking the current moment. The subtitles on the picture update as you move them.
+The panel lists the cues on a timeline that follows the video. The subtitles on the picture update as you move them.
 
-- **Move the timing.** Scroll the list, drag it with the mouse, or swipe on a touch screen. A badge
-  shows the shift. With a keyboard or a TV remote, press Enter or OK on the timeline, then Up and
-  Down shift by 100 ms (holding the key speeds it up). Esc or Back ends the adjustment.
-- **Save** applies the shift to the file, like **Adjust timing** in the dialog. **Reset** drops it.
-- **Synchronize on other track** runs the automatic sync against the audio, another subtitle track
-  or a subtitle file. A running sync shows a spinner and can be cancelled from the panel or from
-  the **Edit subtitles** dialog. How it works is in
-  [Fixing out-of-sync subtitles](/features/subtitles#fixing-out-of-sync-subtitles).
-- The track picker at the top switches to another text track. Switching or closing with an
-  unsaved shift asks you to confirm.
+- **Move the timing.** Scroll the list, drag it, or swipe on a touch screen. A badge shows the shift. With a
+  keyboard or a TV remote, press Enter or OK on the timeline, then Up and Down shift by 100 ms. Esc or Back ends it.
+- **Save** applies the shift to the file. **Reset** drops it.
+- **Synchronize on other track** runs the automatic sync against the audio, another subtitle track or a file.
+- The track picker at the top switches to another text track. Closing with an unsaved shift asks you to confirm.
 
-An embedded track can be previewed here but not saved: the panel says so, and **Save** and
-**Synchronize on other track** stay disabled. Download or import a separate file to save a shift.
-**Save** is also disabled until the timeline has been moved. On a phone the panel opens as a sheet, with icon buttons instead of text.
+An embedded track can be previewed here but not saved: download or import a separate file first. The panel is not
+offered while casting. On a phone it opens as a sheet.
 :::
 
 ### Change how subtitles look
@@ -99,7 +73,7 @@ Open the user menu (your avatar, top right), then **App settings**, then **Subti
 
 ![User menu, App settings, Subtitles](/img/player-user-menu-anim.webp)
 
-Or change them while you watch: **Subtitles**, then the gear, then **Appearance** rows.
+Or change them while you watch: **Subtitles**, then the gear, then the **Appearance** rows.
 
 ![The Appearance list in the player: text size, text color, drop shadow, background color, top and bottom position](/img/player-menu-subtitle-appearance.webp)
 
@@ -121,10 +95,6 @@ Or change them while you watch: **Subtitles**, then the gear, then **Appearance*
 
 **Clear saved track selections**, at the bottom of **App settings > Subtitles**, forgets the
 track you picked for each title.
-
-> [!NOTE]
-> None of this changes how an image-based track looks, or an ASS/SSA track that keeps its own
-> styling: those keep their original appearance.
 
 :::details Which tracks play first
 When you open something new, Fliks picks the audio and subtitle track from your settings. The

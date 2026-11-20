@@ -20,7 +20,7 @@ const FEATURES = [
   { title: 'Music with lyrics', text: 'A full music player with synced lyrics and karaoke.', img: 'music-lyrics-synced.webp', url: '/player/music-player' },
   { title: 'Play on another device', text: 'Start on your phone, control and play on any other device.', img: 'music-device-1-anim.webp', url: '/features/pairing-and-remote-control' },
   { title: 'Offline downloads', text: 'Take movies and episodes with you, no connection needed.', img: 'home-card-offline.webp', url: '/features/offline-downloads' },
-  { title: 'Live TV', text: 'Watch and browse your live channels next to your library.', img: 'livetv-source-form.webp', url: '/features/live-tv' },
+  { title: 'Quality profiles', text: 'Pick which qualities Fliks accepts and when it stops upgrading a title.', img: 'admin-qprofile-4-allowed.webp', url: '/downloads/quality-profiles' },
   { title: 'Books and comics', text: 'Read ebooks, listen to audiobooks and follow your comics.', img: 'library.webp', url: '/features/books-and-audiobooks' },
   { title: 'Chromecast', text: 'Cast to a TV from your phone or browser.', img: 'player-menu-devices.webp', url: '/clients/chromecast' },
   { title: 'Library cleanup', text: 'Find and remove what you no longer watch with rules.', img: 'admin-cleanup-7-preview.webp', url: '/administration/library-cleanup' },

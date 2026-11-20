@@ -54,10 +54,6 @@ comic-specific options are in the **Appearance** panel:
 You can zoom in and out. Position is saved like any playback. The same keyboard shortcuts as
 the book reader apply (arrows or Page keys to turn pages, Esc to close).
 
-> [!NOTE]
-> This page was written from the app's source and release notes. It has no screenshots yet: the
-> demo server has no comics.
-
 ## See also
 
 - [Books and audiobooks](/features/books-and-audiobooks) for the shared reader.

@@ -101,9 +101,7 @@ haven't started yet that share those genres. Don't want to see something suggest
 it from the home page row, and it stays hidden until you reset your dismissed list from **Account
 settings > Recommendations**.
 
-> [!NOTE]
-> This only draws on genres, and only starts producing results once you've finished at least one
-> title that has genre information.
+It only draws on genres, and starts once you have finished a title that has genres.
 
 This personalised row is separate from the recommendations members send each other directly, and
 from the "popular among people you follow" row built from your followed users' own watch history:

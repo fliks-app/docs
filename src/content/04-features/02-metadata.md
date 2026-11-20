@@ -8,15 +8,11 @@ description: Posters, backdrops, cast and details come from provider plugins bun
 
 ## Fixing a wrong match
 
-Open the title, click the three-dot menu next to **Play**, then **Metadata > Identify**. Search
-again (by title and year, or by pasting an exact IMDb/TMDB/TVDB id) and click the right result.
-The match is applied at once and everything for that title is re-fetched in the background, so
-posters, cast and episode listings all catch up. A step-by-step walkthrough with screenshots is
-in [Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
+Open the title, then **More > Metadata > Identify**: the step-by-step walkthrough is in
+[Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
 
-The same **Metadata** submenu has **Refresh metadata**, which re-reads one title from its
-provider on demand. To prefer another provider for one title, use **Advanced > Library** and set
-**Metadata provider**.
+The same **Metadata** menu has **Refresh metadata**, which re-reads one title from its provider. To prefer
+another provider for one title, use **Advanced > Library** and set **Metadata provider**.
 
 ## Add a title that isn't in your library yet
 

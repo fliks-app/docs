@@ -1,105 +1,51 @@
 ---
 title: First-day admin tasks
-description: Click-by-click walkthroughs for the jobs you do right after installing: add a user, make a role, enable subtitles, set up notifications, install a plugin, run a task and take a backup.
+description: A checklist for the jobs you do right after installing: add a user, make a role, enable subtitles, set up notifications, install a plugin, run a task and take a backup.
 ---
 
 > [!SUMMARY]
-> Seven click-by-click jobs for right after installing: add a user, make a role, enable a subtitle provider, set up notifications, install a plugin, run a task and take a backup. A watch-only server needs only the first.
+> Seven jobs for right after installing. Each links to the page with the click-through. A watch-only server needs only the first.
 
-Each walkthrough starts in the administration area (user menu, **Administration**), then the entry named in the first slide. The cursor marks what to click.
+Everything starts in the administration area: user menu, **Administration**.
 
 ## Create a user and give access to a library
 
-A new account needs a username and a password. Its **role** decides what it may do, and the
-library checklist decides what it may see. The default role, **User**, can browse, watch and
-make requests.
+![The form to add a user: username, password, role and libraries](/img/admin-users-3-form.webp)
 
-:::steps
-![Open **Settings > Users** in the administration sidebar](/img/admin-users-1-sidebar.webp)
-![Click **Add a user**](/img/admin-users-2-add.webp)
-![Fill in the username, email, password and role, then tick each library the person may see. Click **Save**](/img/admin-users-3-form.webp)
-![The new account shows up in the list with its role and an **Active** switch. Click the username to open its page](/img/admin-users-4-list.webp)
-![The user page: library access, super-admin, forced password change and request quotas live there](/img/admin-users-5-edit.webp)
-:::
-
-Tell the person the server address and their username. They sign in from any
-[client](/clients/overview). See [Users and permissions](/administration/users-and-permissions)
-for every switch on the user page.
+Open **Settings > Users**, click **Add a user**. Steps: [Users](/administration/users-and-permissions#users).
 
 ## Create a role
 
-Use a custom role when **User** gives too much or too little: a "Family" role that can watch but
-not create watch parties, or a moderator that can approve requests.
+![The role form with its permissions](/img/admin-roles-2-form.webp)
 
-:::steps
-![On **Settings > Roles**, click **New role**](/img/admin-roles-1-new.webp)
-![Name the role and tick its permissions, then click **Save**](/img/admin-roles-2-form.webp)
-![The role appears in the list, and you can pick it when you create or edit a user](/img/admin-roles-3-list.webp)
-:::
-
-A role that should open the administration area needs **Settings access**. The full permission
-list is in [Users and permissions](/administration/users-and-permissions#roles-and-permissions).
+Open **Settings > Roles**, click **New role**. Steps: [Roles and permissions](/administration/users-and-permissions#roles-and-permissions).
 
 ## Enable a subtitle provider
 
-Automatic subtitle search does nothing until at least one provider is enabled. Most providers
-need an account with that service; the form asks for it.
+![The subtitle provider form](/img/admin-subprov-3-form.webp)
 
-:::steps
-![Open **Subtitles > Subtitle providers** in the sidebar](/img/admin-subprov-1-sidebar.webp)
-![Under **Download providers**, click **Add provider**. The button above it adds a translation engine instead](/img/admin-subprov-2-add.webp)
-![Pick the provider type, enter the credentials it asks for, use **Test** to check them, then **Save**](/img/admin-subprov-3-form.webp)
-:::
-
-The providers and what each one needs are listed in [Subtitles](/features/subtitles#providers).
+Open **Subtitles > Subtitle providers**, click **Add provider**. Steps: [Subtitle providers](/administration/subtitle-settings#subtitle-providers).
 
 ## Set up notifications
 
-Notifications push events (a request approved, a subtitle failing, a library cleanup) to a chat
-service. Fliks supports Discord, Slack, ntfy, Gotify and a generic webhook.
+![The notification connection form](/img/admin-notif-3-form.webp)
 
-:::steps
-![Open **Integrations > Notifications**](/img/admin-notif-1-sidebar.webp)
-![Click **New connection**](/img/admin-notif-2-new.webp)
-![Name it, choose the service type, paste the webhook URL (or the service's own fields), untick the events you don't want, and **Save**](/img/admin-notif-3-form.webp)
-:::
+Open **Integrations > Notifications**, click **New connection**. Steps: [Notifications](/administration/integrations#notifications).
 
 ## Install a plugin from the catalogue
 
-The catalogue loads without any account. Installing always shows a consent step first, listing
-what the plugin is allowed to do.
+![The plugin catalogue](/img/admin-plugin-3-catalogue.webp)
 
-:::steps
-![Open **Advanced > Plugins**](/img/admin-plugin-1-sidebar.webp)
-![Click **Search for a plugin**](/img/admin-plugin-2-search.webp)
-![Each card shows its state: **Install**, **Update available** or installed. Click **Install** on the plugin you want](/img/admin-plugin-3-catalogue.webp)
-![Read what the plugin asks for and its trust badge, then confirm with **Install** or back out with **Cancel**](/img/admin-plugin-4-consent.webp)
-:::
-
-Trust badges, signed archives and the plugin settings are covered in [Plugins](/administration/plugins).
+Open **Advanced > Plugins**, click **Search for a plugin**. Steps: [Plugins](/administration/plugins#install-a-plugin-from-the-catalog).
 
 ## Run a scheduled task
 
-Fliks runs its housekeeping on a timer. To run a job now, for example after changing a
-setting that it uses:
+![Running a task from Advanced > Scheduled tasks](/img/admin-task-3-run-anim.webp)
 
-Open **Advanced > Scheduled tasks** and click the play button at the end of the task's row. The status turns to **Running**, then the **Last run** column fills in.
-
-![Opening Advanced > Scheduled tasks, then the play button of a task row](/img/admin-task-3-run-anim.webp)
-
-The scan, sprite and metadata jobs you may want to start by hand are on
-**System > Status > Trigger a task**, see [Nothing shows up after I add a library](/administration/faq#nothing-shows-up-after-i-add-a-library-is-it-broken).
-
-> [!NOTE]
-> **Refresh plugin sources** also applies the automatic plugin updates (on by default, see
-> [Plugin settings](/administration/plugins#plugin-settings)). Expect your installed plugins to
-> move to the newest version when you run it.
+Open **Advanced > Scheduled tasks** and click the play button of a row. More: [Scheduled tasks](/administration/system#scheduled-tasks).
 
 ## Make a backup
 
-Open **System**, select the **Backups** tab and click **Create a backup**. The dump appears in the list with its size and date: **Download** it to keep a copy off the server.
+![The Create a backup button on the Backups tab](/img/admin-backup-2-done-anim.webp)
 
-![Opening System, the Backups tab and the Create a backup button](/img/admin-backup-2-done-anim.webp)
-
-A daily backup already runs at 2 AM. What a backup contains, and how to restore one, is in
-[Backups](/administration/backups).
+Open **System**, select **Backups**, click **Create a backup**. More: [Backups](/administration/backups).

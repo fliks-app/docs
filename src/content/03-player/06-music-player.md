@@ -10,9 +10,7 @@ Music has its own player. It is not the video player: it never takes over the wh
 
 ## Play music
 
-Open an album and press **Play**, or press a track. Playing a track starts the album from that track and queues the tracks after it. **Shuffle** plays the album in random order. The library side (albums, artists, tracks) is in [Music](/features/music).
-
-On an album page, press **Play**. The mini player appears at the bottom right: click it to open the full player, with the cover, the queue and the controls.
+On an album page, press **Play** (or a track: the album starts from it). The mini player appears at the bottom right: click it to open the full player. Browsing the library is in [Music](/features/music).
 
 ![Press Play, then open the mini player](/img/music-start-1-anim.webp)
 
@@ -77,7 +75,7 @@ The queue lists the track playing and the ones coming next. On a computer it sit
 - On a phone, open the queue with the queue button at the bottom right of the full player. It slides up as a sheet. Swipe a row sideways to remove it, or drag its handle to reorder.
 - On a phone, **Edit** lets you tick several tracks, then **Move to top** or **Remove**. **Done** leaves the edit mode.
 
-There is no button to empty the queue in one go. Close the player to drop it.
+Close the player to drop the queue.
 
 ### Play a track next or add it to the queue
 
@@ -88,9 +86,6 @@ Press the three dots at the end of a track, then choose **Play next** to play it
 ![The three dots of a track, then Play next](/img/music-playnext-1-anim.webp)
 
 The track can come from another album: the queue mixes them. During a [watch party](/features/watch-party) that takes turns, **Play next** is not offered: the server places each song by turn.
-
-> [!NOTE]
-> **Play next** and **Add to queue** are in the track menu of an album page. The **Tracks** tab and the artist pages only offer to play a track.
 
 ## Lyrics
 
@@ -144,7 +139,7 @@ Press the screen button at the bottom left, named **This device**, then pick the
 
 ![The screen button and its list of screens](/img/music-device-1-anim.webp)
 
-Details, and what happens to the playback, are in [Casting and other devices](/player/casting-and-other-devices).
+More in [Casting and other devices](/player/casting-and-other-devices).
 
 ## On a phone
 
@@ -152,9 +147,7 @@ The phone layout has the same controls, laid out for a thumb.
 
 ![The music player on a phone: the mini player on an album page, the full player, and the queue sheet](/img/music-phone-player.webp)
 
-1. The mini player sits above the bottom edge of the album page. Tap it to open the full player.
-2. The full player has the cover, the seek bar and the controls. The buttons at the bottom are the device button, **Lyrics** and the queue.
-3. The queue sheet opens from the queue button. Pull it down to close it.
+Tap the mini player to open the full player. The buttons at the bottom are the device button, **Lyrics** and the queue; pull the queue sheet down to close it.
 
 :::details Lock screen and background
 In a browser, Fliks tells the system what is playing: title, artist, album and cover. The notification area, the lock screen and the keyboard's media keys then show them and control play, pause, previous, next and seeking. The mobile apps play music through the platform's own audio. See [Mobile](/clients/mobile).

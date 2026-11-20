@@ -63,12 +63,9 @@ rm -rf ~/Library/Application\ Support/Fliks\ Server
 
 ## First run
 
-Continue with the [Quick start](/getting-started/quick-start): open `http://localhost:4848`,
-create the administrator account on the setup page, and add your first library. Point it at any
-folder on disk; there's no container mount to think about on this install method.
+Your browser opens `http://localhost:4848` on the first launch. Continue with the
+[Quick start](/getting-started/quick-start) from step 2; the library can point at any folder on disk.
 
 ## See also
 
-- [Hardware acceleration](/install/hardware-acceleration) for what VideoToolbox actually
-  accelerates.
-- [Updating](/install/updating) for how to move to a newer release.
+[Hardware acceleration](/install/hardware-acceleration) and [Updating](/install/updating).

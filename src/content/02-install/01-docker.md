@@ -6,47 +6,36 @@ description: Run the Fliks server and its database with Docker Compose, the reco
 > [!SUMMARY]
 > Download the example Compose file, set a database password and your media folder, then run `docker compose up -d` and open `http://<host>:4848`.
 
-:::details What is in the image
-The published image is a single container: the Rust server (`fliks-server`) behind `fliks-engine`,
-the streaming engine that owns port `4848` and forwards the API to the server, the built Angular
-web client served as static assets, and a self-contained FFmpeg build with hardware-acceleration
-support baked in. A separate PostgreSQL container holds the database. It runs on `linux/amd64` and
-`linux/arm64`.
-:::
+## Run Fliks
 
-## Prerequisites
-
-- Docker with the Compose plugin (the `docker compose` command).
-- A folder with your video files, reachable from wherever Docker runs.
-
-## Run Fliks with Docker Compose
-
-Download the example Compose file and rename it:
+You need Docker with the Compose plugin and a folder with your videos.
 
 ```bash
 curl -LO https://raw.githubusercontent.com/fliks-app/fliks/main/docker-compose.example.yml
 mv docker-compose.example.yml docker-compose.yml
 ```
 
-Open `docker-compose.yml` and set three things:
+Edit `docker-compose.yml`:
 
-1. `POSTGRES_PASSWORD` and `DB_PASSWORD`: replace `changeme` with the same real password in both
-   places.
-2. The media volume: `/path/to/your/media:/medias` on the left of the colon is your folder, the
-   right side (`/medias`) is what you'll type when adding a library in the UI.
-3. The host port, only if `4848` is already taken: change the left side of `'4848:4848'` under
-   `ports:` (for example `'8080:4848'`). Leave `PORT` alone; it's the port inside the container.
-
-Then start it:
+1. Replace `changeme` with the same password in `POSTGRES_PASSWORD` and `DB_PASSWORD`.
+2. Set your media folder: `/path/to/your/media:/medias`. You'll type `/medias` when adding a library.
 
 ```bash
 docker compose up -d
 ```
 
-> [!TIP]
-> Pin a specific release instead of `:latest` by editing the image tag; see the
-> [package page](https://github.com/fliks-app/fliks/pkgs/container/fliks) for available tags.
-> `docker compose up -d` after changing it pulls the new image and recreates the container.
+Open `http://<host>:4848` and follow the [Quick start](/getting-started/quick-start) from step 2.
+
+:::details Port 4848 is taken, or pin a version
+Change the left side of `'4848:4848'` under `ports:` (for example `'8080:4848'`); leave `PORT` alone.
+To pin a release instead of `:latest`, edit the image tag (tags are on the
+[package page](https://github.com/fliks-app/fliks/pkgs/container/fliks)), then run
+`docker compose up -d` again.
+:::
+
+## Reference
+
+You don't need any of this for a first install.
 
 ## Volumes
 
@@ -110,7 +99,11 @@ variables each vendor needs (Intel QSV/VAAPI, NVIDIA NVENC, AMD through VAAPI). 
 NVIDIA stacks are `amd64`-only; on `arm64` (a Raspberry Pi 5, an ARM NAS) transcodes fall back
 to CPU.
 
-## First run
+## What is in the image
 
-Continue with the [Quick start](/getting-started/quick-start): open `http://<host>:4848`, create
-the administrator account on the setup page, and add your first library.
+The published image is a single container: the Rust server (`fliks-server`) behind `fliks-engine`,
+the streaming engine that owns port `4848` and forwards the API to the server, the built Angular
+web client served as static assets, and a self-contained FFmpeg build with hardware-acceleration
+support baked in. A separate PostgreSQL container holds the database. It runs on `linux/amd64` and
+`linux/arm64`.
+

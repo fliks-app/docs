@@ -45,7 +45,7 @@ conventions for **Settings > X**, **App settings > X** and **Account settings > 
 
 | Feature | Where | Page |
 |---|---|---|
-| Setup checklist | **Settings > General**; home **Setup** card | [Quick start](/getting-started/quick-start) |
+| Setup checklist | **Settings > General**; home **Setup** card | [Settings > General](/administration/general-and-naming#setup-checklist) |
 | First-day tasks, step by step | Administration | [First day tasks](/administration/first-day-tasks) |
 | Every admin page | Administration sidebar | [Settings](/administration/settings) |
 | Users, roles, permissions | **Users**, **Roles** | [Users and permissions](/administration/users-and-permissions) |

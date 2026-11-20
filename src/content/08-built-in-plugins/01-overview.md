@@ -35,40 +35,20 @@ description: Which plugins Fliks ships with or offers in its catalogue, where to
 
 The Download plugin has its own guide: start with [Download overview](/downloads/plugin).
 
-> [!NOTE]
-> The catalogue also lists the bundled plugins, marked **Installed**. They are the same plugins.
-
 ## Where plugins live
 
-Open the user menu, choose **Administration**, then **Advanced > Plugins**. The page lists what is
-installed as a grid of cards. Each card has the plugin's logo, name and version.
+Open **Advanced > Plugins**: one card per installed plugin. Installing, updating, trust badges and removing are in [Plugins](/administration/plugins).
 
 ![The Plugins page: one card per installed plugin, **Search for a plugin** and the menu at the top](/img/builtin-plugins-list.webp)
 
-:::details What a plugin's page shows
-Click a card to open the plugin's page: status (**Active**), trust badge, tier, what it can do,
-its identifier, version and source, and its metrics. The buttons are **Disable** or **Enable** and
-**Export**, plus **Uninstall** for a catalogue plugin.
-
-![The page of a bundled plugin, with Disable under its name](/img/builtin-plugin-page.webp)
-:::
-
-## Install a catalogue plugin
-
-**Search for a plugin** opens the catalogue: click **Install**, read what it asks, confirm. Click path with screenshots: [First-day admin tasks](/administration/first-day-tasks#install-a-plugin-from-the-catalogue).
-
 ## Configure a plugin
 
-A plugin with settings has a settings page. Where it lives depends on the kind of plugin.
+The plugin's page does not link to its settings. Where they live depends on the kind of plugin.
 
 - **Metadata providers** (every bundled plugin, plus Project Gutenberg, LibriVox, Comic Vine and
   Metron) are configured from **Settings > Metadata**. The provider's row has a **Configure** link.
 - **Other plugins** (Download, Notify, Music lists) get a section of their own in the Administration
   sidebar, named after the plugin.
-
-> [!NOTE]
-> The page of a plugin does not link to its settings. Use **Configure** on **Settings > Metadata**
-> or the plugin's own sidebar section.
 
 Open **Metadata** in the Administration sidebar and click **Configure** on the provider's row. Fill the field, then click **Save**.
 
@@ -80,33 +60,8 @@ Nothing is applied until you click **Save**. API keys and tokens are stored as s
 
 **Settings > Metadata > Order per kind** sets which provider is asked first. See [Metadata settings](/administration/metadata-settings).
 
-## Updates
-
-:::details Updates: the menu, automatic updates and held versions
-Open the menu next to **Search for a plugin** (the three dots). It has **Refresh all sources**,
-**Manage sources**, **Settings** and **Import a plugin**.
-
-![The menu next to Search for a plugin, with Settings highlighted](/img/builtin-plugins-menu.webp)
-
-**Settings** has **Update plugins automatically**, on by default.
-
-![The Settings dialog, with Update plugins automatically on](/img/builtin-plugins-auto-update.webp)
-
-With it on, the scheduled task **Refresh plugin sources** (every day at 03:00 server time, listed under
-**Advanced > Scheduled tasks**) refreshes the catalogue, then installs the newest version of every
-plugin you have, as long as it is signed by the source's catalogue key. A version that asks for
-new permissions is held until you install it by hand, and a version that fails to start is rolled
-back. Updating keeps a plugin's settings.
-
-With it off, an **Update available** badge shows in the catalogue and you update by hand.
-
-The other three settings (**Ignore the required Fliks version**, **Allow installing older
-versions**, **Allow unsigned plugins**) are off by default and meant for development. They are
-described in [Plugins](/administration/plugins#plugin-settings).
-:::
-
 ## See also
 
-- [Plugins](/administration/plugins) for trust, sources, import, export and uninstalling.
+- [Plugins](/administration/plugins) for installing, trust, automatic updates, import, export and uninstalling.
 - [Metadata](/features/metadata) for languages, regions and fixing a wrong match.
 - [Plugin development](/plugins/overview) to write your own.

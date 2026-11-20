@@ -10,12 +10,18 @@ description: Install, trust and manage the plugins that extend what Fliks can do
 
 The page lists the plugins you have installed as a grid of cards. **Search for a plugin** opens
 the catalog: every plugin your configured sources offer, marked **Installed** or **Update
-available** where it applies. It loads without any account. For a click-through, see
-[First-day admin tasks](/administration/first-day-tasks#install-a-plugin-from-the-catalogue). A plugin with no version your server can
+available** where it applies. It loads without any account.
+
+:::steps
+![Open **Advanced > Plugins**](/img/admin-plugin-1-sidebar.webp)
+![Click **Search for a plugin**](/img/admin-plugin-2-search.webp)
+![Each card shows its state: **Install**, **Update available** or installed. Click **Install** on the plugin you want](/img/admin-plugin-3-catalogue.webp)
+![Read what the plugin asks for and its trust badge, then confirm with **Install** or back out with **Cancel**](/img/admin-plugin-4-consent.webp)
+:::
+
+A plugin with no version your server can
 install shows **No installable version**. Installing shows a consent step first (see below) before
 anything is installed. Updating keeps the plugin's settings.
-
-![The plugin catalogue, with an installed plugin, an update and an Install button](/img/plugins-catalog.webp)
 
 ## Importing a plugin by hand
 

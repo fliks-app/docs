@@ -6,9 +6,6 @@ description: Build a running order of movies and episodes, share it with other u
 > [!SUMMARY]
 > Click **Playlists** in the sidebar, or the add-to-list icon on any title, to create a playlist and add movies and episodes. Share it with other users, autoplay it, or save someone else's.
 
-> [!SUMMARY]
-> Click **Playlists** in the sidebar, or the add-to-list icon on any title, to create a playlist and add movies and episodes. Share it with other users, autoplay it, or save someone else's.
-
 ## Open your playlists
 
 Click **Playlists** in the left sidebar (under **LIBRARY**). The page lists your playlists and
