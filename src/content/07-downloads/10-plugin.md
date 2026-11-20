@@ -19,7 +19,7 @@ Install it from the catalogue with the admin account. Keep **Reach services on t
 
 :::steps
 ![Open **Settings > Advanced > Plugins** and click **Search for a plugin**](/img/download-install-1-plugins.webp)
-![Click **Install** on the **Download** card](/img/download-install-2-catalogue.webp)
+![Click **Install** on the **Torrent manager** card](/img/download-install-2-catalogue.webp)
 ![Read the consent list, then click **Install**](/img/download-install-3-consent.webp)
 :::
 
