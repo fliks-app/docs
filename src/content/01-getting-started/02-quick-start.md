@@ -4,7 +4,7 @@ description: Install the server, create the administrator, add your first librar
 ---
 
 > [!SUMMARY]
-> Install the server, create the administrator at `http://<host>:4848`, create your language and quality profiles, add a library, set up a download plugin if you want downloads, then open Fliks on your devices.
+> Install the server, create the administrator at `http://<host>:4848`, create your language and quality profiles, add a library, set up a download plugin and add your first movie, then open Fliks on your devices.
 
 ## 1. Install the server
 
@@ -77,7 +77,18 @@ To let Fliks fetch the titles people request, install a download plugin such as
 [Torrent manager](/built-in-plugins/torrent-manager), then give it an [indexer](/built-in-plugins/indexers)
 and a [download client](/built-in-plugins/download-clients). Skip this if you only watch your own files.
 
-## 6. Open Fliks on your devices
+## 6. Search and add a movie
+
+Open **Search** and type a title. Under **Not in your library**, open it and click **Add**: it joins
+your library with your profiles, and the download plugin starts looking for it.
+
+:::steps
+![Search for a title and open it from **Not in your library**](/img/quick-start-search.webp)
+![Click **Add**](/img/quick-start-add.webp)
+![The movie is in your library, with its quality and language profiles](/img/quick-start-added.webp)
+:::
+
+## 7. Open Fliks on your devices
 
 Open the same address in any browser, or install an app: phone, tablet, TV, desktop. Sign in with
 your account. On a TV, choose **Quick Connect** and type the code it shows on your phone.
