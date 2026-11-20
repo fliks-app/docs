@@ -68,7 +68,7 @@ How subtitles work per title is on [Subtitles](/features/subtitles).
 |---|---|
 | [Media servers](/administration/integrations#media-servers) | Tell another media server to refresh when Fliks adds something. |
 | [Imports](/administration/integrations#imports) | Disk import and migration from other tools. |
-| [Notifications](/administration/integrations#notifications) | Discord, Slack, ntfy, Gotify or a webhook. |
+| [Notifications](/administration/alerts-to-services) | Alerts to Discord, Slack, ntfy or a webhook, and phone push. |
 
 ## Users
 

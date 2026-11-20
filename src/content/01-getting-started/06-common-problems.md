@@ -161,7 +161,7 @@ An administrator chooses who sees the account list. See [Login user list](/admin
 
 ### Notifications and emails don't arrive
 
-Check the provider settings and send a test message. See [Notifications](/features/notifications), [Push notifications](/administration/push-notifications) and [General, naming and outgoing mail](/administration/general-and-naming#outgoing-mail).
+Send a test from [Get notifications on your devices](/features/notifications). Phones also need [Push notifications](/administration/push-notifications). Alerts to a chat service: [Alerts](/administration/alerts-to-services). Emails: [General, naming and outgoing mail](/administration/general-and-naming#outgoing-mail).
 
 ## Downloads
 

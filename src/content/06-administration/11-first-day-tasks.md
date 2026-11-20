@@ -28,9 +28,7 @@ Open **Subtitles > Subtitle providers**, click **Add provider**. Steps: [Subtitl
 
 ## Set up notifications
 
-![The notification connection form](/img/admin-notif-3-form.webp)
-
-Open **Integrations > Notifications**, click **New connection**. Steps: [Notifications](/administration/integrations#notifications).
+Open **Integrations > Notifications**. Alerts to Discord or ntfy: [Alerts to Discord, Slack and ntfy](/administration/alerts-to-services). Phone push: [Push notifications](/administration/push-notifications).
 
 ## Install a plugin from the catalogue
 
