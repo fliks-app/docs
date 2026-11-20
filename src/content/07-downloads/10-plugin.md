@@ -1,11 +1,11 @@
 ---
 title: Set up the plugin
-group: Download plugin
-description: What the Download plugin does, what to set up before it can fetch anything, and how a request turns into a file in your library.
+group: Torrent manager
+description: What Torrent manager does, what to set up before it can fetch anything, and how a request turns into a file in your library.
 ---
 
 > [!SUMMARY]
-> The Download plugin turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins** once the [setup order](/downloads/overview#order-to-set-things-up) is done. Without it requests stay approved forever.
+> Torrent manager turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins** once the [setup order](/downloads/overview#order-to-set-things-up) is done. Without it requests stay approved forever.
 
 Its pages: [Indexers](/downloads/indexers), [Download clients](/downloads/download-clients), [Settings](/downloads/plugin-settings), [Troubleshooting](/downloads/troubleshooting).
 
@@ -31,14 +31,14 @@ Trust badges and sources are in [Plugins](/administration/plugins).
 | What | Where |
 |---|---|
 | The plugin card, **Disable**, **Export**, **Uninstall** | **Settings > Advanced > Plugins**, click **Download** |
-| General options | **Settings > Download > General** |
-| Indexers and indexer sources | **Settings > Download > Indexers** and **Indexer sources** |
-| Download clients | **Settings > Download > Download clients** |
+| General options | **Settings > Torrent manager > General** |
+| Indexers and indexer sources | **Settings > Torrent manager > Indexers** and **Indexer sources** |
+| Download clients | **Settings > Torrent manager > Download clients** |
 | Provider order and search interval | **Settings > Downloads**, see [Downloads](/downloads/automatic-search) |
 | Requests, queue, history, calendar | **Downloads** section of the main sidebar |
 | Search for a release yourself | A title's **⋮** menu, **Files** |
 
-![The Download plugin page, with Disable, Export and Uninstall](/img/download-plugin-page.webp)
+![Torrent manager page, with Disable, Export and Uninstall](/img/download-plugin-page.webp)
 
 > [!WARNING]
 > The **Downloads** item under **Library** in the main sidebar is something else: it lists the

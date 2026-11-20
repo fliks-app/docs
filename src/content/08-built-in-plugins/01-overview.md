@@ -33,7 +33,7 @@ description: Which plugins Fliks ships with or offers in its catalogue, where to
 | [Notify](/built-in-plugins/notify) | Posts Fliks events to an HTTPS address as JSON | Catalogue | No |
 | [Download](/downloads/plugin) | Indexer search, download clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
 
-The Download plugin has its own guide: start with [Download overview](/downloads/plugin).
+Torrent manager has its own guide: start with [Download overview](/downloads/plugin).
 
 ## Where plugins live
 

@@ -1,11 +1,11 @@
 ---
 title: Download clients
-group: Download plugin
-description: Connect qBittorrent or Transmission to the Download plugin, and share the download folder so Fliks can import what the client fetched.
+group: Torrent manager
+description: Connect qBittorrent or Transmission to Torrent manager, and share the download folder so Fliks can import what the client fetched.
 ---
 
 > [!SUMMARY]
-> Add qBittorrent or Transmission in **Settings > Download > Download clients**: host, port, username and password, then **Test connection**. The one mistake to avoid: the client's save folder must be mounted under the same path in both containers (see The shared folder).
+> Add qBittorrent or Transmission in **Settings > Torrent manager > Download clients**: host, port, username and password, then **Test connection**. The one mistake to avoid: the client's save folder must be mounted under the same path in both containers (see The shared folder).
 
 A **download client** downloads the torrent: **qBittorrent** (Web UI) or **Transmission** 3.0 or later. Fliks sends a release, follows its progress and reads the finished file from the client's download folder, so both must agree on a folder: see [The shared folder](#the-shared-folder) before you click **Save**.
 
@@ -29,7 +29,7 @@ qBittorrent's own options.
 
 ## Add qBittorrent in Fliks
 
-Open **Settings > Download > Download clients**.
+Open **Settings > Torrent manager > Download clients**.
 
 :::steps
 ![Click **New download client**](/img/download-client-qbit-1-new.webp)

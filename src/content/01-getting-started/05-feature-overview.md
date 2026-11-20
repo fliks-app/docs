@@ -39,7 +39,7 @@ conventions for **Settings > X**, **App settings > X** and **Account settings > 
 | Comics | A library of that type | [Comics](/features/comics) |
 | Music, lyrics, karaoke | A library of type Albums | [Music](/features/music) |
 | Requests and downloads | Sidebar, **Requests**, **Queue**, **Calendar** | [Requests](/downloads/requests) |
-| Fetch missing titles (indexers, download client) | **Settings > Advanced > Plugins**, **Download** | [Do you need downloads?](/downloads/overview), [Download plugin](/downloads/plugin) |
+| Fetch missing titles (indexers, download client) | **Settings > Advanced > Plugins**, **Download** | [Do you need downloads?](/downloads/overview), [Torrent manager](/downloads/plugin) |
 
 ## Administration
 

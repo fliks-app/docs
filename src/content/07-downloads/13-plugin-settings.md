@@ -1,18 +1,18 @@
 ---
 title: Plugin settings
-group: Download plugin
-description: Every option of the Download plugin, with its default: search time, stalled-download cleanup, seeding, cooldowns and where each one lives.
+group: Torrent manager
+description: Every option of Torrent manager, with its default: search time, stalled-download cleanup, seeding, cooldowns and where each one lives.
 ---
 
 > [!SUMMARY]
-> The Download plugin has few options of its own: pause automatic downloads, how long a search waits, and optional stalled-download cleanup, all in **Settings > Download > General**. Everything else lives on indexers, clients, profiles and **Settings > Downloads**.
+> Torrent manager has few options of its own: pause automatic downloads, how long a search waits, and optional stalled-download cleanup, all in **Settings > Torrent manager > General**. Everything else lives on indexers, clients, profiles and **Settings > Downloads**.
 
 The plugin's own options are few. Most of what changes its behaviour sits in four places:
 
 :::details Where each download option lives
 | Where | What it holds |
 |---|---|
-| **Settings > Download > General** | The options on this page: pause, search time, stalled-download cleanup. |
+| **Settings > Torrent manager > General** | The options on this page: pause, search time, stalled-download cleanup. |
 | [Indexers](/downloads/indexers#indexer-options) | Per tracker: request delay, which searches use it, minimum seeders, seeding limits, priority. |
 | [Download clients](/downloads/download-clients#client-options) | Per client: address, categories, priority. |
 | **Settings > Downloads** | Fliks's own search schedule and provider order, see [Downloads](/downloads/automatic-search). |
@@ -24,7 +24,7 @@ the [quality definitions](/downloads/quality-definitions) and the
 
 ## General
 
-Open **Settings > Download > General** and click **Save** after any change.
+Open **Settings > Torrent manager > General** and click **Save** after any change.
 
 ### Search
 

@@ -4,7 +4,7 @@ description: Choose which download provider is asked first, how often missing an
 ---
 
 > [!SUMMARY]
-> **Settings > Downloads** sets the order of download providers, how often Fliks searches for missing or upgradable titles (every 6 hours by default) and what to do with unrequested album tracks. Only for [requests](/downloads/requests) or the Download plugin: Fliks itself never downloads, a provider plugin does.
+> **Settings > Downloads** sets the order of download providers, how often Fliks searches for missing or upgradable titles (every 6 hours by default) and what to do with unrequested album tracks. Only for [requests](/downloads/requests) or Torrent manager: Fliks itself never downloads, a provider plugin does.
 
 ## Set the automatic search
 
