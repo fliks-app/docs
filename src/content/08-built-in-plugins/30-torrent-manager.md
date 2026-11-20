@@ -9,16 +9,21 @@ description: What Torrent manager does, what to set up before it can fetch anyth
 
 Its pages: [Indexers](/built-in-plugins/indexers), [Download clients](/built-in-plugins/download-clients), [Settings](/built-in-plugins/torrent-manager-settings), [Troubleshooting](/built-in-plugins/torrent-manager-troubleshooting).
 
-## What you need first
+## Get it working
 
-Set up in this order: a [quality profile](/downloads/quality-profiles) and a [language profile](/downloads/language-profiles), the plugin, one [indexer](/built-in-plugins/indexers), one [download client](/built-in-plugins/download-clients). Skipping one is the usual reason nothing happens.
+1. [Install the plugin](#install-the-plugin), below.
+2. [Add an indexer](/built-in-plugins/indexers): where the plugin searches for releases.
+3. [Add a download client](/built-in-plugins/download-clients): qBittorrent or Transmission, which downloads them.
+
+Requests also use a [quality profile](/downloads/quality-profiles) and a
+[language profile](/downloads/language-profiles), set in the Downloads section.
 
 ## Install the plugin
 
 Install it from the catalogue with the admin account. Keep **Reach services on the local network** in the consent list: without it the plugin cannot reach a client or indexer on your network.
 
 :::steps
-![Open **Settings > Advanced > Plugins** and click **Search for a plugin**](/img/download-install-1-plugins.webp)
+![Open **Settings > Plugins** and click **Search for a plugin**](/img/download-install-1-plugins.webp)
 ![Click **Install** on the **Torrent manager** card](/img/download-install-2-catalogue.webp)
 ![Read the consent list, then click **Install**](/img/download-install-3-consent.webp)
 :::
@@ -30,7 +35,7 @@ Trust badges and sources are in [Plugins](/administration/plugins).
 :::details Where every page of the plugin is
 | What | Where |
 |---|---|
-| The plugin card, **Disable**, **Export**, **Uninstall** | **Settings > Advanced > Plugins**, click **Download** |
+| The plugin card, **Disable**, **Export**, **Uninstall** | **Settings > Plugins**, click **Torrent manager** |
 | General options | **Settings > Torrent manager > General** |
 | Indexers and indexer sources | **Settings > Torrent manager > Indexers** and **Indexer sources** |
 | Download clients | **Settings > Torrent manager > Download clients** |
