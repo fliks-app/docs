@@ -56,4 +56,4 @@ conventions for **Settings > X**, **App settings > X** and **Account settings > 
 | Library cleanup rules | **Cleanup** | [Library cleanup](/administration/library-cleanup) |
 | Logs, backups, scheduled tasks | **System**, **Scheduled tasks** | [Logs](/administration/logs-and-troubleshooting), [Backups](/administration/backups) |
 
-Something not working? See [Common problems](/getting-started/common-problems). New in the latest releases: [What's new](/getting-started/whats-new).
+Something not working? See [Common problems](/getting-started/common-problems).
