@@ -4,7 +4,7 @@ description: Install the server, create the administrator, add your first librar
 ---
 
 > [!SUMMARY]
-> Four steps, about five minutes: install the server, create the administrator at `http://<host>:4848`, add a library, open Fliks on your devices.
+> Install the server, create the administrator at `http://<host>:4848`, add a library and open Fliks on your devices. Then set a language profile, a quality profile and an indexer.
 
 ## 1. Install the server
 
@@ -55,6 +55,25 @@ Open the same address in any browser, or install an app: phone, tablet, TV, desk
 your account. On a TV, choose **Quick Connect** and type the code it shows on your phone.
 
 Every client is in [Clients](/clients/overview).
+
+## 5. Finish the setup
+
+Do these three once, right after your first library: they are what makes Fliks find subtitles
+and fetch what you ask for.
+
+- **A language profile**: the languages you want for audio and subtitles. Fliks uses it to
+  search subtitles on its own and to pick the right release. The default profile has no subtitle
+  language, so nothing is searched until you add yours.
+  [Language profiles](/administration/language-profiles)
+- **A quality profile**: which qualities Fliks accepts (720p, 1080p, 4K...) and when it stops
+  upgrading a title. Every request needs one.
+  [Quality profiles](/downloads/quality-profiles)
+- **An indexer**: where Fliks searches for releases, through the Torrent manager plugin. Without
+  one, approved requests are never downloaded. [Set up the plugin](/downloads/plugin), then
+  [add your indexers](/downloads/indexers).
+
+Only watching files you already have? Set the language profile for subtitles and skip the other
+two.
 
 ## Next
 
