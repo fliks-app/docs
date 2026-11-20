@@ -5,13 +5,13 @@ description: What Torrent manager does, what to set up before it can fetch anyth
 ---
 
 > [!SUMMARY]
-> Torrent manager turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins** once the [setup order](/downloads/overview#order-to-set-things-up) is done. Without it requests stay approved forever.
+> Torrent manager turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins**. Without it requests stay approved forever.
 
-Its pages: [Indexers](/downloads/indexers), [Download clients](/downloads/download-clients), [Settings](/downloads/plugin-settings), [Troubleshooting](/downloads/troubleshooting).
+Its pages: [Indexers](/built-in-plugins/indexers), [Download clients](/built-in-plugins/download-clients), [Settings](/built-in-plugins/torrent-manager-settings), [Troubleshooting](/built-in-plugins/torrent-manager-troubleshooting).
 
 ## What you need first
 
-Set up in the order of [Do you need downloads?](/downloads/overview#order-to-set-things-up): profiles on the library, one indexer, one download client, then the plugin. Skipping one is the usual reason nothing happens.
+Set up in this order: a [quality profile](/downloads/quality-profiles) and a [language profile](/downloads/language-profiles), the plugin, one [indexer](/built-in-plugins/indexers), one [download client](/built-in-plugins/download-clients). Skipping one is the usual reason nothing happens.
 
 ## Install the plugin
 
@@ -77,7 +77,7 @@ What happens behind each step:
 5. **Import.** Once a minute the plugin looks for finished downloads. It **copies** the file into the library,
    renamed with your [naming](/administration/general-and-naming) rules, and the state becomes **Importing**
    then **Imported**. The original stays in the client's folder until it has seeded long enough, see
-   [Settings](/downloads/plugin-settings#seeding).
+   [Settings](/built-in-plugins/torrent-manager-settings#seeding).
 6. **Done.** The request changes to **Downloaded** and the title can be played.
 
 If nothing suitable exists yet, the title stays monitored. The plugin searches again on a schedule and reads

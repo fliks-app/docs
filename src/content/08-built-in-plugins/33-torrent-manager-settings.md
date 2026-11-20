@@ -7,24 +7,19 @@ description: Every option of Torrent manager, with its default: search time, sta
 > [!SUMMARY]
 > Torrent manager has few options of its own: pause automatic downloads, how long a search waits, and optional stalled-download cleanup, all in **Settings > Torrent manager > General**. Everything else lives on indexers, clients, profiles and **Settings > Downloads**.
 
-The plugin's own options are few. Most of what changes its behaviour sits in four places:
+## Open the settings
 
-:::details Where each download option lives
-| Where | What it holds |
-|---|---|
-| **Settings > Torrent manager > General** | The options on this page: pause, search time, stalled-download cleanup. |
-| [Indexers](/downloads/indexers#indexer-options) | Per tracker: request delay, which searches use it, minimum seeders, seeding limits, priority. |
-| [Download clients](/downloads/download-clients#client-options) | Per client: address, categories, priority. |
-| **Settings > Downloads** | Fliks's own search schedule and provider order, see [Downloads](/downloads/automatic-search). |
+In the admin sidebar, under **TORRENT MANAGER**, click **General**. Change what you need, then click **Save**.
 
-[quality profile](/downloads/quality-profiles), the [language profile](/administration/language-profiles),
-the [quality definitions](/downloads/quality-definitions) and the
-[custom formats](/downloads/custom-formats), not by this plugin.
-:::
+![Click General under Torrent manager in the admin sidebar](/img/torrent-manager-settings-anim.webp)
 
-## General
+![The General page of Torrent manager: pause, search time and stalled-download cleanup](/img/torrent-manager-settings.webp)
 
-Open **Settings > Torrent manager > General** and click **Save** after any change.
+Tracker, client and profile options live on their own pages: [Indexers](/built-in-plugins/indexers#indexer-options),
+[Download clients](/built-in-plugins/download-clients#client-options), [Quality profiles](/downloads/quality-profiles)
+and [Language profiles](/downloads/language-profiles).
+
+## Options
 
 ### Search
 
@@ -98,7 +93,7 @@ When a search runs, the plugin builds the query from the title and its year, for
 
 An indexer ticked for none of them is never used, which is why the form refuses an empty **Use for**.
 Each indexer is spaced by its **Request delay**, and an indexer that fails is paused for a while, see
-[cooldowns](/downloads/indexers#keeping-an-eye-on-indexers).
+[cooldowns](/built-in-plugins/indexers#keeping-an-eye-on-indexers).
 :::
 
 ## Import

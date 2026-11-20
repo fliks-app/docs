@@ -139,7 +139,7 @@ The test asks for the indexer's capabilities. A failure reads **Could not reach 
 | **Priority** | 25 | Indexers are queried from the lowest number to the highest. |
 | **Active** | on | A disabled indexer is never queried. |
 
-The seeding options are explained under [Settings](/downloads/plugin-settings#seeding).
+The seeding options are explained under [Settings](/built-in-plugins/torrent-manager-settings#seeding).
 
 :::
 
@@ -162,7 +162,7 @@ The list has a name filter, a sort menu and checkboxes to select several rows. E
 skips it. **Clear cooldown** on a row, or **Clear all cooldowns** at the top, queries it again at once.
 
 **Slow indexers.** A search stops waiting for an indexer after the time set in
-[**Seconds allowed for a release search**](/downloads/plugin-settings#search) and keeps the answers
+[**Seconds allowed for a release search**](/built-in-plugins/torrent-manager-settings#search) and keeps the answers
 it already has.
 
 **Tracker quirks.** The plugin asks each indexer which kinds of search it supports. If a typed search such

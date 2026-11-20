@@ -112,5 +112,5 @@ To keep one genre out, add it under **Excluded genres**.
 - [Users and permissions](/administration/users-and-permissions) covers roles and the **Create requests** and
   **Manage requests** permissions.
 - [Libraries](/features/libraries) lists the libraries a rule can target.
-- [Quality profiles](/downloads/quality-profiles) and [language profiles](/administration/language-profiles)
+- [Quality profiles](/downloads/quality-profiles) and [language profiles](/downloads/language-profiles)
   are chosen by the requester at request time. A rule never changes them.

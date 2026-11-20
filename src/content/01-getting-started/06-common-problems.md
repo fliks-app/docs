@@ -167,23 +167,23 @@ Send a test from [Get notifications on your devices](/features/notifications). P
 
 ### Nothing gets downloaded
 
-Work down the checklist: plugin active, title monitored with a quality profile, an active indexer, an active download client. See [Nothing is downloaded](/downloads/troubleshooting#nothing-is-downloaded).
+Work down the checklist: plugin active, title monitored with a quality profile, an active indexer, an active download client. See [Nothing is downloaded](/built-in-plugins/torrent-manager-troubleshooting#nothing-is-downloaded).
 
 ### A request stays Approved
 
-No release has been grabbed yet: it is the same checklist as above. See [Requests](/downloads/requests) and [Download troubleshooting](/downloads/troubleshooting).
+No release has been grabbed yet: it is the same checklist as above. See [Requests](/downloads/requests) and [Download troubleshooting](/built-in-plugins/torrent-manager-troubleshooting).
 
 ### The download finishes but the import fails
 
-The client saved the file outside `/downloads`, or Fliks can't see that folder, or the library mount is read-only. See [The download finishes but the import fails](/downloads/troubleshooting#the-download-finishes-but-the-import-fails) and [The shared folder](/downloads/download-clients#the-shared-folder).
+The client saved the file outside `/downloads`, or Fliks can't see that folder, or the library mount is read-only. See [The download finishes but the import fails](/built-in-plugins/torrent-manager-troubleshooting#the-download-finishes-but-the-import-fails) and [The shared folder](/built-in-plugins/download-clients#the-shared-folder).
 
 ### Test connection fails on an indexer or download client
 
-Read the message shown by the test, then check the address and credentials. Each message is explained on [Download troubleshooting](/downloads/troubleshooting). See [Indexers](/downloads/indexers) and [Download clients](/downloads/download-clients).
+Read the message shown by the test, then check the address and credentials. Each message is explained on [Download troubleshooting](/built-in-plugins/torrent-manager-troubleshooting). See [Indexers](/built-in-plugins/indexers) and [Download clients](/built-in-plugins/download-clients).
 
 ### The wrong quality or language was downloaded
 
-Adjust the library's quality and language profiles, and the score of custom formats. See [Quality profiles](/downloads/quality-profiles), [Custom formats](/downloads/custom-formats) and [Language profiles](/administration/language-profiles).
+Adjust the library's quality and language profiles, and the score of custom formats. See [Quality profiles](/downloads/quality-profiles), [Custom formats](/downloads/custom-formats) and [Language profiles](/downloads/language-profiles).
 
 ### Backups or restores fail
 

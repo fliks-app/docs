@@ -37,6 +37,16 @@
                   </a>
                 </li>
               }
+              @for (link of section.links; track link.url) {
+                <li>
+                  <a
+                    [routerLink]="link.url"
+                    class="-ms-px block border-s-2 border-transparent py-1 ps-3 pe-2 leading-snug text-base-content/70 transition-colors hover:border-base-content/30 hover:text-base-content"
+                  >
+                    {{ link.title }} &rarr;
+                  </a>
+                </li>
+              }
             </ul>
           </details>
         }

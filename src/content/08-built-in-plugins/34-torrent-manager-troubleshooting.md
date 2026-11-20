@@ -14,7 +14,7 @@ Check these in order, on the title that does not move.
 1. **The plugin is installed and Active.** **Settings > Advanced > Plugins**, click **Download**. The badge reads **Active**.
 2. **The title is monitored and has a quality profile.** A title with no
    [quality profile](/downloads/quality-profiles) is never searched. Set the library's defaults, see
-   [What you need first](/downloads/plugin#what-you-need-first).
+   [What you need first](/built-in-plugins/torrent-manager#what-you-need-first).
 3. **Automatic downloads are not paused.** **Settings > Torrent manager > General**, **Pause automatic downloads** is off.
 4. **An indexer is active** and its **Use for** includes **Automatic searches**, and **a download client is active.**
    Without a client the grab fails with *No enabled download client is configured*.
@@ -34,7 +34,7 @@ Check these in order, on the title that does not move.
 | **The source answered with an HTTP error** (401) | The API key is wrong. Copy it again from Prowlarr or Jackett. |
 | **The source answered with an HTTP error** (404) | The address has a wrong path. Remove it, or add the program's URL base. |
 | **Unexpected response: not an indexer list** | The address points at something else, such as a web page. Use the root address of Prowlarr or Jackett. |
-| **The source asks for a login this import cannot provide** | Jackett has an admin password. Remove it, or [add the indexers by hand](/downloads/indexers#add-a-torznab-indexer-by-hand). |
+| **The source asks for a login this import cannot provide** | Jackett has an admin password. Remove it, or [add the indexers by hand](/built-in-plugins/indexers#add-a-torznab-indexer-by-hand). |
 | **This source is disabled. Enable it before importing.** | Switch **Active** on in the source. |
 | **Base URL is empty** | Fill **Base URL**. |
 :::
@@ -78,7 +78,7 @@ For Transmission, also check the port. The form keeps `8080` when you switch **T
 |---|---|
 | **Queued** | The client has it and has not started. |
 | **Downloading** | Data is coming in. |
-| **Stalled** | The client reports no activity. Cleanup can remove it, see [Settings](/downloads/plugin-settings#stalled-downloads). |
+| **Stalled** | The client reports no activity. Cleanup can remove it, see [Settings](/built-in-plugins/torrent-manager-settings#stalled-downloads). |
 | **Paused** | Paused, in the client or from the row menu. **Resume** restarts it. |
 | **Importing** | Finished in the client, copied within a minute. |
 | **Import failed** | The file could not be placed. Open **Info** for the reason, fix it, then **Retry the import** in the row menu. |
@@ -97,7 +97,7 @@ The usual cause is the folder.
 - **The path is outside the ingest root.** The client saved the file somewhere other than `/downloads`. The
   plugin may only read from `/downloads`. Set the client's default save path under `/downloads`, and
   mount the same host folder there in both containers, see
-  [The shared folder](/downloads/download-clients#the-shared-folder).
+  [The shared folder](/built-in-plugins/download-clients#the-shared-folder).
 - **Fliks cannot see the file.** The folder is mounted in the client but not in Fliks, or at another path.
   Run `docker exec <fliks container> ls /downloads` and look for the file.
 - **The library is read-only.** The import copies into the library, so its mount needs write access.

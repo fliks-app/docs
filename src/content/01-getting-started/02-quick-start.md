@@ -57,13 +57,13 @@ and fetch what you ask for.
 - **A language profile**: the languages you want for audio and subtitles. Fliks uses it to
   search subtitles on its own and to pick the right release. The default profile has no subtitle
   language, so nothing is searched until you add yours.
-  [Language profiles](/administration/language-profiles)
+  [Language profiles](/downloads/language-profiles)
 - **A quality profile**: which qualities Fliks accepts (720p, 1080p, 4K...) and when it stops
   upgrading a title. Every request needs one.
   [Quality profiles](/downloads/quality-profiles)
 - **An indexer**: where Fliks searches for releases, through the Torrent manager plugin. Without
-  one, approved requests are never downloaded. [Set up the plugin](/downloads/plugin), then
-  [add your indexers](/downloads/indexers).
+  one, approved requests are never downloaded. [Set up the plugin](/built-in-plugins/torrent-manager), then
+  [add your indexers](/built-in-plugins/indexers).
 
 Only watching files you already have? Set the language profile for subtitles and skip the other
 two.

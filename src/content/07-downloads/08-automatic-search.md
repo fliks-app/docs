@@ -64,7 +64,7 @@ top one is asked to grab it. A new request is still searched at once when it is 
 - [Quality profiles](/downloads/quality-profiles) say which qualities are accepted and when to stop upgrading.
 - [Quality definitions](/downloads/quality-definitions) and [custom formats](/downloads/custom-formats)
   refuse or rank the releases.
-- [Language profiles](/administration/language-profiles) filter audio languages.
+- [Language profiles](/downloads/language-profiles) filter audio languages.
 - [Auto-approval](/downloads/auto-approval) lets a request reach this search without waiting for a person.
 - [Requests](/downloads/requests#what-happens-after-approval) shows what the requester sees as a download moves on.
 - [System](/administration/system) has the task history and the button to run a search now.
