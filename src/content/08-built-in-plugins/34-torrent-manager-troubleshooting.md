@@ -11,7 +11,7 @@ description: Why a title is not downloading, what each test message and queue st
 
 Check these in order, on the title that does not move.
 
-1. **The plugin is installed and Active.** **Settings > Plugins**, click **Download**. The badge reads **Active**.
+1. **The plugin is installed and Active.** **Settings > Plugins**, click **Torrent manager**. The badge reads **Active**.
 2. **The title is monitored and has a quality profile.** A title with no
    [quality profile](/downloads/quality-profiles) is never searched. Give the library a default one, see
    [Quality profiles](/downloads/quality-profiles).

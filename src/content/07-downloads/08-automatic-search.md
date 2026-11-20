@@ -66,5 +66,5 @@ top one is asked to grab it. A new request is still searched at once when it is 
   refuse or rank the releases.
 - [Language profiles](/downloads/language-profiles) filter audio languages.
 - [Auto-approval](/downloads/auto-approval) lets a request reach this search without waiting for a person.
-- [Requests](/downloads/requests#what-happens-after-approval) shows what the requester sees as a download moves on.
+- [Requests](/downloads/requests#from-request-to-file) shows what the requester sees as a download moves on.
 - [System](/administration/system) has the task history and the button to run a search now.

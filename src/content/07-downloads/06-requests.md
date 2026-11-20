@@ -87,13 +87,20 @@ title from the library and deletes its files from disk, exactly as if an admin h
 directly.
 :::
 
-## What happens after approval
+## From request to file
 
-Fliks itself doesn't search anywhere for the file: approving a request marks the title as
-monitored and hands it to whatever acquisition plugin is installed, such as the download plugin (see
-[Plugins](/administration/plugins)). The request moves to
-Processing once a release is actually being grabbed, and to Downloaded once the files for
-everything it asked for have landed on disk.
+Approving a request marks the title as monitored and hands it to the installed acquisition plugin, such as
+[Torrent manager](/built-in-plugins/torrent-manager), which searches, downloads and imports it. The request
+moves to **Processing** while a release is being grabbed, then to **Downloaded** once the files are on disk.
+
+:::steps
+![A user opens the title and clicks **Request**](/img/download-flow-1-request.webp)
+![The button now reads **Already requested**](/img/download-flow-2-requested.webp)
+![An admin opens **Downloads > Requests** and clicks **Approve**](/img/download-flow-3-approve.webp)
+![The release is in **Downloads > Queue**, here **Importing**](/img/download-flow-4-queue.webp)
+![When the import ends, **Downloads > History** shows **Imported**](/img/download-flow-5-history.webp)
+![The request reads **Downloaded** and the title is in the library](/img/download-flow-6-downloaded.webp)
+:::
 
 > [!NOTE]
 > Requests need an acquisition plugin installed to ever leave the Approved state on their own; see

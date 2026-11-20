@@ -117,8 +117,3 @@ The plugin keeps a list of releases it must not grab again. A release gets on it
 
 There is no page that lists the blocklist.
 :::
-
-## Where the Fliks side lives
-
-Provider order, how often missing titles are searched, and what to do with extra album tracks are
-core settings, because they apply to any download provider. See [Downloads](/downloads/automatic-search).
