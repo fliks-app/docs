@@ -5,9 +5,9 @@ description: The vocabulary Fliks uses for its library, its users and its playba
 
 ## Library
 
-A **library** is one root folder plus the media types it holds: movies, series, or both. You can
-have several side by side, each pointed at its own folder, and each with its own set of users
-allowed to see it. See [Libraries](/features/libraries).
+A **library** is one or more folders on the server plus the media types they hold: movies,
+series, books and audiobooks, comics or music albums. You can have several side by side, each
+pointed at its own folders, and each with its own set of users allowed to see it. See [Libraries](/features/libraries).
 
 Inside a library, a **media** is one movie or one show; a show is further broken into seasons and
 episodes. Each of those has one or more **media files** on disk: normally one, but a movie kept
@@ -16,10 +16,20 @@ first, both have more than one file attached to the same media.
 
 ## Metadata
 
-Posters, backdrops, descriptions, cast and genres come from TMDB and TVDB. A library scan
-matches what it finds against these providers automatically; when it can't (an ambiguous name,
-or a file that legitimately isn't in either database), the title still appears using whatever
-Fliks can read from the filename, unidentified. See [Metadata](/features/metadata).
+Posters, backdrops, descriptions, cast and genres come from metadata providers such as TMDB
+and TVDB, which are plugins (**Advanced > Plugins** in **Administration**). A library scan
+matches what it finds against them automatically. When it can't (an ambiguous name, or a file
+that legitimately isn't in either database), you choose **No match: add as is** in the scan
+review, and the title appears with whatever Fliks can read from the filename, marked
+**Unidentified** in the library's admin page. **Identify** on the title fixes it later. See
+[Quick start](/getting-started/quick-start#fixing-an-unidentified-file-later) and
+[Metadata](/features/metadata).
+
+## Where things live
+
+Settings sit in three areas behind your avatar: **Administration** (the server), **App settings**
+(your preferences on this device) and **Account settings** (your account). The click path to
+each task is in [Finding your way around](/getting-started/finding-your-way).
 
 ## Quality and language profiles
 
