@@ -4,59 +4,11 @@ description: The Integrations group of the administration area - Media servers, 
 ---
 
 > [!SUMMARY]
-> **Integrations** connects Fliks to other software, and none of it is needed to watch your files. **Notifications** push events to Discord, Slack, ntfy, Gotify or a webhook: add one connection and keep the events you want. **Media servers** tell another server to rescan, and **Imports** bring data in from elsewhere.
+> **Integrations** connects Fliks to other software, and none of it is needed to watch your files. **Notifications** sends alerts to chat services and turns on phone push. **Media servers** tell another server to rescan, and **Imports** bring data in from elsewhere.
 
 ## Notifications
 
-Fliks posts a short message to a service when something happens. A connection is a service, an endpoint and a list of events. Phones get push through the built-in **Fliks Relay** connection, see [Push notifications](/administration/push-notifications).
-
-:::steps
-![Open **Integrations > Notifications**](/img/admin-notif-1-sidebar.webp)
-![Click **New connection**](/img/admin-notif-2-new.webp)
-![Name it, choose the service type, fill its fields, keep the events you want and **Save**](/img/admin-notif-3-form.webp)
-:::
-
-Choose the **Service type**, fill the URL or token it asks for, press **Send a test notification** (when editing a saved connection), then **Save**. New connections have every event ticked.
-
-:::details Every field of a notification connection
-| Field | Meaning |
-|---|---|
-| **Name** | Required. |
-| **Service type** | `discord`, `slack`, `webhook`, `gotify` or `ntfy`. The fields below change with it. |
-| **Webhook URL** | Discord, Slack and webhook. The URL itself is the credential: it is stored hidden, and editing shows a mask. Leave empty to keep it. |
-| **ntfy server URL** | ntfy only: the base address of your ntfy server. |
-| **Token** | Not shown for Discord and Slack. Optional for ntfy (sent as a bearer token) and webhook (sent as an `Authorization: Bearer` header). Required for Gotify. Leave empty to keep the stored token. |
-| **Topic** | ntfy only. Default `fliks`. |
-| **Trigger events** | All ticked on a new connection. |
-| **Connection active** | A switch; also in the list's **Active** column. |
-| **Send a test notification** | Only when editing a saved connection. Shows success or the error. |
-
-![A ntfy connection](/img/admin-notif-ntfy-form.webp)
-
-Each service gets a plain text message: Discord and Slack the text, Gotify a title `Fliks - <event>` and the message (priority 5), ntfy the message with the title header, and a generic webhook a JSON body `{"event": "...", ...}` with the event's fields (title, language and so on). Each send times out after 10 seconds and is not retried.
-
-:::
-
-:::details Every notification event
-| Group | Event | Message |
-|---|---|---|
-| Requests | `request.created` | New request |
-| | `request.approved`, `request.declined` | Request approved, declined |
-| | `request.processing` | Request downloading |
-| | `request.available` | Request available |
-| | `request.delete.created`, `.approved`, `.declined` | The same three steps for a deletion request |
-| Downloads | `grab.started` | Grabbing a release |
-| | `download.complete` | Download complete |
-| Subtitles | `subtitle.downloaded`, `subtitle.upgraded`, `subtitle.failed`, `subtitle.synced` | Subtitle downloaded, upgraded, failed, synced, with the language |
-| Live TV | `livetv.account_expiring`, `livetv.account_expired` | A source's account expires soon, or has expired |
-| | `livetv.adult_guard_failed` | The adult-group restriction pass failed for a source |
-| Cleanup | `media.leaving_soon` | A title will be removed soon, with the days left |
-| | `media.cleaned_up` | A title was cleaned up |
-| Optimization | `optimize.completed`, `optimize.failed` | A file was optimized, or the optimization failed |
-| Health | `health.corrupt` | A corrupt file was found |
-
-`media.leaving_soon` and `media.cleaned_up` come from [Library cleanup](/administration/library-cleanup).
-:::
+Alerts to Discord, Slack, ntfy, Gotify or a webhook, and the switch for phone notifications: see [Alerts to Discord, Slack and ntfy](/administration/alerts-to-services) and [Push notifications](/administration/push-notifications).
 
 ## Media servers
 
@@ -143,6 +95,4 @@ The music card also creates the root folders and quality profiles it finds. If n
 
 ## See also
 
-- [Requests](/downloads/requests) for the request events.
-- [Library cleanup](/administration/library-cleanup) for the cleanup events.
 - [Libraries](/features/libraries) for the scan review used by the disk import.

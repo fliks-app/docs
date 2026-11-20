@@ -4,15 +4,14 @@ description: Post Fliks events to your own HTTPS address as JSON, with retries a
 ---
 
 > [!SUMMARY]
-> Notify posts Fliks events as JSON to your own HTTPS address, with retries and a delivery log. For Discord, ntfy and similar services use **Integrations > Notifications** instead. Install it from the catalogue and set the **Target URL**.
+> Notify posts Fliks events as JSON to your own HTTPS address, with retries and a delivery log. Install it from the catalogue and set the **Target URL**.
 
 Notify is a catalogue plugin. Every time something happens in Fliks (a title finishes importing, a
 request is approved), it posts the event as JSON to one HTTPS address of yours. Use it to drive a
 chat relay, a home automation flow or a script that keeps its own log.
 
-For Discord, Telegram, ntfy and similar services, use **Notifications** under **Integrations**
-instead (see [Integrations](/administration/integrations#notifications)). Notify is for your own
-endpoint.
+Notify is for your own endpoint. For Discord, ntfy and similar services, see
+[Alerts to Discord, Slack and ntfy](/administration/alerts-to-services).
 
 ## Install and configure
 
@@ -53,5 +52,5 @@ Events carry their data as JSON. `media.imported`, `media.removed`, `request.cre
 
 ## See also
 
-- [Integrations](/administration/integrations#notifications) for the built-in notification targets.
+- [Alerts to Discord, Slack and ntfy](/administration/alerts-to-services) for the built-in targets.
 - [Plugin development](/plugins/overview) for the events a plugin can subscribe to.
