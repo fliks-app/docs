@@ -115,6 +115,7 @@ a parameter, such as `/:page`, stays legal.
 | `ingest:write` | `library_ingest` |
 | `events:emit` | `events_publish`, `notifications_dispatch_grab_started`, `events_emit_own`, `counts_set`, `progress_set` |
 | `config:rw` | `config_get`, `config_set` |
+| `notify:users` | `notify_users`: send a push notification to users. The admin sees the scope at install. See [Sending notifications](/plugins/sending-notifications) |
 
 Calling a host function without every scope it needs fails with `ERR_DENIED`, `plugin "<id>" is
 missing scope "<scope>" required for "<method>"`. Declare every scope every function you call

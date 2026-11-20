@@ -243,6 +243,7 @@ midnight UTC.
 | `library_ingest` | `ingest:write` |
 | `events_publish`, `notifications_dispatch_grab_started`, `counts_set`, `events_emit_own`, `progress_set` | `events:emit` |
 | `config_get`, `config_set` | `config:rw` |
+| `notify::users` | `notify:users` |
 | `provider_set_limits`, `provider_quota_spent` (provider plugins only) | none |
 | `schedule_call`, `cancel_call`, `deadline_remaining_ms`, `db`, `log` | none |
 

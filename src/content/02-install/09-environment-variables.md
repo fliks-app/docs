@@ -105,6 +105,7 @@ These rarely need touching; the defaults match the docker-compose example. Cache
 
 | Variable | Default | What it controls |
 |---|---|---|
+| `FLIKS_PUSH_RELAY_URL` | the official relay | The push relay the Fliks Relay connection registers at. For forks that build their own mobile apps and for development; the store apps only use the official relay. Changing it registers at the new relay at once and deletes the old registration in the background. See [Push notifications](/administration/push-notifications#your-own-relay-and-development). |
 | `FLIKS_PLUGINS_DISABLED` | off | Set to `1` to start the server without loading any plugin except the bundled metadata providers: the way out when a plugin crashes the server on boot. |
 
 ## Hardware
