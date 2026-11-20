@@ -3,6 +3,8 @@ title: The player
 description: How to start a title, what every button of the player does, seek previews, skip intro, picture-in-picture and fullscreen.
 ---
 
+Playing video? Read on. Playing music has its own player: see [The music player](/player/music-player).
+
 ## Start a title
 
 Open a title from your library, then press the **Play** button on its page. The same button reads

@@ -41,9 +41,9 @@ the [developer documentation](/plugins/overview).
 | [LRCLIB](/built-in-plugins/music#lrclib) | Synced and plain lyrics | Bundled | No |
 | [Music lists](/built-in-plugins/music#music-lists) | Follows ListenBrainz, Last.fm, Spotify, Deezer and MusicBrainz lists | Catalogue | Depends on the source |
 | [Notify](/built-in-plugins/notify) | Posts Fliks events to an HTTPS address as JSON | Catalogue | No |
-| Download | Indexer search, download clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
+| [Download](/built-in-plugins/download-overview) | Indexer search, download clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
 
-The Download plugin has its own pages in this section.
+The Download plugin has its own guide: start with [Download overview](/built-in-plugins/download-overview).
 
 > [!NOTE]
 > The catalogue also lists the bundled plugins, marked **Installed**. They are the same plugins.
