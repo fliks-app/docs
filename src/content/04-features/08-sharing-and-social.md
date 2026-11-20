@@ -27,10 +27,9 @@ also reached from the profile's **Privacy** button), for anyone who wants no par
 
 ## Finding people and your own profile
 
-:::steps
-![Click **Search** in the sidebar, type a name, then open the **Members** tab](/img/social-find-members.webp)
-![Open the profile. On a private profile the button reads **Request to follow**.](/img/social-private-profile.webp)
-:::
+Click **Search** in the sidebar, type a name, then open the **Members** tab and the profile. On a private profile the button reads **Request to follow**.
+
+![Search, Members tab, then the profile](/img/social-find-members-anim.webp)
 
 **My profile** in the sidebar opens your own page: your picture, follower and following counts
 (click them to see the lists), a **Privacy** button, and the tabs **Overview** (your recently

@@ -7,18 +7,16 @@ description: A map of the Fliks interface, from the sidebar to the Administratio
 
 Everything you configure sits behind your avatar, top right. Click it to open the user menu.
 
-:::steps
-![The avatar button (1) is always at the top right](/img/nav-desktop-avatar-button.webp)
-![The menu lists **Account settings** (2), **App settings** (3) and **Administration** (4)](/img/nav-desktop-menu-entries.webp)
-:::
+Click the avatar, then look at the three entries of the menu: **Account settings**, **App settings** and **Administration**.
+
+![Click the avatar at the top right: the menu lists **Account settings**, **App settings** and **Administration**](/img/nav-desktop-avatar-button-anim.webp)
 
 On a phone the avatar sits at the top right too, and the menu opens as a sheet from the bottom of
 the screen. The **Administration** entry only shows for accounts that may open the admin pages.
 
-:::steps
-![On a phone, the avatar button (1) is at the top right and the menu button at the top left](/img/nav-phone-avatar-button.webp)
-![The user menu opens from the bottom: **Account settings** (2), **App settings** (3), **Administration** (4)](/img/nav-phone-menu-entries.webp)
-:::
+Tap the avatar at the top right: the menu opens from the bottom with **Account settings**, **App settings** and **Administration**.
+
+![On a phone, tapping the avatar opens the user menu](/img/nav-phone-avatar-button-anim.webp)
 
 | Entry | What it holds | Docs call it |
 |---|---|---|
@@ -85,11 +83,9 @@ Both open a short sidebar of their own.
 Per-title actions live in the **More** menu (three dots) next to **Play**. This is where **Edit
 subtitles** is, and where **Identify** fixes a wrong match.
 
-:::steps
-![Open a title and click the **More** menu next to **Play**](/img/nav-title-more-button.webp)
-![**Edit subtitles** lists, searches and syncs the subtitles of that title; open **Metadata**](/img/nav-title-more-menu.webp)
-![**Metadata** holds **Identify** and **Refresh metadata**](/img/nav-title-metadata-menu.webp)
-:::
+Open a title, click the **More** menu next to **Play**, then **Metadata**: it holds **Identify** and **Refresh metadata**. **Edit subtitles** lists, searches and syncs the subtitles of that title.
+
+![The **More** menu of a title, then **Metadata**](/img/nav-title-more-button-anim.webp)
 
 ## I want to... go to
 

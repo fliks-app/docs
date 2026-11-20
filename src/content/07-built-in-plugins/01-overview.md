@@ -82,11 +82,9 @@ A plugin with settings has a settings page. Where it lives depends on the kind o
 > The page of a plugin does not link to its settings. Use **Configure** on **Settings > Metadata**
 > or the plugin's own sidebar section.
 
-:::steps
-![Open **Metadata** in the Administration sidebar](/img/admin-metadata-1-sidebar.webp)
-![Click **Configure** on the provider's row](/img/admin-metadata-2-configure.webp)
-![Fill the field, then click **Save**](/img/admin-metadata-3-tmdb.webp)
-:::
+Open **Metadata** in the Administration sidebar and click **Configure** on the provider's row. Fill the field, then click **Save**.
+
+![Opening Metadata and clicking Configure on a provider](/img/admin-metadata-3-tmdb-anim.webp)
 
 Nothing is applied until you click **Save**. API keys and tokens are stored as secrets.
 

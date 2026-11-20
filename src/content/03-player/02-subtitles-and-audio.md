@@ -46,11 +46,9 @@ The small gear at the top right of the subtitle list opens the subtitle settings
 [appearance options](#change-how-subtitles-look) and the
 [synchronize panel](#fix-the-timing-while-you-watch).
 
-:::steps
-![Show the controls and open **Subtitles**, then the gear at the top right of the list](/img/player-menu-subtitles.webp)
-![The subtitle settings: **Appearance** rows and **Open synchronize panel**](/img/player-menu-subtitle-appearance.webp)
-![The synchronize panel](/img/player-subtitle-sync.webp)
-:::
+Show the controls and open **Subtitles**, then the gear at the top right of the list. The settings hold the **Appearance** rows and **Open synchronize panel**.
+
+![Subtitles menu, then the gear, then the synchronize panel](/img/player-menu-subtitles-anim.webp)
 
 ### Fix the timing while you watch
 
@@ -92,10 +90,9 @@ An embedded track can be previewed here but not saved: the panel says so, and **
 
 Size, color, shadow, background and position are settings of your device, not of the title.
 
-:::steps
-![Open the user menu (your avatar, top right), then **App settings**](/img/player-user-menu.webp)
-![Open **Subtitles** in the left list](/img/player-app-settings-subtitles.webp)
-:::
+Open the user menu (your avatar, top right), then **App settings**, then **Subtitles** in the left list.
+
+![User menu, App settings, Subtitles](/img/player-user-menu-anim.webp)
 
 Or change them while you watch: **Subtitles**, then the gear, then **Appearance** rows.
 
