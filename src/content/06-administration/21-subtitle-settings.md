@@ -139,5 +139,4 @@ Filter by status (**Downloaded**, **Upgraded**, **Synced**, **Failed**) and lang
 ## See also
 
 - [Subtitles](/features/subtitles) for the feature, the title-page dialog and scoring.
-- [First-day admin tasks](/administration/first-day-tasks#enable-a-subtitle-provider) for a short provider walkthrough.
 - [Scheduled tasks and System](/administration/system#scheduled-tasks): **Search for missing subtitles** and **Upgrade subtitle quality** run from there too.

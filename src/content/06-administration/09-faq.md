@@ -30,33 +30,19 @@ Log in with the temporary password; Fliks asks you to pick a new one straight aw
 
 ### Nothing shows up after I add a library. Is it broken?
 
-Check in this order:
-
-1. The library path must exist **inside** the server (the container path such as `/medias/movies`, not the host one).
-2. Fliks doesn't watch the folder: click **Scan the folder** on the library's **Medias** tab in **Settings > Libraries**. See [Finding media in the folder](/features/libraries#finding-media-in-the-folder).
-3. Episodes need their own folder, the scan reads three levels deep, and `Title Part 2` is taken for an episode.
-4. A non-admin only sees the libraries ticked on its page: [Users and permissions](/administration/users-and-permissions).
-5. A large first import takes a while: watch **Settings > System > Status**. A file that can't be matched still appears, unidentified: use **Identify**.
-
-![The Trigger a task row on System, with the Rescan menu open](/img/admin-system-rescan.webp)
+Check the container path and click **Scan the folder** on the library. Full checklist: [My files don't show up](/getting-started/common-problems#my-files-dont-show-up).
 
 ### My titles have no posters or descriptions
 
-Artwork comes from the metadata provider plugins and needs internet access. Check in **Settings > Plugins** that TMDB is installed and running, then run **Settings > System > Trigger a task > Metadata > Reload missing metadata**. Wrong language: change **Metadata language** in **Settings > General**. An unidentified title has none: use **Identify**.
+Run **Settings > System > Trigger a task > Metadata > Reload missing metadata**. More: [No posters or descriptions](/getting-started/common-problems#no-posters-or-descriptions).
 
 ### Subtitles are missing
 
-1. Add a download provider in **Settings > Subtitle providers** (a fresh install has none): [walkthrough](/administration/first-day-tasks#enable-a-subtitle-provider).
-2. Automatic search covers the languages of the title's language profile: [Subtitles](/features/subtitles).
-3. Run **Settings > System > Trigger a task > Subtitles > Search for missing subtitles**, then read **Settings > Subtitle activity** for failures.
-4. Or search and upload from the subtitles dialog of a title.
+A fresh install has no provider: add one in **Settings > Subtitle providers** ([how](/administration/subtitle-settings#subtitle-providers)). More: [Subtitles are missing](/getting-started/common-problems#subtitles-are-missing).
 
 ### Playback buffers or stutters
 
-1. **Settings > Playback quality** gives each stall a verdict and a cause: [Playback quality](/administration/playback-quality).
-2. A CPU transcode on a small machine is the usual cause: see the [Transcoding dashboard](/administration/transcoding-dashboard) and [Hardware acceleration](/install/hardware-acceleration).
-3. On a slow link, pick a lower quality in the player, or set **Settings > Streaming > "Auto" quality behavior** to adaptive streaming.
-4. A media folder on a slow network share stalls reads whatever the CPU does.
+**Settings > Playback quality** gives each stall a cause ([Playback quality](/administration/playback-quality)). More: [The video keeps buffering](/getting-started/common-problems#the-video-keeps-buffering).
 
 ### Do I need quality profiles, auto-approval and the other download settings?
 
@@ -64,21 +50,21 @@ Not to play files you already have. See [Which areas you can ignore](/administra
 
 ### Where is the setting for X?
 
-See the [map of the admin area](/administration/settings) or the [first-day walkthroughs](/administration/first-day-tasks).
+See the [map of the admin area](/administration/settings) or the [first-day checklist](/administration/first-day-tasks).
 
 ### Does Fliks need internet access to work?
 
-Only for metadata (TMDB, TVDB), the optional update check ([Updating](/install/updating)) and plugin catalogs. Playback and transcoding work on your network without it.
+Only for metadata, the update check and plugin catalogues. Playback works on your network without it.
 
 ## Playback and transcoding
 
 ### Why is Fliks transcoding instead of playing the file directly?
 
-The device can't decode the file's codec, container or bitrate as-is. The [Transcoding dashboard](/administration/transcoding-dashboard) shows the reason for a live stream; [Streaming and transcoding](/features/streaming-and-transcoding) explains Direct Play, Direct Stream and Transcode.
+The device cannot decode the file as is: [Transcoding dashboard](/administration/transcoding-dashboard) shows the reason. More: [Fliks transcodes instead of playing the file directly](/getting-started/common-problems#fliks-transcodes-instead-of-playing-the-file-directly).
 
 ### My GPU isn't being used for transcoding
 
-Fliks only uses a hardware path it tested successfully at startup. Look for `HW accel test passed` or `HW accel test failed` in the server log, then see [Hardware acceleration](/install/hardware-acceleration) for what each vendor needs.
+See [My GPU isn't used for transcoding](/getting-started/common-problems#my-gpu-isnt-used-for-transcoding) and [Hardware acceleration](/install/hardware-acceleration).
 
 ### Does Fliks support 4K and HDR?
 

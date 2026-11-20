@@ -6,24 +6,9 @@ description: Cast from the web app, mobile apps or desktop app to any Chromecast
 > [!SUMMARY]
 > Press the cast icon in the web, mobile or desktop app and pick your Chromecast. The Chromecast streams straight from your server, so it must be able to reach it. Settings are in **App settings > Chromecast**.
 
-## How it works
-
-Fliks ships its own Chromecast receiver app rather than relying on a generic media receiver. When
-you cast, the sending client (web, mobile or desktop) tells the Chromecast to launch that receiver
-and hands it a direct URL to stream from: the Chromecast then pulls the video straight from your
-Fliks server, not through the sending device.
-
-So the Chromecast must be able to reach the server at the address Fliks hands it. Discovery is
-done by the sending device, not the server, so a Docker install works on the default bridge
-network; set **Public address** if the Chromecast can't reach the address Fliks would otherwise
-use (see [Chromecast on a bridge network](/install/docker#chromecast-on-a-bridge-network)).
-
-The receiver uses the same adaptive-streaming player engine as the rest of Fliks, so quality
-switching, subtitles and multiple audio tracks all work the same way they do everywhere else.
-
 ## What the Chromecast can play
 
-:::details What the Chromecast can play
+:::details Codecs and audio
 The receiver answers a short capability probe when a cast session starts. It reports the video
 codecs it can decode (H.264, HEVC, AV1), 10-bit support for HEVC and AV1, and whether the TV shows
 HDR. Fliks builds the cast profile from that answer. A Chromecast that decodes HEVC or AV1 gets
@@ -36,11 +21,13 @@ Audio is AAC, plus AC-3 when **Audio** is set to 5.1 or 7.1 and the device suppo
 
 ## Cast from your device
 
+Press the cast icon in the app, pick your Chromecast, and play.
+
 | Client | Can cast |
 |---|---|
 | Web browser | Yes, using the browser's own Cast integration |
 | Mobile (iOS, Android) | Yes, with an in-app device picker |
-| Desktop | Yes, with an in-app device picker; restarting the app while casting re-joins the session (see [Desktop](/clients/desktop#casting-to-a-chromecast)) |
+| Desktop | Yes, with an in-app device picker; restarting the app while casting re-joins the session (see [Desktop](/clients/desktop#casting-and-downloads)) |
 | Any TV client (Android TV, Samsung, LG, Apple TV) | No: a TV can be a [remote control](/features/pairing-and-remote-control) target, but not a Chromecast sender |
 
 ## Cast settings
@@ -91,6 +78,23 @@ The receiver draws its own interface instead of the stock Chromecast overlay.
   intro** or **Next episode** and the remote's OK button does it. Until the receiver has seen a
   remote key, the cue says to do it from your device. On your phone or computer, the player's
   controls show **Skip intro** during the intro and a next-episode button when one follows.
+:::
+
+## How it works and network needs
+
+:::details Why the Chromecast must reach the server
+Fliks ships its own Chromecast receiver app rather than relying on a generic media receiver. When
+you cast, the sending client (web, mobile or desktop) tells the Chromecast to launch that receiver
+and hands it a direct URL to stream from: the Chromecast then pulls the video straight from your
+Fliks server, not through the sending device.
+
+So the Chromecast must be able to reach the server at the address Fliks hands it. Discovery is
+done by the sending device, not the server, so a Docker install works on the default bridge
+network; set **Public address** if the Chromecast can't reach the address Fliks would otherwise
+use (see [Chromecast on a bridge network](/install/docker#chromecast-on-a-bridge-network)).
+
+The receiver uses the same adaptive-streaming player engine as the rest of Fliks, so quality
+switching, subtitles and multiple audio tracks all work the same way they do everywhere else.
 :::
 
 ## See also

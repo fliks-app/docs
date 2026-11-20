@@ -4,27 +4,13 @@ description: What the Download plugin does, what to set up before it can fetch a
 ---
 
 > [!SUMMARY]
-> The Download plugin turns an approved request into a file in your library. Set up four things in order: quality and language profiles on the library, one indexer, one download client, then install the plugin from **Settings > Plugins**. If you only watch files you already have, you need none of this.
+> The Download plugin turns an approved request into a file in your library: it searches your indexers, picks the best release, hands it to your download client and files the result. Install it from **Settings > Plugins** once the [setup order](/downloads/overview#order-to-set-things-up) is done. Without it requests stay approved forever.
 
-The **Download** plugin searches your indexers, picks the best release, hands it to your download client and files the finished download into your library. Without it Fliks never downloads anything and [requests](/downloads/requests) stay approved forever. Its pages: [Indexers](/downloads/indexers), [Download clients](/downloads/download-clients), [Settings](/downloads/plugin-settings), [Troubleshooting](/downloads/troubleshooting).
+Its pages: [Indexers](/downloads/indexers), [Download clients](/downloads/download-clients), [Settings](/downloads/plugin-settings), [Troubleshooting](/downloads/troubleshooting).
 
 ## What you need first
 
-Downloading needs four things, in this order. Skipping one is the usual reason nothing happens.
-
-1. **A quality profile and a language profile on the library.** They tell Fliks what a good release is.
-   Create them in [Quality profiles](/downloads/quality-profiles) and
-   [Language profiles](/administration/language-profiles), then pick them as the defaults of the library
-   in **Settings > Libraries**, open the library, **Default quality profile** and **Default language profile**.
-   A title with no quality profile is never searched.
-2. **At least one indexer.** An indexer is a Torznab search endpoint. Most people let Prowlarr or Jackett
-   hold their trackers and import them. See [Indexers](/downloads/indexers).
-3. **A download client**, qBittorrent or Transmission, that Fliks can reach and that saves its files
-   in a folder Fliks can also read. See [Download clients](/downloads/download-clients).
-4. **Titles to fetch.** Either someone makes a [request](/downloads/requests) and an admin approves it, or
-   an admin adds a title to the library as monitored. See [How a request becomes a file](#how-a-request-becomes-a-file).
-
-![The library settings: Default quality profile and Default language profile](/img/download-library-profiles.webp)
+Set up in the order of [Do you need downloads?](/downloads/overview#order-to-set-things-up): profiles on the library, one indexer, one download client, then the plugin. Skipping one is the usual reason nothing happens.
 
 ## Install the plugin
 
@@ -146,5 +132,4 @@ The **Search for missing downloads** task that looks for every missing title bel
 
 ## Disabling and uninstalling
 
-**Disable** on the plugin page stops all searching and importing but keeps your indexers, clients,
-history and blocklist. **Uninstall** deletes them with the plugin, so write down your settings first.
+**Disable** stops all searching and importing and keeps your indexers, clients, history and blocklist. **Uninstall** deletes them with the plugin. See [Plugins](/administration/plugins).

@@ -20,6 +20,11 @@ description: Let people sign in with an OpenID Connect provider such as Keycloak
 
 ## Add a provider
 
+:::steps
+![Open **Settings > Single sign-on** and click **Add a provider**](/img/admin-sso-1-add.webp)
+![Fill in the name, issuer URL and client ID, then press **Test**](/img/admin-sso-2-form.webp)
+:::
+
 1. **Add a provider** and fill in **Name** (the button reads "Sign in with <name>"), **Issuer URL**
    (compared exactly with the one the provider advertises, so mind a trailing slash), **Client ID**
    and **Client secret**. Leave the secret blank for a public client. **Test** checks that the

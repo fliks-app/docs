@@ -12,8 +12,6 @@ A watch party is a room on your server where several users watch the same title 
 Playback is shared: when the film plays, pauses or seeks, everyone follows. The room also has a
 chat, reactions, optional voice chat and a programme (the ordered list of titles to play).
 
-Parties need Fliks 5.2 or later. Clients connected to an older server hide them.
-
 ## Who can use it
 
 :::details Permissions needed
@@ -35,6 +33,8 @@ were added to or sent a link for needs no permission, only an account.
 Choose **Watch together** on a movie, an episode or a playlist, or **New party** on the **Watch
 parties** row of the home page (a section you can hide in **App settings > Home**). The dialog asks
 for:
+
+![Home page: press New party, the dialog opens](/img/watch-party-new-anim.webp)
 
 - **A programme.** Add titles with the library picker (search, then pick a movie or episodes: one,
   from here on, a whole season or several). Or leave it empty and choose later, on the party page.

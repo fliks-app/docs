@@ -115,11 +115,8 @@ Pending database migrations run on every start, so the schema is created on firs
 
 ## First run
 
-Continue with the [Quick start](/getting-started/quick-start): open `http://localhost:4848`,
-create the administrator account on the setup page, and add your first library.
+Open `http://localhost:4848` and continue with the [Quick start](/getting-started/quick-start) from step 2.
 
 ## See also
 
-- [Environment variables](/install/environment-variables) for the full reference.
-- [Hardware acceleration](/install/hardware-acceleration) for what your own FFmpeg needs to
-  support hardware transcoding.
+[Environment variables](/install/environment-variables) and [Hardware acceleration](/install/hardware-acceleration).

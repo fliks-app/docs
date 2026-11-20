@@ -41,7 +41,7 @@ Harmless. Set `FLIKS_DISABLE_UPDATE_CHECK=1` to silence it. See [Updating](/inst
 
 ### The video keeps buffering
 
-Open **Settings > Playback quality** to see whether the network, the device or the server caused each stall, then **Settings > Video activity** while it plays. A CPU transcode on a small machine is the usual cause. See [Playback quality](/administration/playback-quality) and the [FAQ entry](/administration/faq#playback-buffers-or-stutters).
+Open **Settings > Playback quality** to see whether the network, the device or the server caused each stall, then **Settings > Video activity** while it plays. A CPU transcode on a small machine is the usual cause. See [Playback quality](/administration/playback-quality).
 
 ### Fliks transcodes instead of playing the file directly
 
@@ -67,7 +67,7 @@ Intros and credits are detected by a background task, which can be switched on i
 
 ### Subtitles are missing
 
-A fresh install has no subtitle provider. Enable one in **Settings > Subtitle providers**, then run **Search for missing subtitles** from **Settings > System**. The checklist is in the [FAQ entry](/administration/faq#subtitles-are-missing) and the [walkthrough](/administration/first-day-tasks#enable-a-subtitle-provider).
+A fresh install has no subtitle provider. Enable one in **Settings > Subtitle providers**, then run **Search for missing subtitles** from **Settings > System**. See [Subtitle settings](/administration/subtitle-settings).
 
 ### Subtitles are out of sync
 
@@ -85,11 +85,11 @@ Image formats are burned into the video by the server on clients that can't draw
 
 ### My files don't show up
 
-The library path is the path inside the container, Fliks does not watch the folder, and episodes need their own folder. Run **Scan the folder** on the library. See [Finding media in the folder](/features/libraries#finding-media-in-the-folder) and the [FAQ entry](/administration/faq#nothing-shows-up-after-i-add-a-library-is-it-broken).
+The library path is the path inside the container, Fliks does not watch the folder, and episodes need their own folder. Run **Scan the folder** on the library. See [Finding media in the folder](/features/libraries#finding-media-in-the-folder).
 
 ### No posters or descriptions
 
-Check that TMDB is installed and running on **Settings > Plugins** and that the server can reach the internet. Then run **Reload missing metadata** from **Settings > System**. See [Metadata](/features/metadata) and the [FAQ entry](/administration/faq#my-titles-have-no-posters-or-descriptions).
+Check that TMDB is installed and running on **Settings > Plugins** and that the server can reach the internet. Then run **Reload missing metadata** from **Settings > System**. See [Metadata](/features/metadata).
 
 ### A title is matched to the wrong movie or show
 
@@ -127,15 +127,15 @@ The device you cast from finds the Chromecast, so it must be on the same network
 
 ### Casting starts but the screen stays black
 
-The Chromecast pulls the video straight from the server, so a wrong **Public address** or a proxy that blocks it shows exactly like this. See [How it works](/clients/chromecast#how-it-works).
+The Chromecast pulls the video straight from the server, so a wrong **Public address** or a proxy that blocks it shows exactly like this. See [How it works](/clients/chromecast#how-it-works-and-network-needs).
 
 ### The Samsung or LG app won't install
 
-The Samsung app is not on the store yet and needs sideloading; the LG app comes from the LG Content Store (webOS 7.0 and newer). See [Samsung TV](/clients/samsung-tizen#sideloading) and [LG TV](/clients/lg-webos#installing).
+The Samsung app is not on the store yet and needs sideloading; the LG app comes from the LG Content Store (webOS 7.0 and newer). See [Samsung TV](/clients/samsung-tizen#sideloading) and [LG TV](/clients/lg-webos#install-and-sign-in).
 
 ### There is no Download or Cast button on my TV
 
-TV apps have no offline downloads, no casting and no admin screens. They can still be a target for remote control. See [Android TV](/clients/android-tv#whats-hidden-on-this-platform).
+TV apps have no offline downloads, no casting and no admin screens. They can still be a target for remote control. See [Android TV](/clients/android-tv#whats-missing-on-tv).
 
 ### Offline downloads don't start or are stuck
 

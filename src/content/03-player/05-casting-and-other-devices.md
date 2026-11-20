@@ -29,11 +29,9 @@ play. On a phone, the list opens as a sheet from the bottom.
   chosen on your side. Settings for HDR, maximum quality and audio channels are in
   **App settings > Chromecast**. See [Chromecast](/clients/chromecast).
 - **Another Fliks screen.** The title opens on that device, and your player controls it: play,
-  pause, seek, volume, next episode, quality, audio and subtitle tracks. A chip with the device
-  name shows where it plays. See [Pairing and remote control](/features/pairing-and-remote-control).
+  pause, seek, volume, next episode, quality, audio and subtitle tracks. Controlling someone else's
+  device needs a code: see [Pairing and remote control](/features/pairing-and-remote-control#play-on-another-of-your-devices-remote-control).
 
 To bring the playback back, open the list again and choose **This device**.
 
-> [!NOTE]
-> The subtitle synchronize panel is not offered while casting. A TV app cannot cast: it can only
-> be a target of the other screens.
+A TV app cannot cast: it can only be a target of the other screens.

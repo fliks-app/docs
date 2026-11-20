@@ -6,64 +6,34 @@ description: A native Windows, macOS and Linux app that connects to a Fliks serv
 > [!SUMMARY]
 > Download the installer for Windows or macOS from the latest release, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
 
-## What it is
+## Install and sign in
 
-The desktop app is a client, not the server: it connects to a Fliks server running elsewhere on
-the network (or on the same machine) the same way the mobile and web clients do. The first screen
-after install asks for that server's address.
+Download the installer from the [latest release](https://github.com/fliks-app/fliks/releases)
+(Windows `.exe`, macOS `.dmg` for Apple Silicon) or install on Linux (below). On first launch, enter
+your server's address and sign in.
 
-It wraps the same Angular interface as the web client inside Electron, but plays video through an
-embedded [mpv](https://mpv.io) engine instead of the browser's own player, which is what lets it
-Direct Play formats a browser can't.
+The desktop app is a client: the server runs elsewhere. (The Windows tray and macOS menu-bar apps
+that run the *server* are in [Install](/install/windows).) It plays through an embedded
+[mpv](https://mpv.io), so it Direct Plays formats a browser can't.
 
-> [!NOTE]
-> Looking for the Windows tray app or the macOS menu-bar app that runs the *server* itself? That's
-> a different piece of software, covered in [Install > Windows](/install/windows) and
-> [Install > macOS](/install/macos).
+### Linux
 
-## Getting it
-
-Windows and macOS: download the installer from the
-[latest release](https://github.com/fliks-app/fliks/releases). Linux has four options, listed below.
-
-| Platform | File | Notes |
-|---|---|---|
-| Windows | `.exe` (NSIS installer) | |
-| macOS | `.dmg` | Apple Silicon only |
-| Linux | APT repository, Snap, `.deb` or `.AppImage` | APT and Snap are covered below; the `.deb` and `.AppImage` are on the release page |
-
-The Linux packages are built on Ubuntu 24.04; a much older distribution may not have the libraries
-the native player needs.
-
-### Linux with APT
-
-On Ubuntu 24.04, Debian 13 and later, add the Fliks repository and install the `fliks-desktop`
-package:
+On Ubuntu 24.04 and Debian 13 or later, with APT:
 
 ```bash
 sudo curl -fsSLo /etc/apt/sources.list.d/fliks.sources https://github.com/fliks-app/fliks/releases/download/apt/fliks.sources
 sudo apt update && sudo apt install fliks-desktop
 ```
 
-The `.sources` file adds the Fliks repository and its signing key to APT. A `.deb` downloaded from
-the releases installs the same file, so `apt upgrade` keeps it current too. The repository carries
-stable releases only. APT installs the system libraries the package needs; the graphics layer
-(SDL3) ships inside it.
+With Snap: `sudo snap install fliks`.
 
-### Linux with Snap
-
-```bash
-sudo snap install fliks
-```
-
-The `stable` channel follows the releases and the `beta` channel follows the pre-releases
-(`sudo snap refresh fliks --channel=beta`).
-
-### The Linux window
-
-The window is native on Wayland as well as X11, and sharp on HiDPI and fractionally scaled
-screens. It draws its own title bar with minimize, maximize and close buttons, and a right click on
-the bar opens the window menu. The bar is hidden in full screen.
+:::details More on the Linux install
+The `.sources` file adds the Fliks repository and its signing key. The repository carries stable
+releases only. A `.deb` or `.AppImage` is also on the release page. Packages are built on Ubuntu
+24.04, so a much older distribution may lack the libraries the player needs. The `beta` Snap channel
+follows pre-releases (`sudo snap refresh fliks --channel=beta`). The window is native on Wayland and
+X11, draws its own title bar (right click for the window menu) and hides it in full screen.
+:::
 
 ## System media controls
 
@@ -95,19 +65,9 @@ in HDR. See [Streaming and transcoding](/features/streaming-and-transcoding)
 for how the server decides what to send in the first place.
 :::
 
-## Casting to a Chromecast
+## Casting and downloads
 
-The desktop app can act as a Chromecast sender: it discovers devices on the network and casts to
-them directly, the same way the mobile apps do. If you restart the app while a cast is running and
-the Chromecast still runs that session, the app re-joins it at launch: the cast bar and the player
-reattach to what is playing, and the TV isn't relaunched. See [Chromecast](/clients/chromecast) for
-what happens on the receiving end.
-
-## Offline downloads
-
-Downloads work the same way as on mobile: turn on automatic download for a playlist and unwatched
-items are fetched to local storage, with watched ones cleared out again. See
-[Offline downloads](/features/offline-downloads) for storage settings and manual downloads.
+The app casts to Chromecasts directly (see [Chromecast](/clients/chromecast)); restarting it while casting re-joins the running session. Offline downloads work as on mobile: see [Offline downloads](/features/offline-downloads).
 
 ## Updates
 

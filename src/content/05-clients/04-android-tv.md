@@ -6,24 +6,15 @@ description: The same Android app, adapted for a 10-foot interface and D-pad nav
 > [!SUMMARY]
 > Install Fliks from the Play Store on the TV, enter the server address, then sign in with Quick Connect instead of typing a password. It is the same app as the phone one, in TV mode.
 
-## One app, two form factors
+## Install and sign in
 
-Android TV isn't a separate app: it's the same package as the [phone and tablet](/clients/mobile)
-build, listed once on the Play Store for both. Fliks detects at launch that it's running on a TV
-(rather than a phone or tablet) and switches the interface into TV mode: a wider layout suited to a
-screen viewed from across the room, and navigation driven entirely by the remote's D-pad instead of
-touch.
+Install "Fliks" from the Play Store on the TV (Android 6 or newer). It is the same app as the
+[phone](/clients/mobile) one and switches to a TV interface by itself.
 
-## Getting it
-
-Install "Fliks" from the Play Store on the Android TV device, the same as any other TV app.
-Minimum Android version: 6 (API 23), the same floor as the phone app.
-
-## Navigating with a remote
-
-Moving the D-pad up or down between rows of posters, or left and right within a row, works the way
-you'd expect from a typical TV app: moving into a row lands on its first item, and moving back into
-a row you already had focus in returns you to the same card rather than resetting to the start.
+On first launch, enter your server's address, then choose
+[Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect):
+the TV shows a code, and you type it on your phone under **Login requests**. Or type your password
+with the on-screen keyboard.
 
 ## Surround sound through an AV receiver
 
@@ -40,22 +31,9 @@ the audio is the exception: a bitstream can't be muted, so its audio is decoded 
 before.
 :::
 
-## What's hidden on this platform
+## What's missing on TV
 
-Consistent with every TV client:
-
-- No offline downloads, and no download-related settings.
-- No public profile browsing.
-- No Chromecast casting from the device (it can still be a target for
-  [remote control](/features/pairing-and-remote-control) from a phone or the web app).
-- No server administration screens.
-
-## Sign in on the TV with Quick Connect
-
-On first launch, enter your server's address. Then use the on-screen keyboard to type a password,
-or set the TV up faster with
-[Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect):
-the TV shows a code, and you type it on a phone that's already logged in, so nothing is typed on the TV itself.
+No offline downloads, no casting out (the TV can still be a [remote control](/features/pairing-and-remote-control) target), no public profiles and no server administration.
 
 ## See also
 

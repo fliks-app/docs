@@ -8,7 +8,7 @@ description: An index of every Administration page, grouped as in the sidebar, w
 
 ## Getting there
 
-The entry only shows with the `settings.access` permission, and never on a TV. These docs write paths as **Settings > Users**. Some items need a permission (Users needs `users.manage`, Roles `roles.manage`, Subtitle activity `media.read`), and a plugin that adds pages gets its own group at the bottom.
+The entry needs the `settings.access` permission and never shows on a TV. These docs write paths as **Settings > Users**. A plugin that adds pages gets its own group at the bottom.
 
 ![The General page, with the administration sidebar on the left](/img/admin-general.webp)
 
@@ -51,7 +51,7 @@ The entry only shows with the `settings.access` permission, and never on a TV. T
 | Entry | What it is |
 |---|---|
 | [Subtitles](/administration/subtitle-settings#subtitles) | Automatic search, minimum score, OCR, sync and cleaning. |
-| [Subtitle providers](/administration/subtitle-settings#subtitle-providers) | Where subtitles and translations come from. See the [walkthrough](/administration/first-day-tasks#enable-a-subtitle-provider). |
+| [Subtitle providers](/administration/subtitle-settings#subtitle-providers) | Where subtitles and translations come from. |
 | [Subtitle activity](/administration/subtitle-settings#subtitle-activity) | Log of what was found, synced, translated or failed. |
 
 How subtitles work per title is on [Subtitles](/features/subtitles).
@@ -68,7 +68,7 @@ How subtitles work per title is on [Subtitles](/features/subtitles).
 |---|---|
 | [Media servers](/administration/integrations#media-servers) | Tell another media server to refresh when Fliks adds something. |
 | [Imports](/administration/integrations#imports) | Disk import and migration from other tools. |
-| [Notifications](/administration/integrations#notifications) | Discord, Slack, ntfy, Gotify or a webhook. See the [walkthrough](/administration/first-day-tasks#set-up-notifications). |
+| [Notifications](/administration/integrations#notifications) | Discord, Slack, ntfy, Gotify or a webhook. |
 
 ## Users
 
@@ -104,7 +104,7 @@ If you only watch files you already have:
 - **Naming** applies only when Fliks renames or moves a file. Untick **Move / rename according to the naming rules** on a folder scan to keep your files where they are.
 - **Cleanup**, **Optimization**, **Karaoke**, **Lyrics**, **Outgoing mail**, **Remote engine** and **Media servers** are opt-in.
 
-The setup checklist on **General** still lists a quality profile and an auto-approval rule: dismiss them with the cross. What you do need is a [library](/features/libraries), a metadata provider (installed by default), and optionally a subtitle provider and a non-admin [user](/administration/first-day-tasks#create-a-user-and-give-access-to-a-library).
+The setup checklist on **General** still lists a quality profile and an auto-approval rule: dismiss them with the cross. What you do need is a [library](/features/libraries), a metadata provider (installed by default), and optionally a subtitle provider and a non-admin [user](/administration/users-and-permissions#users).
 
 ## See also
 

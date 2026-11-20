@@ -24,17 +24,11 @@ choice you can change before pressing play:
 - **Audio** and **Subtitles** open a list of tracks. See
   [Audio and subtitles](/player/subtitles-and-audio).
 
-For a series, open an episode first: the buttons act on that episode. The title page of a series
-shows the episode it will resume.
-
-> [!NOTE]
-> A title with no file yet has no **Play** button. Check the library scan, or the
-> [library setup](/features/libraries), if you expect one.
+For a series, the buttons act on the episode shown: open another one to play it.
 
 ## The control bar
 
-Move the mouse, tap the screen, or press a key to show the controls. They hide on their own after
-a few seconds of playback and stay up while you are paused or a menu is open.
+Move the mouse, tap the screen, or press a key to show the controls. They hide on their own during playback.
 
 ![The player with numbered markers on every control](/img/player-overview-annotated.webp)
 
@@ -78,7 +72,7 @@ The gear opens a short menu.
 - **Watch together** starts a [watch party](/features/watch-party).
 - **Open media** goes to the title page.
 
-Here is the whole thing moving: the bar, the subtitle list, then the appearance options.
+The bar, the subtitle list, then the appearance options:
 
 ![An animation: the Subtitles button is pressed, the track list opens, then the Appearance options](/img/player-subtitles-menu-open.webp)
 
@@ -89,8 +83,7 @@ has chapters, the chapter name. Click to jump there, or press and drag to scrub.
 
 ![Hovering the seek bar: a preview frame with the time 8:08 and the chapter name](/img/player-seek-preview.webp)
 
-Thin marks on the bar are chapters. They come from the file: a file with no chapters shows none.
-Previews are made when a file is imported. If previews are missing, see
+Thin marks on the bar are chapters, when the file has them. Previews missing? See
 [Scrubbing previews](/features/playback#scrubbing-previews).
 
 ## Skip intro and next episode
@@ -100,26 +93,18 @@ On a series, two buttons appear in the bottom right corner of the picture while 
 - **Skip intro** while the episode is in its opening titles.
 - **Next episode** near the end, during the credits, when another episode is queued.
 
-Each carries a short countdown and goes away if you ignore it. Press it to jump past the intro,
-or to start the next episode right away. With the keyboard or a remote, the button takes focus
-when it appears, so Enter or OK presses it.
+Each goes away after a short countdown if you ignore it. With a keyboard or remote, Enter or OK presses it.
 
-Two settings in **App settings > Playback** change this: **Skip intro automatically** skips with
-no button, and **Automatically play next episode** starts the next one when this one ends.
-How the intro is detected is in [Playback](/features/playback#intro-and-credits-detection).
+**Skip intro automatically** and **Automatically play next episode** in **App settings > Playback** do it for you.
+How intros are detected: [Playback](/features/playback#intro-and-credits-detection).
 
-## Picture-in-picture
+## Picture-in-picture and fullscreen
 
-The **Picture-in-Picture** button, top right, pops the video out into a floating window that
-stays on top of other windows. Close the window, or press the button again, to bring the video
-back. It is hidden on TV, and on a browser that does not offer picture-in-picture.
+**Picture-in-Picture**, top right, pops the video out into a floating window on top of other windows. Press it again
+to bring the video back.
 
-## Fullscreen
-
-The **Fullscreen** button, bottom right, fills the screen. `f` does the same on a keyboard, and
-double-clicking the picture too. On a phone, the **Lock orientation** button keeps the screen from
-rotating while you watch. The native iPhone, iPad and Android apps are always fullscreen, so the
-button is not shown there.
+**Fullscreen**, bottom right, fills the screen (`f`, or double-click the picture). On a phone, **Lock orientation**
+keeps the screen from rotating.
 
 ## On a phone
 

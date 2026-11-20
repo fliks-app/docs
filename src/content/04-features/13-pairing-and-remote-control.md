@@ -12,9 +12,7 @@ Typing a password on a TV remote is slow, so Fliks lets a new device get signed 
 that's already logged in instead. The new device shows a 6-digit code, and you type it on the
 signed-in device: approving means reading the screen of the device you mean to sign in.
 
-> [!IMPORTANT]
-> Quick Connect needs server 6.0.0 and an app that shows and sends the code. A TV or mobile app that
-> predates it can't use Quick Connect until you update it; password login is unaffected.
+Quick Connect needs server 6.0.0 and an up-to-date app; password login is unaffected.
 
 **On the new device** (a TV the first time it's set up, or any client after signing out):
 
@@ -50,9 +48,7 @@ pending at once. A wrong code is refused, and after several wrong codes in a sho
 asks you to try again later. A request meant for one account can only be approved by that account.
 :::
 
-> [!NOTE]
-> On the Apple TV app specifically, the waiting screen also shows a QR code that opens the phone's
-> **Login requests** page. It doesn't carry the code: you still type it.
+On Apple TV, a QR code on the waiting screen opens the phone's **Login requests** page. You still type the code.
 
 ## Play on another of your devices (remote control)
 

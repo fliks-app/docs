@@ -4,49 +4,28 @@ description: Native iOS and Android apps for phones and tablets, with offline do
 ---
 
 > [!SUMMARY]
-> Install Fliks from the App Store (iOS 16.6+) or the Play Store (Android 6+). Both apps play through the platform's native player and support offline downloads.
+> Install Fliks from the App Store (iOS 16.6+) or the Play Store (Android 6+), enter your server's address and sign in.
 
-## Getting it
+## Install and sign in
 
 | Platform | Where | Minimum version |
 |---|---|---|
 | iOS, iPadOS | App Store | iOS 16.6 |
 | Android | Play Store | Android 6 (API 23) |
 
-Both apps work on phones and tablets. The Android app is also the
-[Android TV](/clients/android-tv) app: the same package switches to a TV interface when it runs on
-a TV.
+Open the app, type your server's address, then your account and password. The same Android app is
+also the [Android TV](/clients/android-tv) app.
 
-## What's native here
+To save titles for offline viewing, see [Offline downloads](/features/offline-downloads). Both apps
+play through the platform's native player and can download in the background.
 
-The mobile apps aren't just the web client in a wrapper: playback goes through each platform's own
-native player (ExoPlayer on Android, AVPlayer on iOS) instead of the browser engine, which is part
-of what makes [offline downloads](#offline-downloads) and background downloading possible.
-
-### Offline downloads
-
-This is the main thing mobile does that the web client doesn't do as fully: turn on **Automatic
-download** on a playlist and downloads keep running in the background, even if you close the app,
-using each platform's native download machinery. On iOS, a Live Activity shows download progress
-on the lock screen while it's in progress. See [Offline downloads](/features/offline-downloads) for
-what quality is downloaded, storage settings, and which content updates itself automatically.
-
-### Notifications
-
-Both apps ask for notification permission: Android asks at first launch (Android 13 and newer
-only, older versions don't ask), iOS asks when the download service starts. Notifications are used
-for downloads only: progress while a download runs on Android, and a banner when it finishes or
-fails. Declining doesn't disable downloads, you just won't see those notifications.
-
-## Store listings
-
-:::details Store listings
-Screenshots for both stores live in the project repository (`store/android`, `store/ios`),
-covering the home screen, library browsing, genres, a title's detail page, the player and search.
+:::details Notifications and store listings
+Android 13 and newer asks for notification permission at first launch; iOS asks when the download
+service starts. Notifications cover downloads only (progress, finished, failed), and declining
+doesn't disable downloads. On iOS a Live Activity shows download progress on the lock screen.
+Store screenshots live in the project repository (`store/android`, `store/ios`).
 :::
 
 ## See also
 
-- [Offline downloads](/features/offline-downloads)
-- [Pairing and remote control](/features/pairing-and-remote-control)
-- [Chromecast](/clients/chromecast), which both mobile apps can cast to
+[Pairing and remote control](/features/pairing-and-remote-control) and [Chromecast](/clients/chromecast), which both apps can cast to.

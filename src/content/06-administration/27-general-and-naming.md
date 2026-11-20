@@ -31,7 +31,7 @@ The list of usual first steps: add a library, create a quality profile, create a
 |---|---|---|
 | **Server name** | Fliks | The name shown in client apps. |
 | **Public address** | Empty | Overrides the URL Chromecast uses to reach the streams. Empty uses the address detected automatically. Set it to the public https address when Fliks is behind a [reverse proxy](/install/reverse-proxy). Workers without library access also need it, see [Optimization](/administration/optimization#workers). |
-| **Login user list** | **Everyone** | Who sees the list of accounts on the login screen: **Everyone**, **Local network only** (the reverse proxy, if any, must set `X-Forwarded-For`) or **Hidden**. **Hidden** also turns Quick Connect off for new devices: people type their username. See [Users and permissions](/administration/users-and-permissions#login-user-list). |
+| **Login user list** | **Everyone** | Who sees the list of accounts on the login screen: **Everyone**, **Local network only** (the reverse proxy, if any, must set `X-Forwarded-For`) or **Hidden**. **Hidden** also turns [Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect) off for new devices. See [Users and permissions](/administration/users-and-permissions#login-user-list). |
 :::
 
 ### Metadata language and region

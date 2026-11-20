@@ -6,11 +6,9 @@ description: What Fliks runs on, what's shared across every client, and where to
 > [!SUMMARY]
 > Pick the client for your screen below: web, iOS, Android, Android TV, Apple TV, Samsung, LG, desktop, or cast to a Chromecast. All of them use the same account and keep your progress in sync.
 
-## Choose a client for your device
+## Pick your client
 
-Fliks is a single server with a client for nearly every screen in the house. Sign in on any of
-them and your library, your progress and your preferences are the same everywhere: start a film on
-your phone, and the TV offers to resume it from the same spot.
+Same account everywhere: your library, progress and preferences follow you.
 
 | Client | Where to get it | Minimum version |
 |---|---|---|
@@ -24,12 +22,14 @@ your phone, and the TV offers to resume it from the same spot.
 | [Chromecast](/clients/chromecast) | Built in, cast from any client above | Any Chromecast device |
 | [Apple TV](/clients/apple-tv) | App Store | tvOS 17 |
 
-> [!NOTE]
-> There is also a beta Nintendo Switch client, built separately as a homebrew `.nro` from the
-> [switchfliks](https://github.com/fliks-app/switchfliks) project. It's a separate codebase from
-> everything above, so it isn't covered by the rest of this documentation.
+## Sign in
 
-## What every client shares
+Open the app, enter your server's address and sign in with your account. On a TV, choose **Quick
+Connect** instead: the TV shows a code, and you type it on your phone under **Login requests**.
+
+![Open your avatar menu, then Login requests, and type the code the TV shows](/img/clients-login-requests-anim.webp)
+
+More in [Pairing and remote control](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect).
 
 :::details What every client shares
 - **The same account system**: resume position, watch history, playlists, likes and requests all
@@ -43,8 +43,6 @@ your phone, and the TV offers to resume it from the same spot.
   between sending the file as-is, repackaging it, or converting it, per [Streaming and
   transcoding](/features/streaming-and-transcoding).
 :::
-
-## What's different on TV clients
 
 :::details What TV clients cannot do
 Android TV, Samsung (Tizen) and LG (webOS) share the same restrictions, because they're built for
@@ -63,8 +61,5 @@ Apple TV is a separate, native app rather than a build of the same interface (se
 restrictions: no downloads, no casting out, no server administration.
 :::
 
-## See also
-
-Each client's own page covers install steps, its specific playback capabilities, and anything it
-can't do. Start with [Web](/clients/web) or [Mobile](/clients/mobile) if you're setting up your
-first device.
+> [!NOTE]
+> A beta Nintendo Switch client exists as a separate homebrew project, [switchfliks](https://github.com/fliks-app/switchfliks). It is not covered here.

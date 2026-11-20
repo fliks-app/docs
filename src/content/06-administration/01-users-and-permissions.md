@@ -11,10 +11,16 @@ description: Create accounts for the household, control what each one can do, an
 **Settings > Users** lists every account: username, role, an **Active** switch, and last
 activity. **Add a user** asks for a username, an optional email, a password, a role, whether
 the account is active, and the libraries it may see. If you leave the role alone, the new account
-gets the default role. A click-through is in
-[First-day admin tasks](/administration/first-day-tasks#create-a-user-and-give-access-to-a-library).
+gets the default role.
 
-![The Users list, with the signed-in admin account tagged as you](/img/users-list.webp)
+:::steps
+![Open **Settings > Users** in the administration sidebar](/img/admin-users-1-sidebar.webp)
+![Click **Add a user**](/img/admin-users-2-add.webp)
+![Fill in the username, email, password and role, then tick each library the person may see. Click **Save**](/img/admin-users-3-form.webp)
+![The new account shows up in the list with its role and an **Active** switch. Click the username to open its page](/img/admin-users-4-list.webp)
+:::
+
+Tell the person the server address and their username. They sign in from any [client](/clients/overview).
 
 :::details Every setting of a user account
 Click a username to open that user's page. Its **Edit user** card holds the settings below,
@@ -44,11 +50,7 @@ The same page has a **Sign out everywhere** button (ends every session of that u
 | Local network only | Only a caller whose address, and every `X-Forwarded-For` hop, is private or loopback. Behind a [reverse proxy](/install/reverse-proxy), the proxy has to set that header; a request that went through a public address is outside. |
 | Hidden | Nobody. The login screen goes straight to the username form. |
 
-Only enabled accounts are listed, and only with their username and avatar. With **Hidden**, or
-**Local network only** for a caller outside the network, the list is empty, and the login screen
-goes straight to the username form. That form has no Quick Connect button: Quick Connect starts
-from the account screen, which is skipped, so a new device can't use it. Accounts already signed
-in on a device still show in that device's list.
+Only enabled accounts are listed, with their username and avatar. With **Hidden**, or **Local network only** for an outside caller, the login screen goes straight to the username form, and [Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect) is unavailable for new devices.
 :::
 
 Accounts can also sign in through an OpenID Connect provider: see
@@ -60,6 +62,14 @@ Every account other than a super-admin gets its permissions from exactly one **r
 **Settings > Roles** manages them: a role is a name plus a set of permissions, and optionally a
 set of default libraries new users with that role inherit when they're created (library access
 is still managed per user afterward; the role's list is only a starting point).
+
+A custom role fits when **User** gives too much or too little, for example a "Family" role that can watch but not create watch parties.
+
+:::steps
+![On **Settings > Roles**, click **New role**](/img/admin-roles-1-new.webp)
+![Name the role and tick its permissions, then click **Save**](/img/admin-roles-2-form.webp)
+![The role appears in the list, and you can pick it when you create or edit a user](/img/admin-roles-3-list.webp)
+:::
 
 Fliks ships three roles, seeded the first time the server starts with no roles yet:
 

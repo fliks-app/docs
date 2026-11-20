@@ -12,9 +12,7 @@ description: Turn an existing IPTV subscription into another row of channels, wi
 2. [Enable the channels](#enable-and-manage-channels) you want: they arrive disabled.
 3. Optional: [add a program guide](#add-a-program-guide).
 
-Live TV turns an IPTV subscription you already pay for into another row of channels inside Fliks.
-A provider playlist or panel becomes a lineup with its own program guide, and pausing or rewinding
-a few minutes on a live channel works the same way it does on the rest of the library.
+Live TV turns an IPTV subscription you already pay for into a lineup with its own program guide.
 
 > [!IMPORTANT]
 > Fliks does not sell or supply any channels itself. You need a subscription from an IPTV provider
@@ -25,11 +23,6 @@ Everything below lives under **Settings > Live TV**, admin-only, across six tabs
 **Channels**, **Guide**, **Settings**, **Access** and **Health**. The **Live TV** entry only
 appears in the main navigation for an account with the Live TV permission, and only once at least
 one channel is enabled and visible to that account.
-
-> [!IMPORTANT]
-> Channels arrive **disabled** after a sync, so an unreviewed playlist never floods the lineup.
-> After adding your first source, go to the **Channels** tab and enable the channels you want
-> (bulk actions help with large lineups); until then, nobody sees a Live TV entry.
 
 ## Add an IPTV source
 

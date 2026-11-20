@@ -36,6 +36,17 @@ path; nothing is created until the last click.
 | Additional folders | Optional extra folders for the same library (see [Folders](#folders)) |
 :::
 
+### What the scan review shows
+
+Each file found gets a pre-selected candidate from the metadata provider. Check it before you confirm.
+
+![A scan review row whose pre-selected candidate does not match the file: pick the right one](/img/libraries-scan-review-spring.webp)
+
+Nothing fits? Choose **No match: add as is**: the title is added with its file name and a **No metadata** badge,
+and you can [identify it later](#fixing-a-wrong-or-missing-match).
+
+![A file with no match, to be added as is](/img/libraries-scan-review-no-match.webp)
+
 A folder can only belong to one library at a time, and a folder can't contain or sit inside
 another library folder.
 
@@ -44,9 +55,7 @@ library is actually created, so you can review what Fliks found (and fix any wro
 before anything is saved. Once you confirm with **Create the library**, the import runs in the
 background and you're free to keep using the app while it works.
 
-> [!NOTE]
-> Deleting a library (**Delete**, top right of the library's page) removes its titles from Fliks,
-> but never touches the files on disk.
+Deleting a library (**Delete**, top right of its page) removes its titles from Fliks, never the files on disk.
 
 ## Change a library's settings
 
@@ -118,11 +127,8 @@ rather not wait, with **Link all** and **Import all automatically** to handle ev
 > is never moved. The toggle is in the scan dialog of the **Medias** tab and on the **Media**
 > step of the new-library wizard.
 
-> [!TIP]
-> **Rescan files** (in a title's **Analyze** dialog, or **Rescan all files** under **Settings >
-> System** for every title at once) re-reads the files inside each title's own folder, for example
-> after replacing one with a better copy or dropping a new episode into a series folder Fliks
-> already knows. It never discovers a new title: for that, scan the folder again.
+**Rescan files** (a title's **Analyze** dialog, or **Settings > System** for every title) re-reads the files
+of titles Fliks already knows, for example after replacing a file. To find new titles, scan the folder again.
 
 ## Fixing a wrong or missing match
 
@@ -144,8 +150,7 @@ Instead of a title you can fill **IMDb ID**, **TheMovieDb ID** or **TheTVDB ID**
 **Use these IDs**. **Provider** limits the search to TMDB or TVDB. Removing a criterion widens the
 results. A confirmed match re-fetches everything for that title in the background.
 
-> [!NOTE]
-> **Identify** changes the metadata only. It does not rename or move the file.
+**Identify** changes the metadata only, never the file.
 
 See [Metadata](/features/metadata) for what a title page shows once it is matched, and
 [the detail page actions](#the-title-page-and-its-actions) for the other entries of that menu.
@@ -187,9 +192,7 @@ carried along with a video file whenever it moves.
 
 ## Quality and language profiles
 
-:::details Quality and language profiles
 A **quality profile** (**Settings > Quality profiles**) and a **language profile** (**Settings > Language profiles**) decide which copy of a title is acceptable and which subtitle languages to search for. You pick both for each title when you add or request it, not once per library. See [Quality profiles](/downloads/quality-profiles) and [how automatic subtitle search uses the language profile](/features/subtitles#how-automatic-search-works).
-:::
 
 ## Browse and filter a library
 

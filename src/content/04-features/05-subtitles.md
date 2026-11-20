@@ -12,8 +12,7 @@ All subtitle files of a title are managed in one dialog, **Edit subtitles**, on 
 lists every track with its language, file, provider, score and flags. **Search**, **Import** and the
 row actions need the permission to manage subtitles.
 
-The player has no entry for this dialog: it offers track choice, appearance and timing in its own
-dropdowns, described in [Subtitles in the player](/player/subtitles-and-audio#subtitles-in-the-player).
+The player picks tracks and resyncs live: see [Subtitles in the player](/player/subtitles-and-audio#subtitles-in-the-player).
 
 :::steps
 ![Open the title (a movie, or an episode of a series) from the library](/img/player-detail-page.webp)
@@ -34,13 +33,12 @@ the page of an episode, not on the series page.
 
 | You want to | Do this |
 |---|---|
-| Download a subtitle | **Search**, pick the language, then download the result you want. Searching needs at least one provider, set up in **Settings > Subtitle providers**. |
-| Use your own file | **Import**, then choose an `.srt`, `.vtt`, `.ass` or `.ssa` file and its language. See [Importing your own file](#importing-your-own-file). |
-| Fix a subtitle that drifts | **Actions** on its row, then **Timing**, then **Sync**, or use **Adjust timing**. Embedded tracks cannot be synced: download or import a separate file first. |
-| Translate | **Actions**, then **Translate**, and pick the target language. |
-| Remove one | **Actions** on a downloaded, imported or translated row, then **Delete**. On a file downloaded from a provider, **Blacklist** also stops the same result from being downloaded again. An embedded track lives in the video file and cannot be deleted. |
-| Look for every missing language | **Search missing**, shown when the title's language profile asks for a language that has no subtitle yet. |
-
+| Download a subtitle | **Search**, pick the language, then download the result you want. Needs a provider, set up in **Settings > Subtitle providers**. |
+| Use your own file | **Import**, see [Importing your own file](#importing-your-own-file). |
+| Fix a subtitle that drifts | [Sync or shift it](#fixing-out-of-sync-subtitles). |
+| Translate | [Translate it](#translating-a-subtitle). |
+| Remove one | **Actions**, then **Delete**. **Blacklist** on a downloaded file also stops the same result from coming back. An embedded track cannot be deleted. |
+| Look for every missing language | **Search missing**, shown when the language profile asks for a language with no subtitle yet. |
 
 ### Importing your own file
 
@@ -52,13 +50,8 @@ Use **Import** when you already have a subtitle file, for example one you wrote 
 ![A **Subtitle uploaded** message appears and the file gets its own row, with **disk** as its provider](/img/subtitles-import-3.webp)
 :::
 
-Fliks stores the file next to the video, named after it with the language code added (for example
-`Movie (2010).en.srt`). The new row shows the file name, **disk** as the provider and a score of
-100. A file you import is a normal subtitle: it can be synced, shifted, translated and deleted.
-
-> [!NOTE]
-> The **Synced** badge appears on an imported file at once. It does not mean the timing was
-> checked: a file that is out of step with the picture still needs the steps below.
+Fliks stores the file next to the video, named after it with the language code (for example
+`Movie (2010).en.srt`). It is a normal subtitle: it can be synced, shifted, translated and deleted.
 
 ### Actions on a file
 
@@ -81,8 +74,8 @@ file comes from.
 
 ## Fixing out-of-sync subtitles
 
-A subtitle that drifts against the dialogue can be corrected without hunting for the right offset
-by hand. Embedded tracks cannot be synced or adjusted: download or import a separate file first.
+Works on downloaded and imported files. Embedded tracks cannot be synced: download or import a separate file first.
+While the video plays, use the [synchronize panel of the player](/player/subtitles-and-audio#fix-the-timing-while-you-watch) instead.
 
 ### Sync automatically
 
@@ -117,9 +110,7 @@ like this before and after a sync (open it with **Actions > View**):
 ![After: the same line starts at 1:47, on the dialogue](/img/subtitles-sync-after.webp)
 :::
 
-Sync works best on a title with a lot of speech. On a film with long silent stretches it has less
-to line up against, so pick a subtitle track that is already in step as the **Reference** when the
-audio gives a poor result.
+On a film with long silent stretches, pick a subtitle track that is already in step as the **Reference**.
 
 ### Shift by a fixed amount
 
@@ -136,14 +127,7 @@ milliseconds: a positive value delays every cue, a negative one advances them.
 a file made for a video with another framerate. The **Corrections** menu next to **Timing** has
 one-click clean-ups (remove HI tags, style tags or emojis, common fixes, convert to SRT).
 
-> [!TIP]
-> Turn on **Automatically sync subtitles** in **Settings > Subtitles** and every new automatic
-> download or upgrade gets this treatment on its own.
-
-### Resyncing from the player
-
-The player has its own panel to slide a subtitle against the picture while the video plays. How to
-open it and use it is in [The synchronize panel](/player/subtitles-and-audio#fix-the-timing-while-you-watch).
+Turn on **Automatically sync subtitles** in **Settings > Subtitles** to sync every new download on its own.
 
 ## Translating a subtitle
 
@@ -158,13 +142,9 @@ shows up until an admin has turned translation on and added an engine, see
 ![When the bar is gone the new language has its own row, with its own file](/img/subtitles-translate-4.webp)
 :::
 
-This works on any text subtitle, embedded ones included. It runs in the background and keeps the
-original timing, so you can close the dialog. The result is saved next to the video as its own
-file (for example `Movie (2010).fr.srt`) and is a normal subtitle: you can **View** it, sync it or
-delete it. The same translation is never re-run automatically; running it again for the same
-language creates a separate copy rather than replacing the first. A track that is image-based must
-go through [OCR](#extracting-text-from-image-based-subtitles) first, and the target language cannot
-be the language of the source.
+This works on any text subtitle, embedded ones included. It runs in the background, so you can close the
+dialog, and the result is saved next to the video as its own file (for example `Movie (2010).fr.srt`). An image-based
+track must go through [OCR](#extracting-text-from-image-based-subtitles) first.
 
 ![The translated French file, listed with its cues](/img/subtitles-translate-5.webp)
 
@@ -210,12 +190,9 @@ When the source track is flagged hearing-impaired, the translate dialog shows a 
 hearing-impaired annotations** switch. It strips cues such as `[door creaks]` or `(SIGHS)` from the
 translated result once the run finishes, even if you closed the dialog, and the translated file is
 then no longer flagged hearing-impaired. The switch is remembered in your browser. The server-wide
-**Remove HI tags** setting (see [Admin settings](/features/subtitles#admin-settings)) does the same for every
+**Remove HI tags** setting (see [Admin settings](#admin-settings)) does the same for every
 translation.
 :::
-
-> [!NOTE]
-> Translation only runs when you ask for it. Nothing is translated automatically in the background.
 
 ## Extracting text from image-based subtitles
 
@@ -257,9 +234,9 @@ playback starts (your preferred language, or a remembered choice) starts as plai
 video doesn't reload at launch.
 :::
 
-Both cases need **Hide image subtitles** (see [Subtitle appearance](/features/subtitles#subtitle-appearance)) turned
+Both cases need **Hide image subtitles** (in **App settings > Subtitles**, see [Change how subtitles look](/player/subtitles-and-audio#change-how-subtitles-look)) turned
 off. It is on by default: image tracks then stay out of the picker, and styled ASS/SSA plays as
-plain text and takes your appearance settings.
+plain text.
 
 ## How automatic search works
 
@@ -309,42 +286,13 @@ Downloaded files are always cleaned of ads; optionally (see settings below) also
 tags and of your own custom exclusion patterns.
 :::
 
-## Subtitle appearance
-
-:::details Where the appearance settings are
-Track selection (language, mode, SDH, image tracks) and the look of subtitles (size, color, shadow,
-background, position) are per-device settings in **App settings > Subtitles**. They are described in
-[Audio and subtitles](/player/subtitles-and-audio#change-how-subtitles-look). Image-based tracks and
-ASS/SSA tracks with their own styling keep their original look (see
-[Burned-in subtitles](/features/subtitles#burned-in-subtitles)).
-:::
-
 ## Admin settings
 
-**Settings > Subtitles** groups the tuning knobs behind the behaviour above:
-
-:::details Every admin setting and its default
-| Setting | Default | What it does |
-|---|---|---|
-| Automatic subtitle search | On | Master switch for the scheduled and post-import search |
-| Search interval (minutes) | 360 | How often the scheduler re-checks for missing languages |
-| Minimum score | 70 | The score (0 to 100) a result needs to be downloaded automatically |
-| Upgrade interval (minutes) | 720 | How often the upgrade pass runs |
-| Upgrade threshold | 90 | Below this score, a strictly better match replaces what's there |
-| An image track counts as a present subtitle | Off | An embedded image subtitle in a profile language counts as covering it, so no download or OCR runs; playback of that track then always needs a burn-in transcode |
-| Prefer OCR of embedded image tracks over a download | Off | Tries OCR on an embedded image track before searching online |
-| Automatically sync subtitles (ffsubsync/alass) | Off | Runs the sync tool after every automatic download or upgrade |
-| Remove HI tags | Off | Strips things like `[music]` or `(sighs)` from downloaded text, and from translations and OCR results |
-| Custom exclusions (regex) | None | One regular expression per line; any subtitle line matching one is removed |
-:::
-
-The same page's **Statistics** tab lists every language still missing a subtitle across your
-library, with a one-click search for each row. **Settings > Subtitle activity** is a searchable
-history of every subtitle file Fliks has downloaded, translated or OCR'd, with its score and
-status.
+Search interval, minimum score, upgrades, automatic sync and HI-tag removal are set in
+**Settings > Subtitles**: see [Subtitle settings](/administration/subtitle-settings).
 
 ## See also
 
-- [Audio and subtitles](/player/subtitles-and-audio) for choosing a track in the player and for the way to the **Edit subtitles** dialog.
+- [Audio and subtitles](/player/subtitles-and-audio) for choosing a track, appearance and live resync in the player.
 - [Playback](/features/playback) for resume and the other server-side playback behaviour.
 - [Libraries](/features/libraries) for language profiles, which decide what gets searched for.

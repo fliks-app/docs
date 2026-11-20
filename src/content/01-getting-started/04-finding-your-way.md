@@ -10,8 +10,8 @@ description: A map of the Fliks interface, from the sidebar to the Administratio
 
 | I want to... | Go to |
 |---|---|
-| Add a library | **Administration** > **Settings > Libraries** > **Add a library** ([Quick start](/getting-started/quick-start#add-your-media-as-a-library)) |
-| Fix a wrongly matched or unidentified title | The title page > **More** > **Metadata** > **Identify** ([Quick start](/getting-started/quick-start#fix-an-unidentified-file-later)) |
+| Add a library | **Administration** > **Settings > Libraries** > **Add a library** ([Libraries](/features/libraries#creating-a-library)) |
+| Fix a wrongly matched or unidentified title | The title page > **More** > **Metadata** > **Identify** ([Libraries](/features/libraries#fixing-a-wrong-or-missing-match)) |
 | Add a user | **Administration** > **Settings > Users** > **Add a user** ([Users and permissions](/administration/users-and-permissions)) |
 | Change the subtitle look (size, color, position) | **App settings > Subtitles**, section **Subtitle appearance** |
 | Pick my default subtitle language | **App settings > Subtitles**, **Preferred subtitle language** (and **Subtitle mode**) |
@@ -34,16 +34,11 @@ description: A map of the Fliks interface, from the sidebar to the Administratio
 
 ## Open the settings menu
 
-Everything you configure sits behind your avatar, top right. Click it to open the user menu.
-
-Click the avatar, then look at the three entries of the menu: **Account settings**, **App settings** and **Administration**.
+Click your avatar, top right: the menu lists **Account settings**, **App settings** and **Administration**.
 
 ![Click the avatar at the top right: the menu lists **Account settings**, **App settings** and **Administration**](/img/nav-desktop-avatar-button-anim.webp)
 
-On a phone the avatar sits at the top right too, and the menu opens as a sheet from the bottom of
-the screen. The **Administration** entry only shows for accounts that may open the admin pages.
-
-Tap the avatar at the top right: the menu opens from the bottom with **Account settings**, **App settings** and **Administration**.
+On a phone, tap the same avatar: the menu opens from the bottom. **Administration** only shows for accounts that may open the admin pages.
 
 ![On a phone, tapping the avatar opens the user menu](/img/nav-phone-avatar-button-anim.webp)
 
@@ -57,8 +52,7 @@ The same menu also has **Login requests** (to pair a TV), **Switch user** and **
 
 ## Use the sidebar
 
-The left sidebar is the everyday navigation. On a phone it hides behind the menu button at the
-top left.
+The left sidebar is the everyday navigation. On a phone, tap the menu button at the top left.
 
 ![The main sidebar: Home, Search, My profile, then the Library and Downloads groups](/img/nav-home-sidebar.webp)
 
@@ -111,14 +105,8 @@ Both open a short sidebar of their own.
 
 ## On a title page
 
-Per-title actions live in the **More** menu (three dots) next to **Play**. This is where **Edit
-subtitles** is, and where **Identify** fixes a wrong match.
-
-Open a title, click the **More** menu next to **Play**, then **Metadata**: it holds **Identify** and **Refresh metadata**. **Edit subtitles** lists, searches and syncs the subtitles of that title.
+Per-title actions live in the **More** menu (three dots) next to **Play**: **Edit subtitles**, and **Metadata** with **Identify** and **Refresh metadata**.
 
 ![The **More** menu of a title, then **Metadata**](/img/nav-title-more-button-anim.webp)
 
-> [!TIP]
-> Every admin page has a **Back to app** link at the top of its sidebar. Settings pages in the
-> docs are written as the group, then the entry: **Advanced > Plugins** is the **Plugins** entry
-> under the **Advanced** heading of the Administration sidebar.
+In these docs, **Advanced > Plugins** means the **Plugins** entry under the **Advanced** heading of the Administration sidebar.
