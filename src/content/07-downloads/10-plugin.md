@@ -1,5 +1,6 @@
 ---
-title: Download plugin
+title: Set up the plugin
+group: Download plugin
 description: What the Download plugin does, what to set up before it can fetch anything, and how a request turns into a file in your library.
 ---
 

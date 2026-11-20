@@ -1,5 +1,6 @@
 ---
-title: Download settings
+title: Plugin settings
+group: Download plugin
 description: Every option of the Download plugin, with its default: search time, stalled-download cleanup, seeding, cooldowns and where each one lives.
 ---
 

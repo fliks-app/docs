@@ -1,5 +1,6 @@
 ---
 title: Download clients
+group: Download plugin
 description: Connect qBittorrent or Transmission to the Download plugin, and share the download folder so Fliks can import what the client fetched.
 ---
 

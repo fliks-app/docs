@@ -1,5 +1,5 @@
 ---
-title: Downloads
+title: Automatic search
 description: Choose which download provider is asked first, how often missing and upgradable titles are searched, and what happens to extra album tracks.
 ---
 

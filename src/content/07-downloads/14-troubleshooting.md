@@ -1,5 +1,6 @@
 ---
-title: Download troubleshooting
+title: Plugin troubleshooting
+group: Download plugin
 description: Why a title is not downloading, what each test message and queue state means, and how to fix the usual setup mistakes.
 ---
 

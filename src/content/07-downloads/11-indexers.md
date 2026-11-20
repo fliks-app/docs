@@ -1,5 +1,6 @@
 ---
-title: Download indexers
+title: Indexers
+group: Download plugin
 description: Add the trackers the Download plugin searches, by importing them from Prowlarr or Jackett or by typing a Torznab address.
 ---
 
