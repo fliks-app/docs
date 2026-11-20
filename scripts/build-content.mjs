@@ -190,8 +190,42 @@ const docsRenderer = {
   },
 };
 
+// `:::steps` ... `:::` holds one `![caption](/img/x.webp)` per line, rendered as a numbered slider.
+const stepsExtension = {
+  name: 'steps',
+  level: 'block',
+  start: (src) => src.match(/^:::steps/m)?.index,
+  tokenizer(src) {
+    const m = src.match(/^:::steps[^\n]*\n([\s\S]*?)\n:::[ \t]*(?:\n+|$)/);
+    if (!m) return undefined;
+    const slides = [...m[1].matchAll(/^!\[([^\]]*)\]\(([^)\s]+)\)\s*$/gm)].map(([, caption, href]) => ({ caption, href }));
+    if (slides.length < 2 || slides.length !== m[1].trim().split(/\n+/).length) {
+      fail(`${currentFile}: a :::steps block needs two or more lines, each a single ![caption](/img/...) image`);
+    }
+    return { type: 'steps', raw: m[0], slides };
+  },
+  renderer({ slides }) {
+    const items = slides
+      .map(({ caption, href }, i) => {
+        if (!isExternalHref(href)) pageImages.push({ href, file: currentFile });
+        const text = marked.parseInline(caption);
+        return (
+          `<figure class="doc-step"><img src="${escapeHtml(href)}" alt="${escapeHtml(caption)}" loading="lazy">` +
+          `<figcaption><span class="doc-step-num">${i + 1}</span><span>${text}</span></figcaption></figure>`
+        );
+      })
+      .join('');
+    return (
+      `<div class="doc-steps" data-count="${slides.length}"><div class="doc-steps-track" tabindex="0">${items}</div>` +
+      `<div class="doc-steps-nav"><button type="button" class="doc-steps-prev" aria-label="Previous step">&#8592;</button>` +
+      `<span class="doc-steps-pos" aria-live="polite">1 / ${slides.length}</span>` +
+      `<button type="button" class="doc-steps-next" aria-label="Next step">&#8594;</button></div></div>\n`
+    );
+  },
+};
+
 const marked = new Marked({ gfm: true, breaks: false });
-marked.use({ renderer: docsRenderer });
+marked.use({ renderer: docsRenderer, extensions: [stepsExtension] });
 
 // ---------- read content tree ----------
 

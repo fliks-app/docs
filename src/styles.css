@@ -370,3 +370,77 @@ body {
   background-color: rgb(0 0 0 / 0.45);
   backdrop-filter: blur(2px);
 }
+/* ---------- step sliders (:::steps blocks) ---------- */
+
+.doc-steps {
+  margin-block: 1.5em;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  border-radius: var(--radius-box);
+  overflow: hidden;
+}
+.doc-steps-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.doc-steps-track:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+.doc-prose .doc-step {
+  flex: 0 0 100%;
+  margin: 0;
+  scroll-snap-align: start;
+}
+.doc-prose .doc-step img {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+}
+.doc-prose .doc-step figcaption {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.75rem 1rem 0;
+  font-size: 0.95em;
+  color: var(--color-base-content);
+}
+.doc-step-num {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background-color: var(--color-primary);
+  color: var(--color-primary-content);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.doc-steps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem 0.75rem;
+  font-size: 0.875rem;
+}
+.doc-steps-nav button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.doc-steps-nav button:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 8%, transparent);
+}
+.doc-steps-pos {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}

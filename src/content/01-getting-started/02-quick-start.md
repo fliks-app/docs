@@ -25,13 +25,17 @@ administrator** page instead. Pick a username, a password of at least 8 characte
 to confirm, and click **Create account**. You're signed in as that administrator, who has every
 permission.
 
+![The Create the administrator page: username, password, confirmation](/img/setup-create-admin-filled.webp)
+
 The page only shows while the server has no user. After that, the address opens the normal
 login.
 
 ## 3. Add a library
 
-The user menu (your avatar) opens three settings areas, and these docs name each page after
-its entry in that area's sidebar:
+The user menu (your avatar, top right) opens three settings areas, and these docs name each page
+after its entry in that area's sidebar:
+
+![The avatar button (1) opens a menu with Account settings (2), App settings (3) and Administration (4)](/img/nav-desktop-menu-entries.webp)
 
 - **Settings > X** is an admin page, under user menu > **Administration**: **Settings >
   Libraries** means the **Libraries** entry there.
@@ -40,35 +44,92 @@ its entry in that area's sidebar:
 - **Account settings > X** is a page about your account, under user menu > **Account
   settings** (for example **Account settings > Password**).
 
+[Finding your way around](/getting-started/finding-your-way) maps every area, with a phone layout.
+
 Go to **Settings > Libraries** and click **Add a library**. The wizard has three steps:
 
-1. **Information**: give it a name and choose its media types (**Movies**, **Series**, or both).
+:::steps
+![The **Setup** card on the home page: **Configure** next to *Add at least one library*](/img/onboarding-home-empty.webp)
+![**Settings > Libraries**, still empty: click **Add a library**](/img/libraries-empty.webp)
+![**Information**: a name, an icon, and the media types](/img/libraries-wizard-step1.webp)
+![**Users**: who sees the library](/img/libraries-wizard-step2.webp)
+![**Media**: the root path, typed or picked with **Browse...**](/img/libraries-wizard-browse-movies.webp)
+![The new library, its files matched](/img/libraries-created.webp)
+:::
+
+1. **Information**: give it a name and choose its media types (**Movies**, **Series**, or both; books, comics and albums have their own switches).
 2. **Users**: pick who can see it (administrators always can).
 3. **Media**: set the **Root path** to a folder on the server (type it or use **Browse...**).
    Under Docker that's the path you mounted at `/medias` (or a subfolder of it); on Windows or
    macOS it's any folder on disk. Click **Scan the folder**, review what it found, then click
    **Create the library**.
 
-Fliks matches what it finds against TMDB or TVDB and downloads covers, backdrops and cast
-information. A large library can take a while on the first pass.
+### What the scan review shows
+
+**Scan the folder** lists every video file it found, one block per file. Each block shows the
+file path, a title and year search field, and the candidates found on TMDB or TVDB. Fliks
+pre-selects the best candidate, so on a tidy library you only click **Create the library**.
+
+![One block of the scan review: the file, a search field, and the candidates with the pre-selected one outlined. Here `Spring (2019)` was matched to *Spring Breakers* (2013): pick another candidate or search again](/img/libraries-scan-review-spring.webp)
+
+Look at the picks before you create the library, because a short or ambiguous name can match the
+wrong film (a file named `Spring (2019)` was pre-selected as *Spring Breakers* in our test). For a
+wrong pick:
+
+- Choose another candidate in the block.
+- Edit the title or year and click **Search** to look again.
+- Pick **No match: add as is** when the file isn't in either database (a home video, say). The
+  title is added with the name Fliks reads from the file name, no cover and no description, and is
+  badged **No metadata**.
+
+A file with no result at all, like `bbb sunflower 1080p 30fps normal`, is set to **No match: add
+as is** by default.
+
+![A file with no result: badged No metadata, with No match: add as is selected](/img/libraries-scan-review-no-match.webp)
+
+### Fixing an unidentified file later
+
+After the library exists, **Settings > Libraries**, then **View** on the library and its
+**Medias** tab lists every title. An **Unidentified** button, with a count, shows up next to
+**Scan the folder** as soon as one title has no match. Click it to list only those.
+
+1. Open the title from that list.
+2. Open the **More** menu (three dots next to **Play**), then **Metadata**, then **Identify**.
+3. Edit the title and year, or paste an IMDb, TMDB or TVDB ID and click **Use these IDs**.
+4. Pick the right result. The title gets its cover, description and cast.
+
+![The Identify dialog: title, year, provider IDs and a Search button](/img/nav-identify.webp)
+
+The same **Identify** entry fixes a wrong match on any title. The rest of library management
+(extra folders, users, rescans) is in [Libraries](/features/libraries), and matching in
+[Metadata](/features/metadata).
 
 ## 4. Check the setup checklist
 
-**Settings > General** shows a setup checklist with the steps most self-hosters want next; the
-pending ones also appear on an admin's home page. Some are marked required, others recommended:
+**Settings > General** starts with a **Setup** card listing seven steps. Done ones are struck
+through there; the pending ones also appear in a **Setup** card on an admin's home page. Two kinds
+exist: required (red icon) and recommended (yellow icon).
 
-| Item | Why |
-|---|---|
-| Add at least one library | Required: nothing shows up in Fliks without one. |
-| Create a quality profile | Marked required, but only used when downloading: which qualities are acceptable or preferred. |
-| Create a language profile | Marked required, but only used when downloading: preferred audio and subtitle languages. |
-| Enable a subtitle provider | Lets Fliks search for subtitles automatically instead of only using what's embedded. |
-| Create a non-administrator user | Give the rest of the household an account without admin rights (see [Users and permissions](/administration/users-and-permissions)). |
-| Configure notifications | Get pinged on Discord, ntfy, Slack or similar when something happens. |
-| Configure an auto-approval rule | Requests matching the rule are approved without you clicking anything. |
+![Home page of a fresh server: the Setup card with its pending steps and a Configure button on each](/img/onboarding-home-empty.webp)
 
-Dismiss any item you don't need. It disappears from the home page, and **Settings > General**
-keeps a **Re-enable** button for it.
+| Item | Level | What it is for |
+|---|---|---|
+| Add at least one library | Required | Nothing shows up in Fliks without one. |
+| Create a quality profile | Required | Download only: which qualities are acceptable or preferred. |
+| Create a language profile | Required | Download only: preferred audio and subtitle languages. A default profile is created for you, so this one is already ticked on a fresh server. |
+| Enable a subtitle provider | Recommended | Lets Fliks search for subtitles itself instead of only using embedded or imported ones. |
+| Configure notifications | Recommended | Get pinged on Discord, Telegram, ntfy or similar when something happens. |
+| Create a non-administrator user | Recommended | An account without admin rights for the rest of the household (see [Users and permissions](/administration/users-and-permissions)). |
+| Configure an auto-approval rule | Recommended | Requests matching the rule are approved without you clicking anything. |
+
+**If you only want to watch your own files**, you need the library and nothing else. Dismiss
+**Create a quality profile** (the red "required" mark only matters when you download releases),
+**Configure an auto-approval rule** (it only acts on requests) and, if you don't care about
+alerts, **Configure notifications**. Keep **Enable a subtitle provider** if you want subtitles
+found for you, and **Create a non-administrator user** as soon as someone else uses the server.
+
+Click the **X** at the end of a row to dismiss it. It leaves the home page, and **Settings >
+General** keeps a **Re-enable** button for it.
 
 ## 5. Install the clients
 
@@ -81,6 +142,8 @@ film on one device and pick it up on another: the position syncs live.
 
 ## Where to go from here
 
+- [Finding your way around](/getting-started/finding-your-way) if you can't find a setting: a map of
+  the sidebar, the user menu and Administration, with the click path to common tasks.
 - [Concepts](/getting-started/concepts) if some of the terms above (library, quality profile,
   request) aren't obvious yet.
 - [Users and permissions](/administration/users-and-permissions) to set up accounts for the rest

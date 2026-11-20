@@ -39,6 +39,15 @@ Supported in the body:
   `[Volumes](/install/docker#volumes)`. External links (`https://...`) open in a new tab
   automatically.
 - Images: `![alt](/img/my-screenshot.webp)`, referencing a file at `public/img/my-screenshot.webp`.
+- Step sliders: a `:::steps` block with one image per line, each alt text being that step's caption
+  (inline markdown allowed). Use one to show a click path across several screens:
+
+  ```markdown
+  :::steps
+  ![Open the user menu](/img/nav-user-menu.webp)
+  ![Choose **Administration**](/img/nav-admin-entry.webp)
+  :::
+  ```
 
 Every `##`/`###` heading gets an anchor id derived from its text: lowercased, trimmed, every
 character that isn't a letter, digit, space, `-` or `_` dropped, remaining spaces turned into `-`,

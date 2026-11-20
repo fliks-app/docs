@@ -36,6 +36,9 @@ running; the rest of the app works fully without it, on media you already have.
 
 - [Quick start](/getting-started/quick-start): install the server, add a library, and open it on
   your phone or TV, in a few minutes.
+- [Finding your way around](/getting-started/finding-your-way): where every screen and setting
+  lives, with screenshots.
+- [Feature overview](/getting-started/feature-overview): every feature, where it is, and its page.
 - [Concepts](/getting-started/concepts): the vocabulary Fliks uses (libraries, profiles,
   requests, roles) before you dig into the admin pages.
 - [Installation](/install/docker): every way to run the server, one page each.
