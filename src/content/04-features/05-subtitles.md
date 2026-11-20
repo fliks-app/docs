@@ -66,11 +66,9 @@ dropdowns, described in [Subtitles in the player](/player/subtitles-and-audio#su
 
 On a phone:
 
-:::steps
-![On the title page, tap the three dots at the top right](/img/player-phone-detail.webp)
-![Choose **Edit subtitles**](/img/player-phone-more-menu.webp)
-![The dialog opens. Scroll it sideways to reach the **Actions** column](/img/player-phone-subtitles-dialog.webp)
-:::
+On the title page, tap the three dots at the top right and choose **Edit subtitles**. The dialog opens: scroll it sideways to reach the **Actions** column.
+
+![Three dots, Edit subtitles, then the Actions column](/img/player-phone-detail-anim.webp)
 
 For a series, open the episode first: subtitles belong to one file, so **Edit subtitles** is on
 the page of an episode, not on the series page.

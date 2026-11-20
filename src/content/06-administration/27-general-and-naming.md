@@ -11,10 +11,9 @@ description: The first three pages of the Settings group - General, Naming and O
 
 ## General
 
-:::steps
-![Open **Settings > General**](/img/admin-general-1-sidebar.webp)
-![Change a field, here **Login user list**, then press the **Save** of its own card](/img/admin-general-2-login.webp)
-:::
+Open **Settings > General**, change a field, here **Login user list**, then press the **Save** of its own card.
+
+![Opening Settings > General and the Login user list field](/img/admin-general-2-login-anim.webp)
 
 The page has five cards, and **each card has its own Save button**. A change in one card is not saved by the button of another.
 
@@ -65,10 +64,9 @@ See [Metadata](/features/metadata#language-and-region).
 
 The templates used to build a file or folder name when Fliks renames a file after a download or an import. A token like `{Movie Title}` is replaced by the value for that file. Click a token under **Available tokens (click to insert)** to add it where the cursor is. Under each group a **Preview (example)** shows the result for a sample title and updates as you type.
 
-:::steps
-![Open **Settings > Naming**](/img/admin-naming-1-sidebar.webp)
-![Click a token to insert it into the field above, then **Save** at the bottom](/img/admin-naming-2-token.webp)
-:::
+Open **Settings > Naming**, click a token to insert it into the field above, then **Save** at the bottom.
+
+![Opening Settings > Naming and a token](/img/admin-naming-2-token-anim.webp)
 
 One **Save** at the bottom of the page saves every format.
 
@@ -113,10 +111,9 @@ Tokens: `{Artist Name}`, `{Artist SortName}`, `{Album Title}`, `{Release Year}`,
 
 The SMTP account the server uses to send books to e-readers (see [Books and audiobooks](/features/books-and-audiobooks)). Leave it empty if you do not use that.
 
-:::steps
-![Open **Settings > Outgoing mail**](/img/admin-mail-1-sidebar.webp)
-![Fill the account, **Save**, then send yourself a test message with **Send test**](/img/admin-mail-2-test.webp)
-:::
+Open **Settings > Outgoing mail**, fill the account, **Save**, then send yourself a test message with **Send test**.
+
+![Opening Settings > Outgoing mail and the Send test button](/img/admin-mail-2-test-anim.webp)
 
 ![The Outgoing mail page](/img/admin-mail-page.webp)
 

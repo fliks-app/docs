@@ -82,11 +82,9 @@ Trust badges, signed archives and the plugin settings are covered in [Plugins](/
 Fliks runs its housekeeping on a timer. To run a job now, for example after changing a
 setting that it uses:
 
-:::steps
-![Open **Advanced > Scheduled tasks**](/img/admin-task-1-sidebar.webp)
-![Click the play button at the end of the task's row](/img/admin-task-2-run.webp)
-![The status turns to **Running**, then the **Last run** column fills in](/img/admin-task-3-done.webp)
-:::
+Open **Advanced > Scheduled tasks** and click the play button at the end of the task's row. The status turns to **Running**, then the **Last run** column fills in.
+
+![Opening Advanced > Scheduled tasks, then the play button of a task row](/img/admin-task-3-run-anim.webp)
 
 The scan, sprite and metadata jobs you may want to start by hand are on
 **System > Status > Trigger a task**, see [Nothing shows up after I add a library](/administration/faq#nothing-shows-up-after-i-add-a-library-is-it-broken).
@@ -98,10 +96,9 @@ The scan, sprite and metadata jobs you may want to start by hand are on
 
 ## Make a backup
 
-:::steps
-![Open **System** and select the **Backups** tab, then click **Create a backup**](/img/admin-backup-1-create.webp)
-![The dump appears in the list with its size and date. **Download** it to keep a copy off the server](/img/admin-backup-2-done.webp)
-:::
+Open **System**, select the **Backups** tab and click **Create a backup**. The dump appears in the list with its size and date: **Download** it to keep a copy off the server.
+
+![Opening System, the Backups tab and the Create a backup button](/img/admin-backup-2-done-anim.webp)
 
 A daily backup already runs at 2 AM. What a backup contains, and how to restore one, is in
 [Backups](/administration/backups).

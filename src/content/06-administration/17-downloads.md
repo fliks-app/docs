@@ -26,10 +26,9 @@ installed."
 **Settings > Downloads**, in the **Media** section of the admin sidebar. You need the **Settings access**
 permission.
 
-:::steps
-![Open **Settings > Downloads**](/img/admin-downloads-1-sidebar.webp)
-![The page: provider order, **Search interval (minutes)**, the music option and **Save**](/img/admin-downloads-2-page.webp)
-:::
+Open **Settings > Downloads**. The page holds the provider order, **Search interval (minutes)**, the music option and **Save**.
+
+![Opening Settings > Downloads](/img/admin-downloads-2-page-anim.webp)
 
 ## Every setting
 

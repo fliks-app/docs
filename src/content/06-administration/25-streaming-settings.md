@@ -7,11 +7,9 @@ description: Settings > Streaming field by field - Auto quality, segments, black
 
 The concepts (Direct Play, remux, transcode, HDR) are in [Streaming and transcoding](/features/streaming-and-transcoding). GPU detection and container setup are in [Hardware acceleration](/install/hardware-acceleration). The live view of what is running is the [Transcoding dashboard](/administration/transcoding-dashboard).
 
-:::steps
-![Open **Advanced > Streaming** (scroll the sidebar down)](/img/admin-streaming-1-sidebar.webp)
-![Change a field, here **"Auto" quality behavior**](/img/admin-streaming-2-auto.webp)
-![Press **Save**. One button saves every field above it](/img/admin-streaming-3-save.webp)
-:::
+Open **Advanced > Streaming** (scroll the sidebar down) and change a field, here **"Auto" quality behavior**. Press **Save**: one button saves every field above it.
+
+![Opening Advanced > Streaming and a field to change](/img/admin-streaming-3-save-anim.webp)
 
 ## Fields
 

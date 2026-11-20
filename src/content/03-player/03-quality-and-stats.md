@@ -5,10 +5,9 @@ description: Choose a quality, understand Direct Play, Remux and transcoding in 
 
 ## Choose a quality
 
-:::steps
-![Show the controls and open **Settings** (the gear)](/img/player-menu-settings.webp)
-![Choose **Quality**, then a row of the list. The check mark shows the current one](/img/player-menu-quality.webp)
-:::
+Show the controls and open **Settings** (the gear), choose **Quality**, then a row of the list. The check mark shows the current one.
+
+![Settings, then Quality, then a row of the list](/img/player-menu-settings-anim.webp)
 
 The list starts with **Auto**, then the resolutions the title can be sent at, from the original
 down to 144p. A row marked **Low bandwidth** is a lighter version meant for a slow connection.

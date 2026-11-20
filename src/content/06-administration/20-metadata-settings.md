@@ -9,11 +9,9 @@ A watch-only user can ignore this page: the providers installed by default work 
 
 ## Reach it
 
-:::steps
-![Open **Settings > Metadata** in the administration sidebar (under **Media**)](/img/admin-metadata-1-sidebar.webp)
-![Click **Configure** on the row of a provider that has settings, here TMDB](/img/admin-metadata-2-configure.webp)
-![The provider's own page opens, with its settings and a **Save** button](/img/admin-metadata-3-tmdb.webp)
-:::
+Open **Settings > Metadata** in the administration sidebar (under **Media**) and click **Configure** on the row of a provider that has settings, here TMDB. The provider's own page opens, with its settings and a **Save** button.
+
+![Opening Settings > Metadata and clicking Configure on TMDB](/img/admin-metadata-3-tmdb-anim.webp)
 
 ## The Providers table
 

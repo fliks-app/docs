@@ -7,10 +7,9 @@ The engine is the component that probes files and produces the streams (Direct P
 
 Leave every field empty unless you run a separate engine. Nobody needs this page to watch.
 
-:::steps
-![Open **Advanced > Remote engine**](/img/admin-engine-1-sidebar.webp)
-![Fill the fields, press **Test connection**, then **Save**](/img/admin-engine-2-test.webp)
-:::
+Open **Advanced > Remote engine**, fill the fields, press **Test connection**, then **Save**.
+
+![Opening Advanced > Remote engine and the Test connection button](/img/admin-engine-2-test-anim.webp)
 
 ![The Remote streaming engine page](/img/admin-engine-page.webp)
 

@@ -12,10 +12,9 @@ Both pages only matter if you have an albums library. Nobody needs them to play 
 
 ## Lyrics
 
-:::steps
-![Open **Settings > Lyrics** (under **Media**)](/img/admin-lyrics-1-sidebar.webp)
-![Switch **Automatic fetch** on or off, then **Save** at the bottom](/img/admin-lyrics-2-fetch.webp)
-:::
+Open **Settings > Lyrics** (under **Media**). Switch **Automatic fetch** on or off, then **Save** at the bottom.
+
+![Opening Settings > Lyrics and the Automatic fetch switch](/img/admin-lyrics-2-fetch-anim.webp)
 
 ![The Lyrics page](/img/admin-lyrics-page.webp)
 

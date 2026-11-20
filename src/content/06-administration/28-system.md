@@ -39,11 +39,9 @@ The page is called **Dashboard** in its header. It shows the number of **Movies*
 
 Buttons that open menus. Click one, then click an entry: the task starts at once and a row appears under **Task history**. Nothing is asked before it runs.
 
-:::steps
-![Open **System > System**](/img/admin-system-1-sidebar.webp)
-![In **Trigger a task**, open a group such as **Metadata**](/img/admin-system-2-trigger.webp)
-![Click the task to run](/img/admin-system-3-menu.webp)
-:::
+Open **System > System**, open a group in **Trigger a task**, such as **Metadata**, and click the task to run.
+
+![Opening System > System, the Metadata group and a task](/img/admin-system-3-menu-anim.webp)
 
 | Group | Entry | What it does |
 |---|---|---|

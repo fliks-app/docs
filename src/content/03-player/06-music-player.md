@@ -9,11 +9,9 @@ Music has its own player. It is not the video player: it never takes over the wh
 
 Open an album and press **Play**, or press a track. Playing a track starts the album from that track and queues the tracks after it. **Shuffle** plays the album in random order. The library side (albums, artists, tracks) is in [Music](/features/music).
 
-:::steps
-![On an album page, press **Play**](/img/music-start-1.webp)
-![The mini player appears at the bottom right. Click it to open the full player](/img/music-start-2.webp)
-![The full player: cover, queue and controls](/img/music-start-3.webp)
-:::
+On an album page, press **Play**. The mini player appears at the bottom right: click it to open the full player, with the cover, the queue and the controls.
+
+![Press Play, then open the mini player](/img/music-start-1-anim.webp)
 
 ## The mini player
 
@@ -80,10 +78,9 @@ There is no button to empty the queue in one go. Close the player to drop it.
 
 The menu of a track on an album page adds it to the queue without interrupting what plays.
 
-:::steps
-![Press the three dots at the end of a track](/img/music-playnext-1.webp)
-![Choose **Play next** to play it right after the current track, or **Add to queue** to put it last](/img/music-playnext-2.webp)
-:::
+Press the three dots at the end of a track, then choose **Play next** to play it right after the current track, or **Add to queue** to put it last.
+
+![The three dots of a track, then Play next](/img/music-playnext-1-anim.webp)
 
 The track can come from another album: the queue mixes them. During a [watch party](/features/watch-party) that takes turns, **Play next** is not offered: the server places each song by turn.
 
@@ -138,10 +135,9 @@ When an administrator has turned karaoke on and a track has been prepared, a **S
 
 The screen button at the bottom left of the full player lists the screens that can play the music: **This device**, a Chromecast, and any other Fliks screen signed in to your account.
 
-:::steps
-![Press the screen button at the bottom left, named **This device**](/img/music-device-1.webp)
-![Pick the screen to play on. The track and the queue move there](/img/music-device-menu.webp)
-:::
+Press the screen button at the bottom left, named **This device**, then pick the screen to play on. The track and the queue move there.
+
+![The screen button and its list of screens](/img/music-device-1-anim.webp)
 
 Details, and what happens to the playback, are in [Casting and other devices](/player/casting-and-other-devices).
 
