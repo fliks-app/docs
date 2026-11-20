@@ -3,7 +3,10 @@ title: Books and audiobooks
 description: Add a books library, browse works, series and authors, read in the built-in reader, listen to audiobooks, and send books to an e-reader.
 ---
 
-## Creating a books library
+> [!SUMMARY]
+> Switch on **Books and audiobooks** when adding a library, then open a book and press **Read** or **Listen**. Send books to an e-reader from **Send to...**.
+
+## Add a books library
 
 In **Settings > Libraries > Add a library**, switch on **Books and audiobooks** under **Media
 types**. A library can hold books alone or mix them with other types. Folders and the **General**
@@ -25,7 +28,7 @@ Two things differ from video:
 > The same scan toggle as for video, **Move / rename according to the naming rules**, applies. See
 > the [warning in Libraries](/features/libraries#finding-media-in-the-folder).
 
-## Browsing
+## Browse books, series and authors
 
 Click the library in the left sidebar. A library of books alone has the tabs **Books**,
 **Series**, **Authors**, **Genres** and **Likes**.
@@ -59,6 +62,7 @@ The page also offers **Download**, **Share**, **Save offline** on clients that s
 **Read** opens the reader for EPUB (including fixed-layout), PDF and CBZ files. Your position is
 saved like any playback, so you pick up where you stopped on another device.
 
+:::details What the reader supports (EPUB and PDF)
 | Feature | EPUB | PDF |
 |---|---|---|
 | **Contents**, **Search in book**, bookmarks | Yes | No |
@@ -73,9 +77,9 @@ the book's own, **Literata**, **Atkinson Hyperlegible** and a sans-serif. While 
 faint running head shows the chapter, and a line tells how many minutes are left in the chapter
 and in the book. Select a passage to highlight it, add a note, copy it, search it or share the
 quote.
+:::
 
-Keyboard shortcuts in the reader:
-
+:::details Reader keyboard shortcuts
 | Key | Action |
 |---|---|
 | Left / Right arrows | Turn toward that side of the screen |
@@ -88,8 +92,9 @@ Keyboard shortcuts in the reader:
 | **B** | Bookmark this page |
 | Enter | Show or hide the bars |
 | Esc | Close the reader |
+:::
 
-## Listening to audiobooks
+## Listen to audiobooks
 
 **Listen** starts the audiobook player: a mini player that stays while you browse, and a
 full-screen view. It offers play and pause, **Back** and **Forward** skip steps (10 to 60 seconds),
@@ -113,4 +118,4 @@ the home page and stay out of **Continue watching**.
 ## See also
 
 - [Libraries](/features/libraries) for scanning, naming and the actions common to every title.
-- [Requests](/features/requests) for asking for a book in a language you want.
+- [Requests](/downloads/requests) for asking for a book in a language you want.

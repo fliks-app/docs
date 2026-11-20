@@ -3,7 +3,10 @@ title: Quality and playback stats
 description: Choose a quality, understand Direct Play, Remux and transcoding in plain words, read the stats overlay, and what to try when playback stutters.
 ---
 
-## Choose a quality
+> [!SUMMARY]
+> Open **Settings** (the gear) then **Quality** to pick a resolution; **Auto** lets Fliks decide. If playback stutters, lower the quality and open **Stats for nerds** to see why.
+
+## Change the video quality
 
 Show the controls and open **Settings** (the gear), choose **Quality**, then a row of the list. The check mark shows the current one.
 
@@ -21,8 +24,7 @@ The entry only shows when the title offers more than one quality.
 The ladder, the low-bandwidth rows and what **Auto** does are explained in
 [Streaming and transcoding](/features/streaming-and-transcoding#picking-a-quality).
 
-## Direct play, remux and transcode
-
+:::details What Direct Play, Remux and Transcode mean
 Each time you press play, Fliks checks what your device can handle and picks the lightest way to
 send the video:
 
@@ -37,9 +39,9 @@ when the device cannot play AC3 sound.
 
 The full rules, including what always forces a transcode, are in
 [Streaming and transcoding](/features/streaming-and-transcoding#the-three-ways-a-file-can-be-sent).
+:::
 
-## The stats overlay
-
+:::details Read the stats overlay (Stats for nerds)
 **Settings**, then **Stats for nerds**, shows a panel at the top left of the picture. It stays
 until you close it with the cross. On a phone, use **Settings** in the bar, then **Stats for nerds**.
 
@@ -56,8 +58,9 @@ repackaged (**Remux**). The picture is untouched. The AC3 sound is converted to 
 browser cannot play AC3. Nothing is wrong: this is the normal, cheap path.
 
 A live TV channel adds a **Live** block with how far behind live you are.
+:::
 
-## When playback stutters
+## Fix playback that stutters or buffers
 
 Try these in order. Each is quick.
 
@@ -79,7 +82,7 @@ A message in the player (**Playback failed**, **Network error during playback**,
 error**, **Unsupported video format**) comes with **Technical details** and a **Copy info**
 button. Include that text when you report a problem.
 
-## Speed
+## Play slower or faster
 
 The **Speed** button (`1x`) next to **Settings** sets the speed from 0.25x to 2x in steps of 0.25.
 

@@ -3,6 +3,9 @@ title: Notify
 description: Post Fliks events to your own HTTPS address as JSON, with retries and a delivery log.
 ---
 
+> [!SUMMARY]
+> Notify posts Fliks events as JSON to your own HTTPS address, with retries and a delivery log. For Discord, ntfy and similar services use **Integrations > Notifications** instead. Install it from the catalogue and set the **Target URL**.
+
 Notify is a catalogue plugin. Every time something happens in Fliks (a title finishes importing, a
 request is approved), it posts the event as JSON to one HTTPS address of yours. Use it to drive a
 chat relay, a home automation flow or a script that keeps its own log.
@@ -30,8 +33,7 @@ Two rules the plugin never bends:
 
 A changed target applies from the next attempt, queued deliveries included.
 
-## What it does for delivery
-
+:::details Delivery: retries, bursts, log and test
 - **It retries.** A target that is down or slow gets six attempts over about two minutes.
 - **It absorbs bursts.** A library scan that fires hundreds of events queues them, and drops the
   oldest rather than growing without limit.
@@ -41,12 +43,13 @@ A changed target applies from the next attempt, queued deliveries included.
 
 > [!NOTE]
 > The delivery log and the test have no button in the settings page. They are API calls.
+:::
 
-## Event payloads
-
+:::details Event payloads
 Events carry their data as JSON. `media.imported`, `media.removed`, `request.created` and
 `request.approved` carry `externalIds`, a list of `{provider, value}`. `media.files.imported` and
 `acquisition.grabbed` carry `family`.
+:::
 
 ## See also
 

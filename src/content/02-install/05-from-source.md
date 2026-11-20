@@ -3,21 +3,23 @@ title: From source
 description: Build the Rust server, the engine and the web client yourself and run them without Docker.
 ---
 
-## When to use this
+> [!SUMMARY]
+> Build the client and the server, download the engine named in `engine.lock`, and start `fliks-engine` with the server as its child. You provide PostgreSQL and FFmpeg yourself.
 
+:::details When to build from source (and what runs)
 Every other install method bundles its own PostgreSQL and FFmpeg. Building from source is for
 developing Fliks itself, or running it on a platform none of the packaged builds target. You
 provide and manage every dependency yourself. To work on the code with live reload, see the
 [Dev environment](/development/dev-environment) instead.
+:::
 
-## What runs
-
+:::details What runs
 Two processes, started as one: `fliks-engine` owns the public port (`4848`) and starts
 `fliks-server` (port `4849`, the whole HTTP API) as its child, restarting it if it exits. You
 build `fliks-server` and the web client, and download `fliks-engine` as a release binary.
+:::
 
-## Prerequisites
-
+:::details Prerequisites
 | Dependency | Notes |
 |---|---|
 | Rust | The version pinned in `rust-toolchain.toml` (installed by `rustup` on first build). It also adds the `wasm32-wasip2` target. |
@@ -31,6 +33,7 @@ tools, on `PATH` and at least as new as the server (database backups and restore
 (image-based subtitle OCR); `ffsubsync` and `alass` (automatic subtitle sync); Chromaprint's
 `fpcalc` (intro detection). Without them, the corresponding feature degrades instead of failing
 the rest of the server.
+:::
 
 ## Get the code
 

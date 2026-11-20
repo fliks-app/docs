@@ -3,7 +3,8 @@ title: System, statistics and scheduled tasks
 description: The System group of the administration sidebar - Statistics, System, Video activity - and the Scheduled tasks page, with every task and what it does.
 ---
 
-The first section of the administration sidebar, **System**, is a dashboard and a control room. The scheduled tasks live under **Advanced**. None of it is needed to watch, but **System > Trigger a task** is where you go when something did not update.
+> [!SUMMARY]
+> **System** is the control room. None of it is needed to watch, but **System > System > Trigger a task** is where you go when something did not update, and **Advanced > Scheduled tasks** lists every timed job with a run button.
 
 | Page | Path | For |
 |---|---|---|
@@ -16,9 +17,11 @@ The first section of the administration sidebar, **System**, is a dashboard and 
 
 ## Statistics
 
+:::details Statistics page: what it shows
 ![The Statistics page](/img/admin-statistics.webp)
 
 The page is called **Dashboard** in its header. It shows the number of **Movies**, **Series**, **Pending requests** and a **Total**; the **Disk space** of each library path (used share, free space and size); a **Subtitles** block with **Total**, **Downloaded**, **Failed** and **Synced** (the figures behind [Subtitle settings](/administration/subtitle-settings)); and **Quick access** buttons for **Search**, **Calendar** and **Requests**.
+:::
 
 ## System
 
@@ -28,12 +31,14 @@ The page is called **Dashboard** in its header. It shows the number of **Movies*
 
 ### Status
 
+:::details Status tab: every block
 - **APP**: the version and the **Uptime**.
 - **DATABASE**: the engine (PostgreSQL) with a status dot.
 - **INSTALLED PLUGINS**: how many, and how many are running. See [Plugins](/administration/plugins).
 - **Restart server**: asks for confirmation (active playbacks may be interrupted, the server is down for a few seconds) and reloads the page by itself when the server is back. It only works when Fliks runs under something that restarts it, such as Docker.
 - **Refresh** reloads the figures.
 - **Activity** appears while jobs run, with progress per task and a note when more are waiting.
+:::
 
 ### Trigger a task
 
@@ -43,6 +48,7 @@ Open **System > System**, open a group in **Trigger a task**, such as **Metadata
 
 ![Opening System > System, the Metadata group and a task](/img/admin-system-3-menu-anim.webp)
 
+:::details Every task you can trigger
 | Group | Entry | What it does |
 |---|---|---|
 | **Metadata** | **Refresh metadata** | The nightly pass, now: refreshes identified titles that are due (settled titles refreshed in the last week are skipped). |
@@ -59,6 +65,7 @@ Open **System > System**, open a group in **Trigger a task**, such as **Metadata
 | **Media** | The remaining scheduled tasks | **Create a backup**, **Refresh plugin sources**, **Clean up the library**, **Follow new releases**, and the three Live TV tasks. |
 
 A group can also show jobs a plugin registered. **Refresh plugin sources** also applies automatic plugin updates, see the note in [First-day admin tasks](/administration/first-day-tasks#run-a-scheduled-task).
+:::
 
 ### Task history
 
@@ -76,6 +83,7 @@ Lists the playbacks in progress across all clients. It is the [Transcoding dashb
 
 ![The Scheduled tasks list](/img/admin-schedulers-page.webp)
 
+:::details Scheduled tasks columns
 | Column | Meaning |
 |---|---|
 | **Task** | The job's name. |
@@ -85,7 +93,9 @@ Lists the playbacks in progress across all clients. It is the [Transcoding dashb
 | Play button | Runs the task now (**Trigger manually**). A toast says **Task ... triggered.** |
 
 Intervals cannot be edited here. For the subtitle tasks the real interval is the one in [Subtitle settings](/administration/subtitle-settings#search), and the download search interval is on **Settings > Downloads**.
+:::
 
+:::details Every scheduled task and its schedule
 | Task | Schedule | What it does |
 |---|---|---|
 | **Create a backup** | Daily 02:00 | Writes a database backup and prunes the oldest. See [Backups](/administration/backups). |
@@ -99,6 +109,7 @@ Intervals cannot be edited here. For the subtitle tasks the real interval is the
 | **Live TV source refresh** | Hourly | Refreshes the channel list of each [Live TV](/features/live-tv) source. |
 | **Live TV guide refresh** | Hourly | Refreshes the programme guide. |
 | **Live TV guide cleanup** | Daily 01:00 | Removes old programme entries. |
+:::
 
 A plugin that registers jobs adds its own rows. A hidden housekeeping job also runs daily at 03:00 and is not listed.
 

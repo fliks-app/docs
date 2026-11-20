@@ -3,13 +3,16 @@ title: Quick start
 description: Install the server, add your first library, and open Fliks on your other devices.
 ---
 
+> [!SUMMARY]
+> Install the server, create the administrator at `http://<host>:4848`, add a library with the wizard, then sign in from your other devices. About five minutes.
+
 > [!NOTE]
 > These docs name a page after where it lives. **Settings > Libraries** is the **Libraries** entry
 > of **Administration** (user menu, your avatar), **App settings > X** and **Account settings > X**
 > are entries of those two areas of the same menu. [Finding your way around](/getting-started/finding-your-way)
 > shows each one.
 
-## 1. Install the server
+## Install the server
 
 Pick whichever fits the machine that holds your video files. Every option gives you the same Fliks.
 
@@ -23,7 +26,7 @@ Pick whichever fits the machine that holds your video files. Every option gives 
 Each guide ends with the server listening on port `4848`, except TrueNAS, whose app publishes
 port `30485` by default.
 
-## 2. Create the administrator
+## Create the administrator
 
 Open `http://<host>:4848` in a browser (`http://localhost:4848` on the machine itself, port
 `30485` on TrueNAS). A server with no account has no default login: Fliks shows the **Create the
@@ -36,7 +39,7 @@ permission.
 The page only shows while the server has no user. After that, the address opens the normal
 login.
 
-## 3. Add a library
+## Add your media as a library
 
 Open the user menu (your avatar, top right), choose **Administration**, click **Libraries** in its
 sidebar, then **Add a library**. A wizard takes you through three steps.
@@ -63,8 +66,10 @@ sidebar, then **Add a library**. A wizard takes you through three steps.
 > On a new server, the **Setup** card on the home page has a **Configure** button next to *Add at
 > least one library* that opens the same page.
 
-### What the scan review shows
+### Fix a wrong match before creating the library
 
+
+:::details What the scan review shows
 **Scan the folder** lists every video file it found, one block per file. Each block shows the
 file path, a title and year search field, and the candidates found on TMDB or TVDB. Fliks
 pre-selects the best candidate, so on a tidy library you only click **Create the library**.
@@ -85,8 +90,9 @@ A file with no result at all, like `bbb sunflower 1080p 30fps normal`, is set to
 as is** by default.
 
 ![A file with no result: badged No metadata, with No match: add as is selected](/img/libraries-scan-review-no-match.webp)
+:::
 
-### Fixing an unidentified file later
+### Fix an unidentified file later
 
 After the library exists, **Settings > Libraries**, then **View** on the library and its
 **Medias** tab lists every title. An **Unidentified** button, with a count, shows up next to
@@ -103,7 +109,7 @@ The same **Identify** entry fixes a wrong match on any title. The rest of librar
 (extra folders, users, rescans) is in [Libraries](/features/libraries), and matching in
 [Metadata](/features/metadata).
 
-## 4. Check the setup checklist
+## Work through the setup checklist
 
 **Settings > General** starts with a **Setup** card listing seven steps. Done ones are struck
 through there; the pending ones also appear in a **Setup** card on an admin's home page. Two kinds
@@ -111,6 +117,7 @@ exist: required (red icon) and recommended (yellow icon).
 
 ![Home page of a fresh server: the Setup card with its pending steps and a Configure button on each](/img/onboarding-home-empty.webp)
 
+:::details What each checklist item is for
 | Item | Level | What it is for |
 |---|---|---|
 | Add at least one library | Required | Nothing shows up in Fliks without one. |
@@ -120,6 +127,7 @@ exist: required (red icon) and recommended (yellow icon).
 | Configure notifications | Recommended | Get pinged on Discord, Telegram, ntfy or similar when something happens. |
 | Create a non-administrator user | Recommended | An account without admin rights for the rest of the household (see [Users and permissions](/administration/users-and-permissions)). |
 | Configure an auto-approval rule | Recommended | Requests matching the rule are approved without you clicking anything. |
+:::
 
 **If you only want to watch your own files**, you need the library and nothing else. Dismiss
 **Create a quality profile** (the red "required" mark only matters when you download releases),
@@ -130,7 +138,7 @@ found for you, and **Create a non-administrator user** as soon as someone else u
 Click the **X** at the end of a row to dismiss it. It leaves the home page, and **Settings >
 General** keeps a **Re-enable** button for it.
 
-## 5. Install the clients
+## Open Fliks on your phone or TV
 
 Point the web app, or any native client, at the same address and log in with your account. Web,
 iOS, Android, Android TV, Apple TV, Samsung and LG TVs, the desktop app and Chromecast are all

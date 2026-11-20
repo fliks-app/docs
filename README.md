@@ -34,7 +34,11 @@ Supported in the body:
 
 - GitHub-flavoured markdown: tables, fenced code blocks (`bash`, `yaml`, `json`, `ts`, `js`, `html`,
   `css`, `ini`, `dockerfile`, `nginx`, `diff`, `text`, ...), task lists.
-- Callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`.
+- Callouts: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`, `> [!CAUTION]`, and
+  `> [!SUMMARY]` ("In short"): one to three sentences opening a page with what it lets you do.
+- Folded reference: `:::details Every field of the form` ... `:::` hides its markdown body under a
+  clickable title. Use it for option tables, defaults and edge cases so the page reads as a task. It
+  can't contain another `:::` block.
 - Internal links, root-absolute: `[Docker](/install/docker)` or
   `[Volumes](/install/docker#volumes)`. External links (`https://...`) open in a new tab
   automatically.
@@ -48,6 +52,12 @@ Supported in the body:
   ![Choose **Administration**](/img/nav-admin-entry.webp)
   :::
   ```
+
+  A single click on one screen reads better as one animated webp than as a two-step slider.
+
+The search (Ctrl+K) indexes the full text of every section, tolerates typos and maps a few common
+words, French ones included, to the terms the pages use (`SYNONYMS` in `src/app/core/search.ts`).
+Put the words a reader would type in headings and first sentences.
 
 Every `##`/`###` heading gets an anchor id derived from its text: lowercased, trimmed, every
 character that isn't a letter, digit, space, `-` or `_` dropped, remaining spaces turned into `-`,

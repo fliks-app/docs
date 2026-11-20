@@ -5,7 +5,11 @@ import { Injectable, signal } from '@angular/core';
 export class SearchOverlayService {
   readonly isOpen = signal(false);
 
-  open(): void {
+  /** Text typed in an outside search field, handed to the modal when it opens. */
+  readonly seed = signal('');
+
+  open(seed = ''): void {
+    this.seed.set(seed);
     this.isOpen.set(true);
   }
 

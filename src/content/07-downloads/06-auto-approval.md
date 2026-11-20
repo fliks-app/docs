@@ -3,13 +3,10 @@ title: Auto-approval rules
 description: Approve requests without an administrator when they match a rule you wrote, by who asks, what is asked and where it lands.
 ---
 
-> [!NOTE]
-> **Do you need this?** Only if other people make [requests](/features/requests). A rule decides whether a
-> request is approved on the spot or waits for someone with **Manage requests**. If you are the only user, or
-> you approve requests by hand, you can ignore this page. Approval itself still needs an acquisition plugin to
-> fetch the file; see [Requests](/features/requests#what-happens-after-approval).
+> [!SUMMARY]
+> An auto-approval rule approves a request the moment it is made, instead of leaving it **Pending** for a moderator. Only useful when other people make [requests](/downloads/requests). Create one in **Settings > Auto-approval** by choosing who (users or roles) and what (media type, libraries).
 
-## What it is for
+## What a rule does
 
 Without a rule, every request is **Pending** until an administrator or moderator approves it. A rule lets some
 requests skip that step: the request is approved the moment it is made, the title is added to the library
@@ -21,12 +18,9 @@ You decide who and what qualifies. Typical rules:
 - One trusted user may add anything.
 - Anyone may add a series of at most two seasons, but never a documentary.
 
-## Where to find it
+## Create an auto-approval rule
 
-**Settings > Auto-approval**, in the **Media** section of the admin sidebar. You need the **Settings access**
-permission. The page lists each rule with its name, a summary of its criteria and an **Active** switch.
-
-## Create a rule
+**Settings > Auto-approval** (**Media** section, **Settings access** permission).
 
 :::steps
 ![Open **Settings > Auto-approval**](/img/admin-autoapprove-1-sidebar.webp)
@@ -41,8 +35,11 @@ permission. The page lists each rule with its name, a summary of its criteria an
 To change a rule, click its name. To remove it, click **Delete** and confirm. The **Active** switch turns a rule
 off without deleting it.
 
-## Every field
+> [!WARNING]
+> A rule with no criterion approves every request, from everyone. The form warns you with a yellow banner while
+> you have set nothing. Fill in at least a role, a user or a media type.
 
+:::details Every field: name, who, what and except
 | Field | What it does |
 |---|---|
 | **Rule name** | A label. Required. |
@@ -77,9 +74,9 @@ Every criterion you set must hold. Within one criterion, one match is enough. A 
 | Field | What it does |
 |---|---|
 | **Excluded genres** | A request whose title has any of these genres is not approved by this rule, even if every other criterion matches. |
+:::
 
-## How a request is checked
-
+:::details How a request is checked
 1. Fliks lists the **Active** rules. If there is none, the request stays **Pending**.
 2. A rule matches when every criterion it sets holds. Several rules combine as alternatives: the first rule that
    matches approves the request, and the others are not consulted.
@@ -91,15 +88,11 @@ Every criterion you set must hold. Within one criterion, one match is enough. A 
 Genres come from TMDB. For a title from another metadata source, a rule that uses genres cannot match, so the
 request waits for a person.
 
-Auto-approval does not bypass the other request checks. The per-user [quotas](/features/requests#limits-per-user) and the
+Auto-approval does not bypass the other request checks. The per-user [quotas](/downloads/requests#limits-per-user) and the
 duplicate guard still run first. Requests to delete a title are never auto-approved.
+:::
 
-> [!WARNING]
-> A rule with no criterion approves every request, from everyone. The form warns you with a yellow banner while
-> you have set nothing. Fill in at least a role, a user or a media type.
-
-## Worked example: let Family add movies
-
+:::details Worked example: let Family add movies
 Goal: members of the **Family** role can add movies to the **Movies** library without waiting. Series and
 everything else still need approval.
 
@@ -111,12 +104,13 @@ A Family member requests a movie for the Movies library: approved at once. The s
 rule matches, so it stays pending. Someone with another role requests a movie: pending.
 
 To keep one genre out, add it under **Excluded genres**.
+:::
 
 ## How it connects
 
-- [Requests](/features/requests) explains statuses, quotas and what happens after approval.
+- [Requests](/downloads/requests) explains statuses, quotas and what happens after approval.
 - [Users and permissions](/administration/users-and-permissions) covers roles and the **Create requests** and
   **Manage requests** permissions.
 - [Libraries](/features/libraries) lists the libraries a rule can target.
-- [Quality profiles](/administration/quality-profiles) and [language profiles](/administration/language-profiles)
+- [Quality profiles](/downloads/quality-profiles) and [language profiles](/administration/language-profiles)
   are chosen by the requester at request time. A rule never changes them.

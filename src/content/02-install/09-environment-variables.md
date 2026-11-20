@@ -3,7 +3,10 @@ title: Environment variables
 description: Every environment variable the Fliks server reads, with its default and what it controls.
 ---
 
-## Before you reach for one
+> [!SUMMARY]
+> Most tuning lives in the admin UI. You only need an environment variable for what must be known before the app starts: the database, ports and folders. Find the group below, then open it.
+
+## Check the admin UI first
 
 Most day-to-day tuning lives in the admin UI, not in an environment variable: the transcode
 cache budget, tone-mapping algorithm and curve, GPU selection, segment duration, subtitle
@@ -19,6 +22,7 @@ live in `%LOCALAPPDATA%\Fliks Server\conf\tray-settings.json`.
 
 ## Database
 
+:::details All database variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `DB_HOST` | `localhost` | PostgreSQL host. |
@@ -26,9 +30,11 @@ live in `%LOCALAPPDATA%\Fliks Server\conf\tray-settings.json`.
 | `DB_USERNAME` | `fliks` | PostgreSQL user. |
 | `DB_NAME` | `fliks` | Database name. |
 | `DB_PASSWORD` | `fliks` | PostgreSQL password. |
+:::
 
 ## Network and access
 
+:::details All network and access variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `PORT` | `4848` | The public port, the one the engine listens on (the server itself sits behind it on `4849`). In Docker it's the port inside the container: change the host side of `ports:` instead. |
@@ -39,9 +45,11 @@ live in `%LOCALAPPDATA%\Fliks Server\conf\tray-settings.json`.
 | `REFRESH_TOKEN_TTL_DAYS` | `60` | How long a login stays valid without re-entering credentials. |
 | `STREAM_TOKEN_TTL` | `6h` | How long a playback token (the one embedded in a stream URL) stays valid. |
 | `TZ` | `UTC` in the Docker image | Timezone of the server process, used for scheduled tasks and log times. |
+:::
 
 ## Paths and storage
 
+:::details All paths and storage variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `FLIKS_DATA_DIR` | `<cwd>/data` (`/app/data` in Docker) | Artwork, uploaded avatars, and database backups. Not disposable. |
@@ -50,6 +58,7 @@ live in `%LOCALAPPDATA%\Fliks Server\conf\tray-settings.json`.
 | `FLIKS_TRANSCODE_DIR` | `/app/transcode` in the Docker image; else `FLIKS_CACHE_DIR`, else `fliks-transcode` in the system temp directory | The HLS segment cache. Outside Docker the temp directory is `tmpfs` on many hosts: point it at real disk if you have a large cache budget. |
 | `FLIKS_RUNTIME_DIR` | `<data dir>/plugins` | Plugin import staging, the compiled-code cache, and each plugin's private data folder. The installed plugin archives themselves are stored in the database, not here. |
 | `FLIKS_IMAGES_DIR` | *(none)* | Deprecated alias for `FLIKS_DATA_DIR`. Rename it if you still have it set. |
+:::
 
 ## Engine
 
@@ -57,17 +66,21 @@ The server runs behind `fliks-engine`, which fronts the HTTP API and does the me
 Docker image, the TrueNAS app and the Windows and macOS apps start both and wire them together:
 you don't set these.
 
+:::details All engine variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `FLIKS_ENGINE_TOKEN` | generated | The shared secret that protects the engine's control API. Left unset, the engine generates one at first start and writes it (mode `0600`) to `.engine-token` in `FLIKS_CONF_DIR`; the server reads the same file, so the two always agree and a restart keeps it. A value set here wins over the file. Set it only to run the engine and the server separately with a fixed token. |
+:::
 
 Keep the `/app/conf` volume: it holds the token as well as the JWT secret.
 
 ## Metadata providers
 
+:::details All metadata providers variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `METADATA_STALE_AFTER_MONTHS` | `3` | Age after which the scheduled metadata refresh re-fetches a title's metadata. |
+:::
 
 Metadata comes from provider plugins bundled with the server. Their API keys are set per plugin in
 **Settings > Plugins**, not in the environment. Official builds ship default keys; a source build
@@ -80,17 +93,20 @@ has none, so set your own there or titles won't be matched and no artwork is fet
 
 ## Update check
 
+:::details All update check variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `FLIKS_DISABLE_UPDATE_CHECK` | off | Set to `1`, `true` or `yes` to stop the server from asking GitHub for the latest release (it only asks when the web client requests the update status, cached 6 h). See [Updating](/install/updating). |
 | `FLIKS_GITHUB_REPO` | `fliks-app/fliks` | Which repository the update check queries; only relevant if you run a fork. |
 | `FLIKS_SKIP_PRE_MIGRATION_BACKUP` | off | Set to `1`, `true` or `yes` to skip the database dump the server writes before applying pending migrations (to `<data dir>/backups/pre-migration`, the 3 latest kept). Leave it off unless the disk is too small for the dump. See [Backups](/administration/backups#before-a-migration). |
+:::
 
 ## Streaming session tuning
 
 These rarely need touching; the defaults match the docker-compose example. Cache **budget**
 (size and retention) is a **Settings > Streaming** value, not an environment variable.
 
+:::details All streaming session tuning variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `STREAM_LIVE_SESSION_TTL_MS` | `30000` | How long a viewer session survives without a heartbeat before it's considered gone. |
@@ -100,21 +116,26 @@ These rarely need touching; the defaults match the docker-compose example. Cache
 | `STREAM_JOB_FALLBACK_TIMEOUT_MS` | `1800000` | Hard idle timeout that kills a transcoding session nobody is watching. |
 | `STREAM_MAX_SESSIONS_PER_USER` | `10` | Caps concurrent playback sessions for a single account. |
 | `TRANSCODE_CACHE_GC_INTERVAL_MS` | `300000` | How often the transcode cache is swept against its size and age budget. |
+:::
 
 ## Plugins
 
+:::details All plugins variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `FLIKS_PUSH_RELAY_URL` | the official relay | The push relay the Fliks Relay connection registers at. For forks that build their own mobile apps and for development; the store apps only use the official relay. Changing it registers at the new relay at once and deletes the old registration in the background. See [Push notifications](/administration/push-notifications#your-own-relay-and-development). |
 | `FLIKS_PLUGINS_DISABLED` | off | Set to `1` to start the server without loading any plugin except the bundled metadata providers: the way out when a plugin crashes the server on boot. |
+:::
 
 ## Hardware
 
 See [Hardware acceleration](/install/hardware-acceleration) for context.
 
+:::details All hardware variables
 | Variable | Default | What it controls |
 |---|---|---|
 | `FLIKS_OPENCL_DEVICE` | auto | Pins the OpenCL `platform.device` selector used for HDR tone-mapping, for a mixed-GPU host where auto-detection picks the wrong vendor. |
+:::
 
 ## See also
 

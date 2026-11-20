@@ -3,14 +3,12 @@ title: Logs and troubleshooting
 description: Where to find logs on each platform, and how to read the warnings Fliks logs about its own setup.
 ---
 
-## In-app log viewer
+> [!SUMMARY]
+> Read the server's recent log in **Settings > System > Logs**, or the platform log for anything older: `docker compose logs fliks` on Docker. The warnings table below explains the messages Fliks logs about its own setup.
 
-**Settings > System > Logs** shows the server's own recent log lines, newest first, filterable
-by level (Info, Warning, Error) and by a text search, refreshed every 5 seconds. The server keeps
-only the **last 2000 lines in memory**, and the page shows the 200 newest that match your filter.
-That buffer is reset on every restart. For anything older, or to see what happened around a
-crash, go to the platform log below instead. There is no log level setting: the server always
-logs at the same verbosity.
+## Read the logs
+
+**Settings > System > Logs** shows recent log lines, newest first, filterable by level and text. It holds only the last 2000 lines (reset on restart): for anything older, or around a crash, use the platform log below.
 
 ![The in-app log viewer, with log and warn lines from scheduled plugin jobs](/img/logs.webp)
 
@@ -25,9 +23,9 @@ logs at the same verbosity.
 
 ## Warnings worth recognizing
 
-These are logged, not surfaced as errors in the UI, so they're easy to miss unless you're
-already looking at the log (search for the text in the in-app viewer):
+These are logged, not shown as errors in the UI: search for the text in the viewer.
 
+:::details Every warning, what it means and the fix
 | Message (start of line) | What it means | Fix |
 |---|---|---|
 | `data directory not writable: using …` | `FLIKS_DATA_DIR` isn't writable by the process; Fliks fell back to a temp directory. Artwork and avatars won't survive a restart. | Fix the mount/permission, or set `FLIKS_DATA_DIR` to a writable path. |
@@ -35,9 +33,11 @@ already looking at the log (search for the text in the in-app viewer):
 | `no usable conf dir for .jwt-secret: using a process-local secret` | `FLIKS_CONF_DIR` (`/app/conf` in Docker) isn't writable, so a new signing key is generated on every restart and everyone is logged out each time. The same line appears for `.engine-token`. | Fix the mount/permission, or set `JWT_SECRET` (and `FLIKS_ENGINE_TOKEN`). |
 | `hardware run failed, CPU fallback` | A transcode that started on a hardware path (`from=` names it) failed, so Fliks restarted it on the CPU. The line comes from the transcoding engine, so it is in the [platform log](#where-logs-live-per-platform), not in the in-app viewer. The server's `Hardware acceleration: …` line, logged when it detects the machine's capabilities, names the path it found. | See [Hardware acceleration](/install/hardware-acceleration) for what each path needs (a device, a driver version, a container capability). |
 | `GitHub release lookup failed: HTTP …` | The update check got an error answer from GitHub; harmless, retried on the next check. | Ignore, or set `FLIKS_DISABLE_UPDATE_CHECK=1` if the server has no outbound internet access at all. |
+:::
 
 ## Common startup failure: the database extension
 
+:::details Startup stops on the database extension (pg_trgm)
 Fliks creates the `pg_trgm` extension (used for search) with `CREATE EXTENSION IF NOT EXISTS` in
 one of its database migrations, which run on boot, and stops with an error if it fails, before the
 web server starts. With the example Compose file this works out of the box, because the `fliks`
@@ -45,14 +45,17 @@ Postgres role owns its own database. Pointing Fliks at a database on a shared or
 fail here if that role isn't allowed to create extensions. Either have a superuser run
 `CREATE EXTENSION IF NOT EXISTS pg_trgm;` once on that database, or grant the role the `CREATE`
 privilege on it (`pg_trgm` is a trusted extension, so that is enough).
+:::
 
 ## Health check endpoint
 
+:::details Health check endpoint for Docker and orchestrators
 `GET /api/system/liveness` is what Docker's own `HEALTHCHECK` polls (every 30 seconds, a generous
 60-second grace period on startup, since a library scan can otherwise saturate a low-power CPU
 and make an orchestrator think the container is unhealthy mid-scan). It needs no login and only
 answers `{"ok":true}`: it's a plain liveness check, not a deep dependency check. Use the health
 cards on **Settings > System** (Status tab) for database and plugin status instead.
+:::
 
 ## Backup and restore failures
 

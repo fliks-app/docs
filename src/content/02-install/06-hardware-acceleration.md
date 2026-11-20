@@ -3,7 +3,10 @@ title: Hardware acceleration
 description: Which GPU paths Fliks supports, how it picks one automatically, and how to give it access on each platform.
 ---
 
-## How detection works
+> [!SUMMARY]
+> Fliks picks the GPU path itself at startup. Give the container or app access to the device (Docker `devices:` for Intel and AMD, the NVIDIA runtime for NVIDIA), restart the server, and check the log for `HW accel test passed`.
+
+## Check that hardware transcoding is working
 
 Fliks probes for hardware acceleration once, at server startup, by actually running a one-frame
 encode through FFmpeg for each candidate and seeing which one succeeds. It never assumes a GPU
@@ -22,8 +25,7 @@ qsv`, or `HW accel test failed: ...` with FFmpeg's reason), and the
 [Transcoding dashboard](/administration/transcoding-dashboard) shows which path an active stream
 is actually using. Change the device setup, then restart the server so it probes again.
 
-## Codec support by path
-
+:::details Which codecs each path encodes
 | Codec | CPU | Intel QSV | VAAPI | NVIDIA NVENC | AMD AMF | VideoToolbox |
 |---|:-:|:-:|:-:|:-:|:-:|:-:|
 | H.264 | Yes | Yes | Yes | Yes | Yes | Yes |
@@ -38,6 +40,7 @@ render HDR itself, on whichever path is active (including CPU). Keeping HDR thro
 narrower: only HEVC on QSV and NVENC, and AV1 on NVENC, write HDR metadata in hardware, and every
 other backend hands an HDR transcode to the CPU encoder. See
 [HDR and Dolby Vision](/features/streaming-and-transcoding#hdr-and-dolby-vision).
+:::
 
 ## Docker: Intel QSV / VAAPI
 
@@ -77,10 +80,10 @@ services:
 The `fliks` service in the example file already has an `environment:` block: add the two
 `NVIDIA_` lines to it rather than writing a second `environment:` key.
 
-## Docker: architecture note
-
+:::details Docker on arm64
 The Intel and NVIDIA stacks are `amd64`-only. On `arm64` (a Raspberry Pi 5, an ARM NAS), the
 image still pulls and runs fine, but every transcode falls back to CPU.
+:::
 
 ## Windows and macOS
 
@@ -88,8 +91,7 @@ Both native builds detect hardware automatically at launch: QSV, AMF or NVENC on
 (NVENC needs an NVIDIA driver `570` or newer), VideoToolbox on macOS. Nothing to configure; see
 [Windows](/install/windows) and [macOS](/install/macos).
 
-## Multi-GPU hosts
-
+:::details Pick a GPU on a multi-GPU host
 On a Linux host with more than one GPU, **Settings > Streaming** shows a **GPU device** picker
 (hidden when only one GPU is detected) listing every render node Fliks found, so you can pin
 transcoding to a specific adapter instead of letting it auto-pick.
@@ -100,9 +102,9 @@ device:
 | Variable | What it does |
 |---|---|
 | `FLIKS_OPENCL_DEVICE` | Pins the `platform.device` OpenCL selector (e.g. `0.0`) used for HDR tone-mapping on the NVENC/CPU path, when auto-pick chooses the wrong vendor on a mixed Intel+NVIDIA host. |
+:::
 
-## Subtitle burn-in and cropping
-
+:::details Why a stream drops to CPU (subtitle burn-in, cropping)
 Two situations force a step down from the detected hardware path, by design rather than as a
 bug:
 
@@ -114,6 +116,7 @@ bug:
 
 Both fall back automatically; you won't see an error, just a different path in the
 [Transcoding dashboard](/administration/transcoding-dashboard) than you might expect.
+:::
 
 ## See also
 

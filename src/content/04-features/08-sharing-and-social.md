@@ -3,29 +3,10 @@ title: Sharing and social
 description: Follow other users, recommend a title to someone directly, and decide what your own profile shows.
 ---
 
-## The social layer is opt-in, and private by default
+> [!SUMMARY]
+> Follow people from **Search > Members**, recommend a title from its menu, and choose what your profile shows in **Account settings > Privacy**. Nothing is shared by default.
 
-Every account can follow, like, recommend and collaborate on playlists from the moment it's
-created, but nothing about an account is shared until its owner turns it on. By default:
-
-- A profile's visibility is **private**.
-- Every individual "share my..." toggle is **off**.
-
-There's also a single kill switch, **Do not use sharing features** (in **Account settings > Privacy**,
-also reached from the profile's **Privacy** button), for anyone who wants no part of this. Turning it on:
-
-- Makes the account undiscoverable: nobody can view its profile, follow it, recommend content to
-  it, or add it as a playlist collaborator. It also can't view other profiles or save playlists
-  itself.
-- Permanently deletes its existing follows, saved playlists, collaborations and recommendations,
-  after a confirmation dialog. Its own playlists lose all their members and go back to private.
-  This cannot be undone.
-
-> [!WARNING]
-> That deletion is immediate and permanent. There's no separate "pause sharing" option that keeps
-> the data around for later.
-
-## Finding people and your own profile
+## Find people and open your profile
 
 Click **Search** in the sidebar, type a name, then open the **Members** tab and the profile. On a private profile the button reads **Request to follow**.
 
@@ -68,7 +49,7 @@ A movie, a series, a season or an episode can be liked. Playlists can't be liked
 title shows up in your own **My favorites** row on the home page and in a library's **Likes**
 view, and, if you've shared it, in the **Favorites** section of your public profile.
 
-## Recommending a title to someone
+## Recommend a title to someone
 
 Pick **Recommend** (or **Recommend season**) from a title's menu to open a dialog where you choose
 a recipient and, optionally, add a short note. You can only send to a user with a public profile,
@@ -87,12 +68,13 @@ duplicate.
 Recommendations only ever show content in libraries the recipient can access, regardless of what
 libraries the sender can see.
 
-## Public profiles
+## Choose what your profile shows
 
 Every profile page has an **Overview** tab, and, depending on what its owner shares, a
 **Statistics** tab. Your own profile also has a **Recommendations** tab (what was sent to you, and
 what you sent, including dismissed cards). Each section has its own switch in **Account settings > Privacy**:
 
+:::details Every privacy toggle
 | Toggle | Shows on your profile |
 |---|---|
 | Public profile | Whether anyone can view the profile at all (public), or only accepted followers see anything beyond your name (private) |
@@ -101,6 +83,7 @@ what you sent, including dismissed cards). Each section has its own switch in **
 | Share my recent activity | Your last 12 watched titles |
 | Share my favorites | Your last 24 likes |
 | Share my statistics | The Statistics tab (see below) |
+:::
 
 ![The Account settings > Privacy page, with every share toggle off by default](/img/account-privacy.webp)
 
@@ -109,8 +92,7 @@ profile; there's no separate toggle for those. If a visitor would see no playlis
 with anything in it, they get: "This user has chosen not to display any data on their profile."
 Someone who doesn't follow a private profile sees only its name, picture and follow button.
 
-### Statistics
-
+:::details What the Statistics tab tracks
 The Statistics tab shows what's actually tracked:
 
 - Total time watched (from real playback progress, not titles only marked watched by hand)
@@ -118,12 +100,35 @@ The Statistics tab shows what's actually tracked:
 - Series started
 - Episodes watched
 - Requests made (pending, approved and declined, combined)
+:::
 
 ## Profile picture
 
 Upload any image from the profile page; a circular crop tool with a zoom slider lets you frame it
 before saving, and **Remove picture** takes it off again. There are no preset avatars: without an
 uploaded picture, Fliks shows your initials on a colour generated from your name instead.
+
+## Turn off all sharing (opt-in by default)
+
+Every account can follow, like, recommend and collaborate on playlists from the moment it's
+created, but nothing about an account is shared until its owner turns it on. By default:
+
+- A profile's visibility is **private**.
+- Every individual "share my..." toggle is **off**.
+
+There's also a single kill switch, **Do not use sharing features** (in **Account settings > Privacy**,
+also reached from the profile's **Privacy** button), for anyone who wants no part of this. Turning it on:
+
+- Makes the account undiscoverable: nobody can view its profile, follow it, recommend content to
+  it, or add it as a playlist collaborator. It also can't view other profiles or save playlists
+  itself.
+- Permanently deletes its existing follows, saved playlists, collaborations and recommendations,
+  after a confirmation dialog. Its own playlists lose all their members and go back to private.
+  This cannot be undone.
+
+> [!WARNING]
+> That deletion is immediate and permanent. There's no separate "pause sharing" option that keeps
+> the data around for later.
 
 ## See also
 

@@ -466,3 +466,30 @@ body {
   font-variant-numeric: tabular-nums;
   opacity: 0.75;
 }
+
+/* ---------- "In short" callout and folded reference (:::details) ---------- */
+
+.doc-callout-summary {
+  --callout: var(--color-primary);
+  font-size: 1.02em;
+}
+.doc-details {
+  margin-block: 1.25em;
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  border-radius: var(--radius-box);
+}
+.doc-details > summary {
+  cursor: pointer;
+  padding: 0.7rem 1rem;
+  font-weight: 600;
+  list-style-position: inside;
+}
+.doc-details > summary:hover {
+  background-color: color-mix(in oklab, var(--color-base-content) 5%, transparent);
+}
+.doc-details[open] > summary {
+  border-bottom: 1px solid color-mix(in oklab, var(--color-base-content) 10%, transparent);
+}
+.doc-details-body {
+  padding: 0.25rem 1rem 0.75rem;
+}

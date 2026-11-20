@@ -3,6 +3,9 @@ title: LG TV (webOS)
 description: A native webOS app for LG TVs, approved and distributed through the LG Content Store.
 ---
 
+> [!SUMMARY]
+> Install Fliks from the LG Content Store on the TV (webOS 7.0 or newer). Sideloading an `.ipk` is for development only.
+
 ## Compatibility
 
 Fliks supports **webOS 7.0 and newer** (the floor of its LG Content Store listing), and is approved
@@ -42,7 +45,3 @@ differ only by resolution: `media.fliks.app_<version>_uhd_1920x1080.ipk` for 4K 
 (LG's **Developer Mode** app) and the webOS CLI registered against it (`ares-setup-device`),
 install with `ares-install <file>.ipk` and start it with `ares-launch media.fliks.app`.
 
-## See also
-
-- [Pairing and remote control](/features/pairing-and-remote-control)
-- [Streaming and transcoding](/features/streaming-and-transcoding)

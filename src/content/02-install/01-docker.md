@@ -3,20 +3,23 @@ title: Docker
 description: Run the Fliks server and its database with Docker Compose, the recommended way to self-host it.
 ---
 
-## What you get
+> [!SUMMARY]
+> Download the example Compose file, set a database password and your media folder, then run `docker compose up -d` and open `http://<host>:4848`.
 
+:::details What is in the image
 The published image is a single container: the Rust server (`fliks-server`) behind `fliks-engine`,
 the streaming engine that owns port `4848` and forwards the API to the server, the built Angular
 web client served as static assets, and a self-contained FFmpeg build with hardware-acceleration
 support baked in. A separate PostgreSQL container holds the database. It runs on `linux/amd64` and
 `linux/arm64`.
+:::
 
 ## Prerequisites
 
 - Docker with the Compose plugin (the `docker compose` command).
 - A folder with your video files, reachable from wherever Docker runs.
 
-## Set it up
+## Run Fliks with Docker Compose
 
 Download the example Compose file and rename it:
 
@@ -47,6 +50,7 @@ docker compose up -d
 
 ## Volumes
 
+:::details What each volume holds
 | Volume | Contents |
 |---|---|
 | `/medias` | Your library root(s). Read-only is enough to browse and play; downloads, deleting media and saving subtitles next to a video need write access. |
@@ -54,9 +58,11 @@ docker compose up -d
 | `/app/conf` | The JWT signing key and the engine token, both generated at first start. Lose the key and every session is invalidated. |
 | `/app/data` | Artwork, uploaded avatars, database backups, plugin data (`plugins/`), and a regenerable `cache/` subfolder. Not disposable: avatars can't be re-fetched. |
 | `/app/transcode` | The HLS segment cache. Regenerable, safe to wipe. The image sets `FLIKS_TRANSCODE_DIR` to this path. |
+:::
 
 ## Running as a specific user
 
+:::details Run as a specific user (NAS, Kubernetes)
 Some platforms pin the container to a non-root uid: the TrueNAS catalog uses `568`, Unraid uses
 `99:100`, Kubernetes' `runAsNonRoot` and OpenShift's arbitrary uid policy pick their own. The
 image's `/app/conf`, `/app/data` and `/app/transcode` are group-writable by root (`g=u`), so any
@@ -68,17 +74,19 @@ services:
     user: '568:568'
     group_add: ['0']
 ```
+:::
 
 ## Chromecast on a bridge network
 
+:::details Casting from a bridge network
 The default bridge network works for casting. The device you cast from (a browser, the phone
 app, the desktop app) finds the Chromecast itself; the server takes no part in discovery. What
 the Chromecast does need is to reach the server directly, at the address Fliks hands it: set
 **Public address** under **Settings > General** if that address isn't the one the Chromecast
 can reach (see [Reverse proxy](/install/reverse-proxy#tell-fliks-its-public-address)).
+:::
 
-## Limits on a small box
-
+:::details Limit CPU and memory on a small box
 On a shared NAS or single-board computer, cap the container so transcodes don't starve the rest of
 the box. A 4K HDR transcode takes about 700 MB of RAM. The engine sizes itself on the CPUs of the
 limit: software transcodes share them (each gets at least 2 threads), so more simultaneous
@@ -93,6 +101,7 @@ services:
     mem_limit: 4g
     cpus: '4'
 ```
+:::
 
 ## Hardware transcoding
 

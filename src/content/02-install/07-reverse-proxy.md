@@ -3,8 +3,10 @@ title: Reverse proxy
 description: Put Fliks behind nginx, Caddy or Traefik to expose it over HTTPS, with the settings streaming and authentication need to keep working.
 ---
 
-## What the proxy needs to forward
+> [!SUMMARY]
+> Proxy to port `4848` with response buffering off, long timeouts, `X-Forwarded-Proto` and a body limit of 150 MB; serve at the root of a domain and set **Public address** in **Settings > General**. Ready configs for nginx, Caddy and Traefik below.
 
+:::details What the proxy must forward and why
 Fliks doesn't use WebSockets; live updates (scan progress, new downloads, Live TV state) travel
 over Server-Sent Events (SSE), a single long-lived HTTP response the server keeps writing to. In
 practice this means:
@@ -21,6 +23,7 @@ practice this means:
   Fliks ever sees it.
 - Long timeouts on the streaming and SSE paths: a paused player, an idle Live TV tab, or a slow
   network can hold a connection open far longer than a typical API request.
+:::
 
 ## No subpath support
 

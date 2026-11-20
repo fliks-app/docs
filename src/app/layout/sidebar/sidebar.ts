@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
@@ -15,11 +15,6 @@ const pathOf = (url: string) => url.split(/[?#]/)[0];
 export class Sidebar {
   private readonly router = inject(Router);
 
-  protected readonly groups = [
-    { label: 'Documentation', sections: SECTIONS.filter((s) => s.group === 'user') },
-    { label: 'Developers', sections: SECTIONS.filter((s) => s.group === 'dev') },
-  ].filter((g) => g.sections.length);
-
   protected readonly currentPath = toSignal(
     this.router.events.pipe(
       filter((e): e is NavigationEnd => e instanceof NavigationEnd),
@@ -27,6 +22,21 @@ export class Sidebar {
     ),
     { initialValue: pathOf(this.router.url) },
   );
+
+  protected readonly isDev = computed(() =>
+    SECTIONS.some((s) => s.group === 'dev' && s.pages.some((p) => p.url === this.currentPath())),
+  );
+  protected readonly current = computed(() => {
+    const dev = this.isDev();
+    const sections = SECTIONS.filter((s) => s.group === (dev ? 'dev' : 'user'));
+    const other = SECTIONS.find((s) => s.group === (dev ? 'user' : 'dev'));
+    return {
+      label: dev ? 'Developers' : 'Documentation',
+      sections,
+      switchLabel: dev ? 'Back to the user documentation' : 'Developer documentation',
+      switchUrl: other?.pages[0]?.url,
+    };
+  });
 
   protected isCurrentSection(section: DocSection): boolean {
     return section.pages.some((p) => p.url === this.currentPath());

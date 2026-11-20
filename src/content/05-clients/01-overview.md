@@ -3,7 +3,10 @@ title: Overview
 description: What Fliks runs on, what's shared across every client, and where to find the details for each one.
 ---
 
-## One server, many screens
+> [!SUMMARY]
+> Pick the client for your screen below: web, iOS, Android, Android TV, Apple TV, Samsung, LG, desktop, or cast to a Chromecast. All of them use the same account and keep your progress in sync.
+
+## Choose a client for your device
 
 Fliks is a single server with a client for nearly every screen in the house. Sign in on any of
 them and your library, your progress and your preferences are the same everywhere: start a film on
@@ -28,6 +31,7 @@ your phone, and the TV offers to resume it from the same spot.
 
 ## What every client shares
 
+:::details What every client shares
 - **The same account system**: resume position, watch history, playlists, likes and requests all
   live on the server, not on any one device.
 - **[Pairing](/features/pairing-and-remote-control)**: sign a TV into an account without typing a
@@ -38,9 +42,11 @@ your phone, and the TV offers to resume it from the same spot.
 - **Adaptive playback**: each client tells the server what it can decode, and the server picks
   between sending the file as-is, repackaging it, or converting it, per [Streaming and
   transcoding](/features/streaming-and-transcoding).
+:::
 
 ## What's different on TV clients
 
+:::details What TV clients cannot do
 Android TV, Samsung (Tizen) and LG (webOS) share the same restrictions, because they're built for
 navigation with a remote control rather than a mouse or touchscreen:
 
@@ -55,6 +61,7 @@ navigation with a remote control rather than a mouse or touchscreen:
 Apple TV is a separate, native app rather than a build of the same interface (see
 [Apple TV](/clients/apple-tv) for exactly what it does and doesn't cover), but follows the same
 restrictions: no downloads, no casting out, no server administration.
+:::
 
 ## See also
 

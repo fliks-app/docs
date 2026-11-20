@@ -3,49 +3,8 @@ title: Subtitles
 description: Automatic subtitle search across six providers, one-click sync, live resync in the player, on-demand translation, OCR and burn-in for image-based and styled tracks.
 ---
 
-## How automatic search works
-
-Fliks searches for subtitles on its own for every monitored title, using the language, forced and
-hearing-impaired preferences set on that title's **language profile** (not a global setting: each
-title has its own, picked when it's added). A search runs automatically after a file is imported,
-and again on a recurring schedule for anything still missing a language its profile asks for; the
-**Automatic subtitle search** switch in **Settings > Subtitles** turns both off, along with the
-upgrade pass below. **Search missing** in a title's **Edit subtitles** dialog runs it on demand,
-whatever the schedule says.
-
-### Providers
-
-Six sources can be searched. None is set up out of the box: add each one you want with **Add
-provider** under **Settings > Subtitle providers > Download providers**, where it can also be
-switched off and given a priority (25 by default). A lower priority number is tried first, and wins
-if two providers return what looks like the same result. **Test** checks the credentials before you
-save.
-
-| Provider | Covers | Credentials needed |
-|---|---|---|
-| OpenSubtitles | Movies and episodes, most languages | An OpenSubtitles account username and password (an API key is optional) |
-| Subdl | Movies and episodes, most languages | An API key |
-| Gestdown (an Addic7ed mirror) | TV episodes only, a fixed set of languages | None |
-| Supersubtitles | Movies and episodes, Hungarian and English only | None |
-| YIFY | Movies only, looked up by IMDb id | None |
-| Subsynchro | Movies only, French only | None |
-
-### Picking the right match
-
-Every result is scored against the video file: a hash of the file itself is worth the most (a hash
-match is treated as a certain match), the title and year carry most of the rest, and the release
-group, source, resolution and codecs each add a little more. Episodes are scored the same way,
-with the series name and season/episode numbers standing in for the movie-specific fields. The
-best-scoring result above a minimum score (70 by default) is downloaded automatically.
-
-A separate upgrade pass revisits anything downloaded below a higher threshold (90 by default) and
-replaces it if a strictly better match turns up later. A subtitle you've synced or edited by hand
-(timing, framerate, corrections) is locked and skipped by the upgrade pass from then on, and
-**Validate subtitle** sets a subtitle's score to 100, which keeps it above any threshold. A
-translation keeps its source's score and isn't locked.
-
-Downloaded files are always cleaned of ads; optionally (see settings below) also of hearing-impaired
-tags and of your own custom exclusion patterns.
+> [!SUMMARY]
+> Open a title (an episode, for a series), then **More** > **Edit subtitles** to search, import, sync or translate its subtitles. Fliks also searches on its own once a subtitle provider is added in **Settings > Subtitle providers**.
 
 ## Managing subtitles from the title page
 
@@ -103,6 +62,7 @@ Fliks stores the file next to the video, named after it with the language code a
 
 ### Actions on a file
 
+:::details What each action does
 **Actions** at the end of a row opens the menu for that file. What it offers depends on where the
 file comes from.
 
@@ -117,6 +77,7 @@ file comes from.
 | **Validate** | Marks the file as correct, which sets its score to 100 | Files with a score below 100 |
 | **Blacklist** | Deletes the file and stops the same result from being downloaded again | Files downloaded from a provider |
 | **Delete** | Removes the file from the disk | Downloaded, imported and translated files |
+:::
 
 ## Fixing out-of-sync subtitles
 
@@ -137,6 +98,7 @@ you point it at) and slides the whole file back onto it, using
 ![A **Subtitle synced successfully** message appears when it is done](/img/subtitles-sync-4.webp)
 :::
 
+:::details Every option of the sync dialog
 The options in **Sync options**:
 
 | Option | Meaning |
@@ -145,6 +107,7 @@ The options in **Sync options**:
 | **Max offset (seconds)** | The largest shift the search may apply. 60 by default. Leave it empty for no limit. |
 | **Do not fix the framerate** | Stops the sync from also correcting a framerate mismatch. |
 | **Golden-Section Search** | A slower, more accurate search. |
+:::
 
 The result replaces the file. The cue list of an English subtitle that was 2.5 seconds late looks
 like this before and after a sync (open it with **Actions > View**):
@@ -205,6 +168,7 @@ be the language of the source.
 
 ![The translated French file, listed with its cues](/img/subtitles-translate-5.webp)
 
+:::details Translation engines, cost, privacy and quality
 Three kinds of translation engine are supported. They are configured under **Settings > Subtitle
 providers > Subtitle translation** (**Add provider**), and you can add more than one and pick a
 default with **Use as default**:
@@ -248,12 +212,14 @@ translated result once the run finishes, even if you closed the dialog, and the 
 then no longer flagged hearing-impaired. The switch is remembered in your browser. The server-wide
 **Remove HI tags** setting (see [Admin settings](/features/subtitles#admin-settings)) does the same for every
 translation.
+:::
 
 > [!NOTE]
 > Translation only runs when you ask for it. Nothing is translated automatically in the background.
 
 ## Extracting text from image-based subtitles
 
+:::details What OCR supports
 A track like PGS or VobSub is a picture of the text, not the text itself, so it can't be edited,
 translated, or displayed on every client. **Extract to text (OCR)** reads the images and produces a
 normal, editable subtitle file from them.
@@ -265,6 +231,7 @@ normal, editable subtitle file from them.
   relabelled afterwards without redoing the work.
 - An admin can turn on **Prefer OCR of embedded image tracks over a download**, so Fliks tries this
   before searching online for a missing language.
+:::
 
 ## Burned-in subtitles
 
@@ -272,6 +239,7 @@ Some subtitles can't be shown as plain text on every client. For those, the serv
 subtitle into the video itself. The video then plays through a transcode, and the stream reloads
 when you pick or drop such a track.
 
+:::details Which clients burn in which tracks
 - **Image tracks** (PGS, VobSub, DVB, XSub). The desktop app, Android and Android TV draw an
   embedded image track themselves when the video Direct Plays. The web client, iPhone and iPad,
   Samsung, LG and Chromecast always get it burned in, and so does a separate image file on every
@@ -287,23 +255,75 @@ when you pick or drop such a track.
 A styled track you pick yourself from the menu is burned in. One chosen automatically when
 playback starts (your preferred language, or a remembered choice) starts as plain text, so the
 video doesn't reload at launch.
+:::
 
 Both cases need **Hide image subtitles** (see [Subtitle appearance](/features/subtitles#subtitle-appearance)) turned
 off. It is on by default: image tracks then stay out of the picker, and styled ASS/SSA plays as
 plain text and takes your appearance settings.
 
+## How automatic search works
+
+Fliks searches for subtitles on its own for every monitored title, using the language, forced and
+hearing-impaired preferences set on that title's **language profile** (not a global setting: each
+title has its own, picked when it's added). A search runs automatically after a file is imported,
+and again on a recurring schedule for anything still missing a language its profile asks for; the
+**Automatic subtitle search** switch in **Settings > Subtitles** turns both off, along with the
+upgrade pass below. **Search missing** in a title's **Edit subtitles** dialog runs it on demand,
+whatever the schedule says.
+
+### Providers
+
+Six sources can be searched. None is set up out of the box: add each one you want with **Add
+provider** under **Settings > Subtitle providers > Download providers**, where it can also be
+switched off and given a priority (25 by default). A lower priority number is tried first, and wins
+if two providers return what looks like the same result. **Test** checks the credentials before you
+save.
+
+:::details The six providers and what they need
+| Provider | Covers | Credentials needed |
+|---|---|---|
+| OpenSubtitles | Movies and episodes, most languages | An OpenSubtitles account username and password (an API key is optional) |
+| Subdl | Movies and episodes, most languages | An API key |
+| Gestdown (an Addic7ed mirror) | TV episodes only, a fixed set of languages | None |
+| Supersubtitles | Movies and episodes, Hungarian and English only | None |
+| YIFY | Movies only, looked up by IMDb id | None |
+| Subsynchro | Movies only, French only | None |
+:::
+
+### Picking the right match
+
+:::details How a result is scored and upgraded
+Every result is scored against the video file: a hash of the file itself is worth the most (a hash
+match is treated as a certain match), the title and year carry most of the rest, and the release
+group, source, resolution and codecs each add a little more. Episodes are scored the same way,
+with the series name and season/episode numbers standing in for the movie-specific fields. The
+best-scoring result above a minimum score (70 by default) is downloaded automatically.
+
+A separate upgrade pass revisits anything downloaded below a higher threshold (90 by default) and
+replaces it if a strictly better match turns up later. A subtitle you've synced or edited by hand
+(timing, framerate, corrections) is locked and skipped by the upgrade pass from then on, and
+**Validate subtitle** sets a subtitle's score to 100, which keeps it above any threshold. A
+translation keeps its source's score and isn't locked.
+
+Downloaded files are always cleaned of ads; optionally (see settings below) also of hearing-impaired
+tags and of your own custom exclusion patterns.
+:::
+
 ## Subtitle appearance
 
+:::details Where the appearance settings are
 Track selection (language, mode, SDH, image tracks) and the look of subtitles (size, color, shadow,
 background, position) are per-device settings in **App settings > Subtitles**. They are described in
 [Audio and subtitles](/player/subtitles-and-audio#change-how-subtitles-look). Image-based tracks and
 ASS/SSA tracks with their own styling keep their original look (see
 [Burned-in subtitles](/features/subtitles#burned-in-subtitles)).
+:::
 
 ## Admin settings
 
 **Settings > Subtitles** groups the tuning knobs behind the behaviour above:
 
+:::details Every admin setting and its default
 | Setting | Default | What it does |
 |---|---|---|
 | Automatic subtitle search | On | Master switch for the scheduled and post-import search |
@@ -316,6 +336,7 @@ ASS/SSA tracks with their own styling keep their original look (see
 | Automatically sync subtitles (ffsubsync/alass) | Off | Runs the sync tool after every automatic download or upgrade |
 | Remove HI tags | Off | Strips things like `[music]` or `(sighs)` from downloaded text, and from translations and OCR results |
 | Custom exclusions (regex) | None | One regular expression per line; any subtitle line matching one is removed |
+:::
 
 The same page's **Statistics** tab lists every language still missing a subtitle across your
 library, with a one-click search for each row. **Settings > Subtitle activity** is a searchable

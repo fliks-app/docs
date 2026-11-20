@@ -3,6 +3,9 @@ title: Apple TV
 description: A native SwiftUI app covering the core Fliks experience, built specifically for tvOS.
 ---
 
+> [!SUMMARY]
+> Install Fliks from the App Store (tvOS 17+), enter the server address and sign in with Quick Connect. No downloads, Live TV or casting out; create the first administrator in a browser.
+
 ## What it is
 
 ![The Fliks home screen on Apple TV](/img/clients-appletv-home.jpg)
@@ -16,7 +19,7 @@ detail page (including individual episodes), search, playlists, settings, and th
 
 Install "Fliks" from the App Store. Requires **tvOS 17** or newer.
 
-## Signing in
+## Sign in on Apple TV
 
 Enter your server's address on first launch, then sign in with a password, or use **Quick
 Connect**: the same flow every other client uses. The waiting screen shows a 6-digit code, which
@@ -30,6 +33,7 @@ there.
 
 ## Watch parties
 
+:::details How watch parties work on Apple TV
 The Apple TV app takes part in [watch parties](/features/watch-party). When your account can
 create parties, **Watch together** on a title, an episode or a playlist starts one, and so does
 **New party** in the home page's watch parties row. That row also lists your live and scheduled
@@ -41,6 +45,7 @@ starts the party, picks the film, invites people, passes the host role on and re
 the player, the transport bar has a party menu: the member list, quick chat phrases and the
 message history, reactions, the queue, a resync button and the party settings. The host ends the
 party; everyone else leaves it.
+:::
 
 ## Playback
 

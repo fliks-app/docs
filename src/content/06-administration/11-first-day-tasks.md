@@ -3,9 +3,10 @@ title: First-day admin tasks
 description: Click-by-click walkthroughs for the jobs you do right after installing: add a user, make a role, enable subtitles, set up notifications, install a plugin, run a task and take a backup.
 ---
 
-Every walkthrough starts in the administration area: open the user menu, choose
-**Administration**, then pick the entry named in the first slide. The mouse cursor marks what to
-click. The sidebar scrolls; the entry you need can be below the fold.
+> [!SUMMARY]
+> Seven click-by-click jobs for right after installing: add a user, make a role, enable a subtitle provider, set up notifications, install a plugin, run a task and take a backup. A watch-only server needs only the first.
+
+Each walkthrough starts in the administration area (user menu, **Administration**), then the entry named in the first slide. The cursor marks what to click.
 
 ## Create a user and give access to a library
 

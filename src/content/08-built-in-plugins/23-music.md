@@ -3,19 +3,10 @@ title: Music
 description: MusicBrainz, Fanart.tv and LRCLIB (bundled), and Music lists (catalogue): albums, artwork, lyrics and followed lists.
 ---
 
-Music uses three bundled plugins, plus one catalogue plugin that follows your lists on other
-services. Metadata plugins are configured from **Settings > Metadata**; Music lists has its own
-section in the Administration sidebar (see [Overview](/built-in-plugins/overview#configure-a-plugin)).
+> [!SUMMARY]
+> MusicBrainz, Fanart.tv and LRCLIB are bundled and need nothing: they identify albums, supply artwork and fetch lyrics. The Music lists plugin (catalogue) follows your lists on ListenBrainz, Last.fm, Spotify, Deezer or MusicBrainz and wants their albums or tracks.
 
-## Provider order
-
-On a fresh install, **Albums** on **Settings > Metadata** is ordered: Fanart.tv, LRCLIB,
-MusicBrainz. The three do different jobs, so the order matters less than for books:
-
-- MusicBrainz identifies albums, releases and artists.
-- Fanart.tv only supplies artist images and album covers, keyed by MusicBrainz ids.
-- LRCLIB only supplies lyrics. Its order among lyrics providers is set on **Settings > Lyrics**,
-  under **Provider order**.
+Metadata plugins are configured from **Settings > Metadata**; Music lists has its own section in the Administration sidebar (see [Overview](/built-in-plugins/overview#configure-a-plugin)). The three bundled providers do different jobs, so their order matters little: MusicBrainz identifies, Fanart.tv supplies images, LRCLIB supplies lyrics (ordered on **Settings > Lyrics**).
 
 ## MusicBrainz
 

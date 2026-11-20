@@ -3,6 +3,9 @@ title: Desktop
 description: A native Windows, macOS and Linux app that connects to a Fliks server and plays through an embedded mpv engine.
 ---
 
+> [!SUMMARY]
+> Download the installer for Windows or macOS from the latest release, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
+
 ## What it is
 
 The desktop app is a client, not the server: it connects to a Fliks server running elsewhere on
@@ -64,6 +67,7 @@ the bar opens the window menu. The bar is hidden in full screen.
 
 ## System media controls
 
+:::details System media controls
 While the desktop app plays something, it shows up in the operating system's media controls with
 its title, artwork, playback state and progress. An episode appears under its episode label
 (number and title), with the show's name beneath it. The controls disappear when playback ends.
@@ -77,9 +81,11 @@ its title, artwork, playback state and progress. An episode appears under its ep
 They send back play, pause, play/pause and stop (stop leaves the player). Previous and next skip 10
 seconds back and forward. Dragging the progress bar in the OS control seeks to that position, and
 the position stays correct at any playback speed.
+:::
 
 ## Playback engine
 
+:::details About the mpv playback engine
 Video plays through a vendored, self-contained build of mpv rather than the system browser engine,
 which is what makes Direct Play possible for containers and codecs an embedded web view can't
 handle on its own. Windows and macOS decode in hardware; Linux decodes in software by default.
@@ -87,6 +93,7 @@ On a screen without HDR, the app tone-maps HDR sources to SDR itself, so the ser
 file as-is instead of converting it. On macOS, an HDR-capable screen shows HDR10 and HLG content
 in HDR. See [Streaming and transcoding](/features/streaming-and-transcoding)
 for how the server decides what to send in the first place.
+:::
 
 ## Casting to a Chromecast
 
@@ -104,6 +111,7 @@ items are fetched to local storage, with watched ones cleared out again. See
 
 ## Updates
 
+:::details How updates work
 The app checks for a new version 10 seconds after launch and every 6 hours afterward, and you can
 check by hand from **App settings > Update**. It never downloads silently: when an update is found
 you choose to install it, then it's downloaded and the app restarts to apply it. If the check
@@ -120,6 +128,7 @@ How an update installs depends on how you installed the app:
 
 Setting the `FLIKS_DISABLE_UPDATE_CHECK` environment variable to `1`, `true` or `yes` turns the
 in-app check off.
+:::
 
 ## See also
 

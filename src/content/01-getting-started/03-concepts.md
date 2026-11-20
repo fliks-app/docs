@@ -3,6 +3,9 @@ title: Concepts
 description: The vocabulary Fliks uses for its library, its users and its playback pipeline.
 ---
 
+> [!SUMMARY]
+> A short glossary: library, metadata, profiles, requests, roles, the three ways a file is played, plugins and Live TV. Read it when a term in the docs isn't clear.
+
 ## Library
 
 A **library** is one or more folders on the server plus the media types they hold: movies,
@@ -22,7 +25,7 @@ matches what it finds against them automatically. When it can't (an ambiguous na
 that legitimately isn't in either database), you choose **No match: add as is** in the scan
 review, and the title appears with whatever Fliks can read from the filename, marked
 **Unidentified** in the library's admin page. **Identify** on the title fixes it later. See
-[Quick start](/getting-started/quick-start#fixing-an-unidentified-file-later) and
+[Quick start](/getting-started/quick-start#fix-an-unidentified-file-later) and
 [Metadata](/features/metadata).
 
 ## Where things live
@@ -51,7 +54,7 @@ plugin looks for a missing or better release of it, and automatic subtitle searc
 A **request** is how a non-admin user asks for something to be added to the library: search for
 a title that isn't there yet and submit it. An admin (or an auto-approval rule matching who
 asked and what they asked for) approves it, and from there it follows the normal acquisition
-pipeline. See [Requests](/features/requests).
+pipeline. See [Requests](/downloads/requests).
 
 ## Users, roles and permissions
 

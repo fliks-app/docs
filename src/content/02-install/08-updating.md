@@ -3,45 +3,67 @@ title: Updating
 description: How to move the server to a newer release on each install method, and what happens to the database when you do.
 ---
 
-## The update check
+> [!SUMMARY]
+> Docker: `docker compose pull && docker compose up -d`. Windows and macOS apps update themselves. Migrations run on their own at startup, so take a [backup](/administration/backups) first. Coming from 5.x: read [Upgrading to 6.0.0](/install/updating#upgrading-to-600).
 
-Any admin sees an update button in the web client's top bar when a newer server release
-exists; it opens the release notes. It only checks; it never installs anything. The Windows and
-macOS apps have their own updater, described [below](/install/updating#windows-and-macos). There is no background polling: the server asks the project's public
-GitHub releases only when the web client asks it, and caches the answer for six hours, so it
-costs nothing per page load. Set the `FLIKS_DISABLE_UPDATE_CHECK=1` environment variable (on
-Docker or a source install) to turn off the outbound request entirely,
-if you'd rather update on your own schedule without Fliks phoning out for it. The TrueNAS app
-sets it for you.
+## Update the server
 
-## Pre-release versions
+Take a [backup](/administration/backups) before a major update, since a migration can't be rolled back by starting the old version again. Then follow your install method.
 
-A version with a suffix, such as `5.1.0-beta.1`, is published as a GitHub **pre-release** so it
-can be tried before it ships. It is built for every platform, but the app stores and the stable
-update feeds skip it, so no stable install picks one up by itself. On Docker, a stable release
-`5.1.0` is published as `5.1.0`, `5.1`, `5` and `latest`. A pre-release is published under its
-exact tag only (`ghcr.io/fliks-app/fliks:5.1.0-beta.1`), so `latest`, `5.1` and `5` never move to
-it. To try one, pin that tag or download it from the
-[releases page](https://github.com/fliks-app/fliks/releases).
+### Update with Docker
 
-The update check asks GitHub for the latest stable release, which never is a pre-release. A server
-running a pre-release is offered the final release (`5.1.0` is newer than `5.1.0-beta.1`), but not
-the next beta: install that one by hand. Take a [backup](/administration/backups) before moving
-to a pre-release, since a migration can't be rolled back.
+```bash
+docker compose pull
+docker compose up -d
+```
 
-## Database migrations
+This pulls the new image (whatever tag your `docker-compose.yml` points at, `:latest` unless you
+pinned a version) and recreates the container. The database container is untouched unless you
+also changed its image tag.
 
-You never run a migration by hand. Pending migrations run automatically the moment the new
-server starts up, before it accepts any request. This is true on every install method, since they
-all run the same server. Take a [backup](/administration/backups) first anyway: a migration that
-changes the schema can't be rolled back by starting the old version again.
+### Windows and macOS
+
+Both apps update themselves from the [latest release](https://github.com/fliks-app/fliks/releases),
+which never is a pre-release. Your data stays where it is.
+
+- **Windows**: the tray app checks for a release 30 seconds after it starts, then every 6 hours.
+  When one is found, a notification appears and the tray menu gains `Update to <version>`. Click
+  it: the app downloads the update, stops PostgreSQL and the server, installs it under
+  `%LOCALAPPDATA%\FliksServer` and restarts. Your data under `%LOCALAPPDATA%\Fliks Server` is
+  untouched.
+- **macOS**: the menu-bar app checks automatically, and **Check for Updates...** in its menu asks
+  right away. When a release is found it offers to install it, then replaces the app in place; the
+  server stops cleanly first and starts again on the new version. Your data under
+  `~/Library/Application Support/Fliks Server` is untouched.
+
+To update by hand instead, download the newer installer or `.dmg` and run it the way you did the
+first time.
+
+### Update from source
+
+Pull the new tag or commit, then rebuild the client and the server:
+
+```bash
+cd client && npm ci && npx ng build --configuration=production
+cd ../server && SQLX_OFFLINE=true cargo build --release --locked -p fliks-server
+```
+
+If `engine.lock` changed, download the engine release it names again (see [From
+source](/install/from-source#get-the-engine)). Restart the engine with the same command and
+environment as before; migrations run as part of that startup.
+
+### Update on TrueNAS
+
+Updates surface through TrueNAS SCALE's own app-update mechanism (**Apps > Installed** shows an
+available update); it pulls the new image the same way the plain Docker install does.
 
 ## Upgrading to 6.0.0
 
 6.0.0 changes the database layout (libraries now hold folders) and the plugin contract. Read this
 before pulling the image.
 
-**Back up first, and keep free disk.** Take a [backup](/administration/backups) yourself, and
+:::details Back up first and go back to 5.x
+Take a [backup](/administration/backups) yourself, and
 copy it off the server. On top of that, when migrations are pending the server writes a database
 dump before applying them, to `<data dir>/backups/pre-migration` (`/app/data/backups/pre-migration`
 in Docker). It keeps the 3 most recent, plus the first one taken for the pending version, and a
@@ -64,8 +86,10 @@ docker compose exec -T postgres pg_restore --clean --if-exists --no-owner -U <us
 ```
 
 Then pin your compose file back to the 5.x image tag and run `docker compose up -d`.
+:::
 
-**The server may refuse to start.** The first 6.0.0 migration checks that your library data can
+:::details The server refuses to start
+The first 6.0.0 migration checks that your library data can
 move into folders. It fixes what it can on its own and refuses the rest, with an explicit message
 in the log. A refusal changes nothing: the database stays as your 5.x left it, so rolling back to the
 5.x image still works while you fix the data. Open a SQL shell, run what the message asks for, and restart.
@@ -89,8 +113,10 @@ docker compose exec postgres psql -U <user> <db>
 Most messages list the first 100 rows they found, with `<placeholders>` for the values only you
 know; the two about libraries list every one. Run the statements, restart, and repeat until the
 server starts.
+:::
 
-**If you ran a `:main` image early in November.** The `1789000000050` migration was edited on
+:::details Checksum mismatch after running a `:main` image
+The `1789000000050` migration was edited on
 2026-11-04 (#2400) before 6.0.0 shipped. A database that applied the earlier version fails to
 start with a checksum mismatch on that migration. Set its stored checksum to the new file's
 (SHA-384, the checksum sqlx records) in `psql`, then restart:
@@ -102,81 +128,80 @@ UPDATE _sqlx_migrations
 ```
 
 Databases that went from 5.x straight to a release are not affected.
+:::
 
-**Update the plugins.** The server accepts `pluginApi` 3 only. A plugin built for `pluginApi` 2
+:::details Update the plugins
+The server accepts `pluginApi` 3 only. A plugin built for `pluginApi` 2
 stays installed but shows as **failed** in **Settings > Plugins**, with a status telling you to
 install a `pluginApi` 3 build, and its data is kept. At boot the server tries to update each failed
 plugin from the catalog in the background. That works unless you turned off plugin auto-update, the
 new version asks for a scope you haven't granted (it then waits for you), or the plugin isn't
 officially signed; update those by hand. The download plugin must be **2.4.0 or newer** to pick
 releases per season and episode; it adds no scope, so it installs by itself.
+:::
 
-**Provider keys and URLs.** The TMDB and TVDB API keys now live in the settings of their provider
+:::details Provider keys and URLs moved to the plugins
+The TMDB and TVDB API keys now live in the settings of their provider
 plugins. `TMDB_API_KEY` and `TVDB_API_KEY` are imported once on the first boot (an existing plugin
 key wins), then ignored. `FLIKS_TMDB_API_URL`, `FLIKS_TVDB_API_URL` and `FLIKS_TMDB_IMAGE_URL` are
 gone and their values are not imported: a mirror or proxy you pointed them at is no longer used, so
 the providers reach the upstream services directly. The server logs nothing when it ignores them,
 so check your compose file for these three variables yourself.
+:::
 
-**Plugin webhooks and events.** The domain events that plugins receive (`media.imported`,
+:::details Plugin webhooks and events changed
+The domain events that plugins receive (`media.imported`,
 `media.removed`, `request.created` and `request.approved`) no longer carry `tmdbId`. They carry
 `externalIds`, a list of `{ "provider": "tmdb", "value": "603" }` entries, one per id the title
 has. If a data plugin's webhook or a notify plugin forwards them to n8n, Home Assistant or a
 script, update what reads the id to look it up by `provider`. The webhooks configured in
 **Settings > Notifications** don't use these events and are unchanged.
+:::
 
-**Update the apps.** Quick Connect now uses a code (see [Pairing and remote
+:::details Update the TV and mobile apps
+Quick Connect now uses a code (see [Pairing and remote
 control](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect)): the old
 approve-by-tap request is gone, so TV and mobile apps that don't show the code can't use Quick
 Connect until you update them. Password login is unaffected. Apps still on 5.x also lose the
 plugin release picker. Update the TV and mobile apps when you update the server.
+:::
 
-## Docker
+## Database migrations
 
-```bash
-docker compose pull
-docker compose up -d
-```
+You never run a migration by hand. Pending migrations run automatically the moment the new
+server starts up, before it accepts any request. This is true on every install method, since they
+all run the same server. Take a [backup](/administration/backups) first anyway: a migration that
+changes the schema can't be rolled back by starting the old version again.
 
-This pulls the new image (whatever tag your `docker-compose.yml` points at, `:latest` unless you
-pinned a version) and recreates the container. The database container is untouched unless you
-also changed its image tag.
+## Pre-release versions
 
-## Windows and macOS
+:::details How pre-releases are published and updated
+A version with a suffix, such as `5.1.0-beta.1`, is published as a GitHub **pre-release** so it
+can be tried before it ships. It is built for every platform, but the app stores and the stable
+update feeds skip it, so no stable install picks one up by itself. On Docker, a stable release
+`5.1.0` is published as `5.1.0`, `5.1`, `5` and `latest`. A pre-release is published under its
+exact tag only (`ghcr.io/fliks-app/fliks:5.1.0-beta.1`), so `latest`, `5.1` and `5` never move to
+it. To try one, pin that tag or download it from the
+[releases page](https://github.com/fliks-app/fliks/releases).
 
-Both apps update themselves from the [latest release](https://github.com/fliks-app/fliks/releases),
-which never is a pre-release. Your data stays where it is.
+The update check asks GitHub for the latest stable release, which never is a pre-release. A server
+running a pre-release is offered the final release (`5.1.0` is newer than `5.1.0-beta.1`), but not
+the next beta: install that one by hand. Take a [backup](/administration/backups) before moving
+to a pre-release, since a migration can't be rolled back.
+:::
 
-- **Windows**: the tray app checks for a release 30 seconds after it starts, then every 6 hours.
-  When one is found, a notification appears and the tray menu gains `Update to <version>`. Click
-  it: the app downloads the update, stops PostgreSQL and the server, installs it under
-  `%LOCALAPPDATA%\FliksServer` and restarts. Your data under `%LOCALAPPDATA%\Fliks Server` is
-  untouched.
-- **macOS**: the menu-bar app checks automatically, and **Check for Updates...** in its menu asks
-  right away. When a release is found it offers to install it, then replaces the app in place; the
-  server stops cleanly first and starts again on the new version. Your data under
-  `~/Library/Application Support/Fliks Server` is untouched.
+## Check for a new release
 
-To update by hand instead, download the newer installer or `.dmg` and run it the way you did the
-first time.
-
-## From source
-
-Pull the new tag or commit, then rebuild the client and the server:
-
-```bash
-cd client && npm ci && npx ng build --configuration=production
-cd ../server && SQLX_OFFLINE=true cargo build --release --locked -p fliks-server
-```
-
-If `engine.lock` changed, download the engine release it names again (see [From
-source](/install/from-source#get-the-engine)). Restart the engine with the same command and
-environment as before; migrations run as part of that startup.
-
-## TrueNAS
-
-Updates surface through TrueNAS SCALE's own app-update mechanism (**Apps > Installed** shows an
-available update); it pulls the new image the same way the plain Docker install does.
+:::details How the update check works
+Any admin sees an update button in the web client's top bar when a newer server release
+exists; it opens the release notes. It only checks; it never installs anything. The Windows and
+macOS apps have their own updater, described [below](/install/updating#windows-and-macos). There is no background polling: the server asks the project's public
+GitHub releases only when the web client asks it, and caches the answer for six hours, so it
+costs nothing per page load. Set the `FLIKS_DISABLE_UPDATE_CHECK=1` environment variable (on
+Docker or a source install) to turn off the outbound request entirely,
+if you'd rather update on your own schedule without Fliks phoning out for it. The TrueNAS app
+sets it for you.
+:::
 
 ## See also
 

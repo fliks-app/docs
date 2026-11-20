@@ -3,29 +3,31 @@ title: macOS
 description: Run Fliks as a native macOS menu-bar app, with VideoToolbox hardware acceleration and no separate dependencies to install.
 ---
 
-## What you get
+> [!SUMMARY]
+> Download the `.dmg` from the latest release, drag **Fliks Server** to Applications, and Fliks opens at `http://localhost:4848`. Apple Silicon and macOS 13 or newer.
 
+:::details What the app bundles
 A lightweight menu-bar app that runs the Fliks server natively on macOS, with hardware
 transcoding through Apple's VideoToolbox, auto-detected at startup. It bundles PostgreSQL,
 FFmpeg, the streaming engine and the server: there is nothing else to install. Requires Apple Silicon and macOS 13
 (Ventura) or newer.
+:::
 
-## Install
+## Install the macOS app
 
 Download the `Fliks-Server-<version>-arm64.dmg` asset from the
 [latest release](https://github.com/fliks-app/fliks/releases), open it and drag **Fliks Server**
 to Applications. A film icon appears in the menu bar once it runs. Official builds are signed
 with a Developer ID certificate and notarized, so Gatekeeper opens them without a warning.
 
-## What happens on launch
-
+:::details What happens on first launch
 1. PostgreSQL 18 initializes on first run and starts on port `5433`.
 2. The engine listens on port `4848` and starts the server behind it.
 3. On the very first launch only, your browser opens `http://localhost:4848`.
 4. VideoToolbox hardware acceleration is auto-detected.
+:::
 
-## Menu bar
-
+:::details Menu bar actions
 | Action | What it does |
 |---|---|
 | Open Fliks | Opens the web UI in your default browser. |
@@ -34,9 +36,9 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 | View Logs... | Opens the log directory in Finder. |
 | Check for Updates... | Asks for a newer release and, if there is one, installs it in place. See [Updating](/install/updating#windows-and-macos). |
 | Quit Fliks | Gracefully shuts down every process. |
+:::
 
-## Data locations
-
+:::details Where the data lives
 | Path | Contents |
 |---|---|
 | `~/Library/Application Support/Fliks Server/postgresql/` | The database cluster. |
@@ -49,14 +51,15 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 > On versions up to 4.1.x, in-app [backups](/administration/backups) need `pg_dump`, which the app
 > doesn't bundle. They only work if a PostgreSQL client of the same major version (or newer) is
 > installed in `/opt/homebrew/bin` or `/usr/local/bin`.
+:::
 
-## Clean reset
-
+:::details Wipe everything and start over
 To wipe everything and start over, quit Fliks first, then in Terminal:
 
 ```bash
 rm -rf ~/Library/Application\ Support/Fliks\ Server
 ```
+:::
 
 ## First run
 

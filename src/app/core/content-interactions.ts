@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 /** Routes internal links in rendered doc HTML through the router and wires copy buttons and step sliders. */
 export function wireDocContent(container: HTMLElement, router: Router): () => void {
@@ -44,9 +44,24 @@ export function wireDocContent(container: HTMLElement, router: Router): () => vo
     nav.querySelector<HTMLButtonElement>('.doc-steps-next')!.disabled = index === last;
   };
 
+  // A link or search result may point inside a folded :::details block: unfold it before scrolling.
+  const reveal = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const target = id ? container.querySelector<HTMLElement>(`[id="${CSS.escape(id)}"]`) : null;
+    const fold = target?.closest('details');
+    if (!target || !fold) return;
+    for (let d: HTMLElement | null = fold; d; d = d.parentElement?.closest('details') ?? null) {
+      (d as HTMLDetailsElement).open = true;
+    }
+    requestAnimationFrame(() => window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80 }));
+  };
+  const navigations = router.events.subscribe((e) => e instanceof NavigationEnd && setTimeout(reveal));
+  reveal();
+
   container.addEventListener('click', onClick);
   container.addEventListener('scroll', onScroll, true);
   return () => {
+    navigations.unsubscribe();
     container.removeEventListener('click', onClick);
     container.removeEventListener('scroll', onScroll, true);
   };

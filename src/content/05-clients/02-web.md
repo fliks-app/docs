@@ -3,6 +3,9 @@ title: Web
 description: The full Fliks interface in a browser, installable to the home screen, no app store required.
 ---
 
+> [!SUMMARY]
+> Open your server's address in a browser and sign in. Your browser can install it as an app (PWA) with its own icon and window.
+
 ## Using it
 
 Open your server's address in any current browser and sign in. There's nothing to install: the web
@@ -10,7 +13,7 @@ client is the same Angular interface every other non-native client is built from
 feature described in this documentation except the ones that need a TV form factor or native OS
 support.
 
-## Installing it as an app
+## Install the web app on your home screen or desktop
 
 The web client is an installable Progressive Web App: your browser can offer to add it to your home
 screen or desktop like a native app, with its own icon and window, and no address bar. Once
@@ -27,6 +30,7 @@ the titles you pick yourself: **Automatic download** on a playlist isn't availab
 
 ## Browser-specific notes
 
+:::details Browser-specific notes
 - **iOS Safari** doesn't support the standard browser fullscreen API, so the player falls back to
   Safari's own native fullscreen video player on iPhone and iPad instead of Fliks' own fullscreen
   controls.
@@ -34,6 +38,7 @@ the titles you pick yourself: **Automatic download** on a playlist isn't availab
   extension is available (built into Chrome; not every browser has it).
 - **Picture-in-picture** uses the browser's native picture-in-picture support, where the browser
   offers it.
+:::
 
 ## Updates
 

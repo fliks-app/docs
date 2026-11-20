@@ -3,6 +3,9 @@ title: Keyboard, touch and remote
 description: Every keyboard shortcut of the web player, the touch gestures on a phone, and the remote keys on a TV.
 ---
 
+> [!SUMMARY]
+> `Space` plays or pauses, `Left`/`Right` jump 10 seconds, `f` is fullscreen. Phone gestures and TV remote keys are listed below.
+
 ## Keyboard shortcuts
 
 These work in the web player while the picture has the focus, not while you type in a field or
@@ -25,19 +28,19 @@ while a menu or dialog is open.
 The seek, play and frame keys do nothing for a guest of a [watch party](/features/watch-party)
 that only the host controls.
 
-### The seek bar
-
+:::details How the keyboard seek bar scrubs
 With the controls hidden, `Left` and `Right` raise a thin seek bar and scrub from there. Tap the
 key to move 10 seconds. Hold it and the step grows: 10 seconds, then 30, then 60, then 5 minutes.
 The jump happens when you let go. A scrub that lands within 5 seconds of a chapter mark snaps to
 it. Pressing `Left` or `Right` the first time on a resting bar only arms it, so a stray key never
 moves you.
+:::
 
-### Tabbing through the controls
-
+:::details Move between the controls with the keyboard
 Once a button of the bar has the focus, the arrow keys move between them and `Enter` presses one. On a
 hidden bar, `Enter` shows the bar first instead of pressing a button. The **Skip intro** and
 **Next episode** buttons take the focus when they appear, so `Enter` presses them at once.
+:::
 
 ## Touch gestures on a phone
 

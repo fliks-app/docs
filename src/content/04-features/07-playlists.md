@@ -3,13 +3,19 @@ title: Playlists
 description: Build a running order of movies and episodes, share it with other users, or save someone else's public list to your own.
 ---
 
-## Finding your playlists
+> [!SUMMARY]
+> Click **Playlists** in the sidebar, or the add-to-list icon on any title, to create a playlist and add movies and episodes. Share it with other users, autoplay it, or save someone else's.
+
+> [!SUMMARY]
+> Click **Playlists** in the sidebar, or the add-to-list icon on any title, to create a playlist and add movies and episodes. Share it with other users, autoplay it, or save someone else's.
+
+## Open your playlists
 
 Click **Playlists** in the left sidebar (under **LIBRARY**). The page lists your playlists and
 the ones shared with you, and has three buttons at the top right: **Import M3U**, **New smart
 playlist** and **Create a playlist**. The home page also has a **Recent playlists** row.
 
-## Creating a playlist and adding titles
+## Create a playlist and add titles
 
 :::steps
 ![On a title's page, click the add-to-list icon under **Play** (or **More > Add to list**)](/img/playlist-add-1-title.webp)
@@ -36,12 +42,14 @@ The page's top row has **Play**, **Export M3U** (download the list as an M3U fil
 
 ![The three-dot menu of a playlist](/img/playlist-menu.webp)
 
+:::details What the playlist menu does
 | Entry | What it does |
 |---|---|
 | **Users** | Add collaborators and set their role, see [Sharing a playlist](#sharing-a-playlist) |
 | **Settings** | Visibility, **Autoplay**, **Remove watched items**, **Automatic download** |
 | **Rename** | Change the name |
 | **Delete** | Delete the playlist (owner only) |
+:::
 
 Each item has its own three-dot menu with **View details**, **Mark as watched** and **Delete**
 (remove from the playlist).
@@ -61,7 +69,7 @@ reorder it, only use **Edit rules**.
 it cannot find are listed under **Not found in your library**, and **Open playlist** takes you to
 the result.
 
-## Reordering and autoplay
+## Reorder a playlist and autoplay it
 
 Drag items into the order you want by their handles (on a TV, where dragging isn't available, use
 the Move up / Move down buttons instead). A series' episodes move together as one block.
@@ -78,6 +86,7 @@ playlist can work as a queue that empties itself as you get through it.
 
 ## Sharing a playlist
 
+:::details Visibility levels and member roles
 Every playlist has a visibility:
 
 | Visibility | Who can see and play it |
@@ -100,8 +109,9 @@ someone actually edit a shared playlist, add them as a member with a role:
 
 You can only add someone as a member if their profile is public, or if you already follow them and
 they've accepted. A user who turned off sharing entirely can never be added.
+:::
 
-## Saving someone else's playlist
+## Save someone else's playlist
 
 Any playlist someone else owns that you can see (public, followers-only, or one you were added to)
 can be saved to your own playlist list with the **Save** button, the same way you'd bookmark a
@@ -117,14 +127,7 @@ none. There is no custom cover upload.
 
 ## Automatic download
 
-On mobile (iOS, Android) and the desktop app, a playlist can be turned into an automatic download:
-unwatched items are fetched to the device, and items you've already watched are removed again to
-give the space back. This is a per-device setting, not something that follows your account, and it
-only appears on those clients: TVs and the web app don't offer it. The toggle sits in the
-playlist's settings, so only the owner or an administrator of the playlist can turn it on.
-
-See [Offline downloads](/features/offline-downloads) for the full picture, including storage
-limits.
+On iOS, Android and the desktop app, a playlist can keep itself downloaded to the device. See [Keep a playlist downloaded automatically](/features/offline-downloads#keep-a-playlist-downloaded-automatically).
 
 ## See also
 

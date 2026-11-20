@@ -38,7 +38,8 @@ conventions for **Settings > X**, **App settings > X** and **Account settings > 
 | Books and audiobooks | A library of that type | [Books and audiobooks](/features/books-and-audiobooks) |
 | Comics | A library of that type | [Comics](/features/comics) |
 | Music, lyrics, karaoke | A library of type Albums | [Music](/features/music) |
-| Requests and downloads | Sidebar, **Requests**, **Queue**, **Calendar** | [Requests](/features/requests) |
+| Requests and downloads | Sidebar, **Requests**, **Queue**, **Calendar** | [Requests](/downloads/requests) |
+| Fetch missing titles (indexers, download client) | **Settings > Advanced > Plugins**, **Download** | [Do you need downloads?](/downloads/overview), [Download plugin](/downloads/plugin) |
 
 ## Administration
 
@@ -54,3 +55,5 @@ conventions for **Settings > X**, **App settings > X** and **Account settings > 
 | Plugins | **Plugins** | [Plugins](/administration/plugins) |
 | Library cleanup rules | **Cleanup** | [Library cleanup](/administration/library-cleanup) |
 | Logs, backups, scheduled tasks | **System**, **Scheduled tasks** | [Logs](/administration/logs-and-troubleshooting), [Backups](/administration/backups) |
+
+Something not working? See [Common problems](/getting-started/common-problems). New in the latest releases: [What's new](/getting-started/whats-new).

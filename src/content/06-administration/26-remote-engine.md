@@ -3,9 +3,10 @@ title: Remote engine
 description: Settings > Remote engine - point the server at a streaming engine running on another machine.
 ---
 
-The engine is the component that probes files and produces the streams (Direct Play, remux, transcode). It normally runs next to the server, inside the same container or process, and you never configure it. **Settings > Advanced > Remote engine** is for the other case: an engine on a different machine, for instance a GPU box.
+> [!SUMMARY]
+> Only needed if you run the streaming engine on another machine, for instance a GPU box. Leave every field empty otherwise. Fill **Engine URL** and **Bearer token** in **Settings > Advanced > Remote engine**, press **Test connection**, then **Save**.
 
-Leave every field empty unless you run a separate engine. Nobody needs this page to watch.
+The engine is the component that probes files and produces the streams (Direct Play, remux, transcode). It normally runs next to the server, inside the same container or process, and you never configure it. **Settings > Advanced > Remote engine** is for the other case: an engine on a different machine, for instance a GPU box.
 
 Open **Advanced > Remote engine**, fill the fields, press **Test connection**, then **Save**.
 
@@ -15,6 +16,7 @@ Open **Advanced > Remote engine**, fill the fields, press **Test connection**, t
 
 ## Fields
 
+:::details Every field, path mappings and connection status
 | Field | Meaning |
 |---|---|
 | **Engine URL** | Base URL of the engine's control plane, such as `https://engine.example:8080`. Empty uses the `FLIKS_ENGINE_URL` environment variable (the local supervised engine). |
@@ -28,6 +30,7 @@ Open **Advanced > Remote engine**, fill the fields, press **Test connection**, t
 The engine and the server must see the library at paths that match: either the same mount points, or mappings that translate one into the other.
 
 If the video is still forwarded to another address after saving, the page says so: restart the NAS engine with its upstream option set to the saved URL, or clear the URL to go back to the local engine.
+:::
 
 ## See also
 

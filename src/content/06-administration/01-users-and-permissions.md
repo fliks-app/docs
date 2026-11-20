@@ -3,6 +3,9 @@ title: Users and permissions
 description: Create accounts for the household, control what each one can do, and decide which libraries they can see.
 ---
 
+> [!SUMMARY]
+> Create one account per person in **Settings > Users**, give it a role and the libraries it may see, and that is all a household needs. Roles bundle permissions; library access is set per user, separately from the role. Only the administrator can reach these pages.
+
 ## Users
 
 **Settings > Users** lists every account: username, role, an **Active** switch, and last
@@ -13,6 +16,7 @@ gets the default role. A click-through is in
 
 ![The Users list, with the signed-in admin account tagged as you](/img/users-list.webp)
 
+:::details Every setting of a user account
 Click a username to open that user's page. Its **Edit user** card holds the settings below,
 which are independent of the role:
 
@@ -26,11 +30,13 @@ which are independent of the role:
 
 Leave **New password** empty while editing an existing user to keep their current password.
 The same page has a **Sign out everywhere** button (ends every session of that user), a **Delete** button, and **Requests** and **Statistics** tabs for that user.
+:::
 
 ## Login user list
 
-The login screen lists the accounts so people can pick theirs instead of typing a username.
-**Settings > General > Server > Login user list** sets who sees that list, and **Save** applies it:
+**Settings > General > Server > Login user list** sets who sees the account list on the login screen: **Everyone** (default), **Local network only** or **Hidden**. Press **Save**.
+
+:::details Who sees the login user list
 
 | Option | Who sees the list |
 |---|---|
@@ -43,6 +49,7 @@ Only enabled accounts are listed, and only with their username and avatar. With 
 goes straight to the username form. That form has no Quick Connect button: Quick Connect starts
 from the account screen, which is skipped, so a new device can't use it. Accounts already signed
 in on a device still show in that device's list.
+:::
 
 Accounts can also sign in through an OpenID Connect provider: see
 [Single sign-on](/administration/single-sign-on).
@@ -62,6 +69,7 @@ Fliks ships three roles, seeded the first time the server starts with no roles y
 | **User** | `media.read`, `livetv.read`, `requests.create`, `parties.create`, `parties.read_public` | The default role for new users, unless you mark another role as default. |
 | **Readonly** | `media.read`, `livetv.read`, `parties.read_public` | Browse and watch only; can't request a title or create a watch party. |
 
+:::details Every permission and what it grants
 The available permissions (the label the role editor shows is in brackets):
 
 | Permission | Grants |
@@ -83,11 +91,13 @@ The available permissions (the label the role editor shows is in brackets):
 | `settings.access` (Settings access) | Open the Administration area at all, and change every setting in it: libraries, profiles, subtitle and translation providers, Live TV, plugins, and so on. |
 | `users.manage` (Manage users) | Create, edit, disable and delete user accounts. Picking a user's role also needs `roles.manage`. |
 | `roles.manage` (Manage roles) | Create, edit and delete roles, and assign a role to a user. It doesn't grant `users.manage`. |
+:::
 
 A plugin can add its own permissions to this list (namespaced to that plugin, so it can never be
 confused with a core one or another plugin's). They appear under **Plugin permissions** in the role
 editor once the plugin is installed.
 
+:::details Custom roles, plugin permissions and deleting a role
 You can create as many custom roles as you like, combining any permissions: a "Family" role with
 just `media.read`, `livetv.read` and `requests.create`, a "Moderator" role that adds
 `requests.manage` without touching settings, and so on. A role can't be deleted while any user is
@@ -95,6 +105,7 @@ still assigned to it; reassign those users first.
 
 `users.manage` and `roles.manage` are only reachable from the Administration area, so a role that
 holds them also needs `settings.access`.
+:::
 
 ## Which model actually applies
 
@@ -109,6 +120,6 @@ access).
 
 - [Settings](/administration/settings) for where Users and Roles sit among every other admin
   page.
-- [Requests](/features/requests) for how `requests.create` and `requests.manage` interact with
+- [Requests](/downloads/requests) for how `requests.create` and `requests.manage` interact with
   auto-approval rules.
 - [Plugins](/administration/plugins) for how an installed plugin's own permissions show up here.

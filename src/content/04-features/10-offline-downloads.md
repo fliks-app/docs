@@ -3,8 +3,12 @@ title: Offline downloads
 description: Download a title, a season, a whole series or a playlist to a phone, tablet or the desktop app for playback without a connection.
 ---
 
-## Which clients support it
+> [!SUMMARY]
+> On a phone, tablet, desktop or browser, open a movie or episode and choose **Download**, pick a quality, then play it from **Downloads** without a connection. TV apps have no offline downloads.
 
+## Check that your client supports it
+
+:::details Which client supports which feature
 | | Web browser | iOS, Android | Desktop |
 |---|:-:|:-:|:-:|
 | Download a movie or episode | Yes (kept in the browser itself) | Yes | Yes |
@@ -15,6 +19,7 @@ description: Download a title, a season, a whole series or a playlist to a phone
 | Auto-download limit | No | Yes | Yes |
 | Wi-Fi only | No | Yes | No |
 | Free space shown | Yes (the browser's estimate) | Yes | Yes |
+:::
 
 Android TV, Samsung, LG and Apple TV have no offline downloads. They are hidden from the interface
 entirely on every TV client: there's nowhere to start one, and nothing to manage.
@@ -22,7 +27,7 @@ entirely on every TV client: there's nowhere to start one, and nothing to manage
 Downloads and the rules below belong to the signed-in account on that server. Another account on
 the same device doesn't see them.
 
-## Downloading a single title
+## Download a movie or episode
 
 Open a movie or episode and choose **Download**, then pick a quality from the list Fliks offers for
 that specific file, each with an estimated size. The quality set as the default in
@@ -42,7 +47,7 @@ copy. **Delete download** removes it from the device. While a download is still 
 same window shows its progress and a button to stop it, after a confirmation that the part already
 downloaded is removed.
 
-## Downloading a season or a series
+## Download a season or a whole series
 
 A series page has four ways to download more than one episode at once. All of them open the
 quality picker, which lists the number of episodes it will fetch and multiplies each estimated size
@@ -77,6 +82,7 @@ group to fold it open or closed. Shows start closed, a show with a single season
 unfolded, and the groups you open stay open when you leave the page and come back. The newest
 download is at the end of the list.
 
+:::details Download states and row actions
 Each row shows its quality, its size once known, and its state:
 
 | State | Meaning |
@@ -97,11 +103,13 @@ What you can do:
 - Delete a whole show or a whole season from its group header.
 - **Select** to tick several rows (every group opens while you select), then **Retry** the failed
   ones or **Delete** the selection in one go.
+:::
 
 Opening a download from here and then leaving the player brings you back to the Downloads screen.
 
-## Playing a download
+## Play a download offline
 
+:::details Playback and resume rules
 Press **Play** on a movie or episode that has a finished download, from its page or from anywhere
 else in the app, and Fliks plays the copy on the device, with or without a connection. The one
 exception is casting: a Cast receiver can't read files on your device, so Fliks streams from the
@@ -109,8 +117,9 @@ server instead.
 
 When the server answers, your resume point on it wins over what this device recorded, so you pick up
 where another device left off. Offline, playback resumes from the last position this device saved.
+:::
 
-## Automatic downloads for a playlist
+## Keep a playlist downloaded automatically
 
 Turn on **Automatic download** in a playlist's own settings (not on the Downloads screen) and Fliks
 keeps that playlist current on the device by itself: anything in it you haven't watched yet gets
@@ -118,6 +127,7 @@ downloaded, and anything you finish watching is deleted again to free the space.
 a playlist you keep adding to, so there's always something ready to watch without planning ahead of
 a trip.
 
+:::details Rules of automatic playlist downloads
 A few things worth knowing:
 
 - The toggle is set **per device**, not on your account, so turning it on on your phone doesn't
@@ -133,14 +143,16 @@ A few things worth knowing:
   by hand is never removed automatically.
 - Removing an item from the playlist without watching it doesn't delete anything already
   downloaded for it; delete it from the Downloads screen instead.
+:::
 
-## Keeping the next episodes of a series
+## Keep the next episodes of a series on the device
 
 For a series you're following, Fliks can keep the next few unwatched episodes on the device. Open
 the series' actions menu, choose **Auto-download**, then **Next 3 episodes**, **Next 5 episodes** or
 **Next 10 episodes**. **Off** turns it off. The same selector sits at the top of a show's group on
 the Downloads screen, and a show with a rule says so on its header.
 
+:::details How the next-episodes rule behaves
 Once a rule is on:
 
 - The next unwatched episodes that have a file are downloaded, in season then episode order.
@@ -152,6 +164,7 @@ Once a rule is on:
   reached.
 - Like playlists, the rule is **per device**, and only the downloads the rule created are cleaned up
   when watched. An episode you had already downloaded by hand stays.
+:::
 
 This is available on iOS, Android and the desktop app.
 
@@ -160,6 +173,7 @@ This is available on iOS, Android and the desktop app.
 **App settings > Storage** (on every client except TVs) has these settings. They belong to the
 device, not to your account.
 
+:::details Every storage setting
 - **Simultaneous downloads**: how many downloads run at once, from 1 to 5 (default 3). Downloads
   beyond that number wait in the queue. Not shown in the desktop app.
 - **Default quality**: **Best available** (the default), **Original**, 2160p, 1080p, 720p, 480p or
@@ -173,12 +187,12 @@ device, not to your account.
   don't count toward it.
 - **Clear cache**: clears the app's own working cache, not your downloads.
 - **Delete all downloads**: removes every downloaded file from the device in one action.
+:::
 
 There's no overall storage quota on downloads you start by hand and no choice of download folder:
 downloads use whatever storage the operating system gives the app.
 
-## Download notifications
-
+:::details Download notifications and admin view
 On Android, a notification follows the queue. A single download shows its title, its percentage
 and the time left, with **Pause** (or **Resume** while paused) and **Cancel** buttons. Several
 downloads show a count and list each item, with paused ones marked. It reads **Waiting for Wi-Fi**
@@ -189,6 +203,7 @@ and tapping the banner that announces a finished download opens the Downloads sc
 An administrator sees a download in progress under **Downloads in progress** on **Settings > Video
 activity**, apart from the playbacks, without a position or playback controls. See
 [Transcoding dashboard](/administration/transcoding-dashboard).
+:::
 
 ## See also
 

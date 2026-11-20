@@ -3,19 +3,14 @@ title: Movies and series
 description: TMDB, TheTVDB and TheXEM, the bundled plugins that identify movies and series and map scene numbering.
 ---
 
-Three bundled plugins serve video. TMDB and TheTVDB identify titles. TheXEM only translates
-episode numbers. All three are listed on **Administration > Advanced > Plugins** and configured
-from **Settings > Metadata** (see [Overview](/built-in-plugins/overview#configure-a-plugin)).
+> [!SUMMARY]
+> TMDB and TheTVDB identify movies and series out of the box with keys Fliks ships; TheXEM only maps scene numbering. Nothing to set up unless you want your own API key (**Settings > Metadata > Configure**).
+
+Configured from **Settings > Metadata** (see [Overview](/built-in-plugins/overview#configure-a-plugin)).
 
 ## Provider order
 
-Both **Movies** and **Series** start with TMDB, then TheTVDB. Fliks asks them in that order, so
-TheTVDB fills in only when TMDB has nothing. Change the order on **Settings > Metadata**, under
-**Order per kind**. A library can prefer one provider (**Settings > Libraries**), and one title can
-be re-identified against another (see [Metadata](/features/metadata#fixing-a-wrong-match)).
-
-TheXEM is listed under **Series** but does not identify anything: its position changes nothing for
-posters or overviews.
+TMDB is asked first, then TheTVDB, and TheXEM changes nothing for posters or overviews. Reorder on **Settings > Metadata**, see [Metadata settings](/administration/metadata-settings).
 
 ## TMDB
 

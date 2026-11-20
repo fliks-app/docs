@@ -3,7 +3,10 @@ title: Comics
 description: Add a comics library, browse volumes and issues, edit their details, and read in pages, manga or webtoon mode.
 ---
 
-## Creating a comics library
+> [!SUMMARY]
+> Switch on **Comics** when adding a library, scan, then open a volume and press **Read**. Reading mode (pages, manga, webtoon) is in the reader's **Appearance** panel.
+
+## Add a comics library
 
 In **Settings > Libraries > Add a library**, switch on **Comics** under **Media types**, then set
 the folders and scan as described in [Libraries](/features/libraries#creating-a-library).
@@ -23,8 +26,9 @@ The list below is split into **Issues**, **Annuals** and **Specials**. Each row 
 page count, a **Read** badge when finished, a progress bar, a **No file** badge for a missing
 issue, a pencil button to edit it and a three-dot menu.
 
-## Editing a volume or an issue
+## Correct a volume or issue's details
 
+:::details What each edit dialog holds
 Fliks fills these from the files and providers. You can correct them by hand:
 
 - **Edit details** in the volume's three-dot menu opens **Edit volume**: **Title**,
@@ -32,6 +36,7 @@ Fliks fills these from the files and providers. You can correct them by hand:
 - The pencil on an issue opens **Edit issue**: **Number**, **Sort position**, **Type**
   (**Issue**, **Annual** or **Special**), **Title**, **Release date**, **Overview**.
 - **Reset to automatic** drops your edit and goes back to the file and provider values.
+:::
 
 The other entries of the three-dot menu (**Metadata > Identify**, **Refresh metadata**,
 **Advanced** ...) are the ones described in [Libraries](/features/libraries#the-title-page-and-its-actions).

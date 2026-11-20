@@ -95,6 +95,7 @@ function highlightCode(code, requestedLang) {
 }
 
 const CALLOUTS = {
+  SUMMARY: { label: 'In short', variant: 'summary' },
   NOTE: { label: 'Note', variant: 'info' },
   TIP: { label: 'Tip', variant: 'success' },
   IMPORTANT: { label: 'Important', variant: 'important' },
@@ -169,7 +170,7 @@ const docsRenderer = {
 
   blockquote(token) {
     const raw = token.text ?? '';
-    const m = raw.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*\n+/i);
+    const m = raw.match(/^\[!(SUMMARY|NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*\n+/i);
     if (m) {
       const type = m[1].toUpperCase();
       const body = raw.slice(m[0].length);
@@ -229,8 +230,28 @@ const stepsExtension = {
   },
 };
 
+// `:::details Title` ... `:::` folds reference material (field tables, edge cases) under a
+// clickable title. Its body is regular markdown, but can't hold another ::: block.
+const detailsExtension = {
+  name: 'details',
+  level: 'block',
+  start: (src) => src.match(/^:::details/m)?.index,
+  tokenizer(src) {
+    const m = src.match(/^:::details[ \t]+([^\n]+)\n([\s\S]*?)\n:::[ \t]*(?:\n+|$)/);
+    if (!m) return undefined;
+    if (/^:::/m.test(m[2])) fail(`${currentFile}: a :::details block can't contain another ::: block`);
+    return { type: 'details', raw: m[0], summary: m[1].trim(), body: m[2] };
+  },
+  renderer({ summary, body }) {
+    return (
+      `<details class="doc-details"><summary>${marked.parseInline(summary)}</summary>` +
+      `<div class="doc-details-body">${marked.parse(body)}</div></details>\n`
+    );
+  },
+};
+
 const marked = new Marked({ gfm: true, breaks: false });
-marked.use({ renderer: docsRenderer, extensions: [stepsExtension] });
+marked.use({ renderer: docsRenderer, extensions: [stepsExtension, detailsExtension] });
 
 // ---------- read content tree ----------
 
@@ -504,7 +525,7 @@ for (const section of sections) {
         url: heading ? `${page.url}#${heading.id}` : page.url,
         title: heading ? heading.text : page.title,
         section: heading ? `${section.title} / ${page.title}` : section.title,
-        text: decodeEntities(stripTags(body)).slice(0, 600),
+        text: decodeEntities(stripTags(body)).replace(/\s+/g, ' ').trim(),
       });
     }
   }
