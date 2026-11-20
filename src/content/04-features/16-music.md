@@ -46,21 +46,11 @@ as other titles. See [Libraries](/features/libraries#the-title-page-and-its-acti
 
 ## The player
 
-A mini player stays at the bottom while you browse and opens into the full player.
-
-- The **Queue** lists what plays next. Use **Edit** to reorder, **Move to top** or remove tracks.
-- **Shuffle** and **Repeat** (off, all, one track).
-- **Volume levelling** (ReplayGain) by **Track** or **Album**, or **Off**, with a level
-  adjustment.
-- **Lyrics** shows synced lyrics line by line, or word by word when the source has them.
+A mini player stays at the bottom while you browse and opens into the full player, with the queue, shuffle, repeat, volume levelling and lyrics. All of it is described in [The music player](/player/music-player).
 
 ## Lyrics
 
-Lyrics come from the files (embedded, or `.lrc`, `.elrc`, `.ttml`, `.srt`, `.txt` beside the
-track), from the LRCLIB plugin, or from you. **Edit lyrics** opens a dialog to **Fetch from
-providers**, **Add lyrics** from a pasted text or a file, mark one version as **Make default**,
-and use **Tap to sync**: press **Stamp line** as each line starts to sing, **Back** undoes the
-last stamp.
+Lyrics come from the files (embedded, or `.lrc`, `.elrc`, `.ttml`, `.srt`, `.txt` beside the track), from the LRCLIB plugin, or from you. How to show, add and sync them is in [The music player](/player/music-player#lyrics).
 
 ## Smart playlists and M3U
 
@@ -73,10 +63,6 @@ model. Any track can then be prepared (voice separated, lyrics aligned word by w
 with a score per singer, a **Difficulty** from **Easy** to **Hard**, a change of **Key** and a
 **Sound mix** of **Original**, **Guide** or **Instrumental**. Phones can act as microphones in a
 [watch party](/features/watch-party).
-
-> [!NOTE]
-> This page was written from the app's source and release notes. It has no screenshots yet: the
-> demo server has no music.
 
 ## See also
 

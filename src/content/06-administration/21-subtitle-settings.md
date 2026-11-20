@@ -92,14 +92,40 @@ Translation turns an existing text subtitle into another language and adds the *
 | **Max parallel** | How many translations run at once, at least 1. Default 1. |
 | **Add provider** | Opens **New translation provider**. |
 
+Translation does nothing until **Enable translation** is on and at least one provider is added and
+active. The example below sets up [LibreTranslate](https://libretranslate.com/), an open-source
+engine you run yourself: it needs no account and no key. Start it next to Fliks, for example as a
+Compose service:
+
+```yaml
+  libretranslate:
+    image: libretranslate/libretranslate:v1.9.6
+    environment:
+      LT_LOAD_ONLY: en,fr   # only the languages you need; each pair is a download
+    ports: ["127.0.0.1:5000:5000"]
+```
+
+Both containers must share a Docker network, so that Fliks reaches it at `http://libretranslate:5000`.
+The first start downloads the language models and can take a few minutes.
+
+:::steps
+![Open **Settings > Subtitle providers** and turn on **Enable translation**](/img/admin-translation-1.webp)
+![Press **Add provider** in the **Subtitle translation** block](/img/admin-translation-2.webp)
+![In **New translation provider**, open the **Engine** list and choose **LibreTranslate**](/img/admin-translation-3.webp)
+![Name it, enter the **Server URL** and press **Test**](/img/admin-translation-4.webp)
+![**Connection successful** means a test sentence came back translated. Press **Save**](/img/admin-translation-5.webp)
+![The provider is listed as **Default**, with its **Active** switch on](/img/admin-translation-7.webp)
+:::
+
 In the dialog:
 
 | Field | Meaning |
 |---|---|
 | **Name**, **Engine** | **Gemini**, **OpenAI-compatible** (Groq, OpenRouter, Ollama and similar) or **LibreTranslate** (self-hosted). |
-| **Gemini API key**, **Model** | Gemini engine. The model field is prefilled with `gemini-3.5-flash-lite`. |
-| **Base URL** | OpenAI-compatible engine. Examples are shown under the field for Groq, OpenRouter and Ollama. |
-| **API key (optional)** | OpenAI-compatible and LibreTranslate engines. |
+| **Gemini API key**, **Model** | Gemini engine. The key is created in [Google AI Studio](https://aistudio.google.com/). The model field is prefilled with `gemini-3.5-flash-lite`. |
+| **Base URL** | OpenAI-compatible engine. Examples are shown under the field for Groq (`https://api.groq.com/openai/v1`), OpenRouter (`https://openrouter.ai/api/v1`) and Ollama (`http://host.docker.internal:11434/v1`, when Ollama runs on the Docker host). |
+| **API key (optional)** | OpenAI-compatible engine: the key of the hosted service (Groq, OpenRouter and similar issue it in their dashboard), left empty for a local Ollama. LibreTranslate: only if your server was started with API keys. |
+| **Model** | OpenAI-compatible engine: the model name, suggested from the list the endpoint reports or typed in. After switching **Engine** from Gemini, the field may still hold `gemini-3.5-flash-lite`: replace it. |
 | **Server URL** | LibreTranslate, for example `http://libretranslate:5000`. |
 | **Max tokens per request** | Prompt and reserved answer together. 0 uses the model maximum; a value under 2048 is raised to 2048. Not shown for LibreTranslate. |
 | **Tokens per minute** | Requests wait so this budget is never exceeded. 0 turns pacing off. Not shown for LibreTranslate. |

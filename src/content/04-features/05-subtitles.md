@@ -59,8 +59,8 @@ dropdowns, described in [Subtitles in the player](/player/subtitles-and-audio#su
 :::steps
 ![Open the title (a movie, or an episode of a series) from the library](/img/player-detail-page.webp)
 ![Open the **More** menu (three dots) and choose **Edit subtitles**](/img/player-detail-more-menu.webp)
-![The **Edit subtitles** dialog opens, with one row per track](/img/player-subtitles-dialog.webp)
-![Press **Actions** on a row for **View**, **Download** and **Translate**. A downloaded or imported file also has timing and delete actions](/img/player-subtitles-row-actions.webp)
+![The **Edit subtitles** dialog opens, with one row per track. Press **Actions** at the end of a row](/img/player-subtitles-dialog.webp)
+![The row menu: **View**, **Download**, **Translate**, **Change language**, **Timing**, **Corrections** and **Delete** on an imported file](/img/player-subtitles-row-actions.webp)
 ![Press **Search**, choose a language and press **Search** again to look on the subtitle providers](/img/player-subtitles-search.webp)
 :::
 
@@ -78,28 +78,102 @@ the page of an episode, not on the series page.
 | You want to | Do this |
 |---|---|
 | Download a subtitle | **Search**, pick the language, then download the result you want. Searching needs at least one provider, set up in **Settings > Subtitle providers**. |
-| Use your own file | **Import**, then choose an `.srt`, `.vtt`, `.ass` or `.ssa` file and its language. |
+| Use your own file | **Import**, then choose an `.srt`, `.vtt`, `.ass` or `.ssa` file and its language. See [Importing your own file](#importing-your-own-file). |
 | Fix a subtitle that drifts | **Actions** on its row, then **Timing**, then **Sync**, or use **Adjust timing**. Embedded tracks cannot be synced: download or import a separate file first. |
 | Translate | **Actions**, then **Translate**, and pick the target language. |
-| Remove one | **Actions** on a downloaded or imported row, then **Delete**. **Blacklist** also stops the same result from being downloaded again. An embedded track lives in the video file and cannot be deleted. |
+| Remove one | **Actions** on a downloaded, imported or translated row, then **Delete**. On a file downloaded from a provider, **Blacklist** also stops the same result from being downloaded again. An embedded track lives in the video file and cannot be deleted. |
 | Look for every missing language | **Search missing**, shown when the title's language profile asks for a language that has no subtitle yet. |
 
+
+### Importing your own file
+
+Use **Import** when you already have a subtitle file, for example one you wrote or downloaded by hand.
+
+:::steps
+![In **Edit subtitles**, press **Import**](/img/subtitles-import-1.webp)
+![Pick the **Language**, set **Forced** or **Hearing-impaired** if they apply, and choose the file. Then press **Import**](/img/subtitles-import-2.webp)
+![A **Subtitle uploaded** message appears and the file gets its own row, with **disk** as its provider](/img/subtitles-import-3.webp)
+:::
+
+Fliks stores the file next to the video, named after it with the language code added (for example
+`Movie (2010).en.srt`). The new row shows the file name, **disk** as the provider and a score of
+100. A file you import is a normal subtitle: it can be synced, shifted, translated and deleted.
+
+> [!NOTE]
+> The **Synced** badge appears on an imported file at once. It does not mean the timing was
+> checked: a file that is out of step with the picture still needs the steps below.
+
+### Actions on a file
+
+**Actions** at the end of a row opens the menu for that file. What it offers depends on where the
+file comes from.
+
+| Action | What it does | Offered on |
+|---|---|---|
+| **View** | Lists the cues with their start and end times | Every text row |
+| **Download** | Saves the file to your computer (needs the download permission) | Every text row |
+| **Translate** | Creates a copy in another language, see [Translating a subtitle](#translating-a-subtitle) | Every text row |
+| **Change language** | Changes the language the file is filed under | Downloaded, imported and translated files |
+| **Timing** | **Sync**, **Adjust timing** and **Change framerate**, see [Fixing out-of-sync subtitles](#fixing-out-of-sync-subtitles) | Downloaded, imported and translated files |
+| **Corrections** | One-click clean-ups of the text | Downloaded, imported and translated files |
+| **Validate** | Marks the file as correct, which sets its score to 100 | Files with a score below 100 |
+| **Blacklist** | Deletes the file and stops the same result from being downloaded again | Files downloaded from a provider |
+| **Delete** | Removes the file from the disk | Downloaded, imported and translated files |
 
 ## Fixing out-of-sync subtitles
 
 A subtitle that drifts against the dialogue can be corrected without hunting for the right offset
-by hand: open its row's **Actions > Timing > Sync**. Fliks listens to the audio (or another
-subtitle track you point it at) and slides the whole file back onto it, using
-[ffsubsync](https://github.com/smacke/ffsubsync) first and falling back to
-[alass](https://github.com/kaegi/alass) if that doesn't work. Options in the same dialog: a maximum
-offset in seconds, whether to also let it correct a framerate mismatch, and a slower, more accurate
-search mode.
+by hand. Embedded tracks cannot be synced or adjusted: download or import a separate file first.
 
-If you already know the fix, **Adjust timing** shifts a subtitle by a fixed amount, and **Change
-framerate** rescales it between two frame rates. The **Corrections** menu next to **Timing** has
-one-click clean-ups (remove HI tags, style tags or emojis, OCR and common fixes, convert to SRT).
-Embedded subtitle tracks can't be synced or adjusted directly: download or import a separate file
-first.
+### Sync automatically
+
+Open the row's **Actions > Timing > Sync**. Fliks listens to the audio (or another subtitle track
+you point it at) and slides the whole file back onto it, using
+[ffsubsync](https://github.com/smacke/ffsubsync) first and falling back to
+[alass](https://github.com/kaegi/alass) if that doesn't work.
+
+:::steps
+![Open **Actions > Timing** on the file and choose **Sync**](/img/subtitles-sync-1.webp)
+![In **Sync options**, leave **Reference** on the default (the audio of the video file) and press **Sync**](/img/subtitles-sync-2.webp)
+![The row shows **Sync in progress** while the file is processed](/img/subtitles-sync-3.webp)
+![A **Subtitle synced successfully** message appears when it is done](/img/subtitles-sync-4.webp)
+:::
+
+The options in **Sync options**:
+
+| Option | Meaning |
+|---|---|
+| **Reference** | What the file is lined up against. The default is **Default: automatic from the video file**, which uses the audio. The list also offers each audio track, each embedded subtitle track and the other subtitle files of the title: pick one that is already in step with the picture. |
+| **Max offset (seconds)** | The largest shift the search may apply. 60 by default. Leave it empty for no limit. |
+| **Do not fix the framerate** | Stops the sync from also correcting a framerate mismatch. |
+| **Golden-Section Search** | A slower, more accurate search. |
+
+The result replaces the file. The cue list of an English subtitle that was 2.5 seconds late looks
+like this before and after a sync (open it with **Actions > View**):
+
+:::steps
+![Before: the first line starts at 1:49, 2.5 seconds after the dialogue](/img/subtitles-sync-before.webp)
+![After: the same line starts at 1:47, on the dialogue](/img/subtitles-sync-after.webp)
+:::
+
+Sync works best on a title with a lot of speech. On a film with long silent stretches it has less
+to line up against, so pick a subtitle track that is already in step as the **Reference** when the
+audio gives a poor result.
+
+### Shift by a fixed amount
+
+If you already know the offset, use **Actions > Timing > Adjust timing**. Enter minutes, seconds and
+milliseconds: a positive value delays every cue, a negative one advances them.
+
+:::steps
+![Open **Actions > Timing** on the file and choose **Adjust timing**](/img/subtitles-adjust-1.webp)
+![Enter the shift (here minus 2 seconds and minus 500 milliseconds) and press **Adjust timing**](/img/subtitles-adjust-2.webp)
+![The cues now start 2.5 seconds earlier: the first line is at 1:47](/img/subtitles-adjust-3.webp)
+:::
+
+**Change framerate**, in the same **Timing** menu, rescales a subtitle between two frame rates, for
+a file made for a video with another framerate. The **Corrections** menu next to **Timing** has
+one-click clean-ups (remove HI tags, style tags or emojis, common fixes, convert to SRT).
 
 > [!TIP]
 > Turn on **Automatically sync subtitles** in **Settings > Subtitles** and every new automatic
@@ -112,29 +186,53 @@ open it and use it is in [The synchronize panel](/player/subtitles-and-audio#fix
 
 ## Translating a subtitle
 
-When nothing is available in a language you want, translate a track you do have instead: open its
-**Actions > Translate**, choose the target language, and (if more than one translation provider is
-configured) which one to use. This works on any text subtitle, embedded ones included; it runs in
-the background and keeps the original timing. The result is saved next to the video as its own
-file, so the same translation is never paid for or re-run automatically; running it again for the
-same language creates a separate copy rather than replacing the first.
+When nothing is available in a language you want, translate a track you do have instead. Nothing
+shows up until an admin has turned translation on and added an engine, see
+[Setting up a translation engine](/administration/subtitle-settings#translation).
 
-Three kinds of translation engine are supported, configured under **Settings > Subtitle providers >
-Subtitle translation** (**Add provider**), and you can add more than one and pick a default with
-**Use as default**:
+:::steps
+![Open **Actions** on the text subtitle to translate and choose **Translate**](/img/subtitles-translate-1.webp)
+![Choose the **Target language** and press **Translate**. With several engines set up, a provider picker appears too](/img/subtitles-translate-2.webp)
+![A message says the translation started. The new row shows the engine's name as its provider and a progress bar](/img/subtitles-translate-3.webp)
+![When the bar is gone the new language has its own row, with its own file](/img/subtitles-translate-4.webp)
+:::
+
+This works on any text subtitle, embedded ones included. It runs in the background and keeps the
+original timing, so you can close the dialog. The result is saved next to the video as its own
+file (for example `Movie (2010).fr.srt`) and is a normal subtitle: you can **View** it, sync it or
+delete it. The same translation is never re-run automatically; running it again for the same
+language creates a separate copy rather than replacing the first. A track that is image-based must
+go through [OCR](#extracting-text-from-image-based-subtitles) first, and the target language cannot
+be the language of the source.
+
+![The translated French file, listed with its cues](/img/subtitles-translate-5.webp)
+
+Three kinds of translation engine are supported. They are configured under **Settings > Subtitle
+providers > Subtitle translation** (**Add provider**), and you can add more than one and pick a
+default with **Use as default**:
 
 | Engine | What it needs |
 |---|---|
 | Gemini | An API key, and a model (defaults to a small, fast one) |
 | OpenAI-compatible | A base URL and a model; works with Groq, OpenRouter, a local Ollama, or any compatible endpoint. The API key is optional, for setups that don't need one. |
-| LibreTranslate | The URL of your own LibreTranslate server; the API key is optional |
+| LibreTranslate | The URL of your own LibreTranslate server; the API key is optional. Free and local, but it translates cue by cue without context |
 
-The LLM engines also take a **Max tokens per request** and a **Tokens per minute** budget, so a
-free-tier API isn't pushed past its rate limit.
+The LLM engines (Gemini and OpenAI-compatible) also take a **Max tokens per request** and a **Tokens per minute** budget, so a
+free-tier API isn't pushed past its rate limit. Field by field, with the local LibreTranslate walkthrough, this is in
+[Setting up a translation engine](/administration/subtitle-settings#translation).
 
-Each provider has a **Test** button that sends a couple of short lines through it before you rely on
-it. Credentials are stored on the server and are never sent back to the client once saved: the
-settings page always shows a masked field, with the choice to leave it as-is or clear it.
+### Cost and quality
+
+- **Cost.** Gemini and hosted OpenAI-compatible services bill by the token, or limit a free tier. A
+  feature film has well over a thousand cues. LibreTranslate and a local Ollama model cost nothing but
+  your own hardware.
+- **Privacy.** The text of the subtitle is sent to the engine. A hosted service sees it; a
+  LibreTranslate or Ollama server on your own network does not leave it.
+- **Quality.** The LLM engines translate batches of cues, are given the title, genres and synopsis as context and,
+  for languages that have one (French, German, Spanish, Italian, Portuguese, Dutch, Russian),
+  keep a consistent informal or formal form of address. LibreTranslate translates chunks of 25 cues
+  with no context and no such choice: expect plainer, more literal lines. Read a translation
+  before you rely on it.
 
 ![The New translation provider dialog, with the Gemini engine and the gemma-4-26b-a4b-it model selected](/img/admin-subtitle-translation-gemini.webp)
 

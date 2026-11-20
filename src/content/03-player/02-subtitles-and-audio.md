@@ -56,9 +56,16 @@ The small gear at the top right of the subtitle list opens the subtitle settings
 
 If a subtitle is early or late, you can slide it against the picture without leaving the player.
 
-Open **Subtitles**, the gear at the top right of the list, then **Open synchronize panel**.
+Pick the track, open the gear at the top right of the **Subtitles** list, then **Open synchronize panel**.
+The example below fixes an imported English file that shows its lines about 2.5 seconds late.
 
-![The synchronize panel: the cue timeline, the shift badge, **Save** and **Reset**](/img/player-subtitle-sync.webp)
+:::steps
+![Open **Subtitles**, choose the track (here the imported English file), then press the gear at the top right of the list](/img/player-sync-1.webp)
+![Choose **Open synchronize panel**](/img/player-sync-2.webp)
+![The cues are listed on a timeline. Drag the list, or scroll it, to move them against the picture](/img/player-sync-3.webp)
+![The badge shows the shift (here -2.62 s) and **Save** is enabled. Press **Save**](/img/player-subtitle-sync.webp)
+![A **Processing applied successfully** message confirms the file was rewritten](/img/player-sync-4.webp)
+:::
 
 This needs the **Manage subtitles** permission and a text track. It is not offered while casting.
 If no subtitle is on, opening the panel picks the first text track.
@@ -78,8 +85,8 @@ each side marking the current moment. The subtitles on the picture update as you
   unsaved shift asks you to confirm.
 
 An embedded track can be previewed here but not saved: the panel says so, and **Save** and
-**Synchronize on other track** stay disabled, as in the screenshot. Download or import a separate
-file to save a shift. On a phone the panel opens as a sheet, with icon buttons instead of text.
+**Synchronize on other track** stay disabled. Download or import a separate file to save a shift.
+**Save** is also disabled until the timeline has been moved. On a phone the panel opens as a sheet, with icon buttons instead of text.
 
 ### Change how subtitles look
 

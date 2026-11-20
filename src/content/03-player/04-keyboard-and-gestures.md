@@ -74,3 +74,9 @@ a TV, three on other devices. Focus lands on the **Play** button each time the b
 so `OK` pauses.
 
 The Apple TV app uses the Siri Remote and its own native controls. See [Apple TV](/clients/apple-tv).
+
+## Music
+
+The music player has no letter shortcuts. It answers the media keys of a keyboard, a headset or a TV remote: **Play/Pause**, **Play**, **Pause**, **Stop** (closes the player), **Next track** and **Previous track**. The same actions come from the system's media controls, which also seek. See [The music player](/player/music-player).
+
+On a phone, swipe the title of the mini player left or right to change track, swipe a queue row sideways to remove it, and drag its handle to reorder.
