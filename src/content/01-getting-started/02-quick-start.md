@@ -3,6 +3,12 @@ title: Quick start
 description: Install the server, add your first library, and open Fliks on your other devices.
 ---
 
+> [!NOTE]
+> These docs name a page after where it lives. **Settings > Libraries** is the **Libraries** entry
+> of **Administration** (user menu, your avatar), **App settings > X** and **Account settings > X**
+> are entries of those two areas of the same menu. [Finding your way around](/getting-started/finding-your-way)
+> shows each one.
+
 ## 1. Install the server
 
 Pick whichever fits the machine that holds your video files. Every option gives you the same Fliks.
@@ -32,25 +38,13 @@ login.
 
 ## 3. Add a library
 
-The user menu (your avatar, top right) opens three settings areas, and these docs name each page
-after its entry in that area's sidebar:
-
-![The avatar button (1) opens a menu with Account settings (2), App settings (3) and Administration (4)](/img/nav-desktop-menu-entries.webp)
-
-- **Settings > X** is an admin page, under user menu > **Administration**: **Settings >
-  Libraries** means the **Libraries** entry there.
-- **App settings > X** holds your own preferences (playback, subtitles, display, ...), under
-  user menu > **App settings** (for example **App settings > Playback**).
-- **Account settings > X** is a page about your account, under user menu > **Account
-  settings** (for example **Account settings > Password**).
-
-[Finding your way around](/getting-started/finding-your-way) maps every area, with a phone layout.
-
-Go to **Settings > Libraries** and click **Add a library**. The wizard has three steps:
+Open the user menu (your avatar, top right), choose **Administration**, click **Libraries** in its
+sidebar, then **Add a library**. A wizard takes you through three steps.
 
 :::steps
-![On a fresh server, the **Setup** card on the home page: click **Configure** next to *Add at least one library*](/img/onboarding-home-empty.webp)
-![**Settings > Libraries**, still empty: click **Add a library**](/img/libraries-empty.webp)
+![Open the user menu (your avatar, top right) and choose **Administration**](/img/libraries-path-1-user-menu.webp)
+![In the Administration sidebar, click **Libraries**](/img/libraries-path-2-admin-sidebar.webp)
+![Click **Add a library**](/img/libraries-path-3-libraries.webp)
 ![**Information**: a name, an icon and the media types, then click **Next**](/img/libraries-wizard-step1.webp)
 ![**Users**: who sees the library, then click **Next**](/img/libraries-wizard-step2.webp)
 ![**Media**: click **Browse...** to pick the root path (or type it)](/img/libraries-wizard-browse-movies.webp)
@@ -62,10 +56,12 @@ Go to **Settings > Libraries** and click **Add a library**. The wizard has three
 
 1. **Information**: give it a name and choose its media types (**Movies**, **Series**, or both; books, comics and albums have their own switches).
 2. **Users**: pick who can see it (administrators always can).
-3. **Media**: set the **Root path** to a folder on the server (type it or use **Browse...**).
-   Under Docker that's the path you mounted at `/medias` (or a subfolder of it); on Windows or
-   macOS it's any folder on disk. Click **Scan the folder**, review what it found, then click
-   **Create the library**.
+3. **Media**: set the **Root path** to a folder on the server. Under Docker that's the path you
+   mounted at `/medias` (or a subfolder of it); on Windows or macOS it's any folder on disk.
+
+> [!TIP]
+> On a new server, the **Setup** card on the home page has a **Configure** button next to *Add at
+> least one library* that opens the same page.
 
 ### What the scan review shows
 
