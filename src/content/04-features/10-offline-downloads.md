@@ -6,55 +6,30 @@ description: Download a title, a season, a whole series or a playlist to a phone
 > [!SUMMARY]
 > On a phone, tablet, desktop or browser, open a movie or episode and choose **Download**, pick a quality, then play it from **Downloads** without a connection. TV apps have no offline downloads.
 
-Android TV, Samsung, LG and Apple TV have no offline downloads. Downloads belong to the signed-in account on that device.
-
 ## Download a movie or episode
 
-Open a movie or episode and choose **Download**, then pick a quality from the list Fliks offers for
-that specific file, each with an estimated size. The quality set as the default in
-[Storage settings](#storage-settings) is highlighted, but nothing starts until you tap a quality.
-On a phone or tablet the copy is saved in the app, in a web browser it's kept in the browser's own
-storage, and the desktop app saves it to disk and plays it back through its own player.
+Open a movie or episode, press **Download** and pick a quality. The button shows the progress.
 
-Where the client isn't a native mobile app, there's an extra option: **Original file**, the
-untouched source file with no re-encoding, played back exactly as stored. External subtitle files
-aren't included with it. In the desktop app it lands in the Downloads screen like any other
-download; in a web browser it's an ordinary file save to your computer, which the Downloads screen
-doesn't track. The original file is not offered for a season or a series.
+![Press Download, pick a quality, and the button fills up as it downloads](/img/offline-download-quality-anim.webp)
 
-![Press Download on a title page: the quality list opens](/img/offline-download-quality-anim.webp)
+:::details Original file
+On the web and the desktop app the list also offers **Original file**: the source file, untouched, without
+external subtitles. In a browser it is a plain file save that the Downloads screen doesn't track. It isn't
+offered for a season or a series.
+:::
 
-Once a title is on the device, its page shows **Downloaded** where **Download** was. Tap it to open
-**Change quality**: the quality of the copy you have is marked, and picking another one replaces the
-copy. **Delete download** removes it from the device. While a download is still transferring, the
-same window shows its progress and a button to stop it, after a confirmation that the part already
-downloaded is removed.
+Once downloaded, tap the mark again to change the quality or **Delete download**.
 
 ![Tap the downloaded mark on a title page: Change quality opens](/img/offline-change-quality-anim.webp)
 
 ## Download a season or a whole series
 
-A series page has four ways to download several episodes. All open the quality picker, which shows the episode count and total size.
-
-- **Download all episodes**, in the series' actions menu. Specials are left out.
-- **Download season**, in the menu of the season you're viewing.
-- **Select**, above the episode list: tick episodes, use **Select all** if you like, then
-  **Download**.
-- **Download** in the menu of a single episode card.
-
-Only episodes that have a file are included, and ones already on the device are skipped. On a season you have
-started, **Unwatched episodes only** is ticked by default. Episodes are queued one after the other; a file that
-lacks the quality you picked gets the nearest lower one. Each episode card shows a download mark, or a progress ring
-while it transfers.
+On a series page: **Download all episodes** (series menu), **Download season** (season menu), or **Select**
+episodes then **Download**. Episodes already on the device are skipped.
 
 ## The Downloads screen
 
-**Downloads** in the main navigation lists everything on the device, with the space the downloads
-use and the free space left where the device can tell. Movies are single cards. Episodes are grouped
-by show, then by season, with the number of episodes and their size on each group header. Tap a
-group to fold it open or closed. Shows start closed, a show with a single season shows it
-unfolded, and the groups you open stay open when you leave the page and come back. The newest
-download is at the end of the list.
+**Downloads** in the sidebar lists everything on the device and the space used. Episodes are grouped by show and season.
 
 ![The Downloads screen: one finished download and one in progress, with the pause button under the cursor](/img/offline-downloads-screen.webp)
 
@@ -83,9 +58,9 @@ What you can do:
   ones or **Delete** the selection in one go.
 :::
 
-Opening a download from here and then leaving the player brings you back to the Downloads screen.
-
 ## Play a download offline
+
+Open it from **Downloads**: it plays without a connection.
 
 :::details Playback and resume rules
 Press **Play** on a movie or episode that has a finished download, from its page or from anywhere
@@ -99,11 +74,8 @@ where another device left off. Offline, playback resumes from the last position 
 
 ## Keep a playlist downloaded automatically
 
-Turn on **Automatic download** in a playlist's own settings (not on the Downloads screen) and Fliks
-keeps that playlist current on the device by itself: anything in it you haven't watched yet gets
-downloaded, and anything you finish watching is deleted again to free the space. This is meant for
-a playlist you keep adding to, so there's always something ready to watch without planning ahead of
-a trip.
+In the mobile and desktop apps, turn on **Automatic download** in a playlist's settings: unwatched items are
+downloaded, watched ones are removed.
 
 :::details Rules of automatic playlist downloads
 A few things worth knowing:
@@ -125,10 +97,8 @@ A few things worth knowing:
 
 ## Keep the next episodes of a series on the device
 
-For a series you're following, Fliks can keep the next few unwatched episodes on the device. Open
-the series' actions menu, choose **Auto-download**, then **Next 3 episodes**, **Next 5 episodes** or
-**Next 10 episodes**. **Off** turns it off. The same selector sits at the top of a show's group on
-the Downloads screen, and a show with a rule says so on its header.
+In the mobile and desktop apps, a series' menu has **Auto-download**: keep the next 3, 5 or 10 unwatched episodes
+on the device.
 
 :::details How the next-episodes rule behaves
 Once a rule is on:
@@ -144,12 +114,9 @@ Once a rule is on:
   when watched. An episode you had already downloaded by hand stays.
 :::
 
-This is available on iOS, Android and the desktop app.
-
 ## Storage settings
 
-**App settings > Storage** (on every client except TVs) has these settings. They belong to the
-device, not to your account.
+**App settings > Storage** sets the default quality, how many downloads run at once, and clears them all.
 
 ![App settings > Storage, with the Default quality menu under the cursor](/img/offline-storage-settings.webp)
 
@@ -199,6 +166,5 @@ activity**, apart from the playbacks, without a position or playback controls. S
 
 ## See also
 
-- [Playlists](/features/playlists) for turning a playlist itself into an automatic download queue.
 - [Streaming and transcoding](/features/streaming-and-transcoding) for what quality options a file
   actually offers.
