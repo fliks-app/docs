@@ -11,10 +11,10 @@ description: Why a title is not downloading, what each test message and queue st
 
 Check these in order, on the title that does not move.
 
-1. **The plugin is installed and Active.** **Settings > Advanced > Plugins**, click **Download**. The badge reads **Active**.
+1. **The plugin is installed and Active.** **Settings > Plugins**, click **Torrent manager**. The badge reads **Active**.
 2. **The title is monitored and has a quality profile.** A title with no
-   [quality profile](/downloads/quality-profiles) is never searched. Set the library's defaults, see
-   [What you need first](/built-in-plugins/torrent-manager#what-you-need-first).
+   [quality profile](/downloads/quality-profiles) is never searched. Give the library a default one, see
+   [Quality profiles](/downloads/quality-profiles).
 3. **Automatic downloads are not paused.** **Settings > Torrent manager > General**, **Pause automatic downloads** is off.
 4. **An indexer is active** and its **Use for** includes **Automatic searches**, and **a download client is active.**
    Without a client the grab fails with *No enabled download client is configured*.
