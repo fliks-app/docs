@@ -4,7 +4,7 @@ description: Set the minimum, preferred and maximum file size of each quality, w
 ---
 
 > [!SUMMARY]
-> Quality definitions give each quality a minimum, preferred and maximum file size, so searches can refuse fake or bloated releases. Needed only for [requests](/downloads/requests) or the Download plugin, and the defaults are sensible: change a range only when releases are refused for being too small or too large.
+> Quality definitions give each quality a minimum, preferred and maximum file size, so searches can refuse fake or bloated releases. Needed only for [requests](/downloads/requests) or Torrent manager, and the defaults are sensible: change a range only when releases are refused for being too small or too large.
 
 ## What a quality definition does
 

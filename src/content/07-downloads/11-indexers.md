@@ -1,10 +1,11 @@
 ---
-title: Download indexers
-description: Add the trackers the Download plugin searches, by importing them from Prowlarr or Jackett or by typing a Torznab address.
+title: Indexers
+group: Torrent manager
+description: Add the trackers Torrent manager searches, by importing them from Prowlarr or Jackett or by typing a Torznab address.
 ---
 
 > [!SUMMARY]
-> An indexer is a Torznab address the Download plugin searches. The shortest path: in **Settings > Download > Indexer sources**, connect your Prowlarr or Jackett once and every tracker comes in. With a single Torznab address, add the indexer by hand instead. Both end in **Settings > Download > Indexers**.
+> An indexer is a Torznab address Torrent manager searches. The shortest path: in **Settings > Torrent manager > Indexer sources**, connect your Prowlarr or Jackett once and every tracker comes in. With a single Torznab address, add the indexer by hand instead. Both end in **Settings > Torrent manager > Indexers**.
 
 An **indexer** is a Torznab endpoint: a web address and an API key that answer "which releases match this title". The plugin queries every enabled indexer, in parallel, each time it searches. An imported indexer is an ordinary row you can edit, disable or delete.
 
@@ -30,7 +31,7 @@ If you changed Prowlarr's **URL Base** or Jackett's **Base path override**, add 
 
 ## Import from Prowlarr or Jackett
 
-Open **Settings > Download > Indexer sources**. A source is a saved connection to Prowlarr or Jackett: it holds the way to read trackers, not the trackers.
+Open **Settings > Torrent manager > Indexer sources**. A source is a saved connection to Prowlarr or Jackett: it holds the way to read trackers, not the trackers.
 
 ### Prowlarr
 
@@ -45,7 +46,7 @@ You need its address and its API key (in Prowlarr, **Settings > General > Securi
 Then connect Fliks:
 
 :::steps
-![In Fliks, **Settings > Download > Indexer sources**, click **New source**](/img/download-source-prowlarr-1-new.webp)
+![In Fliks, **Settings > Torrent manager > Indexer sources**, click **New source**](/img/download-source-prowlarr-1-new.webp)
 ![Name it, keep **Type** on **Prowlarr**, type the **Base URL** and paste the **API key**, then **Test connection**](/img/download-source-prowlarr-2-form.webp)
 ![**Indexer list read, connection OK** means both are right. Click **Save**](/img/download-source-prowlarr-3-test.webp)
 ![Saving imports straight away. **Import the indexers** reads the list again later](/img/download-source-prowlarr-4-saved.webp)
@@ -113,7 +114,7 @@ With a password you can also remove it in Jackett (empty **Admin password**, **S
 Use this for a tracker with its own Torznab address, for Jackett with a password, or to test. You need the **Base URL** of the feed and its **API key**. In Jackett, **Copy Torznab Feed** on the tracker's row gives the URL.
 
 :::steps
-![In **Settings > Download > Indexers**, click **New indexer**](/img/download-indexer-manual-1-new.webp)
+![In **Settings > Torrent manager > Indexers**, click **New indexer**](/img/download-indexer-manual-1-new.webp)
 ![Type a **Name**, the **Base URL** of the Torznab feed and the **API key**](/img/download-indexer-manual-2-form.webp)
 ![Adjust the other options if needed, then click **Test connection**](/img/download-indexer-manual-3-options.webp)
 ![**Capabilities read, connection OK**: click **Save**](/img/download-indexer-manual-4-test.webp)

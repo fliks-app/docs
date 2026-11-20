@@ -319,6 +319,7 @@ function readSections() {
         slug: pSlug,
         title: data.title.trim(),
         description: (data.description ?? '').trim(),
+        subgroup: (data.group ?? '').trim(),
         headings,
         html,
         links: pageLinks,
@@ -425,6 +426,7 @@ const manifestSections = sections.map((s) => ({
     url: p.url,
     title: p.title,
     description: p.description,
+    subgroup: p.subgroup,
     headings: p.headings,
     prev: p.prev,
     next: p.next,
@@ -442,6 +444,8 @@ export interface DocPageMeta {
   url: string;
   title: string;
   description: string;
+  /** Frontmatter \`group\`: pages sharing one are listed under that label in the sidebar. */
+  subgroup: string;
   headings: DocHeading[];
   prev: { url: string; title: string } | null;
   next: { url: string; title: string } | null;

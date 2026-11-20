@@ -19,7 +19,7 @@ description: Who needs the optional download side of Fliks, who can skip it, and
 3. Pick both as the defaults of your library: **Settings > Libraries**, open the library, **Default quality profile** and **Default language profile**. A title with no quality profile is never searched. See [Quality and language profiles](/features/libraries#quality-and-language-profiles).
 
    ![The library settings: Default quality profile and Default language profile](/img/download-library-profiles.webp)
-4. [Download plugin](/downloads/plugin): install it, nothing is downloaded without it.
+4. [Torrent manager](/downloads/plugin): install it, nothing is downloaded without it.
 5. [Indexers](/downloads/indexers): where releases are searched.
 6. [Download client](/downloads/download-clients): qBittorrent or Transmission, and the shared folder.
 7. [Requests](/downloads/requests): how people ask for titles and who approves them.

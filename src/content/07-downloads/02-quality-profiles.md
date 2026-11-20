@@ -4,7 +4,7 @@ description: Choose which release qualities Fliks may download for a title, how 
 ---
 
 > [!SUMMARY]
-> A quality profile says which release qualities Fliks may download for a title and when it stops looking for something better. Needed only for [requests](/downloads/requests) or the Download plugin: playback never reads it. Create one in **Settings > Quality profiles**: a name, a cutoff, and the qualities you accept.
+> A quality profile says which release qualities Fliks may download for a title and when it stops looking for something better. Needed only for [requests](/downloads/requests) or Torrent manager: playback never reads it. Create one in **Settings > Quality profiles**: a name, a cutoff, and the qualities you accept.
 
 ## Create a quality profile
 
