@@ -122,9 +122,9 @@ only discover it as a refused import in the admin UI.
 
 ## Running against a local dev Fliks instance
 
-1. Turn on **Allow unsigned plugins** (**Settings > Advanced > Plugins > ⋮ > Settings**) while
+1. Turn on **Allow unsigned plugins** (**Settings > Plugins > ⋮ > Settings**) while
    you're developing.
-2. Import your `.fkplugin` (**Settings > Advanced > Plugins > ⋮ > Import a plugin**).
+2. Import your `.fkplugin` (**Settings > Plugins > ⋮ > Import a plugin**).
 3. Watch the plugin's row. Its status badge reads **Active**, **Unavailable** (installed, but the
    plugin isn't in its `ready` state), **Failed** (registration failed or the breaker tripped) or
    **Disabled**. Click the badge for the detail: the `statusReason` of a failed registration and,

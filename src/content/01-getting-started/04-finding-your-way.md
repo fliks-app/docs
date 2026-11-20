@@ -86,8 +86,9 @@ Per-title actions live in the **More** menu (three dots) next to **Play**. This 
 subtitles** is, and where **Identify** fixes a wrong match.
 
 :::steps
-![Open a title and click the **More** menu next to **Play**](/img/nav-title-more-menu.webp)
-![**Edit subtitles** lists, searches and syncs the subtitles of that title; **Metadata** holds **Identify** and **Refresh metadata**](/img/nav-title-metadata-menu.webp)
+![Open a title and click the **More** menu next to **Play**](/img/nav-title-more-button.webp)
+![**Edit subtitles** lists, searches and syncs the subtitles of that title; open **Metadata**](/img/nav-title-more-menu.webp)
+![**Metadata** holds **Identify** and **Refresh metadata**](/img/nav-title-metadata-menu.webp)
 :::
 
 ## I want to... go to

@@ -95,7 +95,9 @@ body {
   display: block;
   margin-inline: auto;
   max-width: 100%;
+  max-height: 32rem;
   height: auto;
+  object-fit: contain;
   border-radius: var(--radius-box);
   border: 1px solid var(--color-base-300);
   background-color: var(--color-base-200);
@@ -396,8 +398,12 @@ body {
 .doc-prose .doc-step img {
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 10;
+  max-height: 28rem;
+  object-fit: contain;
   margin: 0;
   border-radius: 0;
+  background-color: #1d232a;
 }
 .doc-prose .doc-step figcaption {
   display: flex;
@@ -429,16 +435,32 @@ body {
   font-size: 0.875rem;
 }
 .doc-steps-nav button {
-  width: 2rem;
-  height: 2rem;
+  display: inline-grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 999px;
   border: 1px solid color-mix(in oklab, var(--color-base-content) 20%, transparent);
   background: transparent;
   color: inherit;
   cursor: pointer;
 }
-.doc-steps-nav button:hover {
+.doc-steps-nav button:hover:not(:disabled) {
   background-color: color-mix(in oklab, var(--color-base-content) 8%, transparent);
+}
+.doc-steps-nav .doc-steps-next {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-primary-content);
+}
+.doc-steps-nav .doc-steps-next:hover:not(:disabled) {
+  background-color: color-mix(in oklab, var(--color-primary) 85%, black);
+}
+.doc-steps-nav button:disabled {
+  border-color: color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  background-color: transparent;
+  color: color-mix(in oklab, var(--color-base-content) 30%, transparent);
+  cursor: default;
 }
 .doc-steps-pos {
   font-variant-numeric: tabular-nums;

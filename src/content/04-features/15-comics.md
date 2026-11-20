@@ -11,7 +11,7 @@ the folders and scan as described in [Libraries](/features/libraries#creating-a-
 - Fliks reads `.cbz`, `.cb7`, `.cbr` and `.pdf` files, and the `ComicInfo.xml` inside them.
   Your own edits are kept across rescans.
 - Details come from comic metadata providers, such as Metron and Comic Vine. They are plugins to
-  install from **Settings > Plugins**, with your own API key. See [Plugins](/plugins/overview).
+  install from **Settings > Plugins**, with your own API key. See [Comics plugins](/built-in-plugins/comics).
 
 ## Volumes and issues
 

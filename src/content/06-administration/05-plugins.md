@@ -7,7 +7,7 @@ description: Install, trust and manage the plugins that extend what Fliks can do
 
 Fliks ships with no way to acquire media on its own. Everything that adds one, most notably the
 download plugin (torrent indexer search, download-client management, the grab pipeline), is
-installed separately from **Settings > Advanced > Plugins**. This page covers installing and
+installed separately from **Settings > Plugins**. This page covers installing and
 managing them; writing one is covered in the separate developer documentation.
 
 ## Installing from the catalog

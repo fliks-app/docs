@@ -32,11 +32,16 @@ export function wireDocContent(container: HTMLElement, router: Router): () => vo
     }
   };
 
-  // scroll doesn't bubble: capture it to keep each slider's "n / total" in step.
+  // scroll doesn't bubble: capture it to keep each slider's counter and buttons in step.
   const onScroll = (event: Event) => {
     const track = event.target as HTMLElement;
-    const pos = track.classList?.contains('doc-steps-track') && track.parentElement?.querySelector('.doc-steps-pos');
-    if (pos) pos.textContent = `${Math.round(track.scrollLeft / track.clientWidth) + 1} / ${track.children.length}`;
+    const nav = track.classList?.contains('doc-steps-track') && track.nextElementSibling;
+    if (!nav) return;
+    const index = Math.round(track.scrollLeft / track.clientWidth);
+    const last = track.children.length - 1;
+    nav.querySelector('.doc-steps-pos')!.textContent = `${index + 1} / ${last + 1}`;
+    nav.querySelector<HTMLButtonElement>('.doc-steps-prev')!.disabled = index === 0;
+    nav.querySelector<HTMLButtonElement>('.doc-steps-next')!.disabled = index === last;
   };
 
   container.addEventListener('click', onClick);

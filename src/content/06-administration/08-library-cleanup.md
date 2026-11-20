@@ -3,6 +3,16 @@ title: Library cleanup
 description: Flag stale movies, series, seasons and episodes with rules, warn people before they leave, and remove them automatically or by hand.
 ---
 
+> [!CAUTION]
+> Library cleanup **deletes files from your disk**. A rule with the action **Delete media and files** removes
+> the title's whole folder, with everything inside it, and nothing brings it back. Always run **Preview**
+> on a new rule, leave it on **Flag only** at first, and keep **Maximum removals per run** low. A rule does
+> nothing until you create one, and a rule with no **Grace period** never deletes anything by itself.
+
+> [!NOTE]
+> **Do you need this?** No. Cleanup is optional and does nothing until you write a rule. It is for servers that
+> fill up with titles nobody watches. If your library is a fixed collection of your own files, ignore this page.
+
 ## What it does
 
 Library cleanup finds media nobody uses any more and removes it to free disk space. You write
@@ -23,11 +33,39 @@ a flagged title or a recommendation, also needs **Delete media**. Each list only
 libraries the signed-in user can access. See
 [Users and permissions](/administration/users-and-permissions).
 
+## Create a rule
+
+This walk-through builds a safe rule: switched off, flag only, no grace period. It deletes nothing.
+
+:::steps
+![Open **Settings > Cleanup**](/img/admin-cleanup-1-sidebar.webp)
+![Click **New rule**. A fresh server has none](/img/admin-cleanup-2-new.webp)
+![Type a **Name**, switch **Active** off, and set **Action** to **Flag only**. New rules start on **Delete media and files**, so change it first](/img/admin-cleanup-3-action.webp)
+![Scroll to the criteria and fill the ones you want. Here: **Size above (GB)** and **Played fewer than (times)**](/img/admin-cleanup-4-criteria.webp)
+![Click **Save**](/img/admin-cleanup-5-save.webp)
+![In the list, click **Preview** on the rule](/img/admin-cleanup-6-list.webp)
+![**Preview** lists every title the rule matches right now and the space it would free. Nothing is flagged or deleted](/img/admin-cleanup-7-preview.webp)
+:::
+
+A new rule starts **Active**, with the action **Delete media and files**, no grace period and the reminders `7, 1`.
+With no grace period nothing is ever removed automatically, but the moment you type a number of days, the
+first title flagged will be deleted when it ends. Change the action before you set a grace period.
+
 ## Rules
 
 A rule is a name, what it applies to, a set of criteria, an action, a grace period and reminders.
 **New rule** opens the editor. Click a rule's name to edit it. The **Active** switch turns it on
-or off.
+or off. **Preview**, **Export** and **Delete** sit at the end of each row.
+
+| Field | What it does |
+|---|---|
+| **Name** | A label. Required. |
+| **Active** | On by default. A switched-off rule flags nothing and loses its flags at the next run. |
+| **Applies to** | The kinds of title the rule looks at, see below. |
+| **Action** | What happens when the grace period ends, see below. New rules start on **Delete media and files**. |
+| **Grace period (days)** | How long a title stays flagged before the action runs. Empty means flag only, with no date. |
+| **Reminders (days before removal)** | When to send **Leaving soon** notifications. Default `7, 1`. |
+| Criteria | The tests, see below. Every one you set has to hold. |
 
 ### Applies to
 
@@ -83,12 +121,13 @@ then also removes the series itself when no file remains in it.
 
 Changing a rule's grace period does not move the date of a title that is already flagged.
 
-> [!WARNING]
+> [!CAUTION]
 > **Delete media and files** is destructive and cannot be undone. The title's entry is removed from
 > Fliks and its folder is deleted from the disk with everything inside, including files Fliks does
 > not manage. A folder outside the library root, or one shared with another title or library, is
 > left in place, and only the entry is removed. **Delete files and stop monitoring**, and season
-> and episode rules, delete the video files and the subtitle files stored beside them. They do not
+> and episode rules, delete the video files, the subtitle files Fliks has recorded beside them and the
+> `.edl` skip list of each video, if there is one. They do not
 > come back unless you download them again. Try a rule with **Preview** before you turn it on.
 
 Requests for a title that is removed or unmonitored are closed: one still in progress is
@@ -170,6 +209,27 @@ library, and by a minimum and maximum size in GB.
 Each row has **Keep** and **Delete now**. **Delete now** deletes the title and its folder like
 **Delete media and files**. Click a reason badge to open the rule editor with that reason's
 criteria filled in, to turn it into a rule.
+
+## Worked example: free space when the disk fills up
+
+Goal: when the disk of the **Movies** library has under 10% free, remove movies nobody has played for six months,
+with a week of notice, and never more than 5 a day.
+
+- **Name**: `Free space when the disk fills up`. **Applies to**: Movies.
+- **Libraries**: Movies. **Library disk free below (%)**: `10`. **Last played more than (days ago)**: `180`.
+- **Action**: **Delete files and stop monitoring**. **Grace period (days)**: `7`. Reminders: `7, 1`.
+- **Maximum removals per run**: `5`.
+
+Build it with **Flag only** first and run **Preview** to see what it would take. Then:
+
+1. While the disk has more than 10% free, the rule matches nothing.
+2. Once it drops under 10%, the next daily run flags every movie not played for 180 days. Each shows as "Leaving
+   in 7 days" on its card, and a **Leaving soon** notification goes out.
+3. Anyone can still play a movie during that week. Playing it makes it stop matching, and it loses its flag at the next run.
+   You can also click **Keep** on it.
+4. A week later the action runs, five titles a day at most: the video files and their recorded subtitle files are deleted,
+   the title stays in the library, unmonitored, and a **Cleaned up** notification is sent.
+5. If free space climbs back over 10%, the rule stops matching and the remaining flags are removed.
 
 ## Sharing rules
 

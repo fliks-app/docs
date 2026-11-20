@@ -12,7 +12,7 @@ playlist** and **Create a playlist**. The home page also has a **Recent playlist
 ## Creating a playlist and adding titles
 
 :::steps
-![On a title's page, click the add-to-list icon under **Play** (or **More > Add to list**)](/img/media-detail-actions.webp)
+![On a title's page, click the add-to-list icon under **Play** (or **More > Add to list**)](/img/playlist-add-1-title.webp)
 ![Pick a playlist, or type a name and click **Create a playlist** to start a new one](/img/playlist-add-dialog.webp)
 ![The playlist page lists its items. **Play** starts it from the top.](/img/playlist-detail.webp)
 :::

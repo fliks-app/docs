@@ -6,9 +6,19 @@ description: Create libraries, scan folders, fix a wrong match, and find every a
 ## Creating a library
 
 Open **Administration** from your user menu, then **Settings > Libraries > Add a library**. The
-wizard has three steps: **Information**, **Users** and **Media**.
+wizard has three steps: **Information**, **Users** and **Media**. This walks through the whole
+path; nothing is created until the last click.
 
-![The Information step of the New library wizard, with icon, color, media types and metadata fields](/img/libraries-wizard-info.webp)
+:::steps
+![Open the user menu (your avatar, top right) and choose **Administration**](/img/libraries-path-1-user-menu.webp)
+![In the Administration sidebar, click **Libraries** under **SETTINGS**](/img/libraries-path-2-admin-sidebar.webp)
+![Click **Add a library**](/img/libraries-path-3-libraries.webp)
+![Step **Information**: type a name, pick an icon, a color and the media types](/img/libraries-path-4-information.webp)
+![Leave the metadata fields on their defaults, then click **Next**](/img/libraries-path-4b-information-next.webp)
+![Step **Users**: tick who can see the library (administrators always can), then click **Next**](/img/libraries-path-5-users.webp)
+![Step **Media**: type the root path, or click **Browse...** to pick the folder](/img/libraries-path-6-media-browse.webp)
+![Click **Scan the folder** to review what Fliks finds before creating the library](/img/libraries-path-7-scan.webp)
+:::
 
 | Field | What it's for |
 |---|---|
@@ -114,7 +124,8 @@ walks through it with a file named `bbb sunflower 1080p 30fps normal`.
 :::steps
 ![The unidentified file shows a placeholder poster and its file name in the library grid. Click it.](/img/library-fix-1-unidentified.webp)
 ![On the title's page, open the three-dot menu next to **Play**](/img/library-fix-2-menu.webp)
-![Open **Metadata**, then choose **Identify**](/img/library-fix-3-metadata.webp)
+![Open **Metadata**](/img/library-fix-3-metadata.webp)
+![Choose **Identify**](/img/library-fix-3b-identify.webp)
 ![Fix the **Title** (and the **Year** if you know it), then click **Search**](/img/library-fix-4-identify.webp)
 ![Click the right result. There is no confirmation step: the match is applied at once.](/img/library-fix-5-results.webp)
 ![After a few seconds the poster, synopsis, genres and cast are those of Big Buck Bunny](/img/library-fix-6-result.webp)
@@ -169,11 +180,12 @@ Two kinds of profile decide what Fliks considers an acceptable copy of a title, 
 for if you're using the download plugin. You pick both for each title when you add or request it
 (the first profile of each kind is preselected), rather than once for the whole library.
 
-**Quality profile** (**Settings > Quality profiles**): which qualities are acceptable, in what
-order of preference, and a cutoff to stop looking once it's reached. Turning on **Allow upgrades**
-keeps Fliks looking for a strictly better release up to that cutoff, even for a title you already
-have; **Resolution upgrades only** limits that to actual resolution jumps rather than swapping one
-source for another at the same resolution.
+**Quality profile** (**Settings > Quality profiles**): which qualities are acceptable (ranked in a
+fixed order) and a cutoff to stop looking once it's reached. Turning on **Allow upgrades** keeps
+Fliks looking for a strictly better release up to that cutoff, even for a title you already have;
+**Upgrade only if the resolution increases** limits that to actual resolution jumps rather than
+swapping one source for another at the same resolution. Details in
+[Quality profiles](/administration/quality-profiles).
 
 **Language profile** (**Settings > Language profiles**): which audio languages you want, and which
 subtitle languages to search for automatically, each with its own forced and hearing-impaired
