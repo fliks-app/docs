@@ -4,7 +4,7 @@ description: Which plugins Fliks ships with or offers in its catalogue, where to
 ---
 
 > [!SUMMARY]
-> Fliks ships bundled metadata plugins and offers more in a catalogue: downloads, free ebooks, comics, music lists, notifications. Find a plugin in the table below. Metadata providers are configured from **Settings > Metadata**, other plugins in their own sidebar section.
+> Fliks ships bundled metadata plugins and offers more in a catalogue: torrent downloads, free ebooks, comics, music lists, notifications. Find a plugin in the table below. Metadata providers are configured from **Settings > Metadata**, other plugins in their own sidebar section.
 
 ## Bundled and catalogue plugins
 
@@ -31,9 +31,9 @@ description: Which plugins Fliks ships with or offers in its catalogue, where to
 | [LRCLIB](/built-in-plugins/music#lrclib) | Synced and plain lyrics | Bundled | No |
 | [Music lists](/built-in-plugins/music#music-lists) | Follows ListenBrainz, Last.fm, Spotify, Deezer and MusicBrainz lists | Catalogue | Depends on the source |
 | [Notify](/built-in-plugins/notify) | Posts Fliks events to an HTTPS address as JSON | Catalogue | No |
-| [Download](/downloads/plugin) | Indexer search, download clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
+| [Torrent manager](/downloads/plugin) | Torrent search on Torznab indexers, torrent clients and the grab pipeline | Catalogue | Depends on your indexers and clients |
 
-Torrent manager has its own guide: start with [Download overview](/downloads/plugin).
+Torrent manager has its own guide: start with [Set up the plugin](/downloads/plugin).
 
 ## Where plugins live
 
@@ -47,7 +47,7 @@ The plugin's page does not link to its settings. Where they live depends on the 
 
 - **Metadata providers** (every bundled plugin, plus Project Gutenberg, LibriVox, Comic Vine and
   Metron) are configured from **Settings > Metadata**. The provider's row has a **Configure** link.
-- **Other plugins** (Download, Notify, Music lists) get a section of their own in the Administration
+- **Other plugins** (Torrent manager, Notify, Music lists) get a section of their own in the Administration
   sidebar, named after the plugin.
 
 Open **Metadata** in the Administration sidebar and click **Configure** on the provider's row. Fill the field, then click **Save**.
