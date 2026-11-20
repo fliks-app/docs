@@ -30,6 +30,8 @@ copy. **Delete download** removes it from the device. While a download is still 
 same window shows its progress and a button to stop it, after a confirmation that the part already
 downloaded is removed.
 
+![Tap the downloaded mark on a title page: Change quality opens](/img/offline-change-quality-anim.webp)
+
 ## Download a season or a whole series
 
 A series page has four ways to download several episodes. All open the quality picker, which shows the episode count and total size.
@@ -53,6 +55,10 @@ by show, then by season, with the number of episodes and their size on each grou
 group to fold it open or closed. Shows start closed, a show with a single season shows it
 unfolded, and the groups you open stay open when you leave the page and come back. The newest
 download is at the end of the list.
+
+![The Downloads screen: one finished download and one in progress, with the pause button under the cursor](/img/offline-downloads-screen.webp)
+
+![The Downloads screen on a phone](/img/offline-downloads-phone.webp)
 
 :::details Download states and row actions
 Each row shows its quality, its size once known, and its state:
@@ -144,6 +150,8 @@ This is available on iOS, Android and the desktop app.
 
 **App settings > Storage** (on every client except TVs) has these settings. They belong to the
 device, not to your account.
+
+![App settings > Storage, with the Default quality menu under the cursor](/img/offline-storage-settings.webp)
 
 :::details Every storage setting
 - **Simultaneous downloads**: how many downloads run at once, from 1 to 5 (default 3). Downloads
