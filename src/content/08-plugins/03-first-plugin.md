@@ -1,6 +1,6 @@
 ---
 title: Your first plugin
-description: Build, package and install a minimal process plugin from zero, and see it appear in Settings > Advanced > Plugins.
+description: Build, package and install a minimal process plugin from zero, and see it appear in Settings > Plugins.
 ---
 
 ## Prerequisites
@@ -236,13 +236,13 @@ one is unsigned.
 ## Step 3: allow unsigned plugins (once)
 
 A `process` plugin must be signed by the official release key unless the admin allows otherwise.
-Log into your Fliks instance as an admin, open **Settings > Advanced > Plugins**, then the **⋮**
+Log into your Fliks instance as an admin, open **Settings > Plugins**, then the **⋮**
 menu next to **Search for a plugin**, then **Settings**, and turn on **Allow unsigned plugins**.
 This exists for local development; leave it off otherwise.
 
 ## Step 4: install it
 
-Back on **Settings > Advanced > Plugins**, open the **⋮** menu again and choose **Import a
+Back on **Settings > Plugins**, open the **⋮** menu again and choose **Import a
 plugin**. Pick the `.fkplugin` file you just built.
 
 This opens the consent sheet: **Install Hello?**, its id and version, a trust badge (it will say

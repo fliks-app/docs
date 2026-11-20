@@ -8,7 +8,7 @@ description: Releasing through the official catalog, hosting your own, compatibi
 A **catalog** is a signed HTTPS document (`catalog.json`, plus a detached signature at
 `catalog.json.sig`) listing plugins and, for each, the versions available to install: their
 `pluginApi`, their `fliks` compatibility range, a download URL and a sha256. A **source** is a URL
-an admin has added under **Settings > Advanced > Plugins > ⋮ > Manage sources**; there can be
+an admin has added under **Settings > Plugins > ⋮ > Manage sources**; there can be
 several, the official catalog is simply the one seeded by default. Core refuses bytes whose hash
 doesn't match what a catalog's version entry declares.
 
@@ -88,7 +88,7 @@ A catalog is just a document shape and a signature, both of which core already k
    `bad-signature` refresh error), and the URL must be `https://`. The catalog repository's
    `scripts/sign-catalog.mjs` is a working example; it reads the private key from an environment
    variable as base64 PKCS#8 DER.
-3. In Fliks, **Settings > Advanced > Plugins > ⋮ > Manage sources**, add the catalog's URL together
+3. In Fliks, **Settings > Plugins > ⋮ > Manage sources**, add the catalog's URL together
    with the base64 of your Ed25519 **public** key (the raw 32 bytes, the same one-line format as the
    catalog repository's `keys/*.pub` files) as the source's pinned key. Without a pinned key, core
    verifies the catalog against its own official keys only, so a self-signed catalog would be

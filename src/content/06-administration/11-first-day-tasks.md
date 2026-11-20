@@ -4,7 +4,7 @@ description: Click-by-click walkthroughs for the jobs you do right after install
 ---
 
 Every walkthrough starts in the administration area: open the user menu, choose
-**Administration**, then pick the entry named in the first slide. The yellow outline marks what to
+**Administration**, then pick the entry named in the first slide. The mouse cursor marks what to
 click. The sidebar scrolls; the entry you need can be below the fold.
 
 ## Create a user and give access to a library
@@ -17,8 +17,8 @@ make requests.
 ![Open **Settings > Users** in the administration sidebar](/img/admin-users-1-sidebar.webp)
 ![Click **Add a user**](/img/admin-users-2-add.webp)
 ![Fill in the username, email, password and role, then tick each library the person may see. Click **Save**](/img/admin-users-3-form.webp)
-![The new account shows up in the list with its role and an **Active** switch](/img/admin-users-4-list.webp)
-![Click the username to open its page: library access, super-admin, forced password change and request quotas live there](/img/admin-users-5-edit.webp)
+![The new account shows up in the list with its role and an **Active** switch. Click the username to open its page](/img/admin-users-4-list.webp)
+![The user page: library access, super-admin, forced password change and request quotas live there](/img/admin-users-5-edit.webp)
 :::
 
 Tell the person the server address and their username. They sign in from any
@@ -71,8 +71,8 @@ what the plugin is allowed to do.
 :::steps
 ![Open **Advanced > Plugins**](/img/admin-plugin-1-sidebar.webp)
 ![Click **Search for a plugin**](/img/admin-plugin-2-search.webp)
-![Each card shows its state: **Install**, **Update available** or installed](/img/admin-plugin-3-catalogue.webp)
-![Click **Install**: read what the plugin asks for and its trust badge, then confirm with **Install** or back out with **Cancel**](/img/admin-plugin-4-consent.webp)
+![Each card shows its state: **Install**, **Update available** or installed. Click **Install** on the plugin you want](/img/admin-plugin-3-catalogue.webp)
+![Read what the plugin asks for and its trust badge, then confirm with **Install** or back out with **Cancel**](/img/admin-plugin-4-consent.webp)
 :::
 
 Trust badges, signed archives and the plugin settings are covered in [Plugins](/administration/plugins).

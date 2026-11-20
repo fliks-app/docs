@@ -49,12 +49,15 @@ after its entry in that area's sidebar:
 Go to **Settings > Libraries** and click **Add a library**. The wizard has three steps:
 
 :::steps
-![The **Setup** card on the home page: **Configure** next to *Add at least one library*](/img/onboarding-home-empty.webp)
+![On a fresh server, the **Setup** card on the home page: click **Configure** next to *Add at least one library*](/img/onboarding-home-empty.webp)
 ![**Settings > Libraries**, still empty: click **Add a library**](/img/libraries-empty.webp)
-![**Information**: a name, an icon, and the media types](/img/libraries-wizard-step1.webp)
-![**Users**: who sees the library](/img/libraries-wizard-step2.webp)
-![**Media**: the root path, typed or picked with **Browse...**](/img/libraries-wizard-browse-movies.webp)
-![The new library, its files matched](/img/libraries-created.webp)
+![**Information**: a name, an icon and the media types, then click **Next**](/img/libraries-wizard-step1.webp)
+![**Users**: who sees the library, then click **Next**](/img/libraries-wizard-step2.webp)
+![**Media**: click **Browse...** to pick the root path (or type it)](/img/libraries-wizard-browse-movies.webp)
+![Open the folders down to your media, then click **Select this folder**](/img/libraries-wizard-browse-select.webp)
+![Click **Scan the folder** to list the files it finds](/img/libraries-wizard-scan.webp)
+![Review the matches, then click **Create the library**](/img/libraries-wizard-create.webp)
+![The new library page lists its files, matched](/img/libraries-created.webp)
 :::
 
 1. **Information**: give it a name and choose its media types (**Movies**, **Series**, or both; books, comics and albums have their own switches).

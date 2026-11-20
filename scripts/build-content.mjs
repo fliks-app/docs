@@ -190,6 +190,11 @@ const docsRenderer = {
   },
 };
 
+// Lucide chevron-left / chevron-right, inlined: page HTML is static, Angular components can't render in it.
+function lucide(path) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
+}
+
 // `:::steps` ... `:::` holds one `![caption](/img/x.webp)` per line, rendered as a numbered slider.
 const stepsExtension = {
   name: 'steps',
@@ -217,9 +222,9 @@ const stepsExtension = {
       .join('');
     return (
       `<div class="doc-steps" data-count="${slides.length}"><div class="doc-steps-track" tabindex="0">${items}</div>` +
-      `<div class="doc-steps-nav"><button type="button" class="doc-steps-prev" aria-label="Previous step">&#8592;</button>` +
+      `<div class="doc-steps-nav"><button type="button" class="doc-steps-prev" aria-label="Previous step" disabled>${lucide('m15 18-6-6 6-6')}</button>` +
       `<span class="doc-steps-pos" aria-live="polite">1 / ${slides.length}</span>` +
-      `<button type="button" class="doc-steps-next" aria-label="Next step">&#8594;</button></div></div>\n`
+      `<button type="button" class="doc-steps-next" aria-label="Next step">${lucide('m9 18 6-6-6-6')}</button></div></div>\n`
     );
   },
 };

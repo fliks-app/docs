@@ -218,9 +218,7 @@ ASS/SSA tracks with their own styling keep their original look (see
 | An image track counts as a present subtitle | Off | An embedded image subtitle in a profile language counts as covering it, so no download or OCR runs; playback of that track then always needs a burn-in transcode |
 | Prefer OCR of embedded image tracks over a download | Off | Tries OCR on an embedded image track before searching online |
 | Automatically sync subtitles (ffsubsync/alass) | Off | Runs the sync tool after every automatic download or upgrade |
-| Re-encode to UTF-8 after download | On | Normalizes the file's text encoding |
 | Remove HI tags | Off | Strips things like `[music]` or `(sighs)` from downloaded text, and from translations and OCR results |
-| Delete the image subtitle once extracted | Off | Removes the OCR'd track's entry (an embedded track stays in the video file and reappears on the next scan) |
 | Custom exclusions (regex) | None | One regular expression per line; any subtitle line matching one is removed |
 
 The same page's **Statistics** tab lists every language still missing a subtitle across your
