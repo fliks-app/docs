@@ -4,7 +4,7 @@ description: Install the server, create the administrator, add your first librar
 ---
 
 > [!SUMMARY]
-> Install the server, create the administrator at `http://<host>:4848`, add a library and open Fliks on your devices. Then set a language profile, a quality profile and an indexer.
+> Install the server, create the administrator at `http://<host>:4848`, add a library, set a language profile, a quality profile and an indexer, then open Fliks on your devices.
 
 ## 1. Install the server
 
@@ -49,14 +49,7 @@ sees it, then **Browse...** to the folder with your media (under Docker, the pat
 A wrong match is fixed from the title's **More** menu with **Identify**: see
 [Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
 
-## 4. Open Fliks on your devices
-
-Open the same address in any browser, or install an app: phone, tablet, TV, desktop. Sign in with
-your account. On a TV, choose **Quick Connect** and type the code it shows on your phone.
-
-Every client is in [Clients](/clients/overview).
-
-## 5. Finish the setup
+## 4. Finish the setup
 
 Do these three once, right after your first library: they are what makes Fliks find subtitles
 and fetch what you ask for.
@@ -74,6 +67,13 @@ and fetch what you ask for.
 
 Only watching files you already have? Set the language profile for subtitles and skip the other
 two.
+
+## 5. Open Fliks on your devices
+
+Open the same address in any browser, or install an app: phone, tablet, TV, desktop. Sign in with
+your account. On a TV, choose **Quick Connect** and type the code it shows on your phone.
+
+Every client is in [Clients](/clients/overview).
 
 ## Next
 
