@@ -117,7 +117,7 @@ let pageImages = [];
 const docsRenderer = {
   heading({ tokens, depth }) {
     const html = this.parser.parseInline(tokens);
-    const text = tokensToPlainText(tokens);
+    const text = decodeEntities(tokensToPlainText(tokens));
     const base = slugify(text) || 'section';
     let id = base;
     for (let n = 1; slugCounts.has(id); n++) id = `${base}-${n}`;
