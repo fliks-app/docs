@@ -1,128 +1,100 @@
 ---
 title: Indexers
 group: Torrent manager
-description: Add the trackers Torrent manager searches, by importing them from Prowlarr or Jackett or by typing a Torznab address.
+description: Add the trackers Torrent manager searches, by connecting Prowlarr or Jackett or by typing a Torznab address.
 ---
 
 > [!SUMMARY]
-> An indexer is a Torznab address Torrent manager searches. The shortest path: in **Settings > Torrent manager > Indexer sources**, connect your Prowlarr or Jackett once and every tracker comes in. With a single Torznab address, add the indexer by hand instead. Both end in **Settings > Torrent manager > Indexers**.
+> Connect your Prowlarr or Jackett once in **Settings > Torrent manager > Indexer sources** and all its trackers come in. With a single Torznab address, add it by hand instead.
 
-An **indexer** is a Torznab endpoint: a web address and an API key that answer "which releases match this title". The plugin queries every enabled indexer, in parallel, each time it searches. An imported indexer is an ordinary row you can edit, disable or delete.
+An indexer is a tracker the plugin searches. Fliks ships none: you add your trackers in Prowlarr or Jackett, then connect them here.
 
 ![The Indexers page, with one row per indexer](/img/download-indexers-list.webp)
 
-> [!NOTE]
-> Prowlarr and Jackett are separate programs. Fliks does not install them and ships no tracker: you add your own trackers there, under their terms.
+> [!TIP]
+> Type the address **Fliks** uses to reach Prowlarr or Jackett. In Docker on the same network, that's the service name, like `http://prowlarr:9696`. Never `localhost`: in Docker it means the Fliks container itself.
 
-## What Fliks needs from you
+## Connect Prowlarr
 
-The address you type is the one **Fliks** uses to reach Prowlarr or Jackett, not the one in your browser.
+1. In Prowlarr, copy the **API Key** from **Settings > General**.
+2. In Fliks, open **Settings > Torrent manager > Indexer sources** and click **New source**.
+3. Type the **Base URL**, paste the **API key**, click **Test connection**, then **Save**. The trackers are imported.
 
+:::steps
+![In Prowlarr, open **Settings**](/img/download-prowlarr-key-1-settings.webp)
+![Open **General**](/img/download-prowlarr-key-2-general.webp)
+![In **Security**, copy the **API Key**](/img/download-prowlarr-key-3-apikey.webp)
+![In Fliks, **Settings > Torrent manager > Indexer sources**, click **New source**](/img/download-source-prowlarr-1-new.webp)
+![Type the **Base URL**, paste the **API key**, then **Test connection**](/img/download-source-prowlarr-2-form.webp)
+![**Indexer list read, connection OK**: click **Save**](/img/download-source-prowlarr-3-test.webp)
+![The trackers are imported](/img/download-source-prowlarr-4-saved.webp)
+:::
+
+## Connect Jackett
+
+Same steps with **Type** set to **Jackett**. The **API Key** is at the top right of Jackett's dashboard.
+
+:::steps
+![Pick **Jackett**, type the **Base URL** and paste the **API key**](/img/download-source-jackett-1-form.webp)
+![**Test connection**, then **Save**](/img/download-source-jackett-2-test.webp)
+![The trackers are imported](/img/download-source-jackett-3-saved.webp)
+:::
+
+If Jackett has an admin password, the import fails: [add each tracker by hand](#add-a-torznab-indexer-by-hand) instead.
+
+## Add a Torznab indexer by hand
+
+For a tracker with its own Torznab address, or Jackett with a password (**Copy Torznab Feed** on the tracker's row gives the address).
+
+:::steps
+![In **Settings > Torrent manager > Indexers**, click **New indexer**](/img/download-indexer-manual-1-new.webp)
+![Type a **Name**, the **Base URL** of the Torznab feed and the **API key**](/img/download-indexer-manual-2-form.webp)
+![Click **Test connection**](/img/download-indexer-manual-3-options.webp)
+![**Capabilities read, connection OK**: click **Save**](/img/download-indexer-manual-4-test.webp)
+:::
+
+## Reference
+
+:::details Which address to type
 | Fliks runs | Prowlarr or Jackett runs | Address to type |
 |---|---|---|
 | In Docker, same Compose project or network | In Docker, same network | The service name, for example `http://prowlarr:9696` or `http://jackett:9117` |
 | In Docker | On the host, or another machine | The host's LAN address, for example `http://192.168.1.20:9696` |
 | In Docker | In another Compose project | Join one network, or use the host's LAN address and the published port |
 
-> [!WARNING]
-> Do not type `localhost` or `127.0.0.1` when Fliks runs in Docker: they mean the Fliks container itself, and the test fails with **Could not reach the source**.
-
-If you changed Prowlarr's **URL Base** or Jackett's **Base path override**, add it to the address, for example `http://jackett:9117/jackett`. Use `https://` only if the certificate is trusted by the Fliks server.
-
-## Import from Prowlarr or Jackett
-
-Open **Settings > Torrent manager > Indexer sources**. A source is a saved connection to Prowlarr or Jackett: it holds the way to read trackers, not the trackers.
-
-### Prowlarr
-
-You need its address and its API key (in Prowlarr, **Settings > General > Security**, **API Key**).
-
-:::steps
-![In Prowlarr, open **Settings**](/img/download-prowlarr-key-1-settings.webp)
-![Open **General**](/img/download-prowlarr-key-2-general.webp)
-![In **Security**, copy the **API Key** with the button next to it](/img/download-prowlarr-key-3-apikey.webp)
+Add Prowlarr's **URL Base** or Jackett's **Base path override** if you set one, for example `http://jackett:9117/jackett`. Use `https://` only with a certificate the Fliks server trusts.
 :::
 
-Then connect Fliks:
-
-:::steps
-![In Fliks, **Settings > Torrent manager > Indexer sources**, click **New source**](/img/download-source-prowlarr-1-new.webp)
-![Name it, keep **Type** on **Prowlarr**, type the **Base URL** and paste the **API key**, then **Test connection**](/img/download-source-prowlarr-2-form.webp)
-![**Indexer list read, connection OK** means both are right. Click **Save**](/img/download-source-prowlarr-3-test.webp)
-![Saving imports straight away. **Import the indexers** reads the list again later](/img/download-source-prowlarr-4-saved.webp)
-:::
-
-:::details Prowlarr has no trackers yet, and what the import does
-Prowlarr only exposes the trackers you added to it. If its list is empty, add one first. Any tracker type works; these screens add a generic Torznab feed.
+:::details Prowlarr or Jackett has no tracker yet
+Add one there first. In Prowlarr: **Add Indexer**, pick your tracker, fill it, **Test**, **Save**.
 
 ![In Prowlarr, click **Add Indexer**](/img/download-prowlarr-add-1-button.webp)
 
-![Search for your tracker. Here the generic **Torznab** entry](/img/download-prowlarr-add-2-pick.webp)
+![Pick your tracker](/img/download-prowlarr-add-2-pick.webp)
 
-![Fill its address and key, then **Test** and **Save**](/img/download-prowlarr-add-3-form.webp)
+![Fill it, then **Test** and **Save**](/img/download-prowlarr-add-3-form.webp)
 
-What the import does with Prowlarr:
+In Jackett: **Add indexer**, then the **+** of your tracker's row.
 
-- It reads Prowlarr's list through its API, with the key you gave.
-- Each **torrent** indexer becomes a Torznab indexer in Fliks, reached through Prowlarr
-  (`http://prowlarr:9696/<id>/api`). Fliks never talks to the tracker itself.
-- A usenet indexer is skipped.
-- An indexer that is disabled in Prowlarr is imported disabled.
-
-:::
-
-### Jackett
-
-You need its address and its API key: click the copy button next to **API Key** at the top right of Jackett's dashboard. Only trackers already configured in Jackett are imported. Connect Fliks the same way as Prowlarr, with **Type** set to **Jackett**:
-
-:::steps
-![Pick **Jackett**, type the **Base URL** and paste the **API key**](/img/download-source-jackett-1-form.webp)
-![**Test connection**, then **Save**](/img/download-source-jackett-2-test.webp)
-![Saving imports straight away. **Import the indexers** reads the list again later](/img/download-source-jackett-3-saved.webp)
-:::
-
-> [!IMPORTANT]
-> **Jackett with an admin password cannot be imported**: the source form has no password field, and the test fails with *The source asks for a login this import cannot provide.* Either keep Jackett without a password on a private network, or [add each indexer by hand](#add-a-torznab-indexer-by-hand): the Torznab feed is protected by the API key only, so that works with the password on.
-
-:::details Add a tracker in Jackett, and the password error
 ![In Jackett, click **Add indexer**](/img/download-jackett-1-add.webp)
 
-![Search for your tracker and click the **+** button of its row](/img/download-jackett-2-pick.webp)
+![Click the **+** button of the tracker's row](/img/download-jackett-2-pick.webp)
+:::
 
-![The tracker is listed. Copy the **API Key** at the top right](/img/download-jackett-3-key.webp)
-
-Each configured Jackett tracker becomes a Torznab indexer reached through Jackett (`http://jackett:9117/api/v2.0/indexers/<id>/results/torznab/`).
-
-With a password you can also remove it in Jackett (empty **Admin password**, **Set Password**). Without one, Fliks follows Jackett's own sign-in redirect, which needs no password.
+:::details What the import does
+- Each torrent tracker becomes an indexer in Fliks, reached through Prowlarr or Jackett. Usenet ones are skipped; disabled ones come in disabled.
+- **Import the indexers** on the source's row reads the list again: it adds new trackers, never deletes one, and only updates the API key of existing ones.
+- Deleting a source keeps the indexers it imported. A disabled source can't import.
+- Jackett with an admin password answers *The source asks for a login this import cannot provide*. Remove the password in Jackett, or add the trackers by hand.
 
 ![The test of a Jackett source that has an admin password](/img/download-source-jackett-password-error.webp)
 :::
 
-:::details After the import
-- **Import the indexers** (in the row of the source) reads the list again. It adds the new trackers and
-  never deletes one, even if you removed it in Prowlarr or Jackett.
-- An indexer already in Fliks keeps your settings, such as its priority and seeding limits. Only its API
-  key is updated, which matters if you regenerated the key in Prowlarr or Jackett.
-- The toast reads for example **1 indexers added, 0 updated**.
-- Deleting a source keeps the indexers it imported.
-- The **Active** switch of a source turns its import off. Importing a disabled source is refused.
-
+:::details When the test of a hand-added indexer fails
+**Could not reach the indexer**, **The indexer answered with an HTTP error**, **The indexer reported an error** or **Unexpected response** (the address points at a web page, not the Torznab feed).
 :::
 
-## Add a Torznab indexer by hand
-
-Use this for a tracker with its own Torznab address, for Jackett with a password, or to test. You need the **Base URL** of the feed and its **API key**. In Jackett, **Copy Torznab Feed** on the tracker's row gives the URL.
-
-:::steps
-![In **Settings > Torrent manager > Indexers**, click **New indexer**](/img/download-indexer-manual-1-new.webp)
-![Type a **Name**, the **Base URL** of the Torznab feed and the **API key**](/img/download-indexer-manual-2-form.webp)
-![Adjust the other options if needed, then click **Test connection**](/img/download-indexer-manual-3-options.webp)
-![**Capabilities read, connection OK**: click **Save**](/img/download-indexer-manual-4-test.webp)
-:::
-
-The test asks for the indexer's capabilities. A failure reads **Could not reach the indexer**, **The indexer answered with an HTTP error**, **The indexer reported an error** or **Unexpected response** (the address points at a web page, not the Torznab feed).
-
-### Indexer options
+## Indexer options
 
 :::details Every indexer option
 | Option | Default | What it does |
@@ -148,18 +120,13 @@ The seeding options are explained under [Settings](/built-in-plugins/torrent-man
 Each row of the list has **Stats**, **Delete** and a **Cooldown** column (a pause after the indexer failed or asked to be left alone). **Clear cooldown** on a row, or **Clear all cooldowns** at the top, queries it again at once.
 
 :::details Stats, cooldowns, slow indexers and tracker quirks
-The list has a name filter, a sort menu and checkboxes to select several rows. Each row has:
-
-- **Stats**: queries, average response time, results and errors per day, for the last 30 days.
-- **Delete**.
-- A **Cooldown** column. A cooldown is a pause after the indexer failed or asked to be left alone.
+**Stats** shows queries, response time, results and errors per day over 30 days.
 
 ![The Stats of an indexer](/img/download-indexer-stats.webp)
 
 **Cooldowns.** After a failed query the indexer is left alone for 30 seconds, then 2 minutes, 15 minutes,
 1 hour and finally 6 hours if it keeps failing. A success resets the count. An indexer that answers with a
-"retry after" delay is paused for that delay. A search never waits for an indexer in cooldown: it simply
-skips it. **Clear cooldown** on a row, or **Clear all cooldowns** at the top, queries it again at once.
+"retry after" delay is paused for that delay. A search skips an indexer in cooldown.
 
 **Slow indexers.** A search stops waiting for an indexer after the time set in
 [**Seconds allowed for a release search**](/built-in-plugins/torrent-manager-settings#search) and keeps the answers
