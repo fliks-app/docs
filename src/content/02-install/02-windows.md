@@ -3,15 +3,18 @@ title: Windows
 description: Run Fliks as a native Windows system-tray app, with hardware transcoding and no separate dependencies to install.
 ---
 
-## What you get
+> [!SUMMARY]
+> Download the installer from the latest release, run it (no administrator prompt), and Fliks opens at `http://localhost:4848`. It bundles everything it needs.
 
+:::details What the app bundles
 A lightweight system-tray app that runs the Fliks server natively on Windows, with hardware
 transcoding through Intel QSV, AMD AMF or NVIDIA NVENC, auto-detected at startup. It bundles its
 own PostgreSQL, FFmpeg, streaming engine and server: there is nothing else to install. The tray
 app itself is a C#/.NET 8 WinForms application; the server underneath it is the same one as every
 other install method.
+:::
 
-## Install
+## Install the Windows app
 
 Download the installer from the
 [latest release](https://github.com/fliks-app/fliks/releases) (the
@@ -23,17 +26,16 @@ installs per-user, with no administrator prompt, into `%LOCALAPPDATA%\FliksServe
 > CI. An unsigned installer makes Windows SmartScreen warn that the app is unrecognized; choose
 > **More info > Run anyway** to continue.
 
-## What happens on launch
-
+:::details What happens on first launch
 1. PostgreSQL 18 initializes on first run and starts on port `5433`.
 2. The engine listens on port `4848` and starts the server behind it.
 3. On the very first launch only, your browser opens `http://localhost:4848`.
 4. Hardware transcoding is auto-detected, in this order: **QSV > AMF > NVENC > CPU**. NVENC needs
    an NVIDIA driver `570` or newer; on an older driver it's skipped and NVIDIA hardware falls back
    to CPU. AMD runs a full GPU pipeline (D3D11 decode, scale, AMF encode) on the bundled FFmpeg.
+:::
 
-## Tray menu
-
+:::details Tray menu actions
 | Action | What it does |
 |---|---|
 | Open Fliks | Opens the web UI in your default browser. |
@@ -42,9 +44,9 @@ installs per-user, with no administrator prompt, into `%LOCALAPPDATA%\FliksServe
 | Restart Server | Stops and restarts PostgreSQL and the server. |
 | View Logs… | Opens the log folder in Explorer. |
 | Quit Fliks | Gracefully shuts down every process. |
+:::
 
-## Data locations
-
+:::details Where the data lives
 | Path | Contents |
 |---|---|
 | `%LOCALAPPDATA%\Fliks Server\postgresql\` | The database cluster. |
@@ -60,14 +62,15 @@ is removed from `%LOCALAPPDATA%\FliksServer`.
 > On versions up to 4.1.x, in-app [backups](/administration/backups) need `pg_dump`, which the app
 > doesn't put on the server's `PATH`. They only work if a PostgreSQL client of the same major
 > version (or newer) is installed and on the system `PATH`.
+:::
 
-## Clean reset
-
+:::details Wipe everything and start over
 To wipe everything and start over, close Fliks first, then in PowerShell:
 
 ```powershell
 Remove-Item -Recurse -Force "$env:LOCALAPPDATA\Fliks Server"
 ```
+:::
 
 ## First run
 

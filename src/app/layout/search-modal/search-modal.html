@@ -43,8 +43,8 @@
           <div class="min-w-0 flex-1">
             <div class="text-xs opacity-70">{{ result.section }}</div>
             <div class="truncate font-medium">{{ result.title }}</div>
-            @if (result.text) {
-              <div class="truncate text-sm opacity-70">{{ result.text }}</div>
+            @if (result.excerpt) {
+              <div class="truncate text-sm opacity-70">{{ result.excerpt }}</div>
             }
           </div>
           @if (i === active()) {

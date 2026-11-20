@@ -3,19 +3,23 @@ title: Download settings
 description: Every option of the Download plugin, with its default: search time, stalled-download cleanup, seeding, cooldowns and where each one lives.
 ---
 
+> [!SUMMARY]
+> The Download plugin has few options of its own: pause automatic downloads, how long a search waits, and optional stalled-download cleanup, all in **Settings > Download > General**. Everything else lives on indexers, clients, profiles and **Settings > Downloads**.
+
 The plugin's own options are few. Most of what changes its behaviour sits in four places:
 
+:::details Where each download option lives
 | Where | What it holds |
 |---|---|
 | **Settings > Download > General** | The options on this page: pause, search time, stalled-download cleanup. |
-| [Indexers](/built-in-plugins/download-indexers#indexer-options) | Per tracker: request delay, which searches use it, minimum seeders, seeding limits, priority. |
-| [Download clients](/built-in-plugins/download-clients#client-options) | Per client: address, categories, priority. |
-| **Settings > Downloads** | Fliks's own search schedule and provider order, see [Downloads](/administration/downloads). |
+| [Indexers](/downloads/indexers#indexer-options) | Per tracker: request delay, which searches use it, minimum seeders, seeding limits, priority. |
+| [Download clients](/downloads/download-clients#client-options) | Per client: address, categories, priority. |
+| **Settings > Downloads** | Fliks's own search schedule and provider order, see [Downloads](/downloads/automatic-search). |
 
-What counts as a good release is decided by the
-[quality profile](/administration/quality-profiles), the [language profile](/administration/language-profiles),
-the [quality definitions](/administration/quality-definitions) and the
-[custom formats](/administration/custom-formats), not by this plugin.
+[quality profile](/downloads/quality-profiles), the [language profile](/administration/language-profiles),
+the [quality definitions](/downloads/quality-definitions) and the
+[custom formats](/downloads/custom-formats), not by this plugin.
+:::
 
 ## General
 
@@ -23,12 +27,14 @@ Open **Settings > Download > General** and click **Save** after any change.
 
 ### Search
 
+:::details Search options: pause and search time
 | Option | Default | Range | What it does |
 |---|---|---|---|
 | **Pause automatic downloads** | off | | No new release is grabbed on its own: no scheduled search, no RSS grab. Downloads already in progress finish and are imported, and you can still grab a release yourself. |
 | **Seconds allowed for a release search** | 30 | 5 to 120 | A search stops waiting for indexers slower than this and keeps the answers it already has. Raise it if a slow tracker never shows up in the results. |
 
 ![Pause automatic downloads and the search time](/img/download-settings-search.webp)
+:::
 
 **Pause automatic downloads** is the quick way to stop everything without touching the plugin: use it while you move
 the download folder, or before a maintenance on the client.
@@ -38,6 +44,7 @@ the download folder, or before a maintenance on the client.
 A download is stalled when it barely moves. The plugin can remove such a download and look for another
 release. This is **off** until you set **Stalled-download checks before cleanup**.
 
+:::details Stalled-download options and how the count works
 | Option | Default | Range | What it does |
 |---|---|---|---|
 | **Stalled-download checks before cleanup** | empty (off) | 2 to 100 | How many consecutive failed checks remove a download. Empty never cleans up. |
@@ -52,6 +59,7 @@ How it adds up: the plugin reads each unfinished download's progress, at most on
 between checks**. After **Stalled-download checks before cleanup** failed checks in a row the download is
 removed, so with 3 checks every 60 minutes it goes after about 3 hours without progress. A check that sees
 enough progress resets the count.
+:::
 
 > [!WARNING]
 > Removing a stalled download deletes the torrent **and its files** from the client. The release is
@@ -79,6 +87,7 @@ audiobook not yet imported, is kept until it is imported, unless the days limit 
 
 ## Search
 
+:::details How a search is built and which indexers it uses
 When a search runs, the plugin builds the query from the title and its year, for example
 `Caminandes: Llamigos 2016`, and asks each indexer allowed for that kind of search.
 
@@ -88,18 +97,22 @@ When a search runs, the plugin builds the query from the title and its year, for
 
 An indexer ticked for none of them is never used, which is why the form refuses an empty **Use for**.
 Each indexer is spaced by its **Request delay**, and an indexer that fails is paused for a while, see
-[cooldowns](/built-in-plugins/download-indexers#keeping-an-eye-on-indexers).
+[cooldowns](/downloads/indexers#keeping-an-eye-on-indexers).
+:::
 
 ## Import
 
+:::details How the import works
 Once a minute the plugin checks the client for finished downloads it grabbed and copies them into the
 library. There is nothing to configure here: the destination and the file name come from the library and the
 [naming](/administration/general-and-naming) settings. A download that ends with no usable file is removed
 from the client and its release blocklisted. One that holds only other media files fails with a message in
 the **History**, and **Retry the import** in the row menu tries again.
+:::
 
 ## Blocklist
 
+:::details What gets a release blocklisted
 The plugin keeps a list of releases it must not grab again. A release gets on it in three ways:
 
 - You choose **Also blocklist this release** when you remove a transfer from the **Queue**.
@@ -107,8 +120,9 @@ The plugin keeps a list of releases it must not grab again. A release gets on it
 - A finished download contains no media file.
 
 There is no page that lists the blocklist.
+:::
 
 ## Where the Fliks side lives
 
 Provider order, how often missing titles are searched, and what to do with extra album tracks are
-core settings, because they apply to any download provider. See [Downloads](/administration/downloads).
+core settings, because they apply to any download provider. See [Downloads](/downloads/automatic-search).

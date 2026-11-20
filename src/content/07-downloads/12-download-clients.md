@@ -3,15 +3,10 @@ title: Download clients
 description: Connect qBittorrent or Transmission to the Download plugin, and share the download folder so Fliks can import what the client fetched.
 ---
 
-A **download client** is the program that actually downloads the torrent. The Download plugin supports
-two:
+> [!SUMMARY]
+> Add qBittorrent or Transmission in **Settings > Download > Download clients**: host, port, username and password, then **Test connection**. The one mistake to avoid: the client's save folder must be mounted under the same path in both containers (see The shared folder).
 
-- **qBittorrent**, through its Web UI.
-- **Transmission** 3.0 or later, through its remote interface. Fliks's category is a Transmission label.
-
-Fliks sends a release to the client, follows its progress, and when the file is complete it reads it from
-the client's download folder. That last part is why the two programs must agree on a folder, see
-[The shared folder](#the-shared-folder). Read it before you click **Save**: it is the most common mistake.
+A **download client** downloads the torrent: **qBittorrent** (Web UI) or **Transmission** 3.0 or later. Fliks sends a release, follows its progress and reads the finished file from the client's download folder, so both must agree on a folder: see [The shared folder](#the-shared-folder) before you click **Save**.
 
 ## Get the details from qBittorrent
 
@@ -42,7 +37,7 @@ Open **Settings > Download > Download clients**.
 ![**Connected successfully**: click **Save**](/img/download-client-qbit-4-test.webp)
 :::
 
-**Host** follows the same rule as for [indexer sources](/built-in-plugins/download-indexers#what-fliks-needs-from-you):
+**Host** follows the same rule as for [indexer sources](/downloads/indexers#what-fliks-needs-from-you):
 it is the address Fliks uses, so a Docker service name or the host's LAN address, never `localhost` from a
 Fliks that runs in Docker. Type only the name. If you add `http://` or `:8080` Fliks strips them, but
 **Port** and **Use HTTPS** are what count.
@@ -63,6 +58,7 @@ value.
 
 ### Client options
 
+:::details Every client option, categories and priority
 | Option | Default | What it does |
 |---|---|---|
 | **Name** | | The name shown in the list. |
@@ -85,9 +81,9 @@ Fliks sees all its torrents, so keep a category.
 **Priority** matters when you have several clients: new downloads go to the first enabled client, the
 one with the lowest number. The others are still followed for downloads already sent to them, and take
 over if the first is disabled.
+:::
 
-## Test the connection
-
+:::details Test connection: every message
 **Test connection** signs in and asks the client for its state. It does not add anything.
 
 ![Connected successfully](/img/download-client-test-ok.webp)
@@ -102,6 +98,7 @@ over if the first is disabled.
 ![Authentication failed](/img/download-client-test-auth-failed.webp)
 
 ![Could not reach the download client](/img/download-client-test-unreachable.webp)
+:::
 
 ## The shared folder
 
@@ -134,7 +131,7 @@ space for each download once, plus the copy Fliks makes into the library.
 
 > [!NOTE]
 > Fliks **copies** the file into the library, then leaves the original where it is so the client can keep
-> seeding. The original goes away when it reaches its [seeding limit](/built-in-plugins/download-settings#seeding).
+> seeding. The original goes away when it reaches its [seeding limit](/downloads/plugin-settings#seeding).
 > Hard links and moves are not used.
 
 ## Edit or remove a client

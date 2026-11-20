@@ -3,9 +3,23 @@ title: Optimization
 description: Re-encode or remux library files in the background - profiles, global settings, workers and the queue, with every option explained.
 ---
 
-Optimization rewrites library files in the background so they play without a transcode and take less space: a better codec, fewer or reordered tracks, fixed file information. You describe the wanted state in a **profile**, attach it to a library, and Fliks creates a job only for files that differ from it.
+> [!SUMMARY]
+> Optimization rewrites library files in the background so they play without a transcode and take less space. It is optional, a watch-only server does not need it, and it is the only tool here that changes your files. Create a profile, attach it to a library, and check what changes before applying it.
 
-It is optional and nothing a watch-only user needs. It is also the only one of these tools that changes your files, so read [Settings](#settings) (what happens to the originals) before applying a profile. The pages only show on a server recent enough to support it.
+## Optimize a library
+
+Pages show only on a server recent enough to support it. You describe the wanted state in a **profile**, attach it to a library, and Fliks creates a job only for files that differ from it.
+
+:::steps
+![Open **Optimization > Profiles**](/img/admin-optimize-1-sidebar.webp)
+![Click **New profile**](/img/admin-optimize-2-new.webp)
+![Pick a preset. Everything stays editable afterwards](/img/admin-optimize-3-preset.webp)
+![Adjust the sections, name the profile, **Save**](/img/admin-optimize-4-save.webp)
+:::
+
+To use the profile, open the library, its **Optimization** tab, and choose it under **Optimization profile**. The tab shows how many files differ and has **Open the queue**. Existing files are never processed on their own: you choose when to apply the profile.
+
+Before applying one, check what happens to the originals (default: moved to the trash for 7 days) in **Settings > Optimization > Settings**. Follow the jobs in **System > Optimization queue**: **Pause the queue** stops new jobs, **Restore** on a finished job puts the original back.
 
 | Page | Where | What it is for |
 |---|---|---|
@@ -16,16 +30,10 @@ It is optional and nothing a watch-only user needs. It is also the only one of t
 
 ## Profiles
 
+Presets, eligibility, video, audio, subtitles and file options of a profile.
+
+:::details The three presets and the Optimization tab
 ![The Profiles page, empty on a fresh install](/img/admin-optimize-profiles.webp)
-
-:::steps
-![Open **Optimization > Profiles**](/img/admin-optimize-1-sidebar.webp)
-![Click **New profile**](/img/admin-optimize-2-new.webp)
-![Pick a preset. Everything stays editable afterwards](/img/admin-optimize-3-preset.webp)
-![Adjust the sections, name the profile, **Save**](/img/admin-optimize-4-save.webp)
-:::
-
-The three presets:
 
 | Preset | What it does |
 |---|---|
@@ -35,11 +43,15 @@ The three presets:
 
 Once saved, each profile appears in the list with a summary (Video, Audio, Subtitles, File cleanup) and the number of libraries using it. Deleting a profile leaves those libraries with no profile.
 
-To use a profile, open the library, its **Optimization** tab, and choose it under **Optimization profile**. That tab also has **Apply to new files** (future imports only, after the profile's eligibility delay), **Allow renaming** (needed to change an extension or the technical words in a file name), a file preview with the number of files that differ, and **Open the queue**. Existing files are never processed on their own: you choose when to apply the profile.
+The library's **Optimization** tab also has **Apply to new files** (future imports only, after the profile's eligibility delay) and **Allow renaming** (needed to change an extension or the technical words in a file name).
 
+Jobs have three levels, shown in the queue: **Metadata** (fix tags only), **Remux** (rewrite the container) and **Re-encode**.
+:::
+
+:::details Profile fields: eligibility and video
 The values below are those of the **Balanced** preset.
 
-### Eligibility
+#### Eligibility
 
 ![Name and Eligibility, Video conditions](/img/admin-optimize-editor-1.webp)
 
@@ -49,7 +61,7 @@ The values below are those of the **Balanced** preset.
 | **Imported for at least (days)** | 14 | The file may still be replaced or shared by an external tool. |
 | **Skip files with several hard links** | On | Replacing a file shared with another folder would free no space. |
 
-### Video
+#### Video
 
 Turn **Video** off and the video is never touched. On, two blocks decide which videos and into what.
 
@@ -74,7 +86,10 @@ Other videos are copied as they are; audio, subtitles and cleanup still apply.
 | **Remove black bars from the file** | Off | Re-encodes once if the frame is the same all along. Never on HDR10+ or Dolby Vision. |
 | **Quality check on a sample** | Automatic | **Automatic** (on for the faithful quality and for hardware outputs), **Always**, **Never**. |
 
-### Audio
+:::
+
+:::details Profile fields: audio, subtitles and file
+#### Audio
 
 ![Audio, Subtitles and File](/img/admin-optimize-editor-3.webp)
 
@@ -87,7 +102,7 @@ Other videos are copied as they are; audio, subtitles and cleanup still apply.
 | **Order audio tracks by the languages above** | On | Then best quality first within a language. Removes nothing. |
 | **DTS, TrueHD or PCM tracks, which some devices cannot play** | Add a playable version | **Change nothing**, **Add a playable version** (keeps the original, adds E-AC3 with the same channels, else stereo AAC), **Replace with a playable version** (saves often 2 to 4 GB per film, but lossless sound and Atmos are lost). |
 
-### Subtitles
+#### Subtitles
 
 | Field | Balanced | Meaning |
 |---|---|---|
@@ -96,7 +111,7 @@ Other videos are copied as they are; audio, subtitles and cleanup still apply.
 | **Image subtitles (PGS, VobSub)** | Convert them to text | **Keep them**, **Convert them to text** (OCR, kept if recognition fails), **Remove them**. |
 | **Order subtitles by the languages above** | On | Removes nothing. |
 
-### File
+#### File
 
 ![The File section and Save](/img/admin-optimize-editor-4.webp)
 
@@ -107,11 +122,13 @@ Other videos are copied as they are; audio, subtitles and cleanup still apply.
 | **Container format** | Keep the current one | **MKV** or **MP4**. A different container changes the extension, so the library must allow renaming or the file is skipped. |
 
 The **Effect on a file** panel on the right takes a library and a sample file and shows what the profile would do to it and the cost, one pass or several. It says **Imported too recently for the profile** when the eligibility delay applies.
-
-Jobs have three levels, shown in the queue: **Metadata** (fix tags only), **Remux** (rewrite the container) and **Re-encode**.
+:::
 
 ## Settings
 
+Time window, what happens to the originals, verification and device sharing.
+
+:::details Optimization settings: time window, originals, verification
 ![The Settings page](/img/admin-optimize-settings.webp)
 
 | Field | Default | Meaning |
@@ -126,16 +143,26 @@ Jobs have three levels, shown in the queue: **Metadata** (fix tags only), **Remu
 | **Weight of a software encode** | 2 | How many playback transcodes a software encode counts for in the CPU budget. |
 | **Simultaneous jobs** (per device) | Empty | One row per device that announced itself. Empty keeps the value the device declares. |
 
+:::
+
 ## Workers
 
+The server's own local engine always works. Remote workers are optional.
+
+:::details Workers: add a remote machine
 ![The Workers page](/img/admin-optimize-workers.webp)
 
 The server's own **Local engine** always works. **Connected workers** lists each machine with its last seen time, version and encoders. To add a remote worker, enter a **Name** under **Worker tokens** and press **Create token**. The token is shown once, stored hashed, and can be revoked (its jobs return to the queue). A **How to run a worker** link shows the start command.
 
 A worker has a **Library access** mode: **None (HTTP and upload)** (it reads files over HTTP and uploads its output, which needs the **Public address** set on [General](/administration/general-and-naming#server); the page warns when it is empty) or **Shared folders** (it mounts the library, with **Path mappings** from the server path to the worker path).
 
+:::
+
 ## The queue
 
+Watch, pause, reorder and cancel jobs in **System > Optimization queue**.
+
+:::details Reading the optimization queue
 **System > Optimization queue** (button **Settings** at top right goes to the page above).
 
 ![The Optimization queue](/img/admin-optimize-queue.webp)
@@ -145,6 +172,8 @@ A worker has a **Library access** mode: **None (HTTP and upload)** (it reads fil
 - **Devices** shows each device as **Free**, **Busy**, **Paused by playback** or **Offline**, with its used job slots.
 - Three tabs, filtered by library: **Running and waiting**, **Failures** and **Finished**. Waiting jobs are in execution order and can be selected, moved **to the front** or cancelled. Failures show a class (access denied, file in use, corrupt source, no space left, file changed and others) and can be queued again. **Finished** jobs show the size **Saved** and a **Restore** button that puts the original back.
 - Karaoke separation and verification jobs appear here too, labelled by kind.
+
+:::
 
 ## See also
 

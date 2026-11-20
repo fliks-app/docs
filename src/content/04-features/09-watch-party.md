@@ -3,6 +3,9 @@ title: Watch party
 description: Watch the same title in sync with other people, with chat, voice, a shared programme and votes on what to play.
 ---
 
+> [!SUMMARY]
+> Choose **Watch together** on a movie, an episode or a playlist, add people and a programme, and start when everyone is ready. Playback, chat and reactions stay in sync. Needs Fliks 5.2 or later.
+
 ## What a watch party is
 
 A watch party is a room on your server where several users watch the same title together.
@@ -13,6 +16,7 @@ Parties need Fliks 5.2 or later. Clients connected to an older server hide them.
 
 ## Who can use it
 
+:::details Permissions needed
 Three permissions, set per role under **Settings > Roles** (see
 [Users and permissions](/administration/users-and-permissions#roles-and-permissions)):
 
@@ -24,8 +28,9 @@ Three permissions, set per role under **Settings > Roles** (see
 
 **Admin** has all three, **User** the first two, **Readonly** only the second. Joining a party you
 were added to or sent a link for needs no permission, only an account.
+:::
 
-## Creating a party
+## Start a watch party
 
 Choose **Watch together** on a movie, an episode or a playlist, or **New party** on the **Watch
 parties** row of the home page (a section you can hide in **App settings > Home**). The dialog asks
@@ -57,7 +62,7 @@ expires two hours after its start time.
 
 Chat messages are kept with the party until it ends, so late arrivals see the recent history.
 
-## Joining
+## Join a watch party
 
 - **Added by the host.** The party shows on your home page, with a notification for a scheduled
   one. There is nothing to accept: open it and join. **Leave the party** on its page removes you
@@ -73,11 +78,13 @@ or the host adds them again.
 
 ## Roles
 
+:::details Host and participant roles
 - **Host**: the creator. Starts and ends the party, edits the programme, accepts proposals, changes
   settings, adds and excludes people. While the party is live the host can hand the role to a
   connected member from the people list. The role never moves on its own.
 - **Participants**: everyone else. They propose and vote, chat, react, talk, and control playback
   unless the host reserved it. Whoever joined by link or public party is a participant too.
+:::
 
 ## Programme, proposals and votes
 
@@ -106,6 +113,7 @@ moves to the next programme item. A live party with nobody connected ends after 
 
 ## Chat, reactions and voice
 
+:::details Chat, reactions and voice details
 - **Chat** has a panel beside or under the video and the same chat on the party page. Messages are
   limited to 500 characters. System lines record joins, votes, programme edits and setting changes.
   The host can turn chat off.
@@ -115,6 +123,7 @@ moves to the next programme item. A live party with nobody connected ends after 
   mic starts muted. Tap the mic button to toggle it, or hold it to talk only while pressed
   (press-to-talk). The film volume lowers when someone speaks, which you can turn off. On a
   device without a microphone you listen only.
+:::
 
 ## Casting, sharing and the calendar
 
@@ -123,7 +132,7 @@ floating over it (see [Chromecast](/clients/chromecast)). **Share link** opens t
 sheet, or copies the link where there is none. **Add to calendar** adds a scheduled party to your
 calendar (native on phones, an `.ics` file elsewhere).
 
-## Ending and leaving
+## End or leave a party
 
 - The host chooses **End the party** (**Cancel the party** before it starts) and confirms. It ends
   for everyone.
@@ -132,6 +141,7 @@ calendar (native on phones, an `.ics` file elsewhere).
 
 ## Which clients support it
 
+:::details What each client supports
 | Client | Support |
 |---|---|
 | Web, mobile (iOS, Android), desktop | Full |
@@ -141,6 +151,7 @@ calendar (native on phones, an `.ics` file elsewhere).
 On Android TV, Samsung and LG there is no **Share link** or **Add to calendar** button, voice is
 listen only, and chat offers quick phrases (**Pause?**, **5 min**, **Wait for me**) beside the text
 field. On Samsung and LG, drift is corrected by seeking only. Apple TV also lacks **Draw lots**.
+:::
 
 ## See also
 

@@ -3,16 +3,17 @@ title: Playback
 description: Resume across devices, how intros and credits are detected, how seek previews are generated, and skipping commercials from an EDL file. The in-player controls are in the Player section.
 ---
 
-This page covers what the server does around playback. For the player itself (buttons, audio and
-subtitle tracks, keyboard), see [The player](/player/overview).
+> [!SUMMARY]
+> Fliks saves your position and resumes on any device. For series it detects intros and credits, and it can skip commercials from a Kodi `.edl` file placed next to the video. The player buttons themselves are in [The player](/player/overview).
 
-## Resume anywhere
+## Resume where you stopped on another device
 
 Fliks saves your position in the background while you watch, and reads it back on any device you
 sign in on: start a film on your phone, sit down at the TV, and it offers to resume from the same
 spot. Progress is saved a few times a minute during playback, and immediately whenever you pause,
 seek, or finish something, so switching devices mid-scene loses at most a few seconds.
 
+:::details When a title counts as started or watched
 - Under about 10 seconds of progress, a title still shows up under Continue Watching but resumes
   from the start rather than at that tiny offset.
 - Under about 5 seconds, it doesn't count as watched at all, and won't appear in your history or
@@ -21,6 +22,7 @@ seek, or finish something, so switching devices mid-scene loses at most a few se
   end, whichever happens first.
 - If you were offline when you finished something, the position is kept on the device and sent to
   the server as soon as it reconnects.
+:::
 
 ## Intro and credits detection
 
@@ -31,6 +33,7 @@ and two settings in **App settings > Playback**, **Skip intro automatically** an
 **Automatically play next episode** (on by default), act on them. Inside a playlist, the
 playlist's own autoplay setting decides instead.
 
+:::details How intro detection runs and how to re-run it
 > [!NOTE]
 > Detection runs automatically after a series is imported (**Detect intros / credits when importing
 > series** in **Settings > General**, on by default), fingerprinting the audio at the start (and
@@ -38,6 +41,7 @@ playlist's own autoplay setting decides instead.
 > named like an intro is used directly. It can also be re-run by hand from a title's **Analyze**
 > dialog (**Recompute intros / outros**) if a season's markers look wrong, for example after
 > replacing a file.
+:::
 
 ## Scrubbing previews
 
@@ -55,6 +59,7 @@ Put a Kodi `.edl` file next to a video, with the same name (`Movie (2020).mkv` a
 muted stretches go silent. This is the Kodi EDL format, which Comskip and MCEBuddy can write. Fliks reads the file when
 playback starts, so adding, editing or removing it needs no rescan.
 
+:::details EDL file format and what each action does
 Each line is `start end action`, separated by spaces or tabs. Times are seconds (`61.5`),
 `h:mm:ss.ms`, or `#frame` numbers (these need the video's frame rate).
 
@@ -76,12 +81,14 @@ Apple TV, desktop, Android, iOS, web, Tizen, webOS and Chromecast all skip and m
 has mutes, Android plays decoded PCM audio instead of Dolby passthrough, a Chromecast gets an AAC
 transcode instead of AC-3, and iOS keeps the video off AirPlay. An EDL over about 48 KB once encoded
 is dropped for casting (the file still works everywhere else).
+:::
 
-### Turning it off
+### Turn EDL skipping off
 
 In **App settings > Playback** (user menu), per user. The Apple TV app has no switch, but follows
 what you set in another app:
 
+:::details Settings to turn skipping off
 - **Skip cuts and mutes** is on by default. Off, the server stops sending ranges and no client acts
   on the file. A download keeps the ranges it had when it was made: turning this off also stops
   downloads you already have from using them, and turning it back on only adds ranges to downloads
@@ -89,9 +96,13 @@ what you set in another app:
 - **Skip commercial breaks automatically** is on by default. Off, a **Skip ad** button appears
   during a commercial instead (cuts still skip on their own). While casting there is no button, and
   commercials play.
+:::
 
-### Adding an EDL from Fliks
+### Add an EDL from Fliks
 
+On a title's file information, **View companion files** lists the `.edl`; if you can edit media, **Import a file** accepts a new one.
+
+:::details Steps and rules for importing an EDL
 On a title's file information, **View companion files** lists the `.edl` next to the video. You can
 download it from a browser or the desktop app, and delete it if you can delete media. If you can
 edit media, **Import a file** accepts a new one:
@@ -112,6 +123,7 @@ An EDL belongs to one encode. It is copied or moved, and renamed, with the video
 it into a library (`.edl` is in the default **Companion file extensions**), is removed when an
 import replaces the video, and is deleted along with the video when you delete the file from disk,
 unless another video shares its name.
+:::
 
 ## See also
 

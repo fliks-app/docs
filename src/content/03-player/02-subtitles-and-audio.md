@@ -3,6 +3,9 @@ title: Audio and subtitles
 description: Pick an audio or subtitle track in the player, fix subtitle timing with the synchronize panel, and set how subtitles look.
 ---
 
+> [!SUMMARY]
+> In the player, **Audio** and **Subtitles** pick a track; the gear in the subtitle list opens appearance and the synchronize panel for subtitles that are early or late. Defaults live in **App settings**.
+
 ## Pick an audio track
 
 The **Audio** button (headphones) is in the bottom row of the bar. It appears only when the file
@@ -68,6 +71,7 @@ The example below fixes an imported English file that shows its lines about 2.5 
 This needs the **Manage subtitles** permission and a text track. It is not offered while casting.
 If no subtitle is on, opening the panel picks the first text track.
 
+:::details What the synchronize panel offers
 The panel lists the cues on a timeline that follows the video, with a time ruler and a chevron on
 each side marking the current moment. The subtitles on the picture update as you move them.
 
@@ -85,6 +89,7 @@ each side marking the current moment. The subtitles on the picture update as you
 An embedded track can be previewed here but not saved: the panel says so, and **Save** and
 **Synchronize on other track** stay disabled. Download or import a separate file to save a shift.
 **Save** is also disabled until the timeline has been moved. On a phone the panel opens as a sheet, with icon buttons instead of text.
+:::
 
 ### Change how subtitles look
 
@@ -98,6 +103,7 @@ Or change them while you watch: **Subtitles**, then the gear, then **Appearance*
 
 ![The Appearance list in the player: text size, text color, drop shadow, background color, top and bottom position](/img/player-menu-subtitle-appearance.webp)
 
+:::details Every subtitle setting of App settings
 | Setting | Options |
 |---|---|
 | Preferred subtitle language | Any language |
@@ -111,6 +117,7 @@ Or change them while you watch: **Subtitles**, then the gear, then **Appearance*
 | Drop shadow | None, drop shadow, outline, raised |
 | Background color | Transparent, semi-transparent black, black |
 | Subtitle position | Bottom edge and top edge positions |
+:::
 
 **Clear saved track selections**, at the bottom of **App settings > Subtitles**, forgets the
 track you picked for each title.
@@ -119,8 +126,7 @@ track you picked for each title.
 > None of this changes how an image-based track looks, or an ASS/SSA track that keeps its own
 > styling: those keep their original appearance.
 
-## How the first track is chosen
-
+:::details Which tracks play first
 When you open something new, Fliks picks the audio and subtitle track from your settings. The
 audio rules are in **App settings > Playback**.
 
@@ -134,3 +140,4 @@ audio rules are in **App settings > Playback**.
 
 When the chosen rule finds no match, the first audio track plays. Your own pick in the player
 always wins, and is remembered per device for that title.
+:::

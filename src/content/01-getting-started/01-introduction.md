@@ -3,6 +3,9 @@ title: Introduction
 description: What Fliks is, how it's put together, and what to read next.
 ---
 
+> [!SUMMARY]
+> Fliks is a self-hosted server that turns your video folders into a streaming service with covers, profiles and synced progress. Install the server, add a library, then watch from any client: start with the [Quick start](/getting-started/quick-start).
+
 ## What Fliks is
 
 Fliks turns a folder of video files into a streaming service for your household. Point it at

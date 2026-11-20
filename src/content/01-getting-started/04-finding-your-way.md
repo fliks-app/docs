@@ -3,7 +3,36 @@ title: Finding your way around
 description: A map of the Fliks interface, from the sidebar to the Administration pages, with the click path to each common task.
 ---
 
-## The three buttons to know
+> [!SUMMARY]
+> Everything you configure is behind your avatar, top right: **Administration** (the server), **App settings** (this device) and **Account settings** (you). Find your task in the table below, or read the map of each area.
+
+## Find where to do a task
+
+| I want to... | Go to |
+|---|---|
+| Add a library | **Administration** > **Settings > Libraries** > **Add a library** ([Quick start](/getting-started/quick-start#add-your-media-as-a-library)) |
+| Fix a wrongly matched or unidentified title | The title page > **More** > **Metadata** > **Identify** ([Quick start](/getting-started/quick-start#fix-an-unidentified-file-later)) |
+| Add a user | **Administration** > **Settings > Users** > **Add a user** ([Users and permissions](/administration/users-and-permissions)) |
+| Change the subtitle look (size, color, position) | **App settings > Subtitles**, section **Subtitle appearance** |
+| Pick my default subtitle language | **App settings > Subtitles**, **Preferred subtitle language** (and **Subtitle mode**) |
+| Pick my default audio language | **App settings > Playback**, **Audio selection** > **Preferred language** |
+| Manage the subtitles of one title | The title page > **More** > **Edit subtitles** ([Subtitles](/features/subtitles)) |
+| Set up automatic subtitle search | **Administration** > **Subtitles > Subtitle providers**, then **Subtitles** for the rules |
+| Change the streaming quality while watching | The quality menu in the player ([Quality and stats](/player/quality-and-stats)) |
+| Make the server's Auto quality prefer Direct Play or adaptive streaming | **Administration** > **Advanced > Streaming** ([Streaming and transcoding](/features/streaming-and-transcoding)) |
+| Show low-bandwidth qualities in the player | **App settings > Playback**, **Show low-bandwidth qualities** |
+| Pair a TV (Quick Connect) | On the TV choose **Quick Connect**, then on a signed-in device open the avatar menu > **Login requests** and type the code ([Pairing](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect)) |
+| Install a plugin | **Administration** > **Advanced > Plugins** ([Plugins](/administration/plugins)) |
+| See who is watching right now | **Administration** > **System > Video activity** |
+| Check why a stream stutters | **Administration** > **System > Playback quality** |
+| Take or restore a backup | **Administration** > **System**, **Backups** tab ([Backups](/administration/backups)) |
+| Change when automatic tasks run (including the nightly backup) | **Administration** > **Advanced > Scheduled tasks** |
+| Change my password | **Account settings > Password** |
+| Change the interface language | **App settings > Display** |
+| Read logs | **Administration** > **System**, **Logs** tab ([Logs](/administration/logs-and-troubleshooting)) |
+| Dismiss or bring back a setup checklist item | **Administration** > **Settings > General** |
+
+## Open the settings menu
 
 Everything you configure sits behind your avatar, top right. Click it to open the user menu.
 
@@ -26,7 +55,7 @@ Tap the avatar at the top right: the menu opens from the bottom with **Account s
 
 The same menu also has **Login requests** (to pair a TV), **Switch user** and **Log out**.
 
-## The sidebar
+## Use the sidebar
 
 The left sidebar is the everyday navigation. On a phone it hides behind the menu button at the
 top left.
@@ -50,6 +79,7 @@ interface.
 
 ![The Administration sidebar and its groups](/img/nav-admin-sidebar.webp)
 
+:::details Every group of the Administration sidebar
 | Group | Entries |
 |---|---|
 | **System** | **Statistics**, **System** (status, backups, logs, restart), **Video activity** (who is watching), **Optimization queue**, **Playback quality** |
@@ -61,6 +91,7 @@ interface.
 | **Users** | **Users**, **Roles**, **Single sign-on** |
 | **Optimization** | **Profiles**, **Settings**, **Workers** |
 | **Advanced** | **Scheduled tasks**, **Streaming**, **Remote engine**, **Plugins** |
+:::
 
 Some entries only show when the server version or your permissions allow them (**Users** needs the
 permission to manage users, for example).
@@ -86,32 +117,6 @@ subtitles** is, and where **Identify** fixes a wrong match.
 Open a title, click the **More** menu next to **Play**, then **Metadata**: it holds **Identify** and **Refresh metadata**. **Edit subtitles** lists, searches and syncs the subtitles of that title.
 
 ![The **More** menu of a title, then **Metadata**](/img/nav-title-more-button-anim.webp)
-
-## I want to... go to
-
-| I want to... | Go to |
-|---|---|
-| Add a library | **Administration** > **Settings > Libraries** > **Add a library** ([Quick start](/getting-started/quick-start#3-add-a-library)) |
-| Fix a wrongly matched or unidentified title | The title page > **More** > **Metadata** > **Identify** ([Quick start](/getting-started/quick-start#fixing-an-unidentified-file-later)) |
-| Add a user | **Administration** > **Settings > Users** > **Add a user** ([Users and permissions](/administration/users-and-permissions)) |
-| Change the subtitle look (size, color, position) | **App settings > Subtitles**, section **Subtitle appearance** |
-| Pick my default subtitle language | **App settings > Subtitles**, **Preferred subtitle language** (and **Subtitle mode**) |
-| Pick my default audio language | **App settings > Playback**, **Audio selection** > **Preferred language** |
-| Manage the subtitles of one title | The title page > **More** > **Edit subtitles** ([Subtitles](/features/subtitles)) |
-| Set up automatic subtitle search | **Administration** > **Subtitles > Subtitle providers**, then **Subtitles** for the rules |
-| Change the streaming quality while watching | The quality menu in the player ([Quality and stats](/player/quality-and-stats)) |
-| Make the server's Auto quality prefer Direct Play or adaptive streaming | **Administration** > **Advanced > Streaming** ([Streaming and transcoding](/features/streaming-and-transcoding)) |
-| Show low-bandwidth qualities in the player | **App settings > Playback**, **Show low-bandwidth qualities** |
-| Pair a TV (Quick Connect) | On the TV choose **Quick Connect**, then on a signed-in device open the avatar menu > **Login requests** and type the code ([Pairing](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect)) |
-| Install a plugin | **Administration** > **Advanced > Plugins** ([Plugins](/administration/plugins)) |
-| See who is watching right now | **Administration** > **System > Video activity** |
-| Check why a stream stutters | **Administration** > **System > Playback quality** |
-| Take or restore a backup | **Administration** > **System**, **Backups** tab ([Backups](/administration/backups)) |
-| Change when automatic tasks run (including the nightly backup) | **Administration** > **Advanced > Scheduled tasks** |
-| Change my password | **Account settings > Password** |
-| Change the interface language | **App settings > Display** |
-| Read logs | **Administration** > **System**, **Logs** tab ([Logs](/administration/logs-and-troubleshooting)) |
-| Dismiss or bring back a setup checklist item | **Administration** > **Settings > General** |
 
 > [!TIP]
 > Every admin page has a **Back to app** link at the top of its sidebar. Settings pages in the

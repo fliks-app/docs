@@ -3,17 +3,14 @@ title: Quality definitions
 description: Set the minimum, preferred and maximum file size of each quality, which Fliks uses to refuse fake or bloated releases.
 ---
 
-> [!NOTE]
-> **Do you need this?** Only if you use [requests](/features/requests) or the download plugin. These sizes
-> are used to judge releases found by a search. They never touch a file already in your library, and playback
-> does not read them. The defaults are sensible: leave this page alone unless releases are refused for
-> being too small or too large.
+> [!SUMMARY]
+> Quality definitions give each quality a minimum, preferred and maximum file size, so searches can refuse fake or bloated releases. Needed only for [requests](/downloads/requests) or the Download plugin, and the defaults are sensible: change a range only when releases are refused for being too small or too large.
 
-## What it is for
+## What a quality definition does
 
 A quality definition gives each quality a size range, so that Fliks can tell a real 1080p release from a
 suspiciously tiny one, and a reasonable one from a 60 GB remux when you only want a regular copy. The ranges
-are shared by every [quality profile](/administration/quality-profiles).
+are shared by every [quality profile](/downloads/quality-profiles).
 
 For each quality, you set three values:
 
@@ -26,12 +23,9 @@ For each quality, you set three values:
 Video and audio sizes are measured per hour of content (**MB per hour**), so a long film is allowed more
 bytes than a short one. Text formats (books) are measured per file, in **MB**.
 
-## Where to find it
-
-**Settings > Quality definitions**, in the **Media** section of the admin sidebar. You need the **Settings
-access** permission. The tabs **Video**, **Audio** and **Text** show one list each.
-
 ## Change a size range
+
+**Settings > Quality definitions** (**Media** section, **Settings access** permission). The tabs **Video**, **Audio** and **Text** show one list each.
 
 :::steps
 ![Open **Settings > Quality definitions**](/img/admin-qdef-1-sidebar.webp)
@@ -43,8 +37,7 @@ Click anywhere on a track to move the closest handle to that point. The values a
 the track and snap to 0.5 MB. Fliks keeps the three in order: pushing the minimum above the preferred size
 drags the preferred size with it, and so on.
 
-## Every control
-
+:::details Every control on the page
 | Control | What it does |
 |---|---|
 | Text box next to the name | Renames the row. The new name is only a label on this page. Releases are still recognised by the built-in quality name. |
@@ -52,9 +45,9 @@ drags the preferred size with it, and so on.
 | **Reset** | After a confirmation, fills the form with the built-in defaults of the current tab. Nothing is stored until you click **Save**. |
 | **Save** | Stores every row of the current tab. Disabled while there is nothing to save. |
 | **Video** / **Audio** / **Text** | Switches the list. Unsaved changes are dropped when you switch. |
+:::
 
-## How the sizes are used
-
+:::details How the sizes are used (codec scaling, no runtime)
 For each release found by a search, Fliks:
 
 1. Works out the quality from the release name.
@@ -69,9 +62,9 @@ Two details matter:
 - **Newer codecs get smaller files.** The limits are calibrated for x264. For a release named HEVC (x265) they are
   multiplied by 0.55, for AV1 by 0.45 and for VP9 by 0.6, so a 4 GB HEVC file is judged like a 7.3 GB x264 one.
 - **No runtime, no size check.** When the runtime of the title is unknown, the size is not checked.
+:::
 
-## Defaults
-
+:::details Default size ranges
 Video, in MB per hour, as minimum / preferred / maximum. The page shows large values in GB per hour
 (1 GB = 1024 MB), so 3000 appears as 2.9 GB/h.
 
@@ -94,9 +87,9 @@ Video, in MB per hour, as minimum / preferred / maximum. The page shows large va
 Audio is in MB per hour: the 64k qualities are 10 / 30 / 60, 128k are 30 / 60 / 120, 256k are 60 / 120 / 250,
 Lossless 16 bit is 150 / 350 / 700 and Lossless 24 bit is 300 / 700 / 1400. Text is in MB per file: PDF is
 0 / 8 / 150, EPUB 0 / 2 / 80, MOBI and AZW3 0 / 2 / 50.
+:::
 
-## Worked example: cap WEBDL-1080p at 3 GB per hour
-
+:::details Worked example: cap WEBDL-1080p at 3 GB per hour
 Goal: stop Fliks from taking very large WEB releases.
 
 1. On the **Video** tab, find **WEBDL-1080p**.
@@ -106,10 +99,11 @@ Goal: stop Fliks from taking very large WEB releases.
 For a film of 2 hours, a WEBDL-1080p release is now accepted between 500 MB (the default minimum) and about
 6 GB. A 9 GB x264 release is refused as too large. The same film as an HEVC release is accepted up to about
 3.3 GB, because the limit is scaled by 0.55.
+:::
 
 ## How it connects
 
-- [Quality profiles](/administration/quality-profiles) decide which qualities are allowed. Definitions decide how
+- [Quality profiles](/downloads/quality-profiles) decide which qualities are allowed. Definitions decide how
   big a release of an allowed quality may be.
-- [Custom formats](/administration/custom-formats) rank releases that pass both checks.
-- [Downloads](/administration/downloads) runs the searches that use these limits.
+- [Custom formats](/downloads/custom-formats) rank releases that pass both checks.
+- [Downloads](/downloads/automatic-search) runs the searches that use these limits.

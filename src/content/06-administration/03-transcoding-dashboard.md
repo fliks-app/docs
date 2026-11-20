@@ -3,11 +3,12 @@ title: Transcoding dashboard
 description: Watch every active stream live, see why each one is or isn't being transcoded, and step in if you need to.
 ---
 
-## Where it is
+> [!SUMMARY]
+> **Settings > Video activity** shows every active stream live, with the reason each one is or isn't transcoded. Pause, message or stop a stream from its card. It refreshes every 5 seconds by itself.
 
-**Settings > Video activity**, the third entry of the **System** section in the admin sidebar.
-It polls for updates every 5 seconds while the page is open; nothing to refresh by hand. Live TV
-viewers show up here too.
+## Watch a stream live
+
+**Settings > Video activity** (**System** section). Live TV viewers show up here too.
 
 ## What each stream card shows
 

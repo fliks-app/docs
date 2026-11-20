@@ -3,9 +3,10 @@ title: Single sign-on
 description: Let people sign in with an OpenID Connect provider such as Keycloak or Authentik, and what to register at the provider.
 ---
 
-Fliks can sign users in through any OpenID Connect (OIDC) provider. It's a Fliks 6.0.0 feature. The
-page lives at **Settings > Single sign-on** (under **Users**) and is for administrators only, not
-for a role that merely holds `settings.access`: these settings decide who can become an admin.
+> [!SUMMARY]
+> Let people sign in with an OpenID Connect provider such as Keycloak or Authentik. Set the **Public address**, serve Fliks over https, add the provider in **Settings > Single sign-on**, register the addresses Fliks shows you, then tick **Enabled**. Administrators only.
+
+**Settings > Single sign-on** (under **Users**) is for administrators only, not for a role that merely holds `settings.access`: these settings decide who can become an admin. Available from Fliks 6.0.0.
 
 ## Before you start
 
@@ -34,6 +35,7 @@ for a role that merely holds `settings.access`: these settings decide who can be
 | Back-channel logout URI (optional) | `<public address>/api/auth/oidc/<id>/backchannel-logout` |
 | Post-logout redirect URI (optional) | `<public address>/login?autoLaunch=0` |
 
+:::details Platforms, TVs and signing in from another address
 The single redirect URI covers the web app, the desktop app and the iOS and Android apps: don't
 register one per platform. TVs can't use single sign-on; they sign in with
 [Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect)
@@ -42,9 +44,11 @@ linked account is tied to it: add a new provider instead.
 
 Open Fliks on its public address host when you sign in on the web. If you start from another
 address, the web app moves to the public address first, since the sign-in returns there.
+:::
 
 ## Who gets in
 
+:::details Every setting: scope, groups, roles, account creation
 | Setting | What it does |
 |---|---|
 | Scope, Username claim, Prompt | `openid profile email` and `preferred_username` by default. |
@@ -56,12 +60,14 @@ address, the web app moves to the public address first, since the sign-in return
 | Match existing accounts by verified email | Adopts only an account an administrator created without a password that never signed in, when the provider marks the email as verified. Other accounts link from their own account page. |
 | CA certificate | A PEM bundle, for a provider behind a private certificate authority. |
 | Sign out at the provider too | Web only; off by default. |
+:::
 
 Disabling a provider signs its users out at once, and deleting one also removes the links between
 it and their accounts. Each provider in the list shows how many accounts are linked to it.
 
 ## Sign-in policy
 
+:::details Sign-in policy: password login and auto-launch
 **Password login** has two modes:
 
 - **Everyone** (default): passwords keep working next to single sign-on.
@@ -73,12 +79,15 @@ it and their accounts. Each provider in the list shows how many accounts are lin
 **Auto-launch** makes the login page open one provider at once, and folds the administrator
 password form away. An address ending in `?autoLaunch=0` skips it, which is how you reach the
 password form if the provider is down.
+:::
 
 ## Sessions
 
+:::details How long a single sign-on session lasts
 A session started through a provider lasts at most **30 days**, however often it refreshes. After
 that the app runs the provider sign-in again, silently when the provider still has your session.
 Quick Connect logins and device tokens made from such a session are not bound by that limit.
+:::
 
 ## See also
 

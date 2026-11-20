@@ -3,7 +3,14 @@ title: Live TV
 description: Turn an existing IPTV subscription into another row of channels, with a program guide and the ability to pause and rewind live playback.
 ---
 
-## What it does
+> [!SUMMARY]
+> Add your IPTV subscription in **Settings > Live TV > Sources > New source**, then enable its channels on the **Channels** tab: nobody sees **Live TV** until you do. You bring the subscription; Fliks supplies no channels.
+
+## Set up Live TV in three steps
+
+1. [Add a source](#add-an-iptv-source), your provider's playlist or account.
+2. [Enable the channels](#enable-and-manage-channels) you want: they arrive disabled.
+3. Optional: [add a program guide](#add-a-program-guide).
 
 Live TV turns an IPTV subscription you already pay for into another row of channels inside Fliks.
 A provider playlist or panel becomes a lineup with its own program guide, and pausing or rewinding
@@ -24,7 +31,7 @@ one channel is enabled and visible to that account.
 > After adding your first source, go to the **Channels** tab and enable the channels you want
 > (bulk actions help with large lineups); until then, nobody sees a Live TV entry.
 
-## Adding a source
+## Add an IPTV source
 
 Go to **Settings > Live TV > Sources > New source**. A source is one provider connection: add one
 per subscription. Fliks supports two kinds:
@@ -41,12 +48,14 @@ Optional on either kind: a user agent and a referer header, for providers that c
 
 ![The New source dialog for an M3U playlist, with its optional fields and Test connection](/img/livetv-source-form.webp)
 
+:::details Every field of the source form
 | Field | What it controls |
 |---|---|
 | Max simultaneous streams (0 = unlimited) | How many upstream connections *this source* may hold open at once, not how many people can watch: viewers on the same channel, watching it the same way, share one upstream connection. **Test connection** pre-fills it from the account when the field is still 0; whatever the field holds when you save is kept as your own value. |
 | Refresh interval (hours) | How often the lineup is re-fetched. Default 12. |
 | Include groups matching / Exclude groups matching | Regular expressions that filter which channel groups are kept. See below. |
 | Source active | An inactive source is no longer refreshed on schedule, but its channels, streams and history stay (and its channels still play). |
+:::
 
 Fliks only ever keeps live channels from a playlist: any entry that looks like on-demand content
 (the provider's own `/movie/` or `/series/` URL path) is dropped automatically, before any group
@@ -63,8 +72,9 @@ Xtream panel in disguise, the result offers a one-click switch to the richer Xtr
 On failure, the test only says it failed. The real reason (wrong credentials, an unreachable host,
 a timeout) shows up once you save, as the source's own sync error.
 
-### Group filters
+### Filter out channel groups
 
+:::details How group filters work
 A provider bouquet usually mixes channels for dozens of countries and genres under one playlist.
 **Exclude groups matching** drops any channel whose group name matches the pattern:
 
@@ -84,8 +94,9 @@ group name, not an exact match (`sport` also matches "Sports HD"; anchor it with
 exact match). When both are set, exclude always wins. These filters only apply to live channel
 groups: they play no part in dropping on-demand content, which Fliks already excludes on its own.
 An invalid pattern is refused when you save the source.
+:::
 
-## Program guide (EPG)
+## Add a program guide
 
 **Settings > Live TV > Guide > New guide source.** Two kinds:
 
@@ -99,8 +110,7 @@ Also on the form: refresh interval in hours (12 by default), a **Timezone offset
 default, applied only to feed timestamps that carry no timezone of their own), and a
 **Source active** switch.
 
-### Automatic matching
-
+:::details How guide matching works
 Every feed's channels are matched against the lineup automatically, in three passes, weakest last:
 
 1. **By ID**: the channel's own guide channel ID, if already set, matched against the feed's
@@ -116,11 +126,13 @@ The **Match report** on the Guide page shows how many channels landed in each bu
 unmatched channel with a search box: type part of the real channel name, pick the guide entry from
 the suggestions, and save. That match is permanent for that channel. A guide channel ID can also be
 typed directly into a channel's own edit form on the Channels tab.
+:::
 
-## Managing channels
+## Enable and manage channels
 
 **Settings > Live TV > Channels.** Filter by group, source, active state, or search by name.
 
+:::details Every channel action (edit, bulk, merge duplicates)
 - The **Active** switch on each row: an inactive channel is invisible to every viewer and gets no
   program data downloaded, but keeps its number, group, guide match and history.
 - Editing a channel: name, number, group, **Guide channel ID** (manual guide match) and **Guide
@@ -136,9 +148,11 @@ typed directly into a channel's own edit form on the Channels tab.
   its backup streams, used for failover if the main one goes down.
 - Favorites are each viewer's own preference, set with the star on the Live TV page itself. They
   are not the access control described next.
+:::
 
-## Access control by channel group
+## Restrict channel groups for some users
 
+:::details How restricted groups work
 **Settings > Live TV > Access** lists every channel group with a **Restricted** checkbox, and, per
 user, which restricted groups they've been granted (**Manage access**).
 
@@ -151,8 +165,9 @@ built-in pattern covering Fliks' six interface languages (whole-word matches suc
 `sex`/`sexo`/`sexe`, `porn*`, `erotic`/`erotique`/`erotik`, `x-rated`, `adult*` other than "Adult
 Swim", `18+`/`+18`) and adds a newly seen match to the restricted list. Unchecking one by hand keeps
 it exempt from then on: the next sync won't restrict it again unless you recheck it yourself.
+:::
 
-## Timeshift: pause and rewind live
+## Pause and rewind a live channel
 
 A live channel behaves like a recording that keeps growing: pause it and resume from the same
 spot, or jump back in 10-second steps to catch something you missed, then **Back to live**. How far
@@ -164,8 +179,9 @@ recording feature: nothing is kept once it leaves that buffer.
 > stream directly (the desktop app, Android TV, Samsung TVs and the Android app usually do),
 > there is no pause or rewind buffer.
 
-## Settings
+## Tune Live TV settings
 
+:::details Every tuning value and its default
 **Settings > Live TV > Settings** exposes these tuning values:
 
 | Setting | Default | What it does |
@@ -183,9 +199,11 @@ recording feature: nothing is kept once it leaves that buffer.
 > These are also readable and writable through the generic settings API (`GET`/`PUT
 > /api/settings/<key>`). The restricted-groups lists can be read there but not written: changes go
 > through the **Access** tab so grant cleanup happens correctly.
+:::
 
 ## Troubleshooting
 
+:::details Symptoms and causes
 | Symptom | Why |
 |---|---|
 | Test connection just says it failed | It never gives a detailed reason. Save the source (or wait for the scheduled sync) and check the source's own sync error: an Xtream login reports "authentication refused by the provider" on a bad username or password, a playlist URL reports a plain connection or timeout error. |
@@ -195,6 +213,7 @@ recording feature: nothing is kept once it leaves that buffer.
 | "has reached its limit of N simultaneous streams" | The source's max simultaneous streams cap is fully used, including connections that closed in the last few seconds (the slot release delay). Wait, close another stream from that source, or raise the limit. |
 | "Unable to start this channel." | Either the channel has no stream left, or every stream it has failed to open. Check the **Health** tab: each source's sync status, then channels sorted worst first with their failure count, and per stream, when it last worked and its last error. |
 | No **Live TV** entry after a successful sync | New channels start disabled. Enable them on the **Channels** tab. |
+:::
 
 ## See also
 

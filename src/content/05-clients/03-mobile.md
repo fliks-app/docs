@@ -3,6 +3,9 @@ title: Mobile
 description: Native iOS and Android apps for phones and tablets, with offline downloads and background download support.
 ---
 
+> [!SUMMARY]
+> Install Fliks from the App Store (iOS 16.6+) or the Play Store (Android 6+). Both apps play through the platform's native player and support offline downloads.
+
 ## Getting it
 
 | Platform | Where | Minimum version |
@@ -37,8 +40,10 @@ fails. Declining doesn't disable downloads, you just won't see those notificatio
 
 ## Store listings
 
+:::details Store listings
 Screenshots for both stores live in the project repository (`store/android`, `store/ios`),
 covering the home screen, library browsing, genres, a title's detail page, the player and search.
+:::
 
 ## See also
 

@@ -3,6 +3,9 @@ title: Samsung TV (Tizen)
 description: A native Tizen app for Samsung TVs, played through the TV's own hardware video path.
 ---
 
+> [!SUMMARY]
+> Fliks is not on Samsung Apps yet: download the `.wgt` from the GitHub release and sideload it with Tizen Studio (developer mode on the TV, a certificate for that TV). Tizen 5.5 or newer.
+
 ## Compatibility
 
 Fliks targets **Tizen 5.5 and newer**, which covers Samsung TVs from 2020 onwards.
@@ -34,6 +37,7 @@ A few playback limitations are specific to this platform:
 
 ## Sideloading
 
+:::details Sideloading steps
 Sideloading a Tizen app is a developer-facing process: it needs Tizen Studio's command-line tools,
 a Samsung account, and a Samsung author and distributor certificate pair tied to that specific
 TV's device ID.
@@ -62,11 +66,14 @@ Because the distributor certificate is bound to one TV's device ID, a package yo
 only installs on the TV you signed it for; you can't share a signed package between TVs.
 
 ![A movie detail page on a Samsung TV](/img/clients-tizen-detail.jpg)
+:::
 
 ## Store assets
 
+:::details Store assets
 Store screenshots (home, movie detail, playback, library) live under `store/samsung/` in the
 project repository, for anyone preparing a store submission.
+:::
 
 ## See also
 

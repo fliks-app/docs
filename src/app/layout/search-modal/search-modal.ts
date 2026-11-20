@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { LucideCornerDownLeft, LucideSearch } from '@lucide/angular';
 import { SearchOverlayService } from '../../core/search-overlay';
 import { SearchService } from '../../core/search';
-import type { SearchEntry } from '../../../generated/search-index';
+import type { SearchResult } from '../../core/search';
 
 @Component({
   selector: 'app-search-modal',
@@ -19,7 +19,7 @@ export class SearchModal {
   private readonly router = inject(Router);
 
   protected readonly query = signal('');
-  protected readonly results = signal<SearchEntry[]>([]);
+  protected readonly results = signal<SearchResult[]>([]);
   protected readonly active = signal(0);
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly input = viewChild.required<ElementRef<HTMLInputElement>>('input');
@@ -31,7 +31,14 @@ export class SearchModal {
       const dialog = this.dialog().nativeElement;
       if (this.overlay.isOpen() && !dialog.open) {
         dialog.showModal();
-        this.input().nativeElement.select();
+        const input = this.input().nativeElement;
+        const seed = this.overlay.seed();
+        if (seed) {
+          input.value = seed;
+          void this.onInput(seed);
+        }
+        input.select();
+        if (seed) input.setSelectionRange(seed.length, seed.length);
       }
       if (!this.overlay.isOpen() && dialog.open) dialog.close();
     });

@@ -3,20 +3,23 @@ title: Playback quality
 description: See why a playback stuttered, by client, with a verdict, a per-playback timeline and a cause for every stall.
 ---
 
-## Where it is
+> [!SUMMARY]
+> Find out why a playback stuttered: **Settings > Playback quality** gives each playback a verdict (network, device, server or healthy) and a timeline of every freeze. Open **Sessions**, filter by user or device, click the playback. Admins only, and nothing leaves your server.
 
-**Settings > Playback quality**, the fourth entry of the **System** section in the admin sidebar
-(`/admin/playback-quality`). It needs the same access as the rest of the admin area. Every Fliks
-client reports how each playback goes, the server works out what went wrong, and this page shows
-the result. A live version of the verdict also sits on each card of the
-[Transcoding dashboard](/administration/transcoding-dashboard).
+## Find out why a playback stuttered
 
-Nothing here is sent anywhere else: see [What is stored](#what-is-stored).
+Open **Settings > Playback quality** (the **System** section of the admin sidebar). Every Fliks client reports how each playback goes, and the server works out what went wrong.
 
-## Verdicts
+1. Pick the last **7** or **30** days above the tabs. A bar shows the share of each verdict.
+2. On **Sessions** (the default tab), filter by verdict, user and device, then click the row of the playback.
+3. Read the verdict and the **Stalls by cause** table in the detail window. The **Timeline** shows each freeze with a plain sentence for its cause.
+4. To find the device that struggles (a TV with HEVC, say), open **Devices**: playbacks, share with stalls, dropped frames and hardware decoding per device and player.
 
-Each playback gets one verdict, with a confidence (**high**, or **low confidence** when the evidence
-is thin):
+**Export JSON** in the detail saves the whole playback as `playback-quality-<id>.json`, handy for a bug report. A live version of the verdict also sits on each card of the [Transcoding dashboard](/administration/transcoding-dashboard).
+
+## What the verdicts mean
+
+Each playback gets one verdict, with a confidence (**high**, or **low confidence** when the evidence is thin). A quality switch, reload or recovery starts a new session inside a viewing, but they are merged into one playback.
 
 | Verdict | Meaning |
 |---|---|
@@ -27,27 +30,9 @@ is thin):
 | Error | Playback failed with an error and never recovered. |
 | Not enough data | Under a minute of playback time recorded, so nothing to judge. |
 
-The verdict is worked out from the whole viewing: a quality switch, reload or recovery starts a new
-session inside it, but they are merged into one playback.
+A **Server** verdict often points to a slow software encode: see [Hardware acceleration](/install/hardware-acceleration).
 
-## The three tabs
-
-Above the tabs, a bar shows the share of each verdict over the last **7** or **30** days; the
-period also applies to the Sessions and Devices tabs.
-
-**Sessions** is the default. The list can be filtered by verdict, user and device. Each row is one
-playback (verdict, user, device, media, start time, number of stalls); click it for the detail.
-
-**Devices** groups the same data per device and player engine, with the number of playbacks, the
-share that had stalls, the average share of dropped frames, the share decoded by hardware, and the
-most frequent verdict ("Not enough data" only when the device has no other). It is the place to
-spot the TV that struggles with HEVC. Every browser version of "Chrome on Linux" counts as one
-device.
-
-**Settings** holds the two settings (see [Settings](#settings)).
-
-## A playback in detail
-
+:::details What is in a playback's detail window
 The detail window opens with a summary: playback time, device and app version, player engine,
 quality and resolution, video codec, measured throughput, video bitrate, dropped frames, decoder
 (hardware or software), whether CMCD arrived, and the number of sessions. Under it:
@@ -68,8 +53,9 @@ quality and resolution, video codec, measured throughput, video bitrate, dropped
 **Export JSON** saves the whole detail (sessions, events, causes) as
 `playback-quality-<id>.json`, handy for a bug report.
 
-## How a stall's cause is decided
+:::
 
+:::details How a stall's cause is decided
 Fliks looks at each stall as it is recorded, and the first rule that matches wins:
 
 1. **Server production too slow.** While the player was frozen, the server took more than 1 second to
@@ -113,8 +99,9 @@ The playback's verdict then follows these rules, first match wins:
 A software decoder at 720p or above is added as a hint on a Device verdict. It is never a verdict by
 itself, and below 720p it is normal.
 
-## What each client can report
+:::
 
+:::details What each client can report (and what CMCD is)
 Clients send a sample with every heartbeat. Errors, quality switches and reloads are sent right
 away; stalls and recoveries go out with the next heartbeat. What clients can measure differs:
 
@@ -140,17 +127,18 @@ HLS segments Fliks serves (transcode, remux and Live TV), never in Direct Play. 
 whether CMCD arrived. A client that says it sends CMCD while the server sees none is flagged as a
 hint, never a verdict.
 
+:::
+
 ## Settings
 
-On the **Settings** tab:
+On the **Settings** tab of the page:
 
 | Setting | Effect | Default |
 |---|---|---|
 | Collect playback quality from clients | Off: nothing new is recorded, and the live verdict leaves the transcoding dashboard (a few minutes later for a playback already running). | On |
 | Retention (days) | Sessions last seen longer ago than this are deleted every night at 4:00, server time. | 30 |
 
-## What is stored
-
+:::details What is stored
 Everything is kept in your own Fliks database and never leaves your server. Fliks sends no playback
 data to any third party, and the app and server run no analytics service for it.
 
@@ -171,6 +159,8 @@ data to any third party, and the app and server run no analytics service for it.
 Rows are deleted after the retention period, 30 days unless you change it, and a playback's events
 go with it. Turning collection off stops new recording, and rows already stored stay until they
 expire.
+
+:::
 
 ## See also
 

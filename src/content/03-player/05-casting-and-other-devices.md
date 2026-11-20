@@ -3,7 +3,10 @@ title: Casting and other devices
 description: Use the Play on another device button in the player to cast to a Chromecast or hand playback over to another Fliks screen.
 ---
 
-## The Play on another device button
+> [!SUMMARY]
+> Press the cast icon at the top right of the player and pick a Chromecast or another Fliks screen signed in to your account. Choose **This device** to bring playback back.
+
+## Play on a TV, Chromecast or another screen
 
 The button with the cast icon, at the top right of the player, lists every screen that can play
 what you are watching.

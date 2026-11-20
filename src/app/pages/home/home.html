@@ -1,32 +1,61 @@
-<div class="mx-auto max-w-5xl px-4 py-16 sm:px-8 sm:py-24">
-  <div class="mb-16 text-center">
+<div class="mx-auto max-w-5xl px-4 py-10 sm:px-8 sm:py-16">
+  <div class="mb-10 text-center">
     <h1 class="mb-6"><img [src]="logo()" alt="Fliks documentation" class="mx-auto h-10 w-auto sm:h-12" /></h1>
-    <p class="text-lg text-base-content/70 sm:text-xl">Everything you need to install, run and extend Fliks.</p>
-    @if (sections.length) {
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <a [routerLink]="sections[0].pages[0].url" class="btn btn-primary">Get started</a>
-        @if (developersUrl) {
-          <a [routerLink]="developersUrl" class="btn btn-outline">Build a plugin</a>
-        }
-      </div>
+    <label class="input input-lg mx-auto flex w-full max-w-2xl items-center gap-3">
+      <svg lucideSearch class="h-5 w-5 shrink-0 text-base-content/60" aria-hidden="true"></svg>
+      <input
+        #q
+        type="search"
+        class="grow"
+        placeholder="Search the docs"
+        aria-label="Search the documentation"
+        autocomplete="off"
+        spellcheck="false"
+        (input)="search(q)"
+        (keydown.enter)="search(q)"
+      />
+      <kbd class="kbd kbd-sm hidden sm:inline-flex">Ctrl K</kbd>
+    </label>
+  </div>
+
+  <div class="mb-14 grid gap-4 md:grid-cols-3">
+    @for (door of doors; track door.url) {
+      <a
+        [routerLink]="door.url"
+        class="card border border-base-300 bg-base-200/40 p-6 transition-colors hover:border-primary hover:bg-base-200/70"
+      >
+        <h2 class="mb-1 text-xl font-semibold">{{ door.title }} <span aria-hidden="true">&rarr;</span></h2>
+        <p class="text-base-content/70">{{ door.text }}</p>
+      </a>
     }
   </div>
 
-  @if (sections.length) {
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      @for (section of sections; track section.slug) {
-        <a
-          [routerLink]="section.pages[0].url"
-          class="card border border-base-300 bg-base-200/40 p-5 transition-colors hover:border-primary hover:bg-base-200/70"
-        >
-          <h2 class="mb-1 font-semibold">{{ section.title }}</h2>
-          <p class="line-clamp-2 text-sm text-base-content/70">
-            {{ section.pages[0].description || (section.pages.length + ' pages') }}
-          </p>
-        </a>
-      }
-    </div>
-  } @else {
-    <p class="text-center text-base-content/60">Documentation is on its way.</p>
+  <h2 class="mb-4 text-2xl font-semibold">Worth discovering</h2>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    @for (f of features; track f.url) {
+      <a
+        [routerLink]="f.url"
+        class="card overflow-hidden border border-base-300 bg-base-200/40 transition-colors hover:border-primary"
+      >
+        <img
+          [src]="'img/' + f.img"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          class="aspect-video w-full border-b border-base-300 bg-base-300 object-cover object-top"
+        />
+        <div class="p-4">
+          <h3 class="font-semibold">{{ f.title }}</h3>
+          <p class="text-sm text-base-content/70">{{ f.text }}</p>
+        </div>
+      </a>
+    }
+  </div>
+
+  @if (developersUrl) {
+    <p class="mt-12 text-center text-sm text-base-content/60">
+      Building on Fliks?
+      <a [routerLink]="developersUrl" class="link link-hover font-medium">Developer documentation</a>
+    </p>
   }
 </div>

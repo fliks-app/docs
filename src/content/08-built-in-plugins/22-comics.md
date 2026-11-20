@@ -3,6 +3,9 @@ title: Comics
 description: Comic Vine and Metron, the catalogue plugins that identify comic volumes and issues. Both need your own key.
 ---
 
+> [!SUMMARY]
+> Fliks reads comic files without any plugin. For covers, publishers and issue lists, install Comic Vine or Metron from the catalogue and paste your own key or token: until then comics are not matched.
+
 Fliks reads `.cbz`, `.cb7`, `.cbr` and `.pdf` files without any plugin. To get covers, publishers,
 descriptions and issue lists, install a comics provider. Both are catalogue plugins: install them
 from **Administration > Advanced > Plugins > Search for a plugin**, then configure them from

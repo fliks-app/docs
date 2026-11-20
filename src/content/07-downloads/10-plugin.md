@@ -3,44 +3,32 @@ title: Download plugin
 description: What the Download plugin does, what to set up before it can fetch anything, and how a request turns into a file in your library.
 ---
 
-Fliks knows what you have and what you want. It does not go and get it. The **Download** plugin does:
-it searches your indexers, picks the best release for the title, hands it to your download client and
-files the finished download into your library. Without it, Fliks never downloads anything, and
-[requests](/features/requests) stay approved forever.
+> [!SUMMARY]
+> The Download plugin turns an approved request into a file in your library. Set up four things in order: quality and language profiles on the library, one indexer, one download client, then install the plugin from **Settings > Plugins**. If you only watch files you already have, you need none of this.
 
-The plugin has its own pages in this section:
-
-- [Indexers](/built-in-plugins/download-indexers): where releases are searched, imported from Prowlarr or Jackett, or added by hand.
-- [Download clients](/built-in-plugins/download-clients): qBittorrent and Transmission, and the shared folder.
-- [Settings](/built-in-plugins/download-settings): every option, with defaults.
-- [Troubleshooting](/built-in-plugins/download-troubleshooting): what each error means.
+The **Download** plugin searches your indexers, picks the best release, hands it to your download client and files the finished download into your library. Without it Fliks never downloads anything and [requests](/downloads/requests) stay approved forever. Its pages: [Indexers](/downloads/indexers), [Download clients](/downloads/download-clients), [Settings](/downloads/plugin-settings), [Troubleshooting](/downloads/troubleshooting).
 
 ## What you need first
 
 Downloading needs four things, in this order. Skipping one is the usual reason nothing happens.
 
 1. **A quality profile and a language profile on the library.** They tell Fliks what a good release is.
-   Create them in [Quality profiles](/administration/quality-profiles) and
+   Create them in [Quality profiles](/downloads/quality-profiles) and
    [Language profiles](/administration/language-profiles), then pick them as the defaults of the library
    in **Settings > Libraries**, open the library, **Default quality profile** and **Default language profile**.
    A title with no quality profile is never searched.
 2. **At least one indexer.** An indexer is a Torznab search endpoint. Most people let Prowlarr or Jackett
-   hold their trackers and import them. See [Indexers](/built-in-plugins/download-indexers).
+   hold their trackers and import them. See [Indexers](/downloads/indexers).
 3. **A download client**, qBittorrent or Transmission, that Fliks can reach and that saves its files
-   in a folder Fliks can also read. See [Download clients](/built-in-plugins/download-clients).
-4. **Titles to fetch.** Either someone makes a [request](/features/requests) and an admin approves it, or
+   in a folder Fliks can also read. See [Download clients](/downloads/download-clients).
+4. **Titles to fetch.** Either someone makes a [request](/downloads/requests) and an admin approves it, or
    an admin adds a title to the library as monitored. See [How a request becomes a file](#how-a-request-becomes-a-file).
 
 ![The library settings: Default quality profile and Default language profile](/img/download-library-profiles.webp)
 
-> [!NOTE]
-> If you only watch files you already have, you do not need any of this.
+## Install the plugin
 
-## Installing the plugin
-
-The plugin comes from the catalogue. Installing needs the admin account. The consent step lists what it
-can do, including **Reach services on the local network**: that is what lets it talk to a download
-client or an indexer on your own network. A plugin cannot reach private addresses without it.
+Install it from the catalogue with the admin account. Keep **Reach services on the local network** in the consent list: without it the plugin cannot reach a client or indexer on your network.
 
 :::steps
 ![Open **Settings > Advanced > Plugins** and click **Search for a plugin**](/img/download-install-1-plugins.webp)
@@ -48,18 +36,18 @@ client or an indexer on your own network. A plugin cannot reach private addresse
 ![Read the consent list, then click **Install**](/img/download-install-3-consent.webp)
 :::
 
-For trust badges, sources and the Docker volume the plugin writes through, see
-[Plugins](/administration/plugins).
+Trust badges and sources are in [Plugins](/administration/plugins).
 
 ## Where everything is
 
+:::details Where every page of the plugin is
 | What | Where |
 |---|---|
 | The plugin card, **Disable**, **Export**, **Uninstall** | **Settings > Advanced > Plugins**, click **Download** |
 | General options | **Settings > Download > General** |
 | Indexers and indexer sources | **Settings > Download > Indexers** and **Indexer sources** |
 | Download clients | **Settings > Download > Download clients** |
-| Provider order and search interval | **Settings > Downloads**, see [Downloads](/administration/downloads) |
+| Provider order and search interval | **Settings > Downloads**, see [Downloads](/downloads/automatic-search) |
 | Requests, queue, history, calendar | **Downloads** section of the main sidebar |
 | Search for a release yourself | A title's **⋮** menu, **Files** |
 
@@ -69,6 +57,7 @@ For trust badges, sources and the Docker volume the plugin writes through, see
 > The **Downloads** item under **Library** in the main sidebar is something else: it lists the
 > copies you saved for offline playback, see [Offline downloads](/features/offline-downloads).
 > The plugin's queue and history are under the **Downloads** heading, a few lines below.
+:::
 
 The **Queue** and **History** pages need the **Download releases** permission.
 
@@ -86,25 +75,27 @@ the plugin does the rest. The slider uses the plugin with one indexer and one qB
 ![The request reads **Downloaded** and the title is in the library](/img/download-flow-6-downloaded.webp)
 :::
 
+:::details What happens behind each step of a download
 What happens behind each step:
 
 1. **Approval.** The title is added to the library if it was not there, set to monitored, and searched at once.
    An admin who clicks **Add** on a title gets the same result without a request.
 2. **Search.** Every indexer allowed for automatic searches is asked in parallel. Each answer is scored
    against the quality profile and the language profile of the title, the
-   [quality definitions](/administration/quality-definitions) and the
-   [custom formats](/administration/custom-formats).
+   [quality definitions](/downloads/quality-definitions) and the
+   [custom formats](/downloads/custom-formats).
 3. **Grab.** The best release that is not refused is sent to the download client, filed under the client's
    category. The plugin fetches the `.torrent` file itself, so the client does not need to reach the indexer.
 4. **Download.** The **Queue** follows the client. States: **Queued**, **Downloading**, **Stalled**, **Paused**.
 5. **Import.** Once a minute the plugin looks for finished downloads. It **copies** the file into the library,
    renamed with your [naming](/administration/general-and-naming) rules, and the state becomes **Importing**
    then **Imported**. The original stays in the client's folder until it has seeded long enough, see
-   [Settings](/built-in-plugins/download-settings#seeding).
+   [Settings](/downloads/plugin-settings#seeding).
 6. **Done.** The request changes to **Downloaded** and the title can be played.
 
 If nothing suitable exists yet, the title stays monitored. The plugin searches again on a schedule and reads
 the indexers' new releases every 15 minutes, so a release that appears later is still caught.
+:::
 
 ## Searching yourself
 
@@ -117,6 +108,7 @@ You do not need to wait for the automatic search. On any title in a library you 
 ![The **Available releases** list: one tab per indexer, the download button on the right](/img/download-search-4-releases.webp)
 :::
 
+:::details Manual search: warnings, automatic search and tracking status
 - **Search manually** lists every release the indexers returned, with quality, size and seeders. A warning icon means
   the release does not fit the profile, for example **Not an upgrade on the file on disk**. You can still
   download it after a confirmation.
@@ -124,9 +116,11 @@ You do not need to wait for the automatic search. On any title in a library you 
 - **View tracking status** tells whether the title still needs a file, for example **Cutoff met** once the file reaches the profile's cutoff.
 
 A series has the same search on its seasons and episodes.
+:::
 
 ## Scheduled jobs
 
+:::details The four scheduled jobs
 The plugin registers four jobs. You can see and run them in **Settings > Advanced > Scheduled tasks**.
 
 | Job | When | What it does |
@@ -137,15 +131,18 @@ The plugin registers four jobs. You can see and run them in **Settings > Advance
 | **Clean seeded downloads** | Every 5 minutes | Removes finished torrents that reached their seeding limit. |
 
 The **Search for missing downloads** task that looks for every missing title belongs to Fliks itself, see
-[Downloads](/administration/downloads).
+[Downloads](/downloads/automatic-search).
+:::
 
 ## What it supports
 
+:::details What the plugin supports
 | | Supported |
 |---|---|
 | Indexers | Torznab. Prowlarr and Jackett can feed the list. Usenet is not supported. |
 | Download clients | qBittorrent and Transmission (3.0 or later). |
 | Media | Movies, series, books and audiobooks, comics, albums. |
+:::
 
 ## Disabling and uninstalling
 

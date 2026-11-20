@@ -3,22 +3,10 @@ title: Books and audiobooks
 description: OpenLibrary, BnF, Google Books, Audible, Audnexus, Project Gutenberg and LibriVox: what each provides and how they rank.
 ---
 
-Books and audiobooks use five bundled providers, and two catalogue plugins that also add free
-content. None of the bundled ones needs an account or a key. Their settings are not needed, so they
-have no **Configure** link on **Settings > Metadata**.
+> [!SUMMARY]
+> Five bundled providers identify books and audiobooks with no account or key, and two catalogue plugins (Project Gutenberg, LibriVox) add free ebooks and audiobooks. Nothing to configure; install a catalogue plugin only if you want the free content.
 
-## Provider order
-
-On a fresh install, **Books** on **Settings > Metadata** is ordered: Audible, Audnexus, BnF, Google
-Books, OpenLibrary. Fliks asks them in that order. Move the one whose data you trust most to the
-top.
-
-Practical consequences:
-
-- Audible and Audnexus describe **audio** editions. Put OpenLibrary, BnF or Google Books first if
-  your library is mostly ebooks and paper-style metadata matters more.
-- Audnexus has no search: it needs an ASIN to answer.
-- A provider that answers with a rate limit is skipped, and the next one is asked.
+Bundled providers need no account or key, so they have no **Configure** link. Fliks asks **Books** providers in the order set on **Settings > Metadata** ([Metadata settings](/administration/metadata-settings)): Audible and Audnexus describe audio editions, so put OpenLibrary, BnF or Google Books first for an ebook-heavy library. Audnexus has no search (it needs an ASIN), and a provider that answers with a rate limit is skipped.
 
 ## OpenLibrary
 

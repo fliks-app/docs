@@ -3,13 +3,16 @@ title: TrueNAS
 description: Install Fliks from the TrueNAS SCALE community app catalog.
 ---
 
-## What you get
+> [!SUMMARY]
+> Install the **fliks** app from the Community train, set a database password and add your media under **Additional Storage**, then open port `30485`.
 
+:::details What the app is
 Fliks is published in the TrueNAS SCALE **community** train as the app **fliks**. Under the
 hood it's the same Docker image described in [Docker](/install/docker), packaged as a TrueNAS
 app: the catalog handles the Compose file, the volumes and the PostgreSQL sidecar for you.
+:::
 
-## Install
+## Install the TrueNAS app
 
 In the TrueNAS SCALE UI, go to **Apps > Discover Apps**, make sure the **Community** train is
 enabled, and search for **fliks**. On the install form:
@@ -26,12 +29,12 @@ enabled, and search for **fliks**. On the install form:
 > from Fliks), and can change between TrueNAS SCALE versions. Check the current form in your
 > TrueNAS instance rather than assuming it matches an older screenshot.
 
-## Container user
-
+:::details Permissions on your media dataset
 The app runs Fliks as the TrueNAS `apps` user (uid and gid `568`, changeable under **User and
 Group Configuration**). A permissions step at install time makes the storage it creates writable
 for that user. For a host path you add under **Additional Storage**, make sure that user can read
 it (and write it, if you want downloads or saved subtitles there).
+:::
 
 ## Hardware transcoding
 

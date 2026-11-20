@@ -3,9 +3,12 @@ title: The music player
 description: The mini player and the full-screen player for music, the queue, shuffle and repeat, Play next, lyrics, playing on another device, and the phone layout.
 ---
 
+> [!SUMMARY]
+> Press **Play** on an album and the mini player appears; click it for the full player with the queue, shuffle, repeat and lyrics. Add tracks with **Play next** in a track's menu.
+
 Music has its own player. It is not the video player: it never takes over the whole screen, and it keeps playing while you browse. For video, see [The player](/player/overview).
 
-## Start playing
+## Play music
 
 Open an album and press **Play**, or press a track. Playing a track starts the album from that track and queues the tracks after it. **Shuffle** plays the album in random order. The library side (albums, artists, tracks) is in [Music](/features/music).
 
@@ -13,8 +16,7 @@ On an album page, press **Play**. The mini player appears at the bottom right: c
 
 ![Press Play, then open the mini player](/img/music-start-1-anim.webp)
 
-## The mini player
-
+:::details How the mini player works
 The mini player stays at the bottom of the screen on every page, so you can keep browsing. It shows the cover, the title, the artist and a thin progress line, with a **Pause** / **Play** button. Its colour follows the cover.
 
 ![The mini player at the bottom right of the window](/img/music-player-mini.webp)
@@ -22,6 +24,7 @@ The mini player stays at the bottom of the screen on every page, so you can keep
 - Click it to open the full player.
 - On a phone it spans the width of the screen. Swipe its title left or right to go to the next or the previous track.
 - Close the player with **Close the player** in the full player's menu.
+:::
 
 ## The full player
 
@@ -29,6 +32,7 @@ The full player is a window on a computer and a sheet that slides up on a phone.
 
 ![The full player on a computer](/img/music-player-full.webp)
 
+:::details Every control of the full player
 | Control | What it does |
 |---|---|
 | Seek bar | Click or drag to jump. The time played is on the left, the time left on the right. |
@@ -41,6 +45,7 @@ The full player is a window on a computer and a sheet that slides up on a phone.
 | **Favourite** | The heart. Adds the track to your favourites. |
 | **Lyrics** | Shows the lyrics. Only present when the track has lyrics. See [Lyrics](#lyrics). |
 | **This device** | Plays on another screen. See [Play on another device](#play-on-another-device). |
+:::
 
 ![The shuffle and repeat buttons, both switched on](/img/music-controls.webp)
 
@@ -52,14 +57,14 @@ On a computer, **Fullscreen** fills the screen with the cover, the queue and the
 
 ![The fullscreen music player](/img/music-fullscreen.webp)
 
-### The menu
-
+:::details What the player menu holds
 The three dots at the top right open a short menu.
 
 - **Edit lyrics**, when you are allowed to. See [Lyrics](#lyrics).
 - **Volume levelling** sets **Off**, **Track** or **Album** (ReplayGain), so that quiet and loud tracks sound alike. **Level adjustment** raises or lowers the result in dB.
 - **Listen together** starts a [watch party](/features/watch-party) for music.
 - **Close the player** stops playback and removes the mini player.
+:::
 
 ## The queue
 
@@ -74,7 +79,7 @@ The queue lists the track playing and the ones coming next. On a computer it sit
 
 There is no button to empty the queue in one go. Close the player to drop it.
 
-### Play next and Add to queue
+### Play a track next or add it to the queue
 
 The menu of a track on an album page adds it to the queue without interrupting what plays.
 
@@ -100,8 +105,7 @@ Press **Lyrics** in the full player to show them next to the cover. The choice i
 
 A track without lyrics has no **Lyrics** button.
 
-### Where lyrics come from
-
+:::details Where lyrics come from
 Fliks looks for lyrics when it imports a track:
 
 1. A file with the same name as the track, next to it: `.ttml`, `.elrc`, `.lrc`, `.srt` or `.txt` (`01 - Night Bus.lrc` for `01 - Night Bus.mp3`). Add a language to the name for another language (`01 - Night Bus.fr.lrc`). An administrator can change the list in [Settings > Lyrics](/administration/lyrics-and-karaoke).
@@ -109,6 +113,7 @@ Fliks looks for lyrics when it imports a track:
 3. A lyrics provider (LRCLIB), when **Automatic fetch** is on.
 
 A file added after the track was imported is not picked up by a new scan. Add the lyrics from the player instead, as below.
+:::
 
 ### Add or fix lyrics
 
@@ -127,9 +132,9 @@ Once saved, the lyrics show right away.
 - **Make default** chooses which version is shown first. **Delete** removes the shown version.
 - **Tap to sync** times plain lyrics yourself: play the track and press **Stamp line** as each line starts. **Back** undoes the last stamp.
 
-### Karaoke
-
+:::details Karaoke
 When an administrator has turned karaoke on and a track has been prepared, a **Sing** button appears in the player. It offers a score per singer, a **Difficulty**, a change of **Key** and a **Sound mix** (**Original**, **Guide** or **Instrumental**). Set it up in [Settings > Karaoke](/administration/lyrics-and-karaoke#karaoke).
+:::
 
 ## Play on another device
 
@@ -151,9 +156,9 @@ The phone layout has the same controls, laid out for a thumb.
 2. The full player has the cover, the seek bar and the controls. The buttons at the bottom are the device button, **Lyrics** and the queue.
 3. The queue sheet opens from the queue button. Pull it down to close it.
 
-### Lock screen and background
-
+:::details Lock screen and background
 In a browser, Fliks tells the system what is playing: title, artist, album and cover. The notification area, the lock screen and the keyboard's media keys then show them and control play, pause, previous, next and seeking. The mobile apps play music through the platform's own audio. See [Mobile](/clients/mobile).
+:::
 
 ## See also
 

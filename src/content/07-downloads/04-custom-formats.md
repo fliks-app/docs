@@ -3,12 +3,10 @@ title: Custom formats
 description: Add or subtract points on releases that match a pattern, such as a codec, a release group or a word in the name, and test them on a release title.
 ---
 
-> [!NOTE]
-> **Do you need this?** Only if you use [requests](/features/requests) or the download plugin, and only if you want
-> to push the choice between releases of the same quality one way or the other. Quality profiles work without a
-> single custom format. Playback never reads them.
+> [!SUMMARY]
+> A custom format is a named test with a score, such as "HEVC: +50", added to releases that match it, to tell apart releases of the same quality. Optional: quality profiles work without any. Create one in **Settings > Custom formats**, then check it with **Test a release title**.
 
-## What it is for
+## What a custom format does
 
 Quality alone does not tell two releases apart: two 1080p WEB-DL files can be a good encode and a bad one.
 A custom format is a named test with a score. When a release matches it, the score is added to that release.
@@ -22,15 +20,11 @@ Typical uses:
 - Refuse a flaw outright: give it a very negative score and keep the profile's minimum at 0.
 
 Custom formats are global. They are not attached to a profile. Every format scores every release, and each
-[quality profile](/administration/quality-profiles) only sets the minimum total it accepts.
+[quality profile](/downloads/quality-profiles) only sets the minimum total it accepts.
 
-## Where to find it
+## Create a custom format
 
-**Settings > Custom formats**, in the **Media** section of the admin sidebar. You need the **Settings access**
-permission. The page lists your formats (name, score, number of conditions) and, under them, the **Test a
-release title** box.
-
-## Create a format
+**Settings > Custom formats** (**Media** section, **Settings access** permission).
 
 :::steps
 ![Open **Settings > Custom formats**](/img/admin-cformat-1-sidebar.webp)
@@ -44,8 +38,7 @@ release title** box.
 To change a format, click its name. To remove it, click **Delete** and confirm. Deleting a format removes its
 points from future searches at once.
 
-## Every field
-
+:::details Every field and every condition type
 | Field | What it does |
 |---|---|
 | **Name** | A label, required. |
@@ -69,9 +62,9 @@ Each condition row has a type, an operator and a value.
 Separators are ignored when comparing a value, so `web-dl`, `WEB.DL` and `webdl` are the same.
 
 On a row, **Always required** appears once the format has two or more conditions of the same type.
+:::
 
-## How conditions combine
-
+:::details How conditions combine
 Read the hint at the bottom of the form: conditions of the same type are alternatives, different types must all
 hold.
 
@@ -82,15 +75,16 @@ hold.
   every release that does not have the property.
 - A pattern that does not compile matches nothing, so a negated one holds. The form prevents saving such a
   pattern.
+:::
 
-## How scores are used
-
+:::details How scores are used
 1. Every format that matches a release adds its score. The total is the release's custom format score, shown
    in the **CF** column of the manual release list.
 2. If the total is under the profile's **Minimum custom format score**, the release is refused. With the default of 0,
    only a negative total refuses.
 3. Among releases of the same quality, a higher total sorts first. The score never lifts a lower quality above a
    higher one: quality rank is compared first.
+:::
 
 ## Test a release title
 
@@ -98,8 +92,7 @@ Under the list, **Test a release title** shows exactly how your formats read a t
 **Treat as freeleech** if you want to test a flag, and click **Test**. The table lists every format with **Yes** or
 **No** and the points it adds. Use it before relying on a new format: it runs the same matcher as a real search.
 
-## Worked example: prefer HEVC, avoid hardcoded subtitles
-
+:::details Worked example: prefer HEVC, avoid hardcoded subtitles
 1. Create **Prefer HEVC** with score `50` and one condition: **Video codec** is `h265`.
 2. Create **Avoid hardcoded subtitles** with score `-200` and one condition: **Release name (regex)** contains
    `\b(HC|hardsub|hardcoded)\b`.
@@ -107,9 +100,10 @@ Under the list, **Test a release title** shows exactly how your formats read a t
 
 With the minimum score left at 0, that release is refused. A plain `Movie.Name.2024.1080p.WEB-DL.x265-GROUP` totals
 +50 and ranks above an equal release without HEVC.
+:::
 
 ## How it connects
 
-- [Quality profiles](/administration/quality-profiles) set the minimum total a release must reach.
-- [Quality definitions](/administration/quality-definitions) are checked separately, on size.
-- [Downloads](/administration/downloads) runs the automatic searches that score releases.
+- [Quality profiles](/downloads/quality-profiles) set the minimum total a release must reach.
+- [Quality definitions](/downloads/quality-definitions) are checked separately, on size.
+- [Downloads](/downloads/automatic-search) runs the automatic searches that score releases.

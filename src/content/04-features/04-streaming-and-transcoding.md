@@ -3,6 +3,9 @@ title: Streaming and transcoding
 description: How Fliks decides between sending a file untouched, repackaging it, or converting it on the fly, and how hardware acceleration is used.
 ---
 
+> [!SUMMARY]
+> Fliks sends the file untouched when your device can play it, repackages it when only the container or audio is incompatible, and transcodes otherwise. Pick a quality in the player; admins tune the rest in **Settings > Streaming**.
+
 ## The three ways a file can be sent
 
 ![The player with its quality and stats overlay](/img/player.webp)
@@ -48,6 +51,7 @@ mode is active; picking one equal to the source resolution can still Direct Play
 
 ## HDR and Dolby Vision
 
+:::details How HDR is kept or tone-mapped
 An HDR10, HLG or Dolby Vision source is kept as HDR whenever it can be: a Direct Play or a
 Direct Stream never touches it, and a transcode keeps it in HDR when your device supports HDR and
 the server has an encoder that writes HDR correctly. H.264 has no HDR output at all. In hardware, HDR output is
@@ -62,17 +66,21 @@ SDR tone-map curve**, `hable` by default) are admin settings under **Settings > 
 desktop client with its own tone-mapping capability (see [Desktop](/clients/desktop)) can ask the
 server to skip this step and hand over the untouched HDR stream instead. A viewer can also force
 the SDR conversion for their own device with **Disable HDR** in **App settings > Playback**.
+:::
 
 ## Audio
 
+:::details How audio tracks are grouped
 An HLS stream carries one output codec per group of audio tracks: if every track in a title already
 shares one codec your device supports, they're all copied as-is; otherwise Fliks converts every
 track in the group to a single common codec (preferring a surround format when the source and your
 device both support it, falling back to AAC otherwise). Each audio track is still its own
 switchable rendition, so changing the audio track mid-playback doesn't restart the video.
+:::
 
 ## Hardware acceleration
 
+:::details Hardware acceleration and GPU choice
 Encoding happens on whichever hardware path the server finds at startup (Intel QSV, VAAPI, NVIDIA
 NVENC, AMD AMF or Apple VideoToolbox, depending on the platform), with a plain CPU encode as the
 fallback if nothing else works. [Hardware acceleration](/install/hardware-acceleration) has the
@@ -82,9 +90,11 @@ GPU.
 On a server with more than one GPU, **Settings > Streaming > GPU device** picks which one handles
 transcoding (the picker only appears once a second GPU is actually detected); left on **Automatic**,
 Fliks uses the first one it finds.
+:::
 
 ## Admin settings
 
+:::details Every Settings > Streaming option
 **Settings > Streaming**, in addition to the tone-mapping and GPU settings above:
 
 | Setting | What it does |
@@ -96,6 +106,7 @@ Fliks uses the first one it finds.
 | Encoding preset (QSV / libx264) | Speed-versus-quality tradeoff (default `faster`); has no effect on VAAPI or NVENC |
 | Concurrent background jobs | How many FFmpeg jobs can run at once for scans, thumbnails and marker detection. Empty means the CPUs minus one, at least one. Playback never waits for a slot: it starts at once and background jobs pause for it |
 | Cache size limit / retention | How much disk the transcode cache may use, and how long a cached segment is kept, with a manual "Clear cache" action |
+:::
 
 ## See also
 

@@ -3,11 +3,15 @@ title: Music
 description: Add an albums library, browse artists, albums and tracks, use the player, lyrics, smart playlists and karaoke.
 ---
 
-## Creating a music library
+> [!SUMMARY]
+> Switch on **Albums** when adding a library, scan, then open an album and press **Play**. The mini player, queue and lyrics are in [The music player](/player/music-player).
+
+## Add a music library
 
 In **Settings > Libraries > Add a library**, switch on **Albums** under **Media types**, then set
 the folders and scan as described in [Libraries](/features/libraries#creating-a-library).
 
+:::details What the scan reads and the naming settings
 - Fliks reads your tags: the folder is the album, disc folders are merged, and MusicBrainz ids
   decide the match. Cover art and artist images come through plugins installed with Fliks.
 - **Settings > Naming** has an **Albums** section (artist folder, album folder, track file and
@@ -15,6 +19,7 @@ the folders and scan as described in [Libraries](/features/libraries#creating-a-
   `{track:00} - {Track Title}`. The scan toggle **Move / rename according to the naming rules**
   applies, see the [warning in Libraries](/features/libraries#finding-media-in-the-folder).
 - **Settings > Lyrics** and **Settings > Karaoke** (administrators) configure those two features.
+:::
 
 ## Browsing
 
@@ -58,11 +63,13 @@ Rule-based playlists and M3U import are described in [Playlists](/features/playl
 
 ## Karaoke
 
+:::details How karaoke works
 An administrator turns karaoke on in **Settings > Karaoke** and installs a voice separation
 model. Any track can then be prepared (voice separated, lyrics aligned word by word) and sung
 with a score per singer, a **Difficulty** from **Easy** to **Hard**, a change of **Key** and a
 **Sound mix** of **Original**, **Guide** or **Instrumental**. Phones can act as microphones in a
 [watch party](/features/watch-party).
+:::
 
 ## See also
 

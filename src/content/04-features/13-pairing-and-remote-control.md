@@ -3,6 +3,9 @@ title: Pairing and remote control
 description: Sign in on a TV without typing a password, and send a title from one of your devices to play on another.
 ---
 
+> [!SUMMARY]
+> Sign in on a TV with Quick Connect: choose it on the TV, then type the code it shows in your phone's **Login requests** page. To play on another of your devices, pick it in the device picker.
+
 ## Pairing a TV or new device (Quick Connect)
 
 Typing a password on a TV remote is slow, so Fliks lets a new device get signed in through a device
@@ -37,6 +40,7 @@ type their username and a new device isn't offered Quick Connect, since it start
 3. Check the device name, its operating system, its network address and how long ago it asked, then
    press **Approve**, or **Cancel** to back out.
 
+:::details Request limits and what the pending list shows
 The rows listed under the code field are the pending requests that name your account. They only
 carry **Deny**: there's no one-tap approval, so the code is always typed. An unnamed request
 (started without choosing an account) is not listed there; it is approved by its code alone.
@@ -44,12 +48,13 @@ carry **Deny**: there's no one-tap approval, so the code is always typed. An unn
 The request expires after 10 minutes if nobody responds, and a device can only have a few requests
 pending at once. A wrong code is refused, and after several wrong codes in a short time the page
 asks you to try again later. A request meant for one account can only be approved by that account.
+:::
 
 > [!NOTE]
 > On the Apple TV app specifically, the waiting screen also shows a QR code that opens the phone's
 > **Login requests** page. It doesn't carry the code: you still type it.
 
-## Remote control: playing on another device
+## Play on another of your devices (remote control)
 
 Once signed in on more than one device, any of them can tell another one to start playing
 something instead of playing it locally, similar to sending a track to a speaker. This is separate
@@ -88,12 +93,13 @@ Administrators can additionally see and control every device that's currently on
 needing a grant. Other people's devices appear in the device picker next to your own as long as
 **Show household devices** is on (the default); turn it off to list only your own devices.
 
-### Limits
+:::details Limits of remote control
 
 - A TV can be controlled, but it never controls another device itself: the device picker doesn't
   appear on TV clients.
 - A device can't be used to control itself.
 - A command not delivered within a few seconds of being sent is dropped rather than applied late.
+:::
 
 ## See also
 

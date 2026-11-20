@@ -3,12 +3,10 @@ title: Lyrics and karaoke settings
 description: The two administration pages for music, Settings > Lyrics and Settings > Karaoke, field by field, with the models you can download.
 ---
 
-Both pages only matter if you have an albums library. Nobody needs them to play music: lyrics found in the files are shown as is. How listeners use lyrics and karaoke is in [Music](/features/music).
+> [!SUMMARY]
+> Both pages matter only with an albums library, and nobody needs them to play music. **Settings > Lyrics** fetches lyrics for new tracks (on by default). **Settings > Karaoke** separates voices and times lyrics word by word: turn it on, then download one voice separation model. Heavy on CPU and disk.
 
-| Page | What it is for | Needed? |
-|---|---|---|
-| **Settings > Lyrics** | Fetch lyrics from providers for every new track, and write them next to the track. | Optional. |
-| **Settings > Karaoke** | Separate the voice from a track, sync lyrics word by word and manage the models doing it. | Optional, heavy on CPU and disk. |
+How listeners use lyrics and karaoke is in [Music](/features/music).
 
 ## Lyrics
 
@@ -16,21 +14,24 @@ Open **Settings > Lyrics** (under **Media**). Switch **Automatic fetch** on or o
 
 ![Opening Settings > Lyrics and the Automatic fetch switch](/img/admin-lyrics-2-fetch-anim.webp)
 
+
+:::details Every Lyrics field
 ![The Lyrics page](/img/admin-lyrics-page.webp)
 
-### Fetching
+#### Fetching
 
 | Field | Default | What it does |
 |---|---|---|
 | **Automatic fetch** | On | Asks the providers for the lyrics of every new track once its album is imported. |
 | **Provider order** | Installed providers, in install order | Each lyrics provider (LRCLIB ships with the server) has a switch and arrows or a drag handle to reorder. When two providers offer a result of equal quality, the first one wins. With none installed the page says **No lyrics provider is installed.** |
 
-### Files
+#### Files
 
 | Field | Default | What it does |
 |---|---|---|
 | **Write fetched lyrics next to the track** | Off | Saves synced lyrics, from a provider or typed by a user, as an `.lrc` or `.elrc` file next to the audio file. An existing sidecar is never overwritten. |
 | **Sidecar extensions** | Empty | The extensions read next to a track, in order, separated by commas. Empty uses `ttml, elrc, lrc, srt, txt`. |
+:::
 
 ## Karaoke
 
@@ -42,9 +43,9 @@ Open **Settings > Lyrics** (under **Media**). Switch **Automatic fetch** on or o
 
 Karaoke needs a voice separation model before any track can be prepared. Until then the switch does nothing visible.
 
+:::details Every Karaoke setting
 ![The Karaoke settings card](/img/admin-karaoke-settings.webp)
 
-### Settings
 
 | Field | Default | What it does |
 |---|---|---|
@@ -58,9 +59,10 @@ Karaoke needs a voice separation model before any track can be prepared. Until t
 | **Verified acceleration** | None ticked | The accelerations the engine detected, to tick for the background pass. If none: **No GPU acceleration detected, karaoke runs on the CPU.** **Setup details** explains the runtime libraries each GPU backend needs. OpenVINO is flagged as giving wrong results on Intel GPUs. |
 
 On Windows a **Windows ML runtime** block appears when that runtime is missing on the server's machine: it links to Microsoft's download page and has a **Check again** button. The server uses the runtime after its next restart.
+:::
 
-### Models
 
+:::details Karaoke models: what each does and how to manage them
 ![The models list](/img/admin-karaoke-models.webp)
 
 The top of the list shows **Inference runtime**, **Acceleration**, **Speech recogniser** and **Key change** (each **Present** or **Absent**), and a **Disk space** bar with the models folder. Models are grouped by job. On the demo server nothing is installed yet.
@@ -75,6 +77,7 @@ The top of the list shows **Inference runtime**, **Acceleration**, **Speech reco
 Each row shows its size, the **Licence** and a **Model card** link, and a **Download** button. A download asks you to accept the model's licence. Once installed the row offers update and delete; deleting a model also deletes the stems made with it. Folders that belong to no model are listed as **Unknown folders** and can be deleted to free space.
 
 Once models are installed, a **Languages of the library** section lets you pick the sync model per language. If the model changed since a track was synced, a line offers **Re-sync**; generated lyrics are replaced, lyrics you reviewed stay. A re-sync is refused when too little of the lyrics is found in the vocals, and the previous sync is kept.
+:::
 
 ## See also
 

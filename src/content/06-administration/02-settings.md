@@ -1,144 +1,111 @@
 ---
 title: Settings
-description: A map of the admin area, section by section, with where each setting actually lives.
+description: An index of every Administration page, grouped as in the sidebar, with a link to the page that explains it.
 ---
+
+> [!SUMMARY]
+> Open the user menu, then **Administration**. Find the group below, then the row, then follow its link. If you only watch your own files, read [Which areas you can ignore](#which-areas-you-can-ignore).
 
 ## Getting there
 
-Open the user menu and pick **Administration**. The entry only shows up when your account has
-`settings.access`, and never on a TV: the admin area isn't available there. These docs write
-paths into it as **Settings > ...**, for example **Settings > Users**.
+The entry only shows with the `settings.access` permission, and never on a TV. These docs write paths as **Settings > Users**. Some items need a permission (Users needs `users.manage`, Roles `roles.manage`, Subtitle activity `media.read`), and a plugin that adds pages gets its own group at the bottom.
 
 ![The General page, with the administration sidebar on the left](/img/admin-general.webp)
 
-The sidebar is organized into fixed sections, listed below in the order it shows them. A few items only appear once you hold the matching
-permission (Users needs `users.manage`, Roles needs `roles.manage`, Subtitle activity needs
-`media.read`), and an installed plugin that adds pages gets its own section at the bottom, named
-after the plugin.
-
 ## System
 
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [Statistics](/administration/system#statistics) | The admin landing page: counts of movies, series and pending requests, disk space per library path, and subtitle totals (downloaded, failed, synced). |
-| [System](/administration/system#system) | Three tabs. **Status**: server health (app version, uptime, database, running plugins), running and queued activity, **Trigger a task** (metadata refresh, subtitle search, download search, rescan, sprites, intros, backup and more), the task history, and a **Restart server** button when Fliks runs under a supervisor that can bring it back (Docker, for instance). **Backups**: see [Backups](/administration/backups). **Logs**: see [Logs and troubleshooting](/administration/logs-and-troubleshooting). |
-| [Video activity](/administration/system#video-activity) | The live [Transcoding dashboard](/administration/transcoding-dashboard): who's watching what, and on which hardware path. |
-| [Optimization queue](/administration/optimization#the-queue) | Running, waiting, failed and finished [optimization](#optimization) jobs, with an estimated end time and a **Pause the queue** button. |
-| Playback quality | [Why a client stuttered](/administration/playback-quality): a verdict per playback, a timeline with the cause of each stall, and the two settings that turn collection on and set how long it is kept. |
+| [Statistics](/administration/system#statistics) | Counts, disk space per library path and subtitle totals. |
+| [System](/administration/system#system) | Server health, tasks to trigger, task history, [backups](/administration/backups) and [logs](/administration/logs-and-troubleshooting). |
+| [Video activity](/administration/system#video-activity) | Who is watching what, on which hardware path: the [Transcoding dashboard](/administration/transcoding-dashboard). |
+| [Optimization queue](/administration/optimization#the-queue) | Running, waiting and finished optimization jobs. |
+| [Playback quality](/administration/playback-quality) | Why a client stuttered, with a verdict per playback. |
 
 ## Settings
 
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [General](/administration/general-and-naming#general) | The setup checklist; the server name shown in client apps; the **Public address** Chromecast uses to reach streams (set it when Fliks sits behind a [reverse proxy](/install/reverse-proxy), leave it empty otherwise); the **Login user list**, which sets [who sees the account list on the login screen](/administration/users-and-permissions#login-user-list); metadata language and region; and import automation (detect intros and credits, generate seek thumbnails). |
-| Libraries | Add, edit or remove libraries: a disk path, a media type, and who can access it. See [Libraries](/features/libraries). |
-| [Naming](/administration/general-and-naming#naming) | The templates used to rename a file once it is grabbed and imported, per media type (movies, series, books, albums), with a live preview and clickable tokens. Only used when Fliks renames files. |
-| [Outgoing mail](/administration/general-and-naming#outgoing-mail) | The SMTP account (host, port, security, sender, login, size limit) the server uses to send books to e-readers, with **Send test**. Leave it empty if you don't use that. |
-
-The checklist at the top of **General** lists the usual first steps. Each row has a **Configure**
-button, and the cross dismisses a step you don't need. See
-[Which areas you can ignore](#which-areas-you-can-ignore).
+| [General](/administration/general-and-naming#general) | Setup checklist, server name, **Public address**, login user list, metadata language, import automation. |
+| [Libraries](/features/libraries) | Add, edit or remove libraries and who can access them. |
+| [Naming](/administration/general-and-naming#naming) | Templates used to rename imported files. |
+| [Outgoing mail](/administration/general-and-naming#outgoing-mail) | The SMTP account used to send books to e-readers. |
 
 ## Media
 
-Despite the name, most of this group is about *getting* media, not playing it.
-
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [Quality profiles](/administration/quality-profiles) | Which qualities are accepted when a release is downloaded, how they rank, the cutoff and whether upgrades are allowed. |
-| [Language profiles](/administration/language-profiles) | Accepted audio languages for downloads, and the subtitle languages to fetch automatically. The subtitle part also drives [automatic subtitle search](/features/subtitles). |
-| [Quality definitions](/administration/quality-definitions) | Size limits per quality, in MB per hour of content, shared by every profile. |
-| [Custom formats](/administration/custom-formats) | Score points added to releases that match a pattern, applied to every profile, with a **Test a release title** box. |
-| [Auto-approval](/administration/auto-approval) | Rules that approve a [request](/features/requests) without an administrator. |
-| [Cleanup](/administration/library-cleanup) | Rules that flag and remove stale media. Destructive: read the page first. |
-| [Metadata](/administration/metadata-settings) | The metadata providers installed (TMDB, TheTVDB, MusicBrainz, book sources and so on), the namespace each one owns, a **Configure** link where the provider has settings, and the order in which providers are asked for each kind of media. See [Metadata](/features/metadata). |
-| [Downloads](/administration/downloads) | Provider order for automatic downloads and how often missing and upgradable titles are searched (default every 6 hours). Needs the download plugin, otherwise it says no download provider is installed. |
-| [Lyrics](/administration/lyrics-and-karaoke#lyrics) | For music libraries: fetch lyrics automatically for every new track, the provider order, and whether fetched lyrics are written next to the track as `.lrc` files. |
-| [Karaoke](/administration/lyrics-and-karaoke#karaoke) | For music libraries: separate the voice from a track and sync lyrics word by word. Holds the on/off switch, background preparation, a disk budget, the models to download and the detected acceleration. |
-
-Quality profiles, quality definitions, custom formats, auto-approval and Downloads only matter once you
-have installed the download plugin; language profiles also drive automatic subtitle search. See
-[Requests](/features/requests) for how they fit together.
+| [Quality profiles](/downloads/quality-profiles) | Accepted qualities, ranking, cutoff and upgrades for downloads. |
+| [Language profiles](/administration/language-profiles) | Audio and subtitle languages wanted, for downloads and subtitle search. |
+| [Quality definitions](/downloads/quality-definitions) | Size limits per quality, shared by every profile. |
+| [Custom formats](/downloads/custom-formats) | Score points for releases that match a pattern. |
+| [Auto-approval](/downloads/auto-approval) | Rules that approve [requests](/downloads/requests) automatically. |
+| [Cleanup](/administration/library-cleanup) | Rules that flag and remove stale media. Destructive. |
+| [Metadata](/administration/metadata-settings) | Metadata providers and the order they are asked in. |
+| [Downloads](/downloads/automatic-search) | Provider order and how often missing titles are searched. Needs the [Download plugin](/downloads/plugin). |
+| [Lyrics](/administration/lyrics-and-karaoke#lyrics) | Automatic lyrics for music libraries. |
+| [Karaoke](/administration/lyrics-and-karaoke#karaoke) | Voice separation and word-by-word lyrics. |
 
 ## Subtitles
 
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [Subtitles](/administration/subtitle-settings#subtitles) | Automatic subtitle search: search and upgrade intervals, minimum score, OCR of image tracks, automatic sync, and cleaning (hearing-impaired tags, custom exclusions). The **Statistics** and **Search** tabs show totals and a manual search. |
-| [Subtitle providers](/administration/subtitle-settings#subtitle-providers) | Where subtitles come from: **Download providers** (OpenSubtitles, Subdl and others) and **Subtitle translation** engines. A walkthrough is in [First-day admin tasks](/administration/first-day-tasks#enable-a-subtitle-provider). |
-| [Subtitle activity](/administration/subtitle-settings#subtitle-activity) | A log of what was found, downloaded, upgraded, synced or translated, and what failed, filterable by status and language. |
+| [Subtitles](/administration/subtitle-settings#subtitles) | Automatic search, minimum score, OCR, sync and cleaning. |
+| [Subtitle providers](/administration/subtitle-settings#subtitle-providers) | Where subtitles and translations come from. See the [walkthrough](/administration/first-day-tasks#enable-a-subtitle-provider). |
+| [Subtitle activity](/administration/subtitle-settings#subtitle-activity) | Log of what was found, synced, translated or failed. |
 
-How subtitles are found and managed per title is in [Subtitles](/features/subtitles).
+How subtitles work per title is on [Subtitles](/features/subtitles).
 
 ## Live TV
 
-**Live TV** is one page with tabs for Sources, Channels, Guide, Settings, Access and Health,
-fully covered in [Live TV](/features/live-tv).
+| Entry | What it is |
+|---|---|
+| [Live TV](/features/live-tv) | One page with tabs: Sources, Channels, Guide, Settings, Access, Health. |
 
 ## Integrations
 
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [Media servers](/administration/integrations#media-servers) | Notify another self-hosted media server pointed at the same files to refresh its own library when Fliks adds something new. |
-| [Imports](/administration/integrations#imports) | A manual disk import (a folder outside any library is identified, then copied or moved into a library), plus importing watch history, requests or a library from the other tools you are migrating away from. |
-| [Notifications](/administration/integrations#notifications) | Send events to Discord, Slack, ntfy, Gotify or a webhook. A walkthrough is in [First-day admin tasks](/administration/first-day-tasks#set-up-notifications). |
+| [Media servers](/administration/integrations#media-servers) | Tell another media server to refresh when Fliks adds something. |
+| [Imports](/administration/integrations#imports) | Disk import and migration from other tools. |
+| [Notifications](/administration/integrations#notifications) | Discord, Slack, ntfy, Gotify or a webhook. See the [walkthrough](/administration/first-day-tasks#set-up-notifications). |
 
 ## Users
 
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| Users | Accounts and their library access. See [Users and permissions](/administration/users-and-permissions). |
-| Roles | Named sets of permissions. See [Roles and permissions](/administration/users-and-permissions#roles-and-permissions). |
-| Single sign-on | Administrators only: OpenID Connect providers and the sign-in policy. See [Single sign-on](/administration/single-sign-on). |
+| [Users](/administration/users-and-permissions) | Accounts and their library access. |
+| [Roles](/administration/users-and-permissions#roles-and-permissions) | Named sets of permissions. |
+| [Single sign-on](/administration/single-sign-on) | OpenID Connect providers and the sign-in policy. |
 
 ## Optimization
 
-Optimization re-encodes or remuxes library files in the background so they play without a
-transcode, following a profile that describes the wanted state of the files. Each library picks
-one profile, or none. The three pages are:
-
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [Profiles](/administration/optimization#profiles) | Create a profile from a preset. Fliks only creates a job when a file differs from it. |
-| [Settings](/administration/optimization#settings) | A time window, what happens to the originals (move to the trash, keep as `.orig`, delete), trash retention, periodic re-verification, and how devices are shared with playback. |
-| [Workers](/administration/optimization#workers) | The local engine, plus remote workers that connect with a token (shown once, stored hashed). Needs the **Public address** set on **General**. |
-
-The queue itself is **System > Optimization queue**. These pages only show on servers recent
-enough to support optimization.
+| [Profiles](/administration/optimization#profiles) | The wanted state of files, created from a preset. |
+| [Settings](/administration/optimization#settings) | Time window, what happens to originals, trash retention. |
+| [Workers](/administration/optimization#workers) | The local engine and remote workers. |
 
 ## Advanced
 
-![The Scheduled tasks list, with the interval, last run and next run of each job](/img/scheduled-tasks.webp)
-
-| Page | What it's for |
+| Entry | What it is |
 |---|---|
-| [Scheduled tasks](/administration/system#scheduled-tasks) | Every background job Fliks runs on a timer (the daily backup, metadata refresh, plugin source refresh, subtitle search and upgrade, library cleanup, Live TV refreshes, plus any job a plugin adds), with its schedule, last and next run, and a play button to run it now. Schedules are fixed; they can't be edited here. |
-| [Streaming](/administration/streaming-settings) | Segment duration, encoding preset, automatic black bar cropping, HDR to SDR tone-mapping curve, transcode cache size limit and retention (plus a **Clear cache** button), concurrent background FFmpeg jobs, and what the "Auto" quality does (Direct Play first, or adaptive streaming first). See [Hardware acceleration](/install/hardware-acceleration) and [Streaming and transcoding](/features/streaming-and-transcoding). |
-| [Remote engine](/administration/remote-engine) | Point the server at a streaming engine running elsewhere (URL, token, path mappings) and **Test connection**. Leave it empty to use the engine that ships with the server. |
-| Plugins | Install, update and configure plugins. See [Plugins](/administration/plugins). |
+| [Scheduled tasks](/administration/system#scheduled-tasks) | Every timed background job, with last and next run and a button to run it now. |
+| [Streaming](/administration/streaming-settings) | Segments, preset, tone-mapping, transcode cache and "Auto" quality. See also [Hardware acceleration](/install/hardware-acceleration). |
+| [Remote engine](/administration/remote-engine) | Use a streaming engine running elsewhere. |
+| [Plugins](/administration/plugins) | Install, update and configure plugins. |
 
 ## Which areas you can ignore
 
-If you only want to watch files you already have, you can leave the download side alone:
+If you only watch files you already have:
 
-- **Quality profiles, Quality definitions, Custom formats, Auto-approval and Downloads** only
-  steer what is downloaded and who may request it. Nothing in playback reads them, and
-  Downloads is empty until you install the download plugin.
-- **Language profiles** only matter for downloads and for automatic subtitle search. Skip them if you
-  add your own subtitle files or don't use subtitles.
-- **Naming** only applies when Fliks renames or moves a file: a download, or a folder scan with
-  **Move / rename according to the naming rules** ticked (it is by default). Untick it to leave
-  your files where they are.
-- **Cleanup** does nothing until you write a rule.
-- **Optimization**, **Karaoke**, **Lyrics**, **Outgoing mail**, **Remote engine** and **Media
-  servers** are opt-in.
+- **Quality profiles, Quality definitions, Custom formats, Auto-approval and Downloads** only steer downloads and requests. See [Do you need downloads?](/downloads/overview).
+- **Language profiles** matter for downloads and automatic subtitle search only.
+- **Naming** applies only when Fliks renames or moves a file. Untick **Move / rename according to the naming rules** on a folder scan to keep your files where they are.
+- **Cleanup**, **Optimization**, **Karaoke**, **Lyrics**, **Outgoing mail**, **Remote engine** and **Media servers** are opt-in.
 
-The setup checklist on **General** still lists a quality profile and an auto-approval rule. Dismiss
-them with the cross. What you do need: a [library](/features/libraries), a metadata provider
-(installed by default), and optionally a subtitle provider and a non-admin
-[user](/administration/first-day-tasks#create-a-user-and-give-access-to-a-library).
+The setup checklist on **General** still lists a quality profile and an auto-approval rule: dismiss them with the cross. What you do need is a [library](/features/libraries), a metadata provider (installed by default), and optionally a subtitle provider and a non-admin [user](/administration/first-day-tasks#create-a-user-and-give-access-to-a-library).
 
 ## See also
 
-- [Environment variables](/install/environment-variables) for the handful of values that are set
-  before the server starts, rather than from this area.
+- [Environment variables](/install/environment-variables) for values set before the server starts.

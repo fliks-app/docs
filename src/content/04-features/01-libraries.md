@@ -3,6 +3,9 @@ title: Libraries
 description: Create libraries, scan folders, fix a wrong match, and find every action on a library grid and a title page.
 ---
 
+> [!SUMMARY]
+> Create a library in **Settings > Libraries > Add a library**: name it, pick who sees it, set the folder and scan. New files are picked up by **Scan the folder** on the library's **Medias** tab. Fix a wrong match from the title's **More** menu > **Metadata** > **Identify**.
+
 ## Creating a library
 
 Open **Administration** from your user menu, then **Settings > Libraries > Add a library**. The
@@ -20,6 +23,7 @@ path; nothing is created until the last click.
 ![Click **Scan the folder** to review what Fliks finds before creating the library](/img/libraries-path-7-scan.webp)
 :::
 
+:::details Every field of the library form
 | Field | What it's for |
 |---|---|
 | Name | Shown everywhere the library appears; must be unique |
@@ -30,6 +34,7 @@ path; nothing is created until the last click.
 | Default quality / language profile | Stored with the library; the add screen still asks you to pick both for each title |
 | Root path | The folder on the server where this library's files live |
 | Additional folders | Optional extra folders for the same library (see [Folders](#folders)) |
+:::
 
 A folder can only belong to one library at a time, and a folder can't contain or sit inside
 another library folder.
@@ -43,19 +48,21 @@ background and you're free to keep using the app while it works.
 > Deleting a library (**Delete**, top right of the library's page) removes its titles from Fliks,
 > but never touches the files on disk.
 
-## Managing an existing library
+## Change a library's settings
 
 **Settings > Libraries** lists every library. Click **View** on one to open its page, which has
 four tabs.
 
 ![The Medias tab of a library page in Settings > Libraries](/img/libraries-admin-medias.webp)
 
+:::details What each tab of the library page holds
 | Tab | What it holds |
 |---|---|
 | **General** | Name, icon, color, media types, metadata provider, language and region, default profiles. A library with books also gets the audiobook merge options. Click **Save** to apply. |
 | **Users** | Who can see this library. Administrators always see every library. |
 | **Optimization** | The optimization profile applied to new files of this library, and the **Allow renaming** switch for it. Existing files are never processed on their own. |
 | **Medias** | The folders of the library, the **Scan the folder** button and the list of every title in it, with a search box. |
+:::
 
 ### Folders
 
@@ -77,8 +84,9 @@ above the title list. It filters the list down to them. Open one to
 
 Fliks doesn't watch a library's folder continuously in the background. To pick up new titles you've
 added since the last scan, open **Settings > Libraries**, pick the library, and click **Scan the
-folder** on its **Medias** tab. The scan:
+folder** on its **Medias** tab.
 
+:::details What the scan looks for
 - Walks the root folder and up to three levels of subfolders for video files (`.mkv`, `.mp4`,
   `.avi`, `.mov`, `.ts`, `.m2ts`, `.wmv`, `.flv`, `.webm`, `.m4v`, `.mpg`, `.mpeg`, `.ogm`,
   `.mts`). `.vob` is left out: every part of a DVD folder would become its own item.
@@ -92,6 +100,7 @@ folder** on its **Medias** tab. The scan:
   hint.
 - Picks up a matching poster, fanart or logo image already sitting next to the files, for anything
   you choose to add without an online metadata match.
+:::
 
 For each group found, you can **Link** it to a search result, or **Add without metadata** if you'd
 rather not wait, with **Link all** and **Import all automatically** to handle everything at once.
@@ -141,7 +150,7 @@ results. A confirmed match re-fetches everything for that title in the backgroun
 See [Metadata](/features/metadata) for what a title page shows once it is matched, and
 [the detail page actions](#the-title-page-and-its-actions) for the other entries of that menu.
 
-## Who can see what
+## Choose who can see a library
 
 By default, only administrators see every library. Give another user access to a specific library
 from that library's **Users** tab, or from the user's own **Library access** field in **Settings >
@@ -155,6 +164,7 @@ without affecting what anyone else sees.
 **Settings > Naming** controls how files are renamed and organized when Fliks moves them into
 place, with a preview of the result:
 
+:::details Default formats and tokens
 | Setting | Default |
 |---|---|
 | Movie file format | `{Movie Title} ({Release Year}) {Quality Full}` |
@@ -171,28 +181,17 @@ are replaced with the matching value for that file (click a token on
 the page to insert it); a token with nothing to fill it in is simply removed. **Settings > General**
 also has a **Companion file extensions** list (subtitles, `.nfo`, artwork) for files that are
 carried along with a video file whenever it moves.
+:::
 
 ![The Settings > Naming page, with a preview under each format](/img/libraries-admin-naming.webp)
 
 ## Quality and language profiles
 
-Two kinds of profile decide what Fliks considers an acceptable copy of a title, and what to search
-for if you're using the download plugin. You pick both for each title when you add or request it
-(the first profile of each kind is preselected), rather than once for the whole library.
+:::details Quality and language profiles
+A **quality profile** (**Settings > Quality profiles**) and a **language profile** (**Settings > Language profiles**) decide which copy of a title is acceptable and which subtitle languages to search for. You pick both for each title when you add or request it, not once per library. See [Quality profiles](/downloads/quality-profiles) and [how automatic subtitle search uses the language profile](/features/subtitles#how-automatic-search-works).
+:::
 
-**Quality profile** (**Settings > Quality profiles**): which qualities are acceptable (ranked in a
-fixed order) and a cutoff to stop looking once it's reached. Turning on **Allow upgrades** keeps
-Fliks looking for a strictly better release up to that cutoff, even for a title you already have;
-**Upgrade only if the resolution increases** limits that to actual resolution jumps rather than
-swapping one source for another at the same resolution. Details in
-[Quality profiles](/administration/quality-profiles).
-
-**Language profile** (**Settings > Language profiles**): which audio languages you want, and which
-subtitle languages to search for automatically, each with its own forced and hearing-impaired
-preference. See [Subtitles](/features/subtitles#how-automatic-search-works) for how this profile is
-used.
-
-## Browsing a library
+## Browse and filter a library
 
 Click a library in the left sidebar (under **LIBRARY**) to open its grid.
 
@@ -211,11 +210,13 @@ Click a library in the left sidebar (under **LIBRARY**) to open its grid.
 
 ![The Filters panel of a library](/img/library-filters.webp)
 
+:::details Available filters
 | Filter | Choices |
 |---|---|
 | Monitoring | Monitored, Not monitored |
 | Watched | Watched, Not watched |
 | Status | Downloaded, Missing, Cutoff unmet |
+:::
 
 Your last-used filters are remembered per library. Each card has a check mark (mark as watched)
 and, on hover, an **Actions** button.
@@ -242,6 +243,7 @@ The **More** menu holds everything else.
 
 ![The More menu of a title page](/img/media-detail-menu.webp)
 
+:::details Every entry of the More menu
 | Entry | What it does |
 |---|---|
 | **Recommend** | Send the title to another member, see [Sharing and social](/features/sharing-and-social) |
@@ -254,6 +256,7 @@ The **More** menu holds everything else.
 | **Metadata** | **Identify** and **Refresh metadata** (administrators) |
 | **Files** | Entries added by plugins, such as **View tracking status** |
 | **Advanced** | **Analyze**, **Profiles**, **Library**, monitoring and **Delete from library** |
+:::
 
 ![The Metadata submenu](/img/media-detail-menu-metadata.webp)
 
@@ -262,6 +265,7 @@ the title from its provider right away.
 
 ![The Advanced submenu](/img/media-detail-menu-advanced.webp)
 
+:::details What the Advanced entries do
 | Advanced entry | What it does |
 |---|---|
 | **Analyze** | Re-run work on every file of the title: **Rescan files** (full re-scan, includes the other three), **Regenerate sprites** (seek thumbnails), **Recompute crop** (black bars), **Rebuild subtitle cache** |
@@ -269,6 +273,7 @@ the title from its provider right away.
 | **Library** | Move the title to another library and override the metadata provider for this title |
 | **Stop monitoring** / **Monitor** | Whether the download plugin keeps looking for a better copy |
 | **Delete from library** | Remove the title, see the warning below |
+:::
 
 ![The Analyze dialog](/img/media-analyze-dialog.webp)
 
@@ -292,11 +297,11 @@ artwork and other files that travel with the video; you can import or delete the
 Which entries you see depends on your permissions: **Identify**, **Refresh metadata**,
 **Analyze** and monitoring are for administrators, **Profiles** and **Library** need the edit
 permission, **Delete from library** needs the delete permission. A user who can only
-[request](/features/requests) titles sees **Request** instead.
+[request](/downloads/requests) titles sees **Request** instead.
 
 ## See also
 
 - [Metadata](/features/metadata) for how covers, cast and details are fetched and kept current.
 - [Subtitles](/features/subtitles) for how a language profile drives automatic subtitle search.
-- [Requests](/features/requests) for letting other users ask for a title instead of adding it
+- [Requests](/downloads/requests) for letting other users ask for a title instead of adding it
   themselves.

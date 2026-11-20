@@ -3,9 +3,12 @@ title: The player
 description: How to start a title, what every button of the player does, seek previews, skip intro, picture-in-picture and fullscreen.
 ---
 
-Playing video? Read on. Playing music has its own player: see [The music player](/player/music-player).
+> [!SUMMARY]
+> Open a title and press **Play**. Move the mouse or tap to show the controls; `f` goes fullscreen. Seek bar, skip intro, picture-in-picture and the phone layout are below.
 
-## Start a title
+Playing music? It has its own player: see [The music player](/player/music-player).
+
+## Start playing a title
 
 Open a title from your library, then press the **Play** button on its page. The same button reads
 **Resume at 5:05** when you stopped part way through, and a **From the beginning** button appears
@@ -35,6 +38,7 @@ a few seconds of playback and stay up while you are paused or a menu is open.
 
 ![The player with numbered markers on every control](/img/player-overview-annotated.webp)
 
+:::details What each numbered control does
 | # | Control | What it does |
 |---|---|---|
 | 1 | **Back** arrow | Leaves the player and returns to the page you came from. |
@@ -51,6 +55,7 @@ a few seconds of playback and stay up while you are paused or a menu is open.
 | 12 | **Speed** (`1x`) | Plays slower or faster, from 0.25x to 2x. |
 | 13 | **Settings** | Quality, fill screen, stats, and a shortcut back to the title page. |
 | 14 | **Fullscreen** | Fills the screen. Press it again to leave. |
+:::
 
 Two more buttons appear only when they apply:
 

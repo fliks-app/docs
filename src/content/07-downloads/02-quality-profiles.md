@@ -3,35 +3,12 @@ title: Quality profiles
 description: Choose which release qualities Fliks may download for a title, how they rank, and when it stops looking for something better.
 ---
 
-> [!NOTE]
-> **Do you need this?** Only if you use [requests](/features/requests) or the download plugin. A quality
-> profile steers which release gets downloaded and when an existing file is replaced by a better one.
-> Playback never reads it. If you only watch files you already have, skip this page.
+> [!SUMMARY]
+> A quality profile says which release qualities Fliks may download for a title and when it stops looking for something better. Needed only for [requests](/downloads/requests) or the Download plugin: playback never reads it. Create one in **Settings > Quality profiles**: a name, a cutoff, and the qualities you accept.
 
-## What it is for
+## Create a quality profile
 
-A quality profile answers three questions about a title that Fliks searches for:
-
-- Which qualities are acceptable (the ones you tick).
-- When to stop upgrading (the **Cutoff quality**).
-- Whether a copy you already have may be replaced by a better one (**Allow quality upgrades**).
-
-Every title that is searched for carries one quality profile. It is chosen when the title is added or
-requested, falls back to the library's default, and can be changed later from the title page
-(**Profiles**). See [Libraries](/features/libraries#quality-and-language-profiles). A title with no
-quality profile is never searched for.
-
-A quality profile belongs to one family: **Video**, **Audio** or **Text** (books and comics). The three
-tabs at the top of the page list the profiles of each family. Everything below is written for
-**Video**; the other families work the same way with their own qualities (see
-[Audio and text families](#audio-and-text-families)).
-
-## Where to find it
-
-**Settings > Quality profiles**, in the **Media** section of the admin sidebar. You need the
-**Settings access** permission.
-
-## Create a profile
+**Settings > Quality profiles** (**Media** section of the admin sidebar, **Settings access** permission). Every searched title carries one profile: chosen when it is added or requested, defaulting to the library's (see [Libraries](/features/libraries#quality-and-language-profiles)), changeable from the title page (**Profiles**). A title with no quality profile is never searched for.
 
 :::steps
 ![Open **Settings > Quality profiles** in the Media section of the sidebar](/img/admin-qprofile-1-sidebar.webp)
@@ -41,25 +18,28 @@ tabs at the top of the page list the profiles of each family. Everything below i
 ![The profile appears in the list, with its cutoff and the number of allowed qualities](/img/admin-qprofile-5-saved.webp)
 :::
 
-To change a profile, click its name in the list. To remove it, click **Delete** and confirm.
+To change a profile, click its name. To remove it, click **Delete** and confirm.
 
 > [!WARNING]
-> Deleting a profile that titles, libraries or requests still use does not fail. Those titles silently
-> lose their profile and are no longer searched for until you give them another one.
+> Deleting a profile that titles, libraries or requests still use does not fail. Those titles silently lose their profile and are no longer searched for until you give them another one.
 
-## Every field
+The three tabs at the top list the profiles of each family: **Video**, **Audio** or **Text** (books and comics). This page is written for **Video**.
 
+Tick at least one quality before saving, or nothing will ever match. The **Cutoff quality** is where Fliks stops upgrading once a file is on disk.
+
+:::details Every field of the form
 | Field | What it does |
 |---|---|
 | **Profile name** | The label shown in pickers. Required. Names do not have to be unique. |
-| **Cutoff quality** | The quality at which Fliks stops upgrading. New profiles start on the highest quality of the family. See [How the cutoff works](#how-the-cutoff-works). |
+| **Cutoff quality** | The quality at which Fliks stops upgrading. New profiles start on the highest quality of the family. See the fold **How the cutoff works** below. |
 | **Allow quality upgrades** | On by default. When on, a title that already has a file keeps being searched for a better release, up to the cutoff. When off, a title with a file is never searched again. |
 | **Upgrade only if the resolution increases** | Video only, shown when upgrades are on. Refuses an upgrade at the same resolution: a 1080p Bluray will not replace a 1080p WEB-DL. |
-| **Minimum custom format score** | Releases whose total [custom format](/administration/custom-formats) score is below this number are refused, not just ranked last. Default 0, which refuses only a negative total. |
+| **Minimum custom format score** | Releases whose total [custom format](/downloads/custom-formats) score is below this number are refused, not just ranked last. Default 0, which refuses only a negative total. |
 | **Qualities allowed for search** | One checkbox per quality, with its resolution and source on the right. A release whose quality is unticked is refused. A new profile starts with nothing ticked, so tick at least one quality before saving or nothing will ever match. |
 
-## How qualities rank
+:::
 
+:::details How qualities rank, and how a release is chosen
 There is no separate "preferred" setting. Qualities are ranked by a fixed built-in order, and among the
 releases a profile accepts, **the higher rank always wins**. You choose which qualities are allowed; Fliks
 picks the best allowed one.
@@ -79,15 +59,16 @@ custom format score, then by seeders and size.
 When Fliks looks at the releases found for a title, it:
 
 1. Refuses those that break a rule: quality not ticked, custom format score under the minimum, size outside
-   the [quality definition](/administration/quality-definitions), audio language not in the
+   the [quality definition](/downloads/quality-definitions), audio language not in the
    [language profile](/administration/language-profiles), blocklisted, wrong title, year or episode.
 2. Sorts the rest by rank, then by custom format score, then by swarm health and closeness to the
    preferred size.
 3. Takes the first one. Refused releases are sorted last and are never grabbed automatically; you can
    still grab one by hand after a confirmation ("Download anyway?").
 
-## How the cutoff works
+:::
 
+:::details How the cutoff works
 The cutoff only matters once a file is on disk.
 
 | Situation | What Fliks does |
@@ -103,8 +84,9 @@ only Bluray-1080p is an upgrade. Remux-1080p (72) is above the cutoff and refuse
 With **Upgrade only if the resolution increases** on, an upgrade must also have a strictly higher
 resolution than the best file on disk, so a 1080p file is only replaced by 2160p.
 
-## Worked example: up to 1080p Bluray
+:::
 
+:::details Worked example: up to 1080p Bluray
 Goal: good 1080p files, upgraded to Bluray when one appears, and no 4K.
 
 - **Profile name**: `Up to 1080p Bluray`.
@@ -124,8 +106,9 @@ What happens:
 To allow 4K but keep 1080p as the target for existing files, tick the 2160p qualities and leave the cutoff
 on Bluray-1080p. A first download then takes the 4K release if one exists. To keep 4K out, leave it unticked.
 
-## Audio and text families
+:::
 
+:::details Audio and text families
 The **Audio** and **Text** tabs use the same form with their own quality lists. Video-only options are
 hidden.
 
@@ -137,16 +120,18 @@ hidden.
 A book or album want that has no profile of its own accepts every quality of its family. Comics use
 their own family, which has no profile page.
 
+:::
+
 ## How it connects
 
-- **[Quality definitions](/administration/quality-definitions)** set the size limits per quality that
+- **[Quality definitions](/downloads/quality-definitions)** set the size limits per quality that
   every profile shares.
-- **[Custom formats](/administration/custom-formats)** add or subtract points on a release. They are global:
+- **[Custom formats](/downloads/custom-formats)** add or subtract points on a release. They are global:
   the scores apply to every profile, and each profile only sets the minimum it tolerates.
 - **[Language profiles](/administration/language-profiles)** are chosen alongside a quality profile and filter
   audio languages.
 - **[Libraries](/features/libraries#quality-and-language-profiles)** store a default quality profile used when none
   is chosen.
-- **[Requests](/features/requests)** carry a quality profile. A video request cannot be made without one.
-- **[Downloads](/administration/downloads)** decides how often titles are searched. The search itself is done by
+- **[Requests](/downloads/requests)** carry a quality profile. A video request cannot be made without one.
+- **[Downloads](/downloads/automatic-search)** decides how often titles are searched. The search itself is done by
   the download plugin.

@@ -3,39 +3,15 @@ title: Library cleanup
 description: Flag stale movies, series, seasons and episodes with rules, warn people before they leave, and remove them automatically or by hand.
 ---
 
+> [!SUMMARY]
+> Cleanup frees disk space by flagging titles nobody watches and, optionally, deleting them after a grace period. It does nothing until you write a rule, so a library that is a fixed collection of your own files can skip it. Create a rule with **Flag only**, check it with **Preview**, and only then think about deleting.
+
 > [!CAUTION]
-> Library cleanup **deletes files from your disk**. A rule with the action **Delete media and files** removes
-> the title's whole folder, with everything inside it, and nothing brings it back. Always run **Preview**
-> on a new rule, leave it on **Flag only** at first, and keep **Maximum removals per run** low. A rule does
-> nothing until you create one, and a rule with no **Grace period** never deletes anything by itself.
+> A rule with the action **Delete media and files** removes the title's whole folder from the disk and nothing brings it back. Always run **Preview** on a new rule, start with **Flag only**, and keep **Maximum removals per run** low. A rule with no **Grace period** never deletes anything by itself.
 
-> [!NOTE]
-> **Do you need this?** No. Cleanup is optional and does nothing until you write a rule. It is for servers that
-> fill up with titles nobody watches. If your library is a fixed collection of your own files, ignore this page.
+## Create a safe cleanup rule
 
-## What it does
-
-Library cleanup finds media nobody uses any more and removes it to free disk space. You write
-**rules**. Once a day Fliks checks every enabled rule and flags what matches. A flagged title
-shows up as "leaving soon" for everyone who can see it. When its grace period ends, the rule's
-action runs. You can keep a title, or remove it early, at any time.
-
-It is available from Fliks 5.1.
-
-## Where it is
-
-**Settings > Cleanup**, in the **Media** section of the admin sidebar. The page is titled
-**Library cleanup** and has three parts: the rule list, the **Flagged media** list, and
-**Recommendations**.
-
-Opening the page and changing rules needs the **Settings access** permission. **Delete now**, on
-a flagged title or a recommendation, also needs **Delete media**. Each list only shows titles in
-libraries the signed-in user can access. See
-[Users and permissions](/administration/users-and-permissions).
-
-## Create a rule
-
-This walk-through builds a safe rule: switched off, flag only, no grace period. It deletes nothing.
+Open **Settings > Cleanup** (**Media** section of the admin sidebar). You need the **Settings access** permission. This walk-through builds a rule that deletes nothing.
 
 :::steps
 ![Open **Settings > Cleanup**](/img/admin-cleanup-1-sidebar.webp)
@@ -47,16 +23,21 @@ This walk-through builds a safe rule: switched off, flag only, no grace period. 
 ![**Preview** lists every title the rule matches right now and the space it would free. Nothing is flagged or deleted](/img/admin-cleanup-7-preview.webp)
 :::
 
-A new rule starts **Active**, with the action **Delete media and files**, no grace period and the reminders `7, 1`.
-With no grace period nothing is ever removed automatically, but the moment you type a number of days, the
-first title flagged will be deleted when it ends. Change the action before you set a grace period.
+A new rule starts **Active**, with the action **Delete media and files**, no grace period and the reminders `7, 1`. With no grace period nothing is removed automatically, but once you type a number of days the first flagged title will be deleted when it ends. Change the action before you set a grace period.
 
-## Rules
+## What happens after you save
 
-A rule is a name, what it applies to, a set of criteria, an action, a grace period and reminders.
-**New rule** opens the editor. Click a rule's name to edit it. The **Active** switch turns it on
-or off. **Preview**, **Export** and **Delete** sit at the end of each row.
+Every day at 05:00 (server time zone) the **Clean up the library** task flags what the enabled rules match, then runs the action on flagged titles whose grace period has passed. A title that stops matching, for example because someone played it, loses its flag at the next run.
 
+- Everyone who can see the library gets a **Leaving soon** row on the home page and a badge on the title's page.
+- Connections set in **Settings > Notifications** get a **Leaving soon** message, then reminders, then **Cleaned up**.
+- **Maximum removals per run** (default 10) caps removals per run. Set it to 0 to keep flags and reminders but stop automatic removal.
+
+## Keep or delete a flagged title
+
+The **Flagged media** list shows each flagged title with its rule, size and days left. **Keep** removes the flag and protects the title from every rule. **Delete now** runs the rule's action at once, after a confirmation, and also needs the **Delete media** permission. Tick rows to act on several at once.
+
+:::details Rules: every field, criterion and action
 | Field | What it does |
 |---|---|
 | **Name** | A label. Required. |
@@ -67,13 +48,13 @@ or off. **Preview**, **Export** and **Delete** sit at the end of each row.
 | **Reminders (days before removal)** | When to send **Leaving soon** notifications. Default `7, 1`. |
 | Criteria | The tests, see below. Every one you set has to hold. |
 
-### Applies to
+#### Applies to
 
 Pick **Movies**, **Series**, **Seasons** and **Episodes**. Movies can be combined with at most one
 of the other three. A series rule looks at the whole title. A season or episode rule looks at one
 season or one episode with files, and flags it on its own.
 
-### Criteria
+#### Criteria
 
 A rule matches a title that meets **every** criterion it sets. A criterion left empty is ignored.
 
@@ -103,7 +84,7 @@ on season and episode rules.
 Several rules combine as alternatives: a title is flagged if any enabled rule matches it. When
 more than one matches, the rule created first owns it and its grace period applies.
 
-### Action and grace period
+#### Action and grace period
 
 | Action | What happens when the grace period ends |
 |---|---|
@@ -132,26 +113,19 @@ Changing a rule's grace period does not move the date of a title that is already
 
 Requests for a title that is removed or unmonitored are closed: one still in progress is
 declined, and a downloaded one is marked **Removed**, so the title can be requested again. See
-[Requests](/features/requests).
+[Requests](/downloads/requests).
 
-### Preview
+#### Preview
 
 **Preview** lists everything a rule matches right now, with the total size it would free. It
 changes nothing, and works on a rule that is switched off. Titles you chose to keep are left out.
 
-## When a title is flagged
+:::
 
-Every day at 05:00 (server time zone), the **Clean up the library** task in **Settings >
-Scheduled tasks** does two things. It flags what the enabled rules match, then it runs the action
-on flagged titles whose date has passed. A title that stops matching, for example because someone
-played it, loses its flag at the next run. A rule you switch off loses its flags too. You can run
-the task by hand from the Scheduled tasks page.
+:::details The schedule, who sees the flag, and reminders
+Every day at 05:00 (server time zone), the **Clean up the library** task in **Settings > Scheduled tasks** flags what the enabled rules match, then runs the action on flagged titles whose date has passed. A rule you switch off loses its flags too. You can run the task by hand from the Scheduled tasks page. Removing a title by hand is not counted against **Maximum removals per run**.
 
-**Maximum removals per run** (default 10) caps how many titles the task removes in one run. The
-rest wait for the next run. Set it to 0 to stop automatic removal while keeping the flags and
-reminders. Removing a title by hand is not counted.
-
-### Who sees the flag
+#### Who sees the flag
 
 Every user who can open the library sees it, not only admins:
 
@@ -162,7 +136,7 @@ Every user who can open the library sees it, not only admins:
 
 Titles flagged under a switched off rule, and titles with no date, are not shown to viewers.
 
-### Reminders
+#### Reminders
 
 Fliks sends a **Leaving soon** notification when a title is first flagged with a date, then another each time
 its days left reach one of the rule's **Reminders (days before removal)**. The default is `7, 1`.
@@ -173,8 +147,9 @@ Notifications go to the connections set up in **Settings > Notifications** (Disc
 webhook, Gotify or ntfy), not to individual users. Turn on the `media.leaving_soon` and
 `media.cleaned_up` events on the connection to receive them.
 
-## Flagged media
+:::
 
+:::details Flagged media: details and bulk actions
 The **Flagged media** list shows every flagged title under an enabled rule: title (with the
 season and episode for a scoped rule), the rule, the size and the days left, soonest first.
 
@@ -189,9 +164,9 @@ the page reports how many succeeded and how many failed.
 
 An admin can lift a **Keep** through the API with `DELETE /api/cleanup/exclusions/<mediaId>`, adding
 `?seasonId=` or `?episodeId=` for a season or an episode.
+:::
 
-## Recommendations
-
+:::details Recommendations
 Below the flagged list, **Recommendations** suggests titles to remove. Nothing is flagged or
 deleted until you act. A title appears when it meets one of these reasons:
 
@@ -209,9 +184,9 @@ library, and by a minimum and maximum size in GB.
 Each row has **Keep** and **Delete now**. **Delete now** deletes the title and its folder like
 **Delete media and files**. Click a reason badge to open the rule editor with that reason's
 criteria filled in, to turn it into a rule.
+:::
 
-## Worked example: free space when the disk fills up
-
+:::details Worked example: free space when the disk fills up
 Goal: when the disk of the **Movies** library has under 10% free, remove movies nobody has played for six months,
 with a week of notice, and never more than 5 a day.
 
@@ -230,9 +205,9 @@ Build it with **Flag only** first and run **Preview** to see what it would take.
 4. A week later the action runs, five titles a day at most: the video files and their recorded subtitle files are deleted,
    the title stays in the library, unmonitored, and a **Cleaned up** notification is sent.
 5. If free space climbs back over 10%, the rule stops matching and the remaining flags are removed.
+:::
 
-## Sharing rules
-
+:::details Export and import rules
 **Export** on a rule downloads it as a `.fliks-rule.json` file. **Import**, at the top of the
 page, loads such a file and adds the rule. An imported rule is always created switched off, so
 you can review it with **Preview** first.
@@ -276,9 +251,10 @@ An exported rule looks like this. Two examples:
 
 The first only flags old movies nobody started. The second frees the files of movies nobody
 played for 180 days, in the `Movies` library, once its disk has less than 10% free.
+:::
 
 ## See also
 
 - [Libraries](/features/libraries) for what a library is and who can see it.
-- [Requests](/features/requests) for how requests behave when a title leaves the library.
+- [Requests](/downloads/requests) for how requests behave when a title leaves the library.
 - [Settings](/administration/settings) for the Notifications and Scheduled tasks pages.

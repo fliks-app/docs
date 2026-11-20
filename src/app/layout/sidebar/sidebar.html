@@ -1,6 +1,6 @@
 <nav class="flex flex-col gap-6 text-sm" aria-label="Documentation">
-  @for (group of groups; track group.label) {
-    <div>
+  @let group = current();
+  <div>
       <p class="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-base-content/60">{{ group.label }}</p>
       <div class="flex flex-col gap-0.5">
         @for (section of group.sections; track section.slug) {
@@ -36,6 +36,10 @@
           </details>
         }
       </div>
-    </div>
+  </div>
+  @if (group.switchUrl) {
+    <a [routerLink]="group.switchUrl" class="mx-3 border-t border-base-300 pt-4 text-base-content/70 hover:text-primary">
+      {{ group.switchLabel }} &rarr;
+    </a>
   }
 </nav>

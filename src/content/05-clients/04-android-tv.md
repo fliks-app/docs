@@ -3,6 +3,9 @@ title: Android TV
 description: The same Android app, adapted for a 10-foot interface and D-pad navigation on a TV.
 ---
 
+> [!SUMMARY]
+> Install Fliks from the Play Store on the TV, enter the server address, then sign in with Quick Connect instead of typing a password. It is the same app as the phone one, in TV mode.
+
 ## One app, two form factors
 
 Android TV isn't a separate app: it's the same package as the [phone and tablet](/clients/mobile)
@@ -24,6 +27,7 @@ a row you already had focus in returns you to the same card rather than resettin
 
 ## Surround sound through an AV receiver
 
+:::details Surround sound through an AV receiver
 When the TV's HDMI output is connected to a receiver or soundbar that accepts Dolby Digital (AC3),
 Dolby Digital Plus (E-AC3), DTS (including DTS-HD) or Dolby TrueHD as a bitstream, Fliks asks it
 which of those it takes and sends matching audio tracks through untouched. The receiver decodes
@@ -34,6 +38,7 @@ switching receivers needs no restart. There is no setting for it.
 A file with an [`.edl` file](/features/playback#commercials-cuts-and-mutes-edl) that mutes part of
 the audio is the exception: a bitstream can't be muted, so its audio is decoded and converted as
 before.
+:::
 
 ## What's hidden on this platform
 
@@ -45,7 +50,7 @@ Consistent with every TV client:
   [remote control](/features/pairing-and-remote-control) from a phone or the web app).
 - No server administration screens.
 
-## Signing in
+## Sign in on the TV with Quick Connect
 
 On first launch, enter your server's address. Then use the on-screen keyboard to type a password,
 or set the TV up faster with

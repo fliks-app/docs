@@ -3,35 +3,31 @@ title: Metadata
 description: Posters, backdrops, cast and details come from provider plugins bundled with the server, cached locally so nothing hotlinks to an outside service while you browse.
 ---
 
-## Where the data comes from
+> [!SUMMARY]
+> Posters, cast and details come from provider plugins bundled with the server (TMDB and TVDB for video). To fix a wrong match, open the title, **More** > **Metadata** > **Identify**. Metadata refreshes nightly.
 
-Fliks fetches titles, artwork, cast and crew through provider plugins. They ship inside the server
-and are installed at boot, so metadata works on a first start without a catalog. They can be
-disabled but not uninstalled.
+## Fixing a wrong match
 
-| Provider | Covers |
-|---|---|
-| **TMDB** | Movies and series; also trending, popular, upcoming and discovery browsing |
-| **TVDB** | Movies and series, as an alternative source |
-| **OpenLibrary**, **BnF**, **Google Books** | Books |
-| **Audible**, **Audnexus** | Audiobooks |
+Open the title, click the three-dot menu next to **Play**, then **Metadata > Identify**. Search
+again (by title and year, or by pasting an exact IMDb/TMDB/TVDB id) and click the right result.
+The match is applied at once and everything for that title is re-fetched in the background, so
+posters, cast and episode listings all catch up. A step-by-step walkthrough with screenshots is
+in [Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
 
-**Settings > Metadata** sets the order in which providers are tried, per kind of media.
+The same **Metadata** submenu has **Refresh metadata**, which re-reads one title from its
+provider on demand. To prefer another provider for one title, use **Advanced > Library** and set
+**Metadata provider**.
 
-TMDB is the default, and the fallback whenever a library's **Metadata provider** is left on
-**Auto**. A library can be set to prefer one provider over the other (**Settings > Libraries**), and
-that preference can be overridden again for one specific title, or even one specific season, if the
-usual source is missing something for it.
+## Add a title that isn't in your library yet
 
-> [!NOTE]
-> TMDB and TVDB need an API key. Official builds ship default keys. To use your own, enter it in
-> the plugin's settings (**Settings > Plugins**); clearing it restores the default. A source build
-> has no default key: without a TMDB key, video titles are matched through TVDB if it has a key,
-> and otherwise stay unidentified.
->
-> Upgrading from 5.x: `TMDB_API_KEY` and `TVDB_API_KEY` are imported once into the plugin settings
-> on the first 6.0.0 boot. You can then remove them from your compose file.
-> `FLIKS_PLUGINS_DISABLED` does not disable the bundled providers.
+Search brings up matching titles from TMDB or TVDB alongside what's already in your library. Open
+one you don't have yet for a full preview: cast, crew, release dates in every region, original
+language, studios, and (for a series) its seasons. From there:
+
+- **Add** it directly, picking a quality profile, a language profile and a library (only libraries
+  that accept its type are offered), plus which seasons to include for a series.
+- **Request** it instead, if you don't have permission to add media directly: see
+  [Requests](/downloads/requests).
 
 ## Language and region
 
@@ -50,17 +46,38 @@ settled titles refreshed in the last week are still skipped), and **Reload missi
 catches titles that are missing a poster, overview or seasons, or haven't been refreshed in three
 months. Titles added without metadata are skipped by both until you identify them.
 
-## Fixing a wrong match
+## Where the data comes from
 
-Open the title, click the three-dot menu next to **Play**, then **Metadata > Identify**. Search
-again (by title and year, or by pasting an exact IMDb/TMDB/TVDB id) and click the right result.
-The match is applied at once and everything for that title is re-fetched in the background, so
-posters, cast and episode listings all catch up. A step-by-step walkthrough with screenshots is
-in [Libraries](/features/libraries#fixing-a-wrong-or-missing-match).
+Fliks fetches titles, artwork, cast and crew through provider plugins. They ship inside the server
+and are installed at boot, so metadata works on a first start without a catalog. They can be
+disabled but not uninstalled.
 
-The same **Metadata** submenu has **Refresh metadata**, which re-reads one title from its
-provider on demand. To prefer another provider for one title, use **Advanced > Library** and set
-**Metadata provider**.
+:::details Which providers cover what
+| Provider | Covers |
+|---|---|
+| **TMDB** | Movies and series; also trending, popular, upcoming and discovery browsing |
+| **TVDB** | Movies and series, as an alternative source |
+| **OpenLibrary**, **BnF**, **Google Books** | Books |
+| **Audible**, **Audnexus** | Audiobooks |
+:::
+
+**Settings > Metadata** sets the order in which providers are tried, per kind of media.
+
+TMDB is the default, and the fallback whenever a library's **Metadata provider** is left on
+**Auto**. A library can be set to prefer one provider over the other (**Settings > Libraries**), and
+that preference can be overridden again for one specific title, or even one specific season, if the
+usual source is missing something for it.
+
+:::details API keys and upgrading from 5.x
+TMDB and TVDB need an API key. Official builds ship default keys. To use your own, enter it in
+the plugin's settings (**Settings > Plugins**); clearing it restores the default. A source build
+has no default key: without a TMDB key, video titles are matched through TVDB if it has a key,
+and otherwise stay unidentified.
+
+Upgrading from 5.x: `TMDB_API_KEY` and `TVDB_API_KEY` are imported once into the plugin settings
+on the first 6.0.0 boot. You can then remove them from your compose file.
+`FLIKS_PLUGINS_DISABLED` does not disable the bundled providers.
+:::
 
 ## What you can and cannot edit by hand
 
@@ -80,17 +97,6 @@ the add screen described below instead of a dead end. The **People** section lis
 shows up in your libraries, filterable by role.
 
 ![A movie detail page with cast, crew and release details](/img/detail.webp)
-
-## Adding a title that isn't in your library yet
-
-Search brings up matching titles from TMDB or TVDB alongside what's already in your library. Open
-one you don't have yet for a full preview: cast, crew, release dates in every region, original
-language, studios, and (for a series) its seasons. From there:
-
-- **Add** it directly, picking a quality profile, a language profile and a library (only libraries
-  that accept its type are offered), plus which seasons to include for a series.
-- **Request** it instead, if you don't have permission to add media directly: see
-  [Requests](/features/requests).
 
 ## Local image cache
 

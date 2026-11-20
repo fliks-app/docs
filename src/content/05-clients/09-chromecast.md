@@ -3,6 +3,9 @@ title: Chromecast
 description: Cast from the web app, mobile apps or desktop app to any Chromecast device, using a custom receiver built on the same player engine.
 ---
 
+> [!SUMMARY]
+> Press the cast icon in the web, mobile or desktop app and pick your Chromecast. The Chromecast streams straight from your server, so it must be able to reach it. Settings are in **App settings > Chromecast**.
+
 ## How it works
 
 Fliks ships its own Chromecast receiver app rather than relying on a generic media receiver. When
@@ -20,6 +23,7 @@ switching, subtitles and multiple audio tracks all work the same way they do eve
 
 ## What the Chromecast can play
 
+:::details What the Chromecast can play
 The receiver answers a short capability probe when a cast session starts. It reports the video
 codecs it can decode (H.264, HEVC, AV1), 10-bit support for HEVC and AV1, and whether the TV shows
 HDR. Fliks builds the cast profile from that answer. A Chromecast that decodes HEVC or AV1 gets
@@ -28,8 +32,9 @@ level and bit-depth limits. One that reports only H.264 gets an H.264 stream. Th
 remembered per device, so only the first cast to a new device pays for the probe.
 
 Audio is AAC, plus AC-3 when **Audio** is set to 5.1 or 7.1 and the device supports it.
+:::
 
-## Casting from a client
+## Cast from your device
 
 | Client | Can cast |
 |---|---|
@@ -43,6 +48,7 @@ Audio is AAC, plus AC-3 when **Audio** is set to 5.1 or 7.1 and the device suppo
 **App settings > Chromecast** controls what gets sent to a Chromecast once you start casting. The page
 isn't shown on TV clients.
 
+:::details Every cast setting and its default
 | Setting | Default | What it does |
 |---|---|---|
 | HDR | Off | Only turn this on if both the Chromecast device and the TV it's plugged into support HDR. HDR is sent only when the TV reports HDR and the device decodes 10-bit video. Otherwise, or left off, the server converts HDR sources to SDR before sending them. |
@@ -50,6 +56,7 @@ isn't shown on TV clients.
 | Audio | Stereo | Stereo, 5.1 or 7.1. Leave it at stereo unless the TV is connected to a surround system. |
 | Subtitle appearance | Normal size, white, drop shadow, transparent background | Matches the in-app subtitle styling described in [Subtitles](/features/subtitles). |
 | Bottom edge position | 5% | How far above the bottom of the screen the subtitles sit (0, 5, 10, 15 or 20%). |
+:::
 
 The volume slider that appears while casting controls the Chromecast device's own volume, not the
 phone or computer you're casting from.
@@ -67,6 +74,7 @@ for when these tracks are offered.
 
 ## On the TV
 
+:::details What the cast screen shows
 The receiver draws its own interface instead of the stock Chromecast overlay.
 
 - **Progress bar.** It shows while the video is paused and when you seek or change something.
@@ -83,6 +91,7 @@ The receiver draws its own interface instead of the stock Chromecast overlay.
   intro** or **Next episode** and the remote's OK button does it. Until the receiver has seen a
   remote key, the cue says to do it from your device. On your phone or computer, the player's
   controls show **Skip intro** during the intro and a next-episode button when one follows.
+:::
 
 ## See also
 

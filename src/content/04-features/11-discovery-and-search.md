@@ -3,6 +3,9 @@ title: Discovery and search
 description: Home page rows, search across and outside your library, a release calendar, spoiler protection, and suggestions based on what you actually watch.
 ---
 
+> [!SUMMARY]
+> Use **Search** in the sidebar to find titles in and outside your library, and **App settings > Home** to show, hide and reorder the home rows. **Account settings > Spoilers** hides what you haven't watched yet.
+
 ## The home page
 
 ![The Fliks home page with its Continue Watching and Recently Added rows](/img/home.webp)
@@ -10,6 +13,7 @@ description: Home page rows, search across and outside your library, a release c
 The home page is built from rows you can show, hide and reorder yourself, from **App settings >
 Home** (this is remembered per device, not per account). You can also click the **Customize home** tile at the very bottom of the home page.
 
+:::details What each home row shows
 | Row | What it shows |
 |---|---|
 | Watch parties | Parties planned or running, with a **New party** button, see [Watch party](/features/watch-party) |
@@ -21,8 +25,9 @@ Home** (this is remembered per device, not per account). You can also click the 
 | Recently added | The newest arrivals across your libraries |
 | Recent playlists | Your own and shared playlists |
 | Coming soon | What's releasing or airing soon, from the calendar below |
+:::
 
-If you're allowed to make [Requests](/features/requests), a **Recent requests** row is added too,
+If you're allowed to make [Requests](/downloads/requests), a **Recent requests** row is added too,
 shown by default above Recently added (not on TVs). Each library also gets its own "Recently added"
 row, hidden by default, that you can turn on alongside the combined one.
 
@@ -41,7 +46,7 @@ don't want on the home page and in the sidebar.
 
 ![The Libraries dialog opened from the gear of the Libraries row](/img/app-settings-home-libraries.webp)
 
-## Searching
+## Search your library and beyond
 
 Click **Search** in the sidebar and type. The tabs are **All**, **Video**, **Books**, **Music**
 and **Members** (to find other members by name; hidden on TVs and if you've turned off sharing).
@@ -73,11 +78,13 @@ categories off if you'd rather not see it.
 **Account settings > Spoilers** lets you avoid seeing what you haven't gotten to yet, with one
 master switch (**Hide spoiler information**) and three things it can hide once it's on:
 
+:::details What each spoiler setting hides
 | Setting | What it hides |
 |---|---|
 | Blur thumbnails | The still of an unwatched episode, and its page's backdrop |
 | Blur synopses | The plot summary of an unwatched film, season or episode |
 | Hide episode names | Shows "Episode 3" instead of a title that gives away the plot |
+:::
 
 ![The Account settings > Spoilers page with its Hide spoiler information switch](/img/account-spoilers.webp)
 
@@ -106,4 +113,4 @@ both of those are covered in [Sharing and social](/features/sharing-and-social).
 
 - [Metadata](/features/metadata) for where trending, popular and title details come from.
 - [Sharing and social](/features/sharing-and-social) for recommendations sent between users.
-- [Requests](/features/requests) for asking to add something search turned up outside your library.
+- [Requests](/downloads/requests) for asking to add something search turned up outside your library.
