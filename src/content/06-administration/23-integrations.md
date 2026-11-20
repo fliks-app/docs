@@ -88,7 +88,7 @@ The music card also creates the root folders and quality profiles it finds. If n
 
 ## Notifications
 
-Fliks posts a short message to a service when something happens. A connection is a service, an endpoint and a list of events. For a quick walkthrough see [First-day admin tasks](/administration/first-day-tasks#set-up-notifications).
+Fliks posts a short message to a service when something happens. A connection is a service, an endpoint and a list of events. For a quick walkthrough see [First-day admin tasks](/administration/first-day-tasks#set-up-notifications). The list also holds a built-in **Fliks Relay** connection, which delivers notifications to your users' phones; it has no fields and is described in [Push notifications](/administration/push-notifications).
 
 :::steps
 ![Open **Integrations > Notifications**](/img/admin-notif-1-sidebar.webp)
