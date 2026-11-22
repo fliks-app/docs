@@ -21,9 +21,21 @@ This pulls the new image (whatever tag your `docker-compose.yml` points at, `:la
 pinned a version) and recreates the container. The database container is untouched unless you
 also changed its image tag.
 
+### The image no longer runs as root
+
+The image now runs as `568:0`. A volume created by an earlier image is owned by root and is
+refused (the log names the path). Before `docker compose up -d`, give it to the new user:
+
+```bash
+docker compose run --rm --no-deps --user 0 --entrypoint chown fliks -R 568:0 /app/conf /app/data /app/transcode
+```
+
+A host path needs the same `chown -R 568:0 <path>` on the host. The compose example also sets
+`stop_grace_period: 30s`, so a stop lets the server flush before Docker kills it.
+
 ### Non-root installs: move the secrets first
 
-Skip this unless the container runs as a fixed uid (`user: 568:568` with `group_add: ['0']`, the
+Skip this unless the container runs as a fixed uid (`user: 99:100` with `group_add: ['0']`, the
 TrueNAS catalog excepted, which already owns its volumes). Before this fix, a `/app/conf` volume
 owned by root was refused and the signing key and push identity were kept in the container's
 `/tmp`, so a recreate lost them. Run these **before** `docker compose up -d`; `pull` alone

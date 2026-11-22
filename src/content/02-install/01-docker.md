@@ -52,15 +52,15 @@ You don't need any of this for a first install.
 ## Running as a specific user
 
 :::details Run as a specific user (NAS, Kubernetes)
-Some platforms pin the container to a non-root uid: the TrueNAS catalog uses `568`, Unraid uses
-`99:100`, Kubernetes' `runAsNonRoot` and OpenShift's arbitrary uid policy pick their own. The
-image's `/app/conf`, `/app/data` and `/app/transcode` are group-writable by root (`g=u`), so any
-uid works as long as group `0` is in its group list:
+The image runs as `568:0`, and a new volume inherits that ownership. Some platforms pin another
+uid: Unraid uses `99:100`, Kubernetes' `runAsNonRoot` and OpenShift's arbitrary uid policy pick
+their own. The image's `/app/conf`, `/app/data` and `/app/transcode` are group-writable by root
+(`g=u`), so any uid works as long as group `0` is in its group list:
 
 ```yaml
 services:
   fliks:
-    user: '568:568'
+    user: '99:100'
     group_add: ['0']
 ```
 
