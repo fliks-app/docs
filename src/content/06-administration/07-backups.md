@@ -37,15 +37,17 @@ libraries, media, users, roles, settings and history, everything that lives in P
 including the installed plugin archives. It does **not** include:
 
 - Artwork, cached images or uploaded avatars (`FLIKS_DATA_DIR`).
-- The JWT signing key (`FLIKS_CONF_DIR`); restoring a backup onto a fresh install with a
-  different key logs everyone out, since existing sessions were signed with the old one.
+- The JWT signing key and the push identity (`FLIKS_CONF_DIR`). Restoring a backup onto a fresh
+  install without them logs everyone out, invalidates the Subsonic app passwords (sealed with
+  keys derived from the signing key) and drops every push registration.
 - The plugins' runtime directory (`FLIKS_RUNTIME_DIR`, `plugins/` under the data directory by
   default). Fliks rebuilds the compiled code from the archives in the database, but each
   process plugin's private data folder lives there too.
 - The transcode cache; it's disposable by design.
 - Your media files themselves.
 
-If you want a full disaster-recovery copy rather than just the database, back up the data and
+A full recovery needs `FLIKS_CONF_DIR` (`/app/conf`) next to the dump. If you want a full
+disaster-recovery copy rather than just the database, back up the data and
 conf directories yourself alongside this (a filesystem snapshot, or a plain `cp -r`, works fine
 since nothing in them is a live database).
 :::

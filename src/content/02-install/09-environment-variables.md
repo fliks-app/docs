@@ -54,7 +54,7 @@ live in `%LOCALAPPDATA%\Fliks Server\conf\tray-settings.json`.
 |---|---|---|
 | `FLIKS_DATA_DIR` | `<cwd>/data` (`/app/data` in Docker) | Artwork, uploaded avatars, and database backups. Not disposable. |
 | `FLIKS_CACHE_DIR` | `<data dir>/cache` | Extracted subtitle tracks and seek-preview sprites. Fully regenerable; safe to point elsewhere to keep it out of your data backups. |
-| `FLIKS_CONF_DIR` | `/app/conf` | Where the auto-generated JWT secret and engine token are stored. Falls back to a temp directory when that path isn't writable (typical outside Docker), and a lost JWT secret logs everyone out. |
+| `FLIKS_CONF_DIR` | `/app/conf` | Where the auto-generated JWT secret and push identity are stored (and the engine token, when the engine runs apart from the image). The directory must be owned by the server's user or not world-writable. Falls back to a temp directory when that path isn't usable (typical outside Docker); a secret kept there is lost at the next restart or recreate, and **Settings > System > Status** says so. A lost JWT secret logs everyone out and invalidates the Subsonic app passwords. |
 | `FLIKS_TRANSCODE_DIR` | `/app/transcode` in the Docker image; else `FLIKS_CACHE_DIR`, else `fliks-transcode` in the system temp directory | The HLS segment cache. Outside Docker the temp directory is `tmpfs` on many hosts: point it at real disk if you have a large cache budget. |
 | `FLIKS_RUNTIME_DIR` | `<data dir>/plugins` | Plugin import staging, the compiled-code cache, and each plugin's private data folder. The installed plugin archives themselves are stored in the database, not here. |
 | `FLIKS_IMAGES_DIR` | *(none)* | Deprecated alias for `FLIKS_DATA_DIR`. Rename it if you still have it set. |
@@ -69,10 +69,10 @@ you don't set these.
 :::details All engine variables
 | Variable | Default | What it controls |
 |---|---|---|
-| `FLIKS_ENGINE_TOKEN` | generated | The shared secret that protects the engine's control API. Left unset, the engine generates one at first start and writes it (mode `0600`) to `.engine-token` in `FLIKS_CONF_DIR`; the server reads the same file, so the two always agree and a restart keeps it. A value set here wins over the file. Set it only to run the engine and the server separately with a fixed token. |
+| `FLIKS_ENGINE_TOKEN` | generated | The shared secret that protects the engine's control API. Left unset, the engine generates one at first start and writes it (mode `0600`) to `.engine-token` in `FLIKS_CONF_DIR`. The image and the apps pass it to the server themselves; a server started apart from the engine reads the same file, so set it there to be sure the two agree. A value set here wins over the file. Set it only to run the engine and the server separately with a fixed token. |
 :::
 
-Keep the `/app/conf` volume: it holds the token as well as the JWT secret.
+Keep the `/app/conf` volume: it holds the JWT secret and the push identity.
 
 ## Metadata providers
 
