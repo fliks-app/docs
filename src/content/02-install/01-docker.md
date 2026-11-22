@@ -44,7 +44,7 @@ You don't need any of this for a first install.
 |---|---|
 | `/medias` | Your library root(s). Read-only is enough to browse and play; downloads, deleting media and saving subtitles next to a video need write access. |
 | `/downloads` | Only needed if you install the download plugin; use the same path here and in your download client. |
-| `/app/conf` | The JWT signing key and the engine token, both generated at first start. Lose the key and every session is invalidated. |
+| `/app/conf` | The JWT signing key and the push identity (`.push-identity.json`: the web push key and the relay identity), both generated at first start. The Subsonic app passwords and the job grants are sealed with keys derived from the signing key. Lose the volume and every session is invalidated, every Subsonic app needs a new app password and every push registration is made again. |
 | `/app/data` | Artwork, uploaded avatars, database backups, plugin data (`plugins/`), and a regenerable `cache/` subfolder. Not disposable: avatars can't be re-fetched. |
 | `/app/transcode` | The HLS segment cache. Regenerable, safe to wipe. The image sets `FLIKS_TRANSCODE_DIR` to this path. |
 :::
@@ -63,6 +63,11 @@ services:
     user: '568:568'
     group_add: ['0']
 ```
+
+A volume that another uid already owns (a host path, or a volume first used as root) is refused
+with an error line naming the file and the `chown` to run, for example `chown -R 568:0 <path>`.
+When `/app/conf` cannot be used, the secrets are kept in the container's `/tmp`, lost at every
+recreate, and **Settings > System > Status** shows a red line saying so.
 :::
 
 ## Chromecast on a bridge network

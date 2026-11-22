@@ -21,6 +21,28 @@ This pulls the new image (whatever tag your `docker-compose.yml` points at, `:la
 pinned a version) and recreates the container. The database container is untouched unless you
 also changed its image tag.
 
+### Non-root installs: move the secrets first
+
+Skip this unless the container runs as a fixed uid (`user: 568:568` with `group_add: ['0']`, the
+TrueNAS catalog excepted, which already owns its volumes). Before this fix, a `/app/conf` volume
+owned by root was refused and the signing key and push identity were kept in the container's
+`/tmp`, so a recreate lost them. Run these **before** `docker compose up -d`; `pull` alone
+recreates nothing. For a setup without compose, replace `docker compose exec fliks` with
+`docker exec <container>`.
+
+1. `docker compose exec fliks ls -la /tmp/fliks-conf`. If the directory is absent, the install is
+   not affected.
+2. Copy the files across (`.jwt-secret` is absent when `JWT_SECRET` is set):
+
+   ```bash
+   docker compose exec fliks sh -c 'for f in .jwt-secret .push-identity.json; do [ -f /tmp/fliks-conf/$f ] && cp -p /tmp/fliks-conf/$f /app/conf/; done; ls -la /app/conf'
+   ```
+3. On `Permission denied`, the volume is a host path the uid cannot write: run the `chown` that
+   the server logged (for example `chown -R 568:0 <path>`) and repeat step 2.
+
+Skipping this costs one round of re-setup: Subsonic apps need a new app password and push
+registrations are made again. Users stay signed in.
+
 ### Windows and macOS
 
 Both apps update themselves from the [latest release](https://github.com/fliks-app/fliks/releases),

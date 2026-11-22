@@ -97,9 +97,10 @@ FLIKS_CONF_DIR=$HOME/.local/share/fliks/conf \
 - `SERVE_STATIC_PATH` tells the server where the built client lives, so it can serve it on the
   same port as the API; without it there's no web UI to load.
 - `FLIKS_CAST_DIR` points at the folder holding the emoji assets (`server/public`).
-- `FLIKS_CONF_DIR` holds the generated JWT signing key and engine token. Its default, `/app/conf`,
+- `FLIKS_CONF_DIR` holds the generated JWT signing key and push identity. Its default, `/app/conf`,
   usually isn't writable outside Docker, and the fallback is a temp directory: lose it and
-  everyone is logged out.
+  everyone is logged out, Subsonic apps need a new app password and push registrations are made
+  again. Point it at a directory of yours.
 - Metadata keys are not environment variables. Only the published Docker image and the packaged
   apps carry default keys; a source build has none, so set your own in **Settings > Plugins** after
   the first start, or titles aren't matched and no artwork is fetched.
