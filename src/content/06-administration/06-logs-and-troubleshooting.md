@@ -51,6 +51,25 @@ fail here if that role isn't allowed to create extensions. Either have a superus
 privilege on it (`pg_trgm` is a trusted extension, so that is enough).
 :::
 
+:::details Boot message: the database role is missing something
+Fliks never refuses to start over its database role. At boot it logs `the database role is
+missing: …` and **Settings > System > Status** shows the same list:
+
+| Item | Meaning |
+|---|---|
+| `create_role` | The role cannot create roles. |
+| `create_database` | The role has no `CREATE` on the database. |
+| `public_owner` | The role does not own the `public` schema. |
+| `foreign_objects` | Some objects belong to another role. |
+| `advisory_locks` | The role cannot take advisory locks, or others can. |
+| `plugin_roles` | Plugin roles are missing or not administered by the role. |
+
+The fix is `fliks-server db-role`, run as the administrator (see
+[db-role](/install/environment-variables#db-role)). A line saying the application connects as a
+superuser is only a note, and so is the one about PostgreSQL 15: use 16 or newer for the role's
+isolation.
+:::
+
 ## Health check endpoint
 
 :::details Health check endpoint for Docker and orchestrators

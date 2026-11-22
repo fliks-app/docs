@@ -28,7 +28,8 @@ otherwise touches your schema only when an admin explicitly exports, imports or 
 below).
 
 Provisioning needs the core database role to be a superuser or, on Postgres 16 and later, a
-`CREATEROLE` role that is a member of each plugin role. Core also revokes `CREATE` on `public` from
+`CREATEROLE` role that is a member of each plugin role. `fliks-server db-role` grants the
+`fliks_app` role exactly that (see [db-role](/install/environment-variables#db-role)). Core also revokes `CREATE` on `public` from
 `PUBLIC` when Postgres still grants it (the default before Postgres 15), so a plugin role can't
 create objects among the core tables.
 

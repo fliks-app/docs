@@ -31,6 +31,11 @@ for that user. For a host path you add under **Additional Storage**, make sure t
 it (and write it, if you want downloads or saved subtitles there).
 :::
 
+> [!NOTE]
+> The dedicated database role does not apply here: the app connects through TrueNAS's shared
+> PostgreSQL library with a single database user, and there is no second role. If you bring your
+> own PostgreSQL, [`fliks-server db-role`](/install/environment-variables#db-role) stays available.
+
 ## Hardware transcoding
 
 If your TrueNAS box has a GPU, select it under **GPU Configuration** in the app's resources
