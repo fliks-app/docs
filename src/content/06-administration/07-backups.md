@@ -18,11 +18,15 @@ Open **Settings > System** and select the **Backups** tab, then click **Create a
 
 - **Create a backup** on demand, outside the daily schedule.
 - **Download** one, to keep a copy outside the server entirely.
-- **Restore** one. This runs `psql` against the current database with the dump's contents, which
-  overwrites what's there now. Fliks asks for confirmation first, and stops at the first error
-  rather than leaving a half-restored database. Restart the server afterward (the **Restart
-  server** button on **Settings > System**, when it's shown, or restart the container or app
-  yourself).
+- **Restore** one. This replaces the current database with the backup's contents. Fliks asks
+  for confirmation first, and the core data goes back in one transaction that stops at the first
+  error rather than leaving a half-restored database. Each plugin's data is restored separately,
+  under that plugin's own database login: one that cannot be restored (a constraint its rows
+  break, say) stays empty and disabled, and Fliks names it once the restore ends, while
+  everything else is restored. When the server runs under a supervisor (Docker, systemd, the
+  Windows and macOS apps) it restarts by itself afterward; otherwise restart it yourself (the
+  **Restart server** button on **Settings > System**, when it's shown, or restart the container
+  or app).
 - **Delete** one, permanently.
 
 > [!WARNING]
@@ -32,7 +36,7 @@ Open **Settings > System** and select the **Backups** tab, then click **Create a
 ## What a backup contains
 
 :::details What a backup contains and does not contain
-A Fliks backup is a plain SQL dump of the database, taken with `pg_dump`. It covers your
+A Fliks backup is a `pg_dump` custom-format archive (`.dump`) of the database. It covers your
 libraries, media, users, roles, settings and history, everything that lives in PostgreSQL,
 including the installed plugin archives. It does **not** include:
 
@@ -45,6 +49,14 @@ including the installed plugin archives. It does **not** include:
   process plugin's private data folder lives there too.
 - The transcode cache; it's disposable by design.
 - Your media files themselves.
+- The data of a plugin that PostgreSQL cannot read for the dump. On a server whose database
+  role is neither a superuser nor allowed to bypass row-level security, a plugin table that
+  forces row-level security is left out; Fliks says which plugin when you create the backup,
+  and that plugin starts empty after a restore.
+
+Backups made before this version are plain `.sql` files. They stay in the list, can be
+downloaded and are pruned as before, but one that holds plugin data is refused on restore: it
+would run the plugins' code with the database owner's rights. Restore a `.dump` instead.
 
 A full recovery needs `FLIKS_CONF_DIR` (`/app/conf`) next to the dump. If you want a full
 disaster-recovery copy rather than just the database, back up the data and
@@ -62,13 +74,13 @@ as **Create a backup** in **Settings > Scheduled tasks**, where you can also run
 
 :::details Where backups are stored
 Under `<data dir>/backups` (`/app/data/backups` in Docker), as
-`fliks-backup-<timestamp>.sql` files. Being under the data directory, they survive an image
+`fliks-backup-<timestamp>.dump` files. Being under the data directory, they survive an image
 or app update, and they're included if you back up that directory yourself. They sit on the same
 disk as the server, though: download a copy now and then, or copy that folder elsewhere, so a
 dead disk doesn't take the backups with it.
 
 > [!NOTE]
-> Backups need the PostgreSQL client tools (`pg_dump` and `psql`). The Docker image includes
+> Backups need the PostgreSQL client tools (`pg_dump`, `pg_restore` and `psql`). The Docker image includes
 > them. On versions up to 4.1.x, the Windows and macOS apps don't put a `pg_dump` on the server's
 > `PATH`, so backups there only work if you install a matching PostgreSQL client yourself; a
 > from-source install needs both tools on `PATH`. Check that **Create a backup** works before
@@ -85,6 +97,11 @@ in Docker) as `fliks-pre-migration-v<version>-<timestamp>.dump` (a `pg_dump` cus
 the 3 most recent are kept, plus the first one of the pending version. These files are not listed
 under **Settings > System > Backups**; copy them from the folder.
 A start with nothing to migrate takes none.
+
+To go back to one, stop the server and run `fliks-server restore <file>` (in Docker, a one-off
+container with the same image and environment). It restores the core data and every plugin the
+same way as the page above, and never migrates, so the older version you start afterward boots
+on it.
 
 If the dump fails (no room on the disk, no `pg_dump`), the server stops and says so instead of
 migrating. Free the space or fix the tool, or set `FLIKS_SKIP_PRE_MIGRATION_BACKUP=1` to start
