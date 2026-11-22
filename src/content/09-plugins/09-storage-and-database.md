@@ -15,9 +15,9 @@ reconciled every time it registers:
 - A **password rotated every time the plugin starts**, never persisted and never handed to the
   guest. Core holds one connection pool per plugin and logs in as that role itself; the plugin
   reaches the database only through the `db` interface.
-- `USAGE` on the `public` schema, and **`REFERENCES`-only, column-level** grants on exactly the core
-  tables your manifest's `database.coreRefs` names, and only their `id` column. You can put a
-  foreign key into `public.media(id)`; you cannot `SELECT` from it.
+- `USAGE` on the `public` schema, and **`SELECT (id)`, column-level** grants on exactly the core
+  tables your manifest's `database.coreRefs` names, and only their `id` column. You can read those
+  ids; you cannot `SELECT` any other column, and you cannot create a foreign key into core.
 - A connection whose `search_path` is your schema only. `public` is deliberately not on it, so an
   unqualified query can never accidentally hit a core table. Each query is one statement, and a
   connection is reset when it returns to the pool, so a `SET` in one call never leaks into the next.
@@ -41,11 +41,12 @@ Each name in `database.coreRefs` must:
 - Actually exist as a `public` base table with an `id` column, checked at provision time; a table
   that doesn't exist yet fails provisioning with `db-provision-failed`.
 
-Point a foreign key at it with `ON DELETE CASCADE` or `ON DELETE SET NULL`. Anything else (a
-`RESTRICT` or `NO ACTION` FK from your schema into a core table) would block core from deleting the
-referenced row. That is advised against, not enforced: after your first successful migration core
-checks your schema for such keys and surfaces a warning on the plugin row and in its logs, rather
-than refusing to run it.
+Keep the core ids you store as plain integer columns, with no foreign key: a key into a core table
+would run its cascade and your triggers as the core database role when core deletes the row, so
+`CREATE TABLE ... REFERENCES public.<table>` fails with `42501`, and provisioning drops any such key
+it finds (and fails with `db-provision-failed` naming one it cannot drop). Core does not clean your
+rows when it deletes a core row: delete or null the rows whose ids no longer exist yourself, for
+example from a scheduled job, checking with `NOT EXISTS` on `public.<table>(id)`.
 
 ## Talking to the database
 
@@ -117,8 +118,8 @@ this against a real Postgres, including the schema and grants themselves.
 
 - No core feature queries your schema. The only core code that reads or writes it is the
   admin-triggered export, import and uninstall below.
-- You cannot `SELECT` a `coreRefs` table, only reference its `id` in a foreign key. A query that
-  tries fails with a permissions error from Postgres itself (`42501`).
+- You can read only the `id` column of a `coreRefs` table. A query that touches any other column
+  fails with a permissions error from Postgres itself (`42501`).
 - You have no path to another plugin's schema.
 - Nothing outside `database.coreRefs` is visible to you at all; adding a new core dependency later
   means shipping a new manifest version.

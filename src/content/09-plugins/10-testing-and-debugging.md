@@ -155,7 +155,7 @@ the last 2000 core log lines overall, so it's a recent window, not an archive.
 - Output is capped at 64 KiB per minute across all of it. Past the cap, the rest of that minute is
   dropped, with a single warning. Rate-limit your own logging.
 - Core writes its own lines under the same tag: every crash with its reason, an unhealthy `health`
-  reply, a tripped circuit breaker, a foreign key that blocks core deletes, an outbound request the
+  reply, a tripped circuit breaker, an outbound request the
   guard refused (`plugin "<id>" outbound refused: <host> resolves to <class> address`, never the
   full URL).
 

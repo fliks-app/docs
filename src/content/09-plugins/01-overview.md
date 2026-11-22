@@ -92,7 +92,7 @@ If something a plugin might want to do isn't in one of the lists above, it isn't
 design, and there's no per-installation escape hatch:
 
 - No arbitrary database access. A `process` plugin only ever sees its own schema, plus
-  `REFERENCES`-only column grants on the core tables it declared needing.
+  `SELECT (id)` column grants on the core tables it declared needing.
 - No sockets of its own. Outbound HTTP goes through core, which refuses private and reserved
   addresses unless the admin consented to `network.internal` at install.
 - No filesystem access outside its own data directory, mounted as `/data`.
