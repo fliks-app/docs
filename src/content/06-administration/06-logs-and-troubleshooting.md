@@ -58,7 +58,7 @@ missing: …` and **Settings > System > Status** shows the same list:
 | Item | Meaning |
 |---|---|
 | `create_role` | The role cannot create roles. |
-| `create_database` | The role has no `CREATE` on the database. |
+| `create_database` | The role lacks `CREATE` or `TEMPORARY` on the database. |
 | `public_owner` | The role does not own the `public` schema. |
 | `foreign_objects` | Some objects belong to another role. |
 | `advisory_locks` | The role cannot take advisory locks, or others can. |

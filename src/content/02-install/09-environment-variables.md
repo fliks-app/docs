@@ -46,7 +46,7 @@ in place. Otherwise it connects as the administrator, a superuser (it retries fo
 PostgreSQL starts), and:
 
 - creates or updates the role (`LOGIN NOSUPERUSER NOCREATEDB CREATEROLE NOREPLICATION NOBYPASSRLS`);
-- grants it `CONNECT` and `CREATE` on the database and makes it the owner of `public` and of every
+- grants it `CONNECT`, `CREATE` and `TEMPORARY` on the database and makes it the owner of `public` and of every
   core object, one `ALTER OWNER` at a time, each committed alone under a 10 second lock timeout:
   a busy table fails the run, and running it again finishes the job;
 - lets it administer the plugin roles;
