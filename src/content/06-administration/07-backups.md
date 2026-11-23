@@ -33,6 +33,11 @@ Open **Settings > System** and select the **Backups** tab, then click **Create a
 > Restoring overwrites the current database. Take a fresh backup first if you want any way back
 > from whatever state you're restoring away from.
 
+> [!NOTE]
+> Restoring needs a PostgreSQL 17 or later server: the dump sets `transaction_timeout`, which
+> older servers reject. On an older one, Fliks refuses the restore and says so; move the database
+> to PostgreSQL 17 or later, then restore it there. This also applies to `fliks-server restore`.
+
 ## What a backup contains
 
 :::details What a backup contains and does not contain
