@@ -68,7 +68,7 @@ where marked optional.
 | `runtime` | `"wasm"` | yes | The only legal value. |
 | `memoryMb` | number | yes | The cap on each instance's linear memory, in MiB, at most 1024. All live instances of one plugin together may hold at most twice this. A `memory.grow` past the cap traps that instance. |
 | `files` | `{ path: sha256 }` | yes | sha256 of every archived entry except the manifest and its own signature: `plugin.wasm` and the logo. `cargo xtask package` computes it. |
-| `database` | `{ schema: boolean, coreRefs: string[], secrets?: [...] }` | yes | Whether the plugin wants its own Postgres schema, which core tables it needs `REFERENCES` grants on, and which stored values are credentials. See below. |
+| `database` | `{ schema: boolean, coreRefs: string[], secrets?: [...] }` | yes | Whether the plugin wants its own Postgres schema, which core tables it needs `SELECT (id)` grants on, and which stored values are credentials. See below. |
 | `routes` | array of `{ method, path, policy, objectGuard? }` | yes, may be empty | Every HTTP route core will proxy to this plugin. A route not declared here does not exist, full stop. |
 | `scopes` | array | yes, non-empty | Which host-function groups this plugin may call. Table below. |
 | `ingestRoots` | array of strings | yes, may be empty | Absolute path prefixes `library_ingest` is allowed to take files from. Each must be absolute, already normalised (no `..`, `.` or `//`), and not a filesystem root (`/` or `C:\`). A drive-letter path is read as a Windows path. |
