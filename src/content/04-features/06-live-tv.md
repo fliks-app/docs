@@ -100,7 +100,8 @@ An invalid pattern is refused when you save the source.
   connection** on the source tells you whether a program guide was found.
 
 Also on the form: refresh interval in hours (12 by default), a **Timezone offset (minutes)** (0 by
-default, applied only to feed timestamps that carry no timezone of their own), and a
+default, added to every timestamp of the feed, for a feed that publishes its local time as if it were UTC; it
+does not follow daylight saving changes), and a
 **Source active** switch.
 
 :::details How guide matching works
@@ -202,7 +203,7 @@ recording feature: nothing is kept once it leaves that buffer.
 | Test connection just says it failed | It never gives a detailed reason. Save the source (or wait for the scheduled sync) and check the source's own sync error: an Xtream login reports "authentication refused by the provider" on a bad username or password, a playlist URL reports a plain connection or timeout error. |
 | An expired or suspended provider account | Once a sync has read an Xtream account's status and expiry date, they're shown next to the source ("Expired", "Expires soon"), and a notification goes out when the account expires or is about to. Nothing is blocked; if every stream then fails, the player says the subscription has expired. |
 | Zero channels on a source's first sync | Not an error; the provider's playlist is genuinely empty. Confirmed by **Test connection**. |
-| A sync suddenly returns under half the channels it had before | Refused outright; the previous lineup is kept untouched. Treated as a provider rate limit or an error page mistaken for the real playlist. The sync error explains why nothing changed. |
+| A sync suddenly returns under half the channels it had before | The scheduled refresh refuses it and keeps the previous lineup. Treated as a provider rate limit or an error page mistaken for the real playlist. The sync error explains why nothing changed. If the provider really dropped them, press **Sync now**: a manual sync takes the smaller lineup, and a channel unseen for `livetv_stale_stream_days` days is removed with its favorites. |
 | "has reached its limit of N simultaneous streams" | The source's max simultaneous streams cap is fully used, including connections that closed in the last few seconds (the slot release delay). Wait, close another stream from that source, or raise the limit. |
 | "Unable to start this channel." | Either the channel has no stream left, or every stream it has failed to open. Check the **Health** tab: each source's sync status, then channels sorted worst first with their failure count, and per stream, when it last worked and its last error. |
 | No **Live TV** entry after a successful sync | New channels start disabled. Enable them on the **Channels** tab. |
