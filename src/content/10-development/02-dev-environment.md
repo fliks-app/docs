@@ -131,6 +131,14 @@ cargo fmt --all --check
 cargo clippy --all-targets -- -D warnings
 ```
 
+Production runs as a non-superuser role. Run the tests under it with
+`FLIKS_TEST_APP_ROLE=1 ../scripts/with-test-postgres.sh cargo test -p fliks-server`.
+
+A migration may create only a trusted extension (`pg_trgm`, `unaccent`, ...), with
+`IF NOT EXISTS`, since the app role has `CREATE` on the database. No `ALTER SYSTEM`,
+`COPY ... PROGRAM` or `COPY ... FILE`, untrusted language, `session_replication_role` or event
+trigger: superuser-only statements fail under that role.
+
 The plugin SDK (`server/crates/plugin-sdk`) is a separate workspace with its own tests. The HTTP
 parity suite replays recorded scenarios through the front door and runs locally only; see
 `server/parity/README.md`.

@@ -24,7 +24,7 @@ build `fliks-server` and the web client, and download `fliks-engine` as a releas
 |---|---|
 | Rust | The version pinned in `rust-toolchain.toml` (installed by `rustup` on first build). It also adds the `wasm32-wasip2` target. |
 | Node.js 24 | Only to build the web client. Same version the Docker image uses. |
-| PostgreSQL | The Docker example runs 18. Create a user and a database for Fliks. The user needs privilege to `CREATE EXTENSION`, since a migration creates `pg_trgm` (used for search). |
+| PostgreSQL | The Docker example runs 18. Create a user and a database for Fliks. The user needs privilege to `CREATE EXTENSION`, since a migration creates `pg_trgm` (used for search): a superuser, or a role with `CREATE` on the database (see [db-role](/install/environment-variables#db-role) to set one up). |
 | FFmpeg + FFprobe | On `PATH`, for the engine. Hardware transcoding is only as good as what your FFmpeg build exposes; the packaged builds all use a bundled build with QSV/VAAPI/NVENC support compiled in. |
 
 Optional, each needed only by one feature: `pg_dump` and `psql` from the PostgreSQL client

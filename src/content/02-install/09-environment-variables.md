@@ -27,10 +27,57 @@ live in `%LOCALAPPDATA%\Fliks Server\conf\tray-settings.json`.
 |---|---|---|
 | `DB_HOST` | `localhost` | PostgreSQL host. |
 | `DB_PORT` | `5432` | PostgreSQL port. |
-| `DB_USERNAME` | `fliks` | PostgreSQL user. |
+| `DB_USERNAME` | `fliks` | PostgreSQL user. The example Compose file sets `fliks_app`, see [db-role](#db-role). |
 | `DB_NAME` | `fliks` | Database name. |
-| `DB_PASSWORD` | `fliks` | PostgreSQL password. |
+| `DB_PASSWORD` | `fliks` | PostgreSQL password. With `fliks_app`, it must be set, not `fliks`, and different from the administrator's. |
+| `DB_ADMIN_USERNAME` | unset | PostgreSQL administrator, read only by `fliks-server db-role`, never by the server. |
+| `DB_ADMIN_PASSWORD` | unset | Its password, same rule. |
 :::
+
+## db-role
+
+`fliks-server db-role` gives Fliks a PostgreSQL role of its own, so the server doesn't run as a
+superuser. The role is named by `DB_USERNAME` (`fliks_app` in the example Compose file) and its
+password is `DB_PASSWORD`. The administrator comes from `DB_ADMIN_USERNAME` and
+`DB_ADMIN_PASSWORD`.
+
+The command first logs in as the app role and exits 0 without the administrator when everything is
+in place. Otherwise it connects as the administrator, a superuser (it retries for 60 seconds while
+PostgreSQL starts), and:
+
+- creates or updates the role (`LOGIN NOSUPERUSER NOCREATEDB CREATEROLE NOREPLICATION NOBYPASSRLS`);
+- grants it `CONNECT`, `CREATE` and `TEMPORARY` on the database and makes it the owner of `public` and of every
+  core object, one `ALTER OWNER` at a time, each committed alone under a 10 second lock timeout:
+  a busy table fails the run, and running it again finishes the job;
+- lets it administer the plugin roles;
+- makes the advisory lock functions usable by it only.
+
+With the example Compose file the `fliks-db-role` service runs it on every `docker compose up`. On
+an external PostgreSQL server, run it once:
+
+```bash
+docker run --rm \
+  -e DB_HOST=db.example.com -e DB_PORT=5432 -e DB_NAME=fliks \
+  -e DB_USERNAME=fliks_app -e DB_PASSWORD=<app password> \
+  -e DB_ADMIN_USERNAME=<admin> -e DB_ADMIN_PASSWORD=<admin password> \
+  ghcr.io/fliks-app/fliks fliks-server db-role
+```
+
+Then set `DB_USERNAME` and `DB_PASSWORD` on Fliks. If you can't hand the administrator password to
+Fliks, add `--print`: the command writes the same SQL (with a SCRAM verifier, never the plain
+password) for a database administrator to run statement by statement with `psql -f`, not
+`psql -1`. On a managed server where the administrator isn't a superuser, one gap stays:
+`advisory_locks`, which only the bootstrap superuser can revoke. **Settings > System > Status**
+shows it.
+
+Fliks never refuses to start over the role. It logs the missing items at boot and lists them on
+the Status page (`create_role`, `create_database`, `public_owner`, `foreign_objects`,
+`advisory_locks`, `plugin_roles`); the fix is `fliks-server db-role`. A role that is a superuser
+gets a muted note.
+
+> [!NOTE]
+> On PostgreSQL 15, a role with `CREATEROLE` can reach the host (`GRANT pg_execute_server_program`).
+> Use 16 or newer for the isolation; the Status page shows a muted line. 15 stays supported.
 
 ## Network and access
 

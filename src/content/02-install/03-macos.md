@@ -43,6 +43,7 @@ with a Developer ID certificate and notarized, so Gatekeeper opens them without 
 |---|---|
 | `~/Library/Application Support/Fliks Server/postgresql/` | The database cluster. |
 | `~/Library/Application Support/Fliks Server/conf/` | The auto-generated JWT secret and engine token. |
+| `~/Library/Application Support/Fliks Server/private/` | The database administrator password (`.db-admin-password`), kept out of the server's reach. `conf/.db-password` is the password of the `fliks_app` role the server uses; the app sets both up at launch. |
 | `~/Library/Application Support/Fliks Server/data/` | The server's working directory: artwork, avatars, backups. |
 | `~/Library/Application Support/Fliks Server/logs/` | Server and PostgreSQL logs. |
 | `/tmp/transcode/` | The HLS transcode cache, ephemeral. |

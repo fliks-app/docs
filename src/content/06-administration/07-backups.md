@@ -63,6 +63,11 @@ Backups made before this version are plain `.sql` files. They stay in the list, 
 downloaded and are pruned as before, but one that holds plugin data is refused on restore: it
 would run the plugins' code with the database owner's rights. Restore a `.dump` instead.
 
+- On the Windows and macOS apps, the database administrator password: the `private` folder next
+  to `conf` (`private/.db-admin-password`). `conf/.db-password` is the password of the `fliks_app`
+  role. Back both up together with the database cluster. To go back to an older app build, copy
+  `private/.db-admin-password` over `conf/.db-password`.
+
 A full recovery needs `FLIKS_CONF_DIR` (`/app/conf`) next to the dump. If you want a full
 disaster-recovery copy rather than just the database, back up the data and
 conf directories yourself alongside this (a filesystem snapshot, or a plain `cp -r`, works fine

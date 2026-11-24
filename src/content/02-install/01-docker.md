@@ -17,7 +17,9 @@ mv docker-compose.example.yml docker-compose.yml
 
 Edit `docker-compose.yml`:
 
-1. Replace `changeme` with the same password in `POSTGRES_PASSWORD` and `DB_PASSWORD`.
+1. Replace `changeme` with a password, the same in `POSTGRES_PASSWORD` and `DB_ADMIN_PASSWORD`.
+   Replace `change-me-too` in `DB_PASSWORD` with a different one: Fliks connects with that
+   password, not the administrator's.
 2. Set your media folder: `/path/to/your/media:/medias`. You'll type `/medias` when adding a library.
 
 ```bash
@@ -36,6 +38,38 @@ To pin a release instead of `:latest`, edit the image tag (tags are on the
 ## Reference
 
 You don't need any of this for a first install.
+
+## Database role
+
+:::details The database role Fliks connects as
+The example file starts a one-shot `fliks-db-role` service before `fliks`. It runs
+[`fliks-server db-role`](/install/environment-variables#db-role) with the PostgreSQL administrator
+and gives the `fliks_app` role the database. `fliks` then connects as `fliks_app`, which is not a
+superuser. The administrator password stays in the `postgres` and `fliks-db-role` services, never
+in `fliks`. A second Fliks on the same PostgreSQL cluster needs its own `DB_USERNAME`: the role
+belongs to the cluster, not to the database.
+
+The `postgres` health check is now `pg_isready -h 127.0.0.1 -U fliks`.
+:::
+
+:::details Switch an existing install to the database role
+An upgrade does not change an existing install: it keeps connecting as its current PostgreSQL
+user. To opt in:
+
+1. Back up in **Settings > Backup**.
+2. In your `docker-compose.yml`, add the `fliks-db-role` service and the `DB_USERNAME` and
+   `DB_PASSWORD` lines of the new example file, and make `fliks` depend on the service as the
+   example does.
+3. Check that the administrator password in the file is the real one. PostgreSQL ignores
+   `POSTGRES_PASSWORD` once the data directory exists, so the file may hold an outdated value.
+4. Run `docker compose up -d`.
+
+To go back, set `DB_USERNAME` and `DB_PASSWORD` to the administrator's again and remove the
+service. Nothing moves back: a superuser ignores ownership, and `fliks_app` and what it owns stay,
+harmlessly. To give the objects back, run `REASSIGN OWNED BY fliks_app TO fliks`.
+
+With an external PostgreSQL server, see [`db-role`](/install/environment-variables#db-role).
+:::
 
 ## Volumes
 

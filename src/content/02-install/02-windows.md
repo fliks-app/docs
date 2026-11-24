@@ -48,6 +48,7 @@ If SmartScreen warns that the app is unrecognized, choose **More info > Run anyw
 |---|---|
 | `%LOCALAPPDATA%\Fliks Server\postgresql\` | The database cluster. |
 | `%LOCALAPPDATA%\Fliks Server\conf\` | The JWT secret, the engine token and `tray-settings.json`, which holds the web port (`Port`, default `4848`) and the database port (`PgPort`, default `5433`). |
+| `%LOCALAPPDATA%\Fliks Server\private\` | The database administrator password (`.db-admin-password`), kept out of the server's reach. `conf\.db-password` is the password of the `fliks_app` role the server uses; the app sets both up at launch. |
 | `%LOCALAPPDATA%\Fliks Server\data\` | The server's working directory: images, thumbnails, backups. |
 | `%LOCALAPPDATA%\Fliks Server\logs\` | Server and PostgreSQL logs. |
 | `%LOCALAPPDATA%\Fliks Server\transcode\` | The HLS transcode cache, ephemeral. |
