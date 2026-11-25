@@ -6,10 +6,10 @@ description: A native Windows, macOS and Linux app that connects to a Fliks serv
 > [!SUMMARY]
 > Install from the Mac App Store, download the installer for Windows or macOS, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
 
-## Install and sign in
+## Install
 
-Install the app for your system below, then on first launch enter your server's address and sign
-in. Every installer is also on the [latest release](https://github.com/fliks-app/fliks/releases/latest).
+Install the app for your system below, then [sign in](/clients/overview#sign-in) to your server.
+Every installer is also on the [latest release](https://github.com/fliks-app/fliks/releases/latest).
 
 The desktop app is a client: the server runs elsewhere. (The Windows tray and macOS menu-bar apps
 that run the *server* are in [Install](/install/windows).) It plays through an embedded
