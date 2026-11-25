@@ -4,13 +4,22 @@ description: A native Windows, macOS and Linux app that connects to a Fliks serv
 ---
 
 > [!SUMMARY]
-> Download the installer for Windows or macOS from the latest release, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
+> Install from the Mac App Store, download the installer for Windows or macOS, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
 
 ## Install and sign in
 
-Download the installer from the [latest release](https://github.com/fliks-app/fliks/releases)
-(Windows `.exe`, macOS `.dmg` for Apple Silicon) or install on Linux (below). On first launch, enter
-your server's address and sign in.
+:::downloads
+Download Fliks v{version} for macOS | Fliks-Client-{version}-arm64.dmg
+Download Fliks v{version} for Windows | Fliks-Client-{version}-Setup.exe
+Download Fliks v{version} for Linux (AppImage) | Fliks-Client-{version}-x86_64.AppImage
+Get Fliks on the Mac App Store | https://apps.apple.com/app/fliks/id6771854507
+:::
+
+On a Mac (Apple Silicon, macOS 13 or later), install Fliks from the
+[Mac App Store](https://apps.apple.com/app/fliks/id6771854507) or from the `.dmg`. On Windows, run the
+`.exe`. On Linux, prefer APT or Snap (below). Every installer is also on the
+[latest release](https://github.com/fliks-app/fliks/releases/latest). On first launch, enter your
+server's address and sign in.
 
 The desktop app is a client: the server runs elsewhere. (The Windows tray and macOS menu-bar apps
 that run the *server* are in [Install](/install/windows).) It plays through an embedded
@@ -83,6 +92,7 @@ How an update installs depends on how you installed the app:
 | Install | Updated by |
 |---|---|
 | Windows `.exe`, macOS `.dmg`, Linux `.AppImage` | The in-app update described above |
+| Mac App Store | The App Store. The in-app check is skipped |
 | Linux APT or `.deb` | `apt upgrade`, or the in-app update, which reinstalls the package and asks for administrator rights |
 | Linux Snap | `snapd`, in the background. The in-app check is skipped, so **App settings > Update** always reports the app as up to date |
 

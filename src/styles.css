@@ -72,14 +72,14 @@ body {
 .doc-prose :where(h2 + h3) {
   margin-top: 1em;
 }
-.doc-prose :where(a) {
+.doc-prose :where(a:not(.btn)) {
   text-decoration: underline;
   text-decoration-color: color-mix(in oklab, var(--color-primary) 55%, transparent);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   font-weight: 500;
 }
-.doc-prose :where(a):hover {
+.doc-prose :where(a:not(.btn)):hover {
   color: var(--color-primary);
   text-decoration-color: currentColor;
 }
@@ -465,6 +465,13 @@ body {
 .doc-steps-pos {
   font-variant-numeric: tabular-nums;
   opacity: 0.75;
+}
+
+.doc-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block: 1.25em;
 }
 
 /* ---------- "In short" callout and folded reference (:::details) ---------- */
