@@ -4,17 +4,34 @@ description: A native Windows, macOS and Linux app that connects to a Fliks serv
 ---
 
 > [!SUMMARY]
-> Download the installer for Windows or macOS from the latest release, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
+> Install from the Mac App Store, download the installer for Windows or macOS, or install on Linux with APT, Snap, `.deb` or AppImage, then enter your server's address. It plays through mpv, so it Direct Plays more formats than a browser.
 
-## Install and sign in
+## Install
 
-Download the installer from the [latest release](https://github.com/fliks-app/fliks/releases)
-(Windows `.exe`, macOS `.dmg` for Apple Silicon) or install on Linux (below). On first launch, enter
-your server's address and sign in.
+Install the app for your system below, then [sign in](/clients/overview#sign-in) to your server.
+Every installer is also on the [latest release](https://github.com/fliks-app/fliks/releases/latest).
 
 The desktop app is a client: the server runs elsewhere. (The Windows tray and macOS menu-bar apps
 that run the *server* are in [Install](/install/windows).) It plays through an embedded
 [mpv](https://mpv.io), so it Direct Plays formats a browser can't.
+
+### Windows
+
+Download the installer and run it. Windows 10 or later, x64.
+
+:::downloads
+Fliks Client v{version} for Windows | Fliks-Client-{version}-Setup.exe
+:::
+
+### macOS
+
+Install from the Mac App Store, or download the `.dmg` and drag **Fliks** to Applications. Apple
+Silicon, macOS 13 or later.
+
+:::downloads
+Get Fliks on the Mac App Store | https://apps.apple.com/app/fliks/id6771854507
+Fliks Client v{version} for macOS | Fliks-Client-{version}-arm64.dmg
+:::
 
 ### Linux
 
@@ -25,11 +42,16 @@ sudo curl -fsSLo /etc/apt/sources.list.d/fliks.sources https://github.com/fliks-
 sudo apt update && sudo apt install fliks-desktop
 ```
 
-With Snap: `sudo snap install fliks`.
+With Snap: `sudo snap install fliks`. Or download a package:
+
+:::downloads
+Fliks Client v{version} (.deb) | Fliks-Client-{version}-amd64.deb
+Fliks Client v{version} (AppImage) | Fliks-Client-{version}-x86_64.AppImage
+:::
 
 :::details More on the Linux install
 The `.sources` file adds the Fliks repository and its signing key. The repository carries stable
-releases only. A `.deb` or `.AppImage` is also on the release page. Packages are built on Ubuntu
+releases only, and a downloaded `.deb` adds the same source. Packages are built on Ubuntu
 24.04, so a much older distribution may lack the libraries the player needs. The `beta` Snap channel
 follows pre-releases (`sudo snap refresh fliks --channel=beta`). The window is native on Wayland and
 X11, draws its own title bar (right click for the window menu) and hides it in full screen.
@@ -83,6 +105,7 @@ How an update installs depends on how you installed the app:
 | Install | Updated by |
 |---|---|
 | Windows `.exe`, macOS `.dmg`, Linux `.AppImage` | The in-app update described above |
+| Mac App Store | The App Store. The in-app check is skipped |
 | Linux APT or `.deb` | `apt upgrade`, or the in-app update, which reinstalls the package and asks for administrator rights |
 | Linux Snap | `snapd`, in the background. The in-app check is skipped, so **App settings > Update** always reports the app as up to date |
 

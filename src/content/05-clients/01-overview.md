@@ -18,7 +18,7 @@ Same account everywhere: your library, progress and preferences follow you.
 | [Android TV](/clients/android-tv) | Play Store | Android 6 |
 | [Samsung TV](/clients/samsung-tizen) (Tizen) | Sideload (not yet on Samsung Apps) | Tizen 5.5 |
 | [LG TV](/clients/lg-webos) (webOS) | LG Content Store | webOS 7.0 |
-| [Desktop](/clients/desktop) | GitHub release download | Windows, macOS (Apple Silicon only), Linux |
+| [Desktop](/clients/desktop) | Mac App Store, or download for Windows, macOS and Linux | macOS 13 (Apple Silicon only), Windows, Linux |
 | [Chromecast](/clients/chromecast) | Built in, cast from any client above | Any Chromecast device |
 | [Apple TV](/clients/apple-tv) | App Store | tvOS 17 |
 

@@ -191,7 +191,7 @@ const docsRenderer = {
   },
 };
 
-// Lucide chevron-left / chevron-right, inlined: page HTML is static, Angular components can't render in it.
+// Lucide icons, inlined: page HTML is static, Angular components can't render in it.
 function lucide(path) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
 }
@@ -230,6 +230,55 @@ const stepsExtension = {
   },
 };
 
+// Latest fliks release, for :::downloads. Without it (offline build) the buttons point at the release page.
+const RELEASES_URL = 'https://github.com/fliks-app/fliks/releases/latest';
+const latestRelease = await fetch('https://api.github.com/repos/fliks-app/fliks/releases/latest', {
+  headers: process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {},
+  signal: AbortSignal.timeout(10_000),
+})
+  .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+  .then((r) => ({ version: r.tag_name.replace(/^v/, ''), assets: new Map(r.assets.map((a) => [a.name, a.browser_download_url])) }))
+  .catch((err) => {
+    console.warn(`build-content: latest release unavailable (${err.message}); download buttons link to the release page`);
+    return null;
+  });
+
+// Lucide download / external-link.
+const DOWNLOAD_ICON = 'M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5';
+const EXTERNAL_ICON = 'M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6';
+
+// `:::downloads` ... `:::` holds one `Button text | target` per line. `{version}` is the latest release's;
+// a target that isn't a URL names an asset of that release.
+const downloadsExtension = {
+  name: 'downloads',
+  level: 'block',
+  start: (src) => src.match(/^:::downloads/m)?.index,
+  tokenizer(src) {
+    const m = src.match(/^:::downloads[^\n]*\n([\s\S]*?)\n:::[ \t]*(?:\n+|$)/);
+    if (!m) return undefined;
+    const buttons = m[1].trim().split(/\n+/).map((line) => line.split('|').map((s) => s.trim()));
+    if (buttons.some((b) => b.length !== 2 || !b[0] || !b[1])) {
+      fail(`${currentFile}: each :::downloads line is \`Button text | asset name or URL\``);
+    }
+    return { type: 'downloads', raw: m[0], buttons };
+  },
+  renderer({ buttons }) {
+    const v = latestRelease?.version;
+    const items = buttons
+      .map(([text, target]) => {
+        const external = isExternalHref(target);
+        const href = external ? target : (v && latestRelease.assets.get(target.replaceAll('{version}', v))) || RELEASES_URL;
+        const label = v ? text.replaceAll('{version}', v) : text.replace(/\s*v?\{version\}/g, '');
+        const html = escapeHtml(label);
+        return external
+          ? `<a class="btn btn-outline" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${html}${lucide(EXTERNAL_ICON)}</a>`
+          : `<a class="btn btn-primary" href="${escapeHtml(href)}">${lucide(DOWNLOAD_ICON)}${html}</a>`;
+      })
+      .join('');
+    return `<div class="doc-downloads not-prose">${items}</div>\n`;
+  },
+};
+
 // `:::details Title` ... `:::` folds reference material (field tables, edge cases) under a
 // clickable title. Its body is regular markdown, but can't hold another ::: block.
 const detailsExtension = {
@@ -251,7 +300,7 @@ const detailsExtension = {
 };
 
 const marked = new Marked({ gfm: true, breaks: false });
-marked.use({ renderer: docsRenderer, extensions: [stepsExtension, detailsExtension] });
+marked.use({ renderer: docsRenderer, extensions: [stepsExtension, downloadsExtension, detailsExtension] });
 
 // ---------- read content tree ----------
 
