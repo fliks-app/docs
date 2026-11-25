@@ -191,7 +191,7 @@ const docsRenderer = {
   },
 };
 
-// Lucide chevron-left / chevron-right, inlined: page HTML is static, Angular components can't render in it.
+// Lucide icons, inlined: page HTML is static, Angular components can't render in it.
 function lucide(path) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${path}"/></svg>`;
 }
@@ -243,6 +243,10 @@ const latestRelease = await fetch('https://api.github.com/repos/fliks-app/fliks/
     return null;
   });
 
+// Lucide download / external-link.
+const DOWNLOAD_ICON = 'M12 15V3M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5';
+const EXTERNAL_ICON = 'M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6';
+
 // `:::downloads` ... `:::` holds one `Button text | target` per line. `{version}` is the latest release's;
 // a target that isn't a URL names an asset of that release.
 const downloadsExtension = {
@@ -265,8 +269,10 @@ const downloadsExtension = {
         const external = isExternalHref(target);
         const href = external ? target : (v && latestRelease.assets.get(target.replaceAll('{version}', v))) || RELEASES_URL;
         const label = v ? text.replaceAll('{version}', v) : text.replace(/\s*v?\{version\}/g, '');
-        const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
-        return `<a class="btn ${external ? 'btn-outline' : 'btn-primary'}" href="${escapeHtml(href)}"${attrs}>${escapeHtml(label)}</a>`;
+        const html = escapeHtml(label);
+        return external
+          ? `<a class="btn btn-outline" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${html}${lucide(EXTERNAL_ICON)}</a>`
+          : `<a class="btn btn-primary" href="${escapeHtml(href)}">${lucide(DOWNLOAD_ICON)}${html}</a>`;
       })
       .join('');
     return `<div class="doc-downloads not-prose">${items}</div>\n`;

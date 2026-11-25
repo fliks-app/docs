@@ -44,12 +44,12 @@ Supported in the body:
   automatically.
 - Images: `![alt](/img/my-screenshot.webp)`, referencing a file at `public/img/my-screenshot.webp`.
 - Download buttons: a `:::downloads` block with one `Button text | target` per line. The target is a
-  URL or the name of an asset of the latest fliks release; `{version}` in either is that release's
+  URL (outlined button, opens a new tab) or the name of an asset of the latest fliks release; `{version}` in either is that release's
   version, fetched at build time (a scheduled deploy picks up new releases):
 
   ```markdown
   :::downloads
-  Download Fliks v{version} for macOS | Fliks-Client-{version}-arm64.dmg
+  Fliks Client v{version} for macOS | Fliks-Client-{version}-arm64.dmg
   Get Fliks on the Mac App Store | https://apps.apple.com/app/fliks/id6771854507
   :::
   ```

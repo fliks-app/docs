@@ -20,7 +20,7 @@ that run the *server* are in [Install](/install/windows).) It plays through an e
 Download the installer and run it. Windows 10 or later, x64.
 
 :::downloads
-Download Fliks v{version} for Windows | Fliks-Client-{version}-Setup.exe
+Fliks Client v{version} for Windows | Fliks-Client-{version}-Setup.exe
 :::
 
 ### macOS
@@ -30,7 +30,7 @@ Silicon, macOS 13 or later.
 
 :::downloads
 Get Fliks on the Mac App Store | https://apps.apple.com/app/fliks/id6771854507
-Download Fliks v{version} for macOS | Fliks-Client-{version}-arm64.dmg
+Fliks Client v{version} for macOS | Fliks-Client-{version}-arm64.dmg
 :::
 
 ### Linux
@@ -45,8 +45,8 @@ sudo apt update && sudo apt install fliks-desktop
 With Snap: `sudo snap install fliks`. Or download a package:
 
 :::downloads
-Download Fliks v{version} (.deb) | Fliks-Client-{version}-amd64.deb
-Download Fliks v{version} (AppImage) | Fliks-Client-{version}-x86_64.AppImage
+Fliks Client v{version} (.deb) | Fliks-Client-{version}-amd64.deb
+Fliks Client v{version} (AppImage) | Fliks-Client-{version}-x86_64.AppImage
 :::
 
 :::details More on the Linux install

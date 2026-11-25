@@ -83,7 +83,7 @@ body {
   color: var(--color-primary);
   text-decoration-color: currentColor;
 }
-.doc-prose a[target='_blank']::after {
+.doc-prose a[target='_blank']:not(.btn)::after {
   content: '\2197';
   display: inline-block;
   margin-inline-start: 0.15em;
