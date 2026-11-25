@@ -15,7 +15,7 @@
         @if (m.prev) {
           <a [routerLink]="m.prev.url" class="doc-pager-link">
             <span class="text-xs text-base-content/60">Previous</span>
-            <span class="font-medium text-primary">&larr; {{ m.prev.title }}</span>
+            <span class="font-medium text-primary"><svg lucideArrowLeft class="inline h-4 w-4 align-[-0.125em]" aria-hidden="true"></svg> {{ m.prev.title }}</span>
           </a>
         } @else {
           <span class="hidden sm:block"></span>
@@ -23,7 +23,7 @@
         @if (m.next) {
           <a [routerLink]="m.next.url" class="doc-pager-link sm:items-end sm:text-end">
             <span class="text-xs text-base-content/60">Next</span>
-            <span class="font-medium text-primary">{{ m.next.title }} &rarr;</span>
+            <span class="font-medium text-primary">{{ m.next.title }} <svg lucideArrowRight class="inline h-4 w-4 align-[-0.125em]" aria-hidden="true"></svg></span>
           </a>
         }
       </nav>

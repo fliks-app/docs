@@ -2,14 +2,14 @@ import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
-import { LucideChevronRight } from '@lucide/angular';
+import { LucideArrowRight, LucideChevronRight } from '@lucide/angular';
 import { DocSection, SECTIONS } from '../../../generated/manifest';
 
 const pathOf = (url: string) => url.split(/[?#]/)[0];
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, LucideChevronRight],
+  imports: [RouterLink, LucideArrowRight, LucideChevronRight],
   templateUrl: './sidebar.html',
 })
 export class Sidebar {

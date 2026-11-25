@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { LucideSearch } from '@lucide/angular';
+import { LucideArrowRight, LucideSearch } from '@lucide/angular';
 import { ThemeService } from '../../core/theme';
 import { SearchOverlayService } from '../../core/search-overlay';
 import { setSeo, SITE_URL } from '../../core/seo';
@@ -31,7 +31,7 @@ const FEATURES = [
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, LucideSearch],
+  imports: [RouterLink, LucideArrowRight, LucideSearch],
   templateUrl: './home.html',
 })
 export class Home {
