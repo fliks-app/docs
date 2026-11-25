@@ -265,7 +265,8 @@ const downloadsExtension = {
         const external = isExternalHref(target);
         const href = external ? target : (v && latestRelease.assets.get(target.replaceAll('{version}', v))) || RELEASES_URL;
         const label = v ? text.replaceAll('{version}', v) : text.replace(/\s*v?\{version\}/g, '');
-        return `<a class="btn ${external ? 'btn-outline' : 'btn-primary'}" href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+        const attrs = external ? ' target="_blank" rel="noopener noreferrer"' : '';
+        return `<a class="btn ${external ? 'btn-outline' : 'btn-primary'}" href="${escapeHtml(href)}"${attrs}>${escapeHtml(label)}</a>`;
       })
       .join('');
     return `<div class="doc-downloads not-prose">${items}</div>\n`;
