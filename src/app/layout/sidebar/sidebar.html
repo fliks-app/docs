@@ -43,7 +43,7 @@
                     [routerLink]="link.url"
                     class="-ms-px block border-s-2 border-transparent py-1 ps-3 pe-2 leading-snug text-base-content/70 transition-colors hover:border-base-content/30 hover:text-base-content"
                   >
-                    {{ link.title }} &rarr;
+                    {{ link.title }} <svg lucideArrowRight class="inline h-4 w-4 align-[-0.125em]" aria-hidden="true"></svg>
                   </a>
                 </li>
               }
@@ -54,7 +54,7 @@
   </div>
   @if (group.switchUrl) {
     <a [routerLink]="group.switchUrl" class="mx-3 border-t border-base-300 pt-4 text-base-content/70 hover:text-primary">
-      {{ group.switchLabel }} &rarr;
+      {{ group.switchLabel }} <svg lucideArrowRight class="inline h-4 w-4 align-[-0.125em]" aria-hidden="true"></svg>
     </a>
   }
 </nav>

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Component, ElementRef, afterRenderEffect, computed, inject, input, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { LucideArrowLeft, LucideArrowRight } from '@lucide/angular';
 import { wireDocContent } from '../../core/content-interactions';
 import { setSeo, SITE_URL } from '../../core/seo';
 import { Toc } from '../../layout/toc/toc';
@@ -9,7 +10,7 @@ import { PAGES_BY_URL } from '../../../generated/manifest';
 
 @Component({
   selector: 'app-doc-page',
-  imports: [RouterLink, Toc],
+  imports: [RouterLink, Toc, LucideArrowLeft, LucideArrowRight],
   templateUrl: './doc-page.html',
 })
 export class DocPage {

@@ -24,7 +24,7 @@
         [routerLink]="door.url"
         class="card border border-base-300 bg-base-200/40 p-6 transition-colors hover:border-primary hover:bg-base-200/70"
       >
-        <h2 class="mb-1 text-xl font-semibold">{{ door.title }} <span aria-hidden="true">&rarr;</span></h2>
+        <h2 class="mb-1 text-xl font-semibold">{{ door.title }} <svg lucideArrowRight class="inline h-5 w-5 align-[-0.125em]" aria-hidden="true"></svg></h2>
         <p class="text-base-content/70">{{ door.text }}</p>
       </a>
     }
