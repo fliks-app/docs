@@ -8,7 +8,7 @@ description: The same Android app, adapted for a 10-foot interface and D-pad nav
 
 ## Install and sign in
 
-Install "Fliks" from the Play Store on the TV (Android 6 or newer). It is the same app as the
+Install "Fliks" from the Play Store on the TV (Android 7 or newer). It is the same app as the
 [phone](/clients/mobile) one and switches to a TV interface by itself.
 
 On first launch, enter your server's address, then choose

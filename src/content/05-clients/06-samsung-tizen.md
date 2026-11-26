@@ -4,11 +4,11 @@ description: A native Tizen app for Samsung TVs, played through the TV's own har
 ---
 
 > [!SUMMARY]
-> Fliks is not on Samsung Apps yet: download the `.wgt` from the GitHub release and sideload it with Tizen Studio (developer mode on the TV, a certificate for that TV). Tizen 5.5 or newer.
+> Fliks is not on Samsung Apps yet: download the `.wgt` from the GitHub release and sideload it with Tizen Studio (developer mode on the TV, a certificate for that TV). Tizen 6.5 or newer.
 
 ## Install and sign in
 
-Fliks needs **Tizen 5.5 or newer** (Samsung TVs from 2020). It is not on Samsung Apps yet, so it is
+Fliks needs **Tizen 6.5 or newer** (Samsung TVs from 2022). It is not on Samsung Apps yet, so it is
 sideloaded: see the steps below. Then enter your server's address and choose
 [Quick Connect](/features/pairing-and-remote-control#pairing-a-tv-or-new-device-quick-connect), typing
 the code the TV shows on your phone's **Login requests** page.

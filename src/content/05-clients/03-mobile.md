@@ -4,14 +4,14 @@ description: Native iOS and Android apps for phones and tablets, with offline do
 ---
 
 > [!SUMMARY]
-> Install Fliks from the App Store (iOS 16.6+) or the Play Store (Android 6+), enter your server's address and sign in.
+> Install Fliks from the App Store (iOS 16.6+) or the Play Store (Android 7+), enter your server's address and sign in.
 
 ## Install and sign in
 
 | Platform | Where | Minimum version |
 |---|---|---|
 | iOS, iPadOS | App Store | iOS 16.6 |
-| Android | Play Store | Android 6 (API 23) |
+| Android | Play Store | Android 7 (API 24) |
 
 Open the app, type your server's address, then your account and password. The same Android app is
 also the [Android TV](/clients/android-tv) app.

@@ -14,9 +14,9 @@ Same account everywhere: your library, progress and preferences follow you.
 |---|---|---|
 | [Web](/clients/web) | Any browser, at your server's address | Any current browser |
 | [Mobile](/clients/mobile) (iOS, iPadOS) | App Store | iOS 16.6 |
-| [Mobile](/clients/mobile) (Android) | Play Store | Android 6 (API 23) |
-| [Android TV](/clients/android-tv) | Play Store | Android 6 |
-| [Samsung TV](/clients/samsung-tizen) (Tizen) | Sideload (not yet on Samsung Apps) | Tizen 5.5 |
+| [Mobile](/clients/mobile) (Android) | Play Store | Android 7 (API 24) |
+| [Android TV](/clients/android-tv) | Play Store | Android 7 |
+| [Samsung TV](/clients/samsung-tizen) (Tizen) | Sideload (not yet on Samsung Apps) | Tizen 6.5 |
 | [LG TV](/clients/lg-webos) (webOS) | LG Content Store | webOS 7.0 |
 | [Desktop](/clients/desktop) | Mac App Store, or download for Windows, macOS and Linux | macOS 13 (Apple Silicon only), Windows, Linux |
 | [Chromecast](/clients/chromecast) | Built in, cast from any client above | Any Chromecast device |
